@@ -1,7 +1,45 @@
 {
   "name": "portfolio-v2",
+  "description": "Home of lekoarts.de",
   "version": "1.0.0",
   "private": true,
   "author": "LekoArts <hello@lekoarts.de>",
-  "license": "MIT"
+  "license": "GPLv3",
+  "workspaces": [
+    "packages/*",
+    "www"
+  ],
+  "scripts": {
+    "develop": "yarn workspace www develop",
+    "tsc": "tsc",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx,.js",
+    "lint:fix": "yarn lint --fix",
+    "format": "prettier \"**/*.{md,mdx,json,yaml}\" --write"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.7",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
