@@ -10,11 +10,11 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.21",
     "@mdx-js/react": "^1.6.21",
-    "gatsby-plugin-mdx": "^1.5.0-next.0",
-    "gatsby-plugin-sharp": "^2.9.0-next.0",
-    "gatsby-remark-images": "^3.6.0-next.0",
-    "gatsby-source-filesystem": "^2.6.0-next.0",
-    "gatsby-transformer-sharp": "^2.7.0-next.0",
+    "gatsby-plugin-mdx": "^1.6.0-next.0",
+    "gatsby-plugin-sharp": "^2.10.0-next.1",
+    "gatsby-remark-images": "^3.7.0-next.0",
+    "gatsby-source-filesystem": "^2.7.0-next.1",
+    "gatsby-transformer-sharp": "^2.8.0-next.1",
     "lodash.kebabcase": "^4.1.1"
   }
 }

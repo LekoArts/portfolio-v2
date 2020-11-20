@@ -5,14 +5,14 @@ import { mdxResolverPassthrough, slugify, withDefaults } from "utils"
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }, themeOptions): any => {
   const { createTypes, createFieldExtension } = actions
 
-  const { blogPrefix } = withDefaults(themeOptions)
+  const { writingPrefix } = withDefaults(themeOptions)
 
   createFieldExtension({
     name: `slugify`,
     extend() {
       return {
         resolve(source) {
-          return slugify(source, blogPrefix)
+          return slugify(source, writingPrefix)
         },
       }
     },
@@ -64,9 +64,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     }
 
     type CoreConfig implements Node {
-      blogSource: String
-      blogPath: String
-      blogPrefix: String
+      writingSource: String
+      writingPath: String
+      writingPrefix: String
       tagPath: String
       tagPrefix: String
       formatString: String
@@ -112,13 +112,13 @@ export const onCreateNode = (
   }
 
   const { createNode, createParentChildLink } = actions
-  const { blogSource } = withDefaults(themeOptions)
+  const { writingSource } = withDefaults(themeOptions)
 
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
   // Check for "posts" and create the "Post" type
-  if (node.internal.type === `Mdx` && source === blogSource) {
+  if (node.internal.type === `Mdx` && source === writingSource) {
     let modifiedTags
 
     if (node.frontmatter.tags) {

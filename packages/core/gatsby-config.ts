@@ -13,13 +13,14 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          name: options.blogSource,
-          path: options.blogSource,
+          name: options.writingSource,
+          path: options.writingSource,
         },
       },
       mdx && {
         resolve: `gatsby-plugin-mdx`,
         options: {
+          lessBabel: true,
           extensions: [`.mdx`, `.md`],
           gatsbyRemarkPlugins: [
             {
