@@ -31,37 +31,30 @@ export const slugify = (source: { slug: string | null; title: string }, basePath
 }
 
 const random = (seed: number): number => {
-  // eslint-disable-next-line no-param-reassign
-  const x = Math.sin(seed++) * 10000
+  let s = seed
+  const x = Math.sin(s++) * 10000
   return x - Math.floor(x)
 }
 
 /**
- * Use the Fisher–Yates algorithm to shuffle an array
+ * Use the Fisher–Yates algorithm to shuffle an array. The count stops the shuffle so that not the whole array needs to be iterated through.
  * @param array - Input array
- * @param id - Used for seeding the result
+ * @param seed - Used for seeding the result
+ * @param count - Number of items to take out of the array
  * @returns A seeded shuffled array
  */
-export const shuffle = <T>(array: T[], id: string): T[] => {
-  let seed = new Prando(id).nextInt(0, 1000)
-  let m = array.length
-  let t
-  let i
+export const shuffle = <T>(array: T[], seed: number, count = 2): T[] => {
+  let s = seed
+  const m = array.length
+  const maxToShuffle = Math.min(m - 1, count)
 
-  // While there remain elements to shuffle…
-  while (m) {
-    // Pick a remaining element…
-    i = Math.floor(random(seed) * m--)
-
-    // And swap it with the current element.
-    t = array[m]
-    array[m] = array[i]
-    array[i] = t
-    // eslint-disable-next-line no-param-reassign
-    ++seed
+  for (let i = 0; i < maxToShuffle; i++) {
+    const toSwap = i + Math.floor(random(s) * (m - i))
+    ;[array[i], array[toSwap]] = [array[toSwap], array[i]]
+    s++
   }
 
-  return array
+  return array.slice(0, count)
 }
 
 export { withDefaults } from "./with-defaults"

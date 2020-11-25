@@ -1,6 +1,7 @@
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
 import kebabCase from "lodash.kebabcase"
-import { mdxResolverPassthrough, slugify, withDefaults } from "utils"
+import Prando from "prando"
+import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }, themeOptions): any => {
   const { createTypes, createFieldExtension } = actions
@@ -117,7 +118,6 @@ export const onCreateNode = (
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
-  // Check for "posts" and create the "Post" type
   if (node.internal.type === `Mdx` && source === writingSource) {
     let modifiedTags
 
@@ -156,4 +156,43 @@ export const onCreateNode = (
 
     createParentChildLink({ parent: node, child: getNode(mdxPostId) })
   }
+}
+
+export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArgs): any => {
+  const resolvers = {
+    Query: {
+      randomPosts: {
+        type: [`Post`],
+        args: {
+          count: {
+            type: `Int`,
+            description: `Count of how many nodes should be returned`,
+          },
+          seed: {
+            type: `String`,
+            description: `Input a seed (e.g. the current id of the node) to deterministically retrieve the same nodes on every run`,
+          },
+        },
+        async resolve(source, args, context) {
+          const { count = 2, seed } = args || {}
+          const rng = new Prando(seed)
+          const s = rng.next()
+          const allNodes = await context.nodeModel.runQuery({
+            query: {
+              sort: {
+                fields: [`date`],
+                order: [`ASC`],
+              },
+            },
+            type: `Post`,
+            firstOnly: false,
+          })
+          rng.reset()
+          return shuffle(allNodes, s, count)
+        },
+      },
+    },
+  }
+
+  createResolverArgs.createResolvers(resolvers)
 }

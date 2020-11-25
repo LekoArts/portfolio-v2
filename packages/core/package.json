@@ -15,6 +15,7 @@
     "gatsby-remark-images": "^3.7.0-next.0",
     "gatsby-source-filesystem": "^2.7.0-next.1",
     "gatsby-transformer-sharp": "^2.8.0-next.1",
-    "lodash.kebabcase": "^4.1.1"
+    "lodash.kebabcase": "^4.1.1",
+    "prando": "^5.1.2"
   }
 }
