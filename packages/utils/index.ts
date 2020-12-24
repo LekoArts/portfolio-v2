@@ -1,5 +1,4 @@
 import kebabCase from "lodash.kebabcase"
-import Prando from "prando"
 
 /**
  * Uses currying. When providing fieldName as an argument a function will be returned that runs with this fieldName
@@ -21,13 +20,14 @@ export const mdxResolverPassthrough = (fieldName: string) => async (source, args
 /**
  * Creates a slug out of incoming source
  * @param source
- * @param basePath
+ * @param prefix
  * @returns Slugified string
  */
-export const slugify = (source: { slug: string | null; title: string }, basePath = ``): string => {
+export const slugify = (source: { slug: string | null; title: string }, prefix = ``): string => {
   const slug = source.slug ? source.slug : kebabCase(source.title)
+  const p = kebabCase(prefix)
 
-  return `/${basePath}/${slug}`.replace(/\/\/+/g, `/`)
+  return `/${p}/${slug}`.replace(/\/\/+/g, `/`)
 }
 
 const random = (seed: number): number => {

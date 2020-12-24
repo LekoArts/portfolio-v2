@@ -17,6 +17,13 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
           path: options.writingSource,
         },
       },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: options.gardenSource,
+          path: options.gardenSource,
+        },
+      },
       mdx && {
         resolve: `gatsby-plugin-mdx`,
         options: {

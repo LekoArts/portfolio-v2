@@ -1,19 +1,25 @@
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
-import kebabCase from "lodash.kebabcase"
 import Prando from "prando"
+import get from "lodash.get"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }, themeOptions): any => {
   const { createTypes, createFieldExtension } = actions
 
-  const { writingPrefix } = withDefaults(themeOptions)
+  const getFieldValue = (fieldName, source) => get(source, fieldName)
 
   createFieldExtension({
     name: `slugify`,
-    extend() {
+    args: {
+      fieldName: `String`,
+      fallback: `String`,
+    },
+    extend({ fieldName, fallback }) {
       return {
         resolve(source) {
-          return slugify(source, writingPrefix)
+          const computedPrefix = getFieldValue(fieldName, source)
+          const prefix = computedPrefix || fallback
+          return slugify(source, prefix)
         },
       }
     },
@@ -34,43 +40,70 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
   createTypes(`
     interface Post @nodeInterface {
       id: ID!
-      slug: String! @slugify
-      title: String!
-      date: Date! @dateformat
+      slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 160): String!
       body: String!
       html: String
       timeToRead: Int
-      tags: [PostTag]
-      banner: File @fileByRelativePath
+      image: File @fileByRelativePath
+      category: Category! @link(by: "name")
+      date: Date! @dateformat
       description: String
-    }
-
-    type PostTag {
-      name: String
-      slug: String
+      published: Boolean!
+      subtitle: String
+      title: String!
+      type: String!
     }
 
     type MdxPost implements Node & Post {
-      slug: String! @slugify
-      title: String!
-      date: Date! @dateformat
+      slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       body: String! @mdxpassthrough(fieldName: "body")
       html: String! @mdxpassthrough(fieldName: "html")
       timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
-      tags: [PostTag]
-      banner: File @fileByRelativePath
+      image: File @fileByRelativePath
+      category: Category! @link(by: "name")
+      date: Date! @dateformat
       description: String
+      published: Boolean!
+      subtitle: String
+      title: String!
+      type: String!
+    }
+
+    type Category implements Node {
+      name: String
+      posts: [Post] @link(by: "category.name", from: "name")
+    }
+
+    interface Garden @nodeInterface {
+      id: ID!
+      slug: String! @slugify(fallback: "garden")
+      excerpt(pruneLength: Int = 160): String!
+      body: String!
+      html: String
+      timeToRead: Int
+      date: Date! @dateformat
+      title: String!
+      tags: [String!]!
+      icon: String!
+    }
+
+    type MdxGarden implements Node & Garden {
+      slug: String! @slugify(fallback: "garden")
+      excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
+      body: String! @mdxpassthrough(fieldName: "body")
+      html: String! @mdxpassthrough(fieldName: "html")
+      timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
+      date: Date! @dateformat
+      title: String!
+      tags: [String!]!
+      icon: String!
     }
 
     type CoreConfig implements Node {
       writingSource: String
-      writingPath: String
-      writingPrefix: String
-      tagPath: String
-      tagPrefix: String
-      formatString: String
+      gardenSource: String
     }
   `)
 }
@@ -98,14 +131,28 @@ type BlogNode = {
     slug?: string
     title: string
     date: string
-    tags: string[]
-    banner: string
+    category: string
+    image: string
     description: string
+    type: "prose" | "tutorial"
+    published: boolean
   }
 }
 
+type GardenNode = {
+  frontmatter: {
+    slug?: string
+    title: string
+    date: string
+    tags: string[]
+    icon: string
+  }
+}
+
+type MdxNode = BlogNode | GardenNode
+
 export const onCreateNode = (
-  { node, actions, getNode, createNodeId, createContentDigest }: CreateNodeArgs<BlogNode>,
+  { node, actions, getNode, createNodeId, createContentDigest }: CreateNodeArgs<MdxNode>,
   themeOptions: PluginOptions
 ): void => {
   if (node.internal.type !== `Mdx`) {
@@ -113,31 +160,38 @@ export const onCreateNode = (
   }
 
   const { createNode, createParentChildLink } = actions
-  const { writingSource } = withDefaults(themeOptions)
+  const { writingSource, gardenSource } = withDefaults(themeOptions)
 
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
-  if (node.internal.type === `Mdx` && source === writingSource) {
-    let modifiedTags
-
-    if (node.frontmatter.tags) {
-      modifiedTags = node.frontmatter.tags.map((tag) => ({
-        name: tag,
-        slug: kebabCase(tag),
-      }))
-    } else {
-      modifiedTags = null
+  if (source === writingSource) {
+    const f = node.frontmatter as BlogNode["frontmatter"]
+    const fieldData: BlogNode["frontmatter"] = {
+      slug: f.slug ? f.slug : undefined,
+      title: f.title,
+      date: f.date,
+      category: f.category,
+      image: f.image,
+      description: f.description,
+      published: f.published,
+      type: f.type,
     }
 
-    const fieldData = {
-      slug: node.frontmatter.slug ? node.frontmatter.slug : undefined,
-      title: node.frontmatter.title,
-      date: node.frontmatter.date,
-      tags: modifiedTags,
-      banner: node.frontmatter.banner,
-      description: node.frontmatter.description,
-    }
+    const c = fieldData.category
+
+    createNode({
+      id: createNodeId(`writing-category-${c}`),
+      name: c,
+      parent: null,
+      children: [],
+      internal: {
+        type: `Category`,
+        contentDigest: createContentDigest(c),
+        content: JSON.stringify(c),
+        description: `Category of each Post`,
+      },
+    })
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`)
 
@@ -155,6 +209,34 @@ export const onCreateNode = (
     })
 
     createParentChildLink({ parent: node, child: getNode(mdxPostId) })
+  }
+
+  if (source === gardenSource) {
+    const f = node.frontmatter as GardenNode["frontmatter"]
+    const fieldData: GardenNode["frontmatter"] = {
+      slug: f.slug ? f.slug : undefined,
+      title: f.title,
+      date: f.date,
+      icon: f.icon,
+      tags: f.tags,
+    }
+
+    const mdxGardenId = createNodeId(`${node.id} >>> MdxGarden`)
+
+    createNode({
+      ...fieldData,
+      id: mdxGardenId,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `MdxGarden`,
+        contentDigest: createContentDigest(fieldData),
+        content: JSON.stringify(fieldData),
+        description: `Mdx implementation of the Garden interface`,
+      },
+    })
+
+    createParentChildLink({ parent: node, child: getNode(mdxGardenId) })
   }
 }
 

@@ -1,0 +1,12 @@
+{
+  "name": "scripts",
+  "description": "Scripts to generate content",
+  "version": "0.0.1",
+  "private": true,
+  "license": "GPLv3",
+  "dependencies": {
+    "@sindresorhus/slugify": "^1.1.0",
+    "enquirer": "^2.3.6",
+    "fs-extra": "^9.0.1"
+  }
+}
