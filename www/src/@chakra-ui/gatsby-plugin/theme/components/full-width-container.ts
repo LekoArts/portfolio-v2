@@ -31,10 +31,10 @@ const FullWidthContainer = {
     }),
     dark: (props) => ({
       outer: {
-        bg: mode(`blueGray.800`, `blueGray.800`)(props),
+        bg: mode(`blueGray.700`, `blueGray.800`)(props),
       },
       inner: {
-        bg: mode(`blueGray.800`, `blueGray.800`)(props),
+        bg: mode(`blueGray.700`, `blueGray.800`)(props),
         color: `blueGray.300`,
       },
     }),

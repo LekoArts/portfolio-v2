@@ -16,6 +16,7 @@ type Props = {
         items: {
           name: string
           link: string
+          isExternal: boolean | null
         }[]
       }[]
     }
@@ -40,6 +41,7 @@ const useSiteMetadata = () => {
             items {
               name
               link
+              isExternal
             }
           }
         }

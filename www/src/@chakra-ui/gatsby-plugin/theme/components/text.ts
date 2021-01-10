@@ -17,6 +17,9 @@ const Text = {
         color: mode(`blueGray.900`, `blueGray.100`)(props),
       },
     }),
+    lightContainer: (props) => ({
+      color: mode(`blueGray.700`, `blueGray.200`)(props),
+    }),
   },
 }
 

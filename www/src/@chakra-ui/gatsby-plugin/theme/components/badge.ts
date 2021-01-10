@@ -2,7 +2,7 @@ import { mode } from "@chakra-ui/theme-tools"
 
 const baseStyles = {
   fontSize: [`xs`, null, null, `sm`],
-  fontWeight: `normal`,
+  fontWeight: `medium`,
   letterSpacing: `widest`,
 }
 
@@ -18,7 +18,7 @@ const Badge = {
     light: (props) => ({
       ...baseStyles,
       bg: mode(`white`, `blueGray.900`)(props),
-      color: mode(`blueGray.500`, `blueGray.200`)(props),
+      color: mode(`blueGray.500`, `blueGray.400`)(props),
       px: `1rem`,
       py: `4px`,
       borderRadius: `xl`,

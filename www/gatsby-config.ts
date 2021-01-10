@@ -91,14 +91,17 @@ const gatsbyConfig: GatsbyConfig & { flags: Record<string, boolean> } = {
           {
             name: `Twitter`,
             link: `https://www.twitter.com/lekoarts_de`,
+            isExternal: true,
           },
           {
             name: `Instagram`,
             link: `https://www.instagram.com/lekoarts.de`,
+            isExternal: true,
           },
           {
             name: `GitHub`,
             link: `https://www.github.com/LekoArts`,
+            isExternal: true,
           },
         ],
       },

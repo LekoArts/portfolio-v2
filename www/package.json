@@ -27,5 +27,8 @@
     "react-helmet": "^6.1.0",
     "ts-node": "^9.1.1",
     "utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/react-icons": "^3.0.0"
   }
 }

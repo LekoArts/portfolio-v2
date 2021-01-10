@@ -16,6 +16,7 @@ import Heading from "./components/heading"
 import Prose from "./components/prose"
 import Text from "./components/text"
 import Badge from "./components/badge"
+import Button from "./components/button"
 
 // Custom breakpoints
 const breakpoints = createBreakpoints({
@@ -42,6 +43,7 @@ const theme = extendTheme({
     Prose,
     Text,
     Badge,
+    Button,
   },
   breakpoints,
   config: {

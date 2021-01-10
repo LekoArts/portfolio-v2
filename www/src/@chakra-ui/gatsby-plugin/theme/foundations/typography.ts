@@ -17,7 +17,7 @@ const fonts: ThemeOverride["fonts"] = {
 // 1.250 Major Third Type Scale
 const fontSizes: ThemeOverride["fontSizes"] = {
   xs: `0.64rem`,
-  sm: `0.8rem`,
+  sm: `0.875rem`, // 14px
   md: `1rem`,
   lg: `1.125rem`,
   xl: `1.563rem`, // h4
