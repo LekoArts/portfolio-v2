@@ -1,7 +1,19 @@
 import * as React from "react"
 import { useMultiStyleConfig, Box, Container } from "@chakra-ui/react"
+import { BackgroundProps } from "@chakra-ui/system"
 
-const FullWidthContainer = ({ variant = undefined, bg = undefined, children, ...rest }) => {
+interface IFullWidthContainerProps {
+  variant?: "default" | "light" | "dark" | "navigation" | undefined
+  bg?: BackgroundProps["bg"]
+  [key: string]: unknown
+}
+
+const FullWidthContainer: React.FC<IFullWidthContainerProps> = ({
+  variant = undefined,
+  bg = undefined,
+  children,
+  ...rest
+}) => {
   const styles = useMultiStyleConfig(`FullWidthContainer`, { variant })
 
   return (

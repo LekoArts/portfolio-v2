@@ -23,7 +23,7 @@ const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to con
         top: `10px`,
         left: `10px`,
         background,
-        zIndex: 10,
+        zIndex: `skipLink`,
         width: `auto`,
         height: `auto`,
       }}

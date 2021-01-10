@@ -1,41 +1,69 @@
 import * as React from "react"
-import { PageProps } from "gatsby"
-import { Heading, useColorMode, Button, Container, useBreakpointValue } from "@chakra-ui/react"
-import Prose from "../components/typography/prose"
+import { PageProps, graphql } from "gatsby"
+import { Container, VStack, Text, Badge } from "@chakra-ui/react"
 import Layout from "../components/blocks/layout"
-import { SkipNavContent } from "../components/a11y/skip-nav"
-// @ts-ignore
-import MarkdownSample from "../MarkdownSample.mdx"
 import FullWidthContainer from "../components/blocks/full-width-container"
+import { SkipNavContent } from "../components/a11y/skip-nav"
+import Heading from "../components/heading"
 
-function Toggle() {
-  const { colorMode, toggleColorMode } = useColorMode()
-  return (
-    <header>
-      <Button onClick={toggleColorMode}>Toggle {colorMode === `light` ? `Dark` : `Light`}</Button>
-    </header>
-  )
+type DataProps = {
+  posts: {
+    nodes: {
+      title: string
+      description: string
+      slug: string
+    }[]
+  }
 }
 
-const Index: React.FC<PageProps> = () => {
-  const variant = useBreakpointValue([`sm`, `default`, `default`, `lg`, `xl`])
+const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
+  const [firstPost, ...rest] = data.posts.nodes
+  const otherPosts = [...rest]
 
   return (
     <Layout>
-      <FullWidthContainer variant="light">test123</FullWidthContainer>
-      <Container>
-        <Toggle />
-        <Heading as="h1" variant="h1">
-          Test
-        </Heading>
-        <SkipNavContent>
-          <Prose variant={variant}>
-            <MarkdownSample />
-          </Prose>
-        </SkipNavContent>
-      </Container>
+      <SkipNavContent>
+        <Container>
+          <VStack spacing="5" py={[20, 24, null, 28, 32]}>
+            <Text variant="heading" textStyle="h1">
+              Hi, I’m Lennart!
+            </Text>
+            <Text variant="prominent" maxWidth="45ch" textAlign="center">
+              <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
+              I’m passionate about working on open source products & building thriving communities around them.
+            </Text>
+            <Text variant="prominent" maxWidth="40ch" textAlign="center">
+              I’m currently working remotely at <a href="https://www.gatsbyjs.com">Gatsby</a> on the open source
+              project.
+            </Text>
+          </VStack>
+        </Container>
+        <FullWidthContainer variant="light">
+          <VStack alignItems="flex-start">
+            <VStack alignItems="flex-start">
+              <Badge variant="light">Latest Post</Badge>
+              <Heading as="h2">{firstPost.title}</Heading>
+              <Text>{firstPost.description}</Text>
+              <div>{firstPost.slug}</div>
+            </VStack>
+            <div>test123</div>
+          </VStack>
+        </FullWidthContainer>
+      </SkipNavContent>
     </Layout>
   )
 }
 
 export default Index
+
+export const query = graphql`
+  {
+    posts: allPost(sort: { fields: date, order: ASC }, limit: 4) {
+      nodes {
+        title
+        description
+        slug
+      }
+    }
+  }
+`

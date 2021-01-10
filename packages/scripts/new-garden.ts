@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 import { prompt } from "enquirer"
 import slugify from "@sindresorhus/slugify"
 import fs from "fs-extra"

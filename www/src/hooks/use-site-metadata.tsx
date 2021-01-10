@@ -4,6 +4,20 @@ type Props = {
   site: {
     siteMetadata: {
       siteTitle: string
+      primaryNavigation: {
+        name: string
+        link: string
+      }[]
+      footerNavigation: {
+        heading: {
+          name: string
+          link: string | null
+        }
+        items: {
+          name: string
+          link: string
+        }[]
+      }[]
     }
   }
 }
@@ -14,6 +28,20 @@ const useSiteMetadata = () => {
       site {
         siteMetadata {
           siteTitle
+          primaryNavigation {
+            name
+            link
+          }
+          footerNavigation {
+            heading {
+              name
+              link
+            }
+            items {
+              name
+              link
+            }
+          }
         }
       }
     }

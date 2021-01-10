@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }, themeOptions): any => {
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): any => {
   const { createTypes, createFieldExtension } = actions
 
   const getFieldValue = (fieldName, source) => get(source, fieldName)

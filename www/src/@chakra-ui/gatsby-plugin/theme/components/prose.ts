@@ -1,7 +1,7 @@
 import { mode } from "@chakra-ui/theme-tools"
 import { round, rem, em } from "../custom/utils"
 
-const proseStyles = {
+const Prose = {
   baseStyle: (props) => ({
     color: mode(`gray.700`, `gray.300`)(props),
     a: {
@@ -50,7 +50,7 @@ const proseStyles = {
       left: em(4, 16),
     },
     hr: {
-      borderColor: mode(`gray.200`, `gray.600`)(props),
+      borderColor: mode(`blueGray.200`, `blueGray.600`)(props),
       borderTopWidth: 1,
       marginTop: em(48, 16),
       marginBottom: em(48, 16),
@@ -74,8 +74,10 @@ const proseStyles = {
     },
     h1: {
       color: mode(`gray.900`, `gray.100`)(props),
-      fontWeight: `800`,
-      fontSize: em(36, 16),
+      fontWeight: `700`,
+      fontFamily: `heading`,
+      letterSpacing: `wide`,
+      fontSize: em(40, 16), // Changed from 40
       marginTop: `0`,
       marginBottom: em(32, 36),
       lineHeight: round(40 / 36),
@@ -83,7 +85,8 @@ const proseStyles = {
     h2: {
       color: mode(`gray.900`, `gray.100`)(props),
       fontWeight: `700`,
-      fontSize: em(24, 16),
+      fontFamily: `heading`,
+      fontSize: em(28, 16), // Changed from 24
       marginTop: em(48, 24),
       marginBottom: em(24, 24),
       lineHeight: round(32 / 24),
@@ -91,7 +94,8 @@ const proseStyles = {
     h3: {
       color: mode(`gray.900`, `gray.100`)(props),
       fontWeight: `600`,
-      fontSize: em(20, 16),
+      fontFamily: `heading`,
+      fontSize: em(24, 16), // Changed from 20
       marginTop: em(32, 20),
       marginBottom: em(12, 20),
       lineHeight: round(32 / 20),
@@ -99,6 +103,7 @@ const proseStyles = {
     h4: {
       color: mode(`gray.900`, `gray.100`)(props),
       fontWeight: `600`,
+      fontFamily: `heading`,
       marginTop: em(24, 16),
       marginBottom: em(8, 16),
       lineHeight: round(24 / 16),
@@ -113,12 +118,11 @@ const proseStyles = {
       color: mode(`gray.900`, `gray.100`)(props),
       fontWeight: `600`,
       fontSize: em(14, 16),
-    },
-    "code::before": {
-      content: `"\`"`,
-    },
-    "code::after": {
-      content: `"\`"`,
+      fontFamily: `mono`,
+      bg: mode(`brand.primaryAlpha`, `brand.dark.primaryAlpha`)(props),
+      px: `2`,
+      py: `1`,
+      borderRadius: `base`,
     },
     "a code": {
       color: mode(`gray.900`, `gray.100`)(props),
@@ -289,25 +293,25 @@ const proseStyles = {
         paddingLeft: em(20, 18),
       },
       h1: {
-        fontSize: em(30, 14),
+        fontSize: em(34, 14), // Changed from 30
         marginTop: `0`,
         marginBottom: em(24, 30),
         lineHeight: round(36 / 30),
       },
       h2: {
-        fontSize: em(20, 14),
+        fontSize: em(24, 14), // Changed from 20
         marginTop: em(32, 20),
         marginBottom: em(16, 20),
         lineHeight: round(28 / 20),
       },
       h3: {
-        fontSize: em(18, 14),
+        fontSize: em(21, 14), // Changed from 21
         marginTop: em(28, 18),
         marginBottom: em(8, 18),
         lineHeight: round(28 / 18),
       },
       h4: {
-        marginTop: em(20, 14),
+        marginTop: em(26, 14),
         marginBottom: em(8, 14),
         lineHeight: round(20 / 14),
       },
@@ -456,19 +460,19 @@ const proseStyles = {
         paddingLeft: em(24, 24),
       },
       h1: {
-        fontSize: em(48, 18),
+        fontSize: em(54, 18), // Changed from 48
         marginTop: `0`,
         marginBottom: em(40, 48),
         lineHeight: round(48 / 48),
       },
       h2: {
-        fontSize: em(30, 18),
+        fontSize: em(36, 18), // Changed from 30
         marginTop: em(56, 30),
         marginBottom: em(32, 30),
         lineHeight: round(40 / 30),
       },
       h3: {
-        fontSize: em(24, 18),
+        fontSize: em(28, 18), // Changed from 24
         marginTop: em(40, 24),
         marginBottom: em(16, 24),
         lineHeight: round(36 / 24),
@@ -623,19 +627,19 @@ const proseStyles = {
         paddingLeft: em(32, 30),
       },
       h1: {
-        fontSize: em(56, 20),
+        fontSize: em(64, 20), // Changed from 56
         marginTop: `0`,
         marginBottom: em(48, 56),
         lineHeight: round(56 / 56),
       },
       h2: {
-        fontSize: em(36, 20),
+        fontSize: em(42, 20), // Changed from 36
         marginTop: em(56, 36),
         marginBottom: em(32, 36),
         lineHeight: round(40 / 36),
       },
       h3: {
-        fontSize: em(30, 20),
+        fontSize: em(34, 20), // Changed from 30
         marginTop: em(48, 30),
         marginBottom: em(20, 30),
         lineHeight: round(40 / 30),
@@ -780,4 +784,4 @@ const proseStyles = {
   },
 }
 
-export default proseStyles
+export default Prose
