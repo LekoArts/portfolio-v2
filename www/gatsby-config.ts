@@ -114,6 +114,7 @@ const gatsbyConfig: GatsbyConfig & { flags: Record<string, boolean> } = {
   plugins: [
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-omni-font-loader`,
       options: {

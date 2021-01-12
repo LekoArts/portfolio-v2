@@ -1,5 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql, Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 import { Container, VStack, Stack, Text, Badge, Box, Flex, Grid } from "@chakra-ui/react"
 import { shuffle } from "utils"
 import Layout from "../components/blocks/layout"
@@ -87,10 +88,10 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       height={[`150px`, null, null, `200px`, `250px`]}
                       boxShadow="lg"
                       whileHover={{
-                        scale: 1.025,
+                        scale: 1.05,
                         boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)`,
                       }}
-                      whileTap={{ scale: 0.975 }}
+                      whileTap={{ scale: 0.95 }}
                       display="flex"
                       alignItems="flex-end"
                       color="white"
@@ -101,6 +102,34 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     </MotionBox>
                   </Link>
                 ))}
+              </Grid>
+            </Stack>
+            <Stack direction="column" width="100%" spacing={6}>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Badge variant="light">Art</Badge>
+                <SubtleButton to="/art">See all art</SubtleButton>
+              </Flex>
+              <Grid gridTemplateColumns="repeat(2, 1fr)" gap={[4, null, 8]}>
+                <StaticImage
+                  src="../images/pages-index-photography-preview.jpg"
+                  alt=""
+                  layout="constrained"
+                  quality={90}
+                  formats={[`auto`, `webp`, `avif`]}
+                  placeholder="blurred"
+                  width={500}
+                  aspectRatio={16 / 9}
+                />
+                <StaticImage
+                  src="../images/pages-index-3d-preview.jpg"
+                  alt=""
+                  layout="constrained"
+                  quality={90}
+                  formats={[`auto`, `webp`, `avif`]}
+                  placeholder="blurred"
+                  width={500}
+                  aspectRatio={16 / 9}
+                />
               </Grid>
             </Stack>
           </VStack>
