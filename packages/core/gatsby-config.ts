@@ -24,6 +24,18 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
           path: options.gardenSource,
         },
       },
+      {
+        resolve: `gatsby-source-graphql`,
+        options: {
+          typeName: `GitHub`,
+          fieldName: `github`,
+          url: `https://api.github.com/graphql`,
+          headers: {
+            Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+          },
+          fetchOptions: {},
+        },
+      },
       mdx && {
         resolve: `gatsby-plugin-mdx`,
         options: {

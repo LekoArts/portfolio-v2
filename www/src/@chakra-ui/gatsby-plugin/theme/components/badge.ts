@@ -23,6 +23,14 @@ const Badge = {
       py: `4px`,
       borderRadius: `xl`,
     }),
+    dark: (props) => ({
+      ...baseStyles,
+      bg: mode(`blueGray.50`, `blueGray.800`)(props),
+      color: mode(`blueGray.600`, `blueGray.400`)(props),
+      px: `1rem`,
+      py: `4px`,
+      borderRadius: `xl`,
+    }),
   },
 }
 

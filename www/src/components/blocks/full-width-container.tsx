@@ -1,8 +1,8 @@
 import * as React from "react"
-import { useMultiStyleConfig, Box, Container } from "@chakra-ui/react"
+import { useMultiStyleConfig, Box, Container, BoxProps } from "@chakra-ui/react"
 import { BackgroundProps } from "@chakra-ui/system"
 
-interface IFullWidthContainerProps {
+interface IFullWidthContainerProps extends BoxProps {
   variant?: "default" | "light" | "dark" | "navigation" | undefined
   bg?: BackgroundProps["bg"]
   [key: string]: unknown

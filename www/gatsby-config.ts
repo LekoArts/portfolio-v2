@@ -1,6 +1,8 @@
 import { GatsbyConfig } from "gatsby"
 
-const gatsbyConfig: GatsbyConfig & { flags: Record<string, boolean> } = {
+require(`dotenv`).config()
+
+const gatsbyConfig: GatsbyConfig = {
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,
     primaryNavigation: [

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-core",
-  "description": "Powers the GraphQL interface creation and sourcing of files",
+  "description": "Powers the GraphQL interface creation and sourcing of data",
   "private": true,
   "version": "0.0.1",
   "license": "GPLv3",
@@ -10,11 +10,12 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "gatsby-plugin-mdx": "^1.9.0-next.0",
+    "gatsby-plugin-mdx": "^1.9.0-next.1",
     "gatsby-plugin-sharp": "2.13.0-next.1",
-    "gatsby-remark-images": "^3.10.0-next.0",
+    "gatsby-remark-images": "^3.10.0-next.1",
     "gatsby-source-filesystem": "^2.10.0-next.1",
-    "gatsby-transformer-sharp": "^2.11.0-next.1",
+    "gatsby-source-graphql": "^2.13.0-next.0",
+    "gatsby-transformer-sharp": "2.11.0-next.1",
     "lodash.get": "^4.4.2",
     "lodash.kebabcase": "^4.1.1",
     "prando": "^5.1.2"
