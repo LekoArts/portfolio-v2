@@ -3,7 +3,7 @@ import { IconButton, useColorMode, HStack } from "@chakra-ui/react"
 import { FaMoon as Moon } from "react-icons/fa"
 import { MdWbSunny as Sun } from "react-icons/md"
 import Link from "./link"
-import useSiteMetadata from "../hooks/use-site-metadata"
+import usePrimaryNavigation from "../hooks/use-primary-navigation"
 
 const Toggle: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -20,8 +20,11 @@ const Toggle: React.FC = () => {
   )
 }
 
+/**
+ * Navigation component containing the primary links + Darkmode toggle
+ */
 const Navigation: React.FC = () => {
-  const { primaryNavigation } = useSiteMetadata()
+  const primaryNavigation = usePrimaryNavigation()
 
   return (
     <HStack spacing="4">
@@ -29,7 +32,7 @@ const Navigation: React.FC = () => {
         <HStack as="ul" listStyleType="none" spacing="4">
           {primaryNavigation.map((item) => (
             <li key={item.link}>
-              <Link to={item.link} fontSize={[`md`, null, null, `lg`]} p="2">
+              <Link to={item.link} fontSize={[`md`, null, null, `lg`]} p="2" activeClassName="active">
                 {item.name}
               </Link>
             </li>

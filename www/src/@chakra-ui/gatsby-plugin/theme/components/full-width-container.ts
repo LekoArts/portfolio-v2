@@ -31,10 +31,10 @@ const FullWidthContainer = {
     }),
     dark: (props) => ({
       outer: {
-        bg: mode(`blueGray.700`, `blueGray.800`)(props),
+        bg: mode(`blueGray.700`, `blueGray.950`)(props),
       },
       inner: {
-        bg: mode(`blueGray.700`, `blueGray.800`)(props),
+        bg: mode(`blueGray.700`, `blueGray.950`)(props),
         color: `blueGray.300`,
       },
     }),
@@ -44,8 +44,17 @@ const FullWidthContainer = {
         backdropFilter: `blur(8px)`,
         position: `fixed`,
         display: `flex`,
-        alignItems: `center`,
         height: `navigationHeight`,
+        zIndex: `sticky`,
+      },
+    }),
+    navigationWithSub: (props) => ({
+      outer: {
+        bg: mode(`brand.bgAlpha`, `brand.dark.bgAlpha`)(props),
+        backdropFilter: `blur(8px)`,
+        position: `fixed`,
+        display: `flex`,
+        height: `navigationWithSubHeight`,
         zIndex: `sticky`,
       },
     }),

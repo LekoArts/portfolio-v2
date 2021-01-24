@@ -7,7 +7,7 @@ import slugify from "@sindresorhus/slugify"
 import fs from "fs-extra"
 
 const currentDate = new Date().toISOString().split(`T`)[0]
-const iconChoices = [`general`, `cli`, `gatsby`, `javascript`, `react`] as const
+const iconChoices = [`general`, `cli`, `gatsby`, `javascript`, `react`, `typescript`] as const
 type Icons = typeof iconChoices[number]
 
 async function run() {
@@ -45,6 +45,7 @@ async function run() {
         { name: `CLI`, value: `cli` },
         { name: `Gatsby`, value: `gatsby` },
         { name: `JavaScript`, value: `javascript` },
+        { name: `TypeScript`, value: `typescript` },
         { name: `React`, value: `react` },
       ],
       // @ts-ignore
@@ -75,6 +76,7 @@ async function run() {
   const frontmatter = `---
 title: "${res.title}"
 date: ${res.date}
+lastUpdated: ${res.date}
 icon: "${res.icon}"
 tags:
 ${res.tags.map((t) => `  - ${t}`).join(`

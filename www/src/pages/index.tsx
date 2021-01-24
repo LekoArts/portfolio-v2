@@ -99,7 +99,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
     <Layout>
       <SkipNavContent>
         <Container>
-          <VStack spacing="5" py={[20, 24, null, 36, 40]}>
+          <VStack spacing="5" py={[20, 24, null, 40, 48]}>
             <Heading as="h1">Hi, I’m Lennart!</Heading>
             <Text variant="prominent" maxWidth="45ch" textAlign="center">
               <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
@@ -112,7 +112,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
           </VStack>
         </Container>
         <FullWidthContainer variant="light">
-          <VStack alignItems="flex-start" spacing={24} py={[20, 24, null, 32, 36]}>
+          <VStack alignItems="flex-start" spacing={24} py={[16, 24, null, 36, 40]}>
             <VStack alignItems="flex-start" spacing={[6, 8]}>
               <Badge variant="light">Latest Post</Badge>
               <Box>
@@ -217,7 +217,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
           </VStack>
         </FullWidthContainer>
         <Container>
-          <Flex alignItems="center" flexDirection="column" py={[20, 24, null, 36, 40]}>
+          <Flex alignItems="center" flexDirection="column" py={[20, 24, null, 40, 48]}>
             <Heading as="h2">Open Source</Heading>
             <Text variant="prominent" maxWidth="40ch" textAlign="center">
               Working in the open, interacting with the community & building projects that are accessible to everyone

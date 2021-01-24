@@ -1,4 +1,8 @@
-import kebabCase from "lodash.kebabcase"
+import sindresorhusSlugify, { Options } from "@sindresorhus/slugify"
+
+const slugifyOptions: Options = {
+  decamelize: false,
+}
 
 /**
  * Uses currying. When providing fieldName as an argument a function will be returned that runs with this fieldName
@@ -23,9 +27,13 @@ export const mdxResolverPassthrough = (fieldName: string) => async (source, args
  * @param prefix
  * @returns Slugified string
  */
-export const slugify = (source: { slug: string | null; title: string }, prefix = ``): string => {
-  const slug = source.slug ? source.slug : kebabCase(source.title)
-  const p = kebabCase(prefix)
+export const slugify = (source: { slug?: string; title?: string }, prefix = ``): string => {
+  if (!source.title) {
+    return `/${sindresorhusSlugify(prefix, slugifyOptions)}`
+  }
+
+  const slug = source.slug ? source.slug : sindresorhusSlugify(source.title, slugifyOptions)
+  const p = sindresorhusSlugify(prefix, slugifyOptions)
 
   return `/${p}/${slug}`.replace(/\/\/+/g, `/`)
 }

@@ -3,6 +3,9 @@ import { Link } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
 import { Button } from "@chakra-ui/react"
 
+/**
+ * Primary buttons for important CTA
+ */
 const PrimaryButton: React.FC<{ to: string; isExternal?: boolean }> = ({ children, to, isExternal = false }) => (
   <Button
     as={isExternal ? `a` : Link}
@@ -31,6 +34,9 @@ const PrimaryButton: React.FC<{ to: string; isExternal?: boolean }> = ({ childre
   </Button>
 )
 
+/**
+ * Secondary button
+ */
 const SubtleButton: React.FC<{ to: string; isExternal?: boolean }> = ({ children, to, isExternal = false }) => (
   <Button
     as={isExternal ? `a` : Link}

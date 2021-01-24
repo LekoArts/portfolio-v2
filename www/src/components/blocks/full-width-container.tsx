@@ -3,7 +3,7 @@ import { useMultiStyleConfig, Box, Container, BoxProps } from "@chakra-ui/react"
 import { BackgroundProps } from "@chakra-ui/system"
 
 interface IFullWidthContainerProps extends BoxProps {
-  variant?: "default" | "light" | "dark" | "navigation" | undefined
+  variant?: "default" | "light" | "dark" | "navigation" | "navigationWithSub" | undefined
   bg?: BackgroundProps["bg"]
   [key: string]: unknown
 }

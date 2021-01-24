@@ -1,0 +1,22 @@
+# 2021 portfolio v2 redirects. Switched from two languages to english only, changed blog paths from /blog/<slug> to /<category>/<slug>
+# Added also a /garden for smaller entries, switched /projects to /art
+
+# German
+- fromPath: /projects
+  toPath: /art
+- fromPath: /blog
+  toPath: /writing
+- fromPath: /tags/gatsby
+  toPath: /gatsby
+
+# English
+- fromPath: /en
+  toPath: /
+- fromPath: /en/projects
+  toPath: /art
+- fromPath: /en/blog
+  toPath: /writing
+- fromPath: /en/contact
+  toPath: /contact
+- fromPath: /en/tags/gatsby
+  toPath: /gatsby

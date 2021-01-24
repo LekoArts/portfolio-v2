@@ -8,7 +8,7 @@ import { SkipNavContent } from "../components/a11y/skip-nav"
 import MarkdownSample from "../MarkdownSample.mdx"
 
 const Index: React.FC<PageProps> = () => {
-  const variant = useBreakpointValue([`sm`, `default`, `default`, `lg`, `xl`])
+  const variant = useBreakpointValue([`sm`, `default`, `default`, `lg`, `xl`]) as "sm" | "default" | "lg" | "xl"
 
   return (
     <Layout>

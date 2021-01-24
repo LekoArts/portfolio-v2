@@ -6,9 +6,6 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
   const { mdx = true } = themeOptions
 
   return {
-    siteMetadata: {
-      anotherText: `foobar`,
-    },
     plugins: [
       {
         resolve: `gatsby-source-filesystem`,
@@ -22,6 +19,13 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
         options: {
           name: options.gardenSource,
           path: options.gardenSource,
+        },
+      },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: options.dataSource,
+          path: options.dataSource,
         },
       },
       {
@@ -64,6 +68,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
         },
       },
       `gatsby-transformer-sharp`,
+      `gatsby-transformer-yaml`,
       `gatsby-plugin-sharp`,
     ],
   }

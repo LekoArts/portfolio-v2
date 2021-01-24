@@ -50,6 +50,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       image: File @fileByRelativePath
       category: Category! @link(by: "name")
       date: Date! @dateformat
+      lastUpdated: Date! @dateformat
       description: String
       published: Boolean!
       subtitle: String
@@ -66,6 +67,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       image: File @fileByRelativePath
       category: Category! @link(by: "name")
       date: Date! @dateformat
+      lastUpdated: Date! @dateformat
       description: String
       published: Boolean!
       subtitle: String
@@ -74,7 +76,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     }
 
     type Category implements Node {
-      name: String
+      name: String!
+      slug: String! @slugify(fieldName: "name")
       posts: [Post] @link(by: "category.name", from: "name")
     }
 
@@ -86,6 +89,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       html: String
       timeToRead: Int
       date: Date! @dateformat
+      lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
@@ -98,6 +102,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       html: String! @mdxpassthrough(fieldName: "html")
       timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
       date: Date! @dateformat
+      lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
@@ -131,21 +136,24 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
 type BlogNode = {
   frontmatter: {
     slug?: string
-    title: string
-    date: string
-    category: string
     image: string
+    category: string
+    date: string
+    lastUpdated?: string
     description: string
-    type: "prose" | "tutorial"
     published: boolean
+    subtitle?: string
+    title: string
+    type: "prose" | "tutorial"
   }
 }
 
 type GardenNode = {
   frontmatter: {
     slug?: string
-    title: string
     date: string
+    lastUpdated?: string
+    title: string
     tags: string[]
     icon: string
   }
@@ -172,7 +180,9 @@ export const onCreateNode = (
     const fieldData: BlogNode["frontmatter"] = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
+      subtitle: f.subtitle ? f.subtitle : undefined,
       date: f.date,
+      lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,
       category: f.category,
       image: f.image,
       description: f.description,
@@ -219,6 +229,7 @@ export const onCreateNode = (
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       date: f.date,
+      lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,
       icon: f.icon,
       tags: f.tags,
     }

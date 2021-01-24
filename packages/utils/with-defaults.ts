@@ -8,9 +8,11 @@ import { PluginOptions } from "gatsby"
 export const withDefaults = (themeOptions: PluginOptions) => {
   const writingSource = (themeOptions.writingSource as string) || `content/writing`
   const gardenSource = (themeOptions.writingSource as string) || `content/garden`
+  const dataSource = (themeOptions.dataSource as string) || `src/data`
 
   return {
     writingSource,
     gardenSource,
+    dataSource,
   }
 }
