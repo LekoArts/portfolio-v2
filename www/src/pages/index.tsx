@@ -25,6 +25,8 @@ import Spacer from "../components/blocks/spacer"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import Heading from "../components/heading"
 import { PrimaryButton, SubtleButton } from "../components/buttons"
+import space from "../styles/space"
+import { cardVariants } from "../styles/motion"
 
 type RepositoryInfo = {
   stargazerCount: number
@@ -86,6 +88,7 @@ const openSourceRepos = [
 ]
 
 const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
+  const primaryRepoBg = useColorModeValue(`brand.primaryBg`, `brand.dark.primaryBg`)
   const secondaryRepoBg = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const [firstPost, ...rest] = data.posts.nodes
   const otherPosts = [...rest]
@@ -98,8 +101,8 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
   return (
     <Layout>
       <SkipNavContent>
-        <Container>
-          <VStack spacing="5" py={[20, 24, null, 40, 48]}>
+        <FullWidthContainer variant="hero">
+          <VStack spacing="5" py={space.paddingLarge}>
             <Heading as="h1">Hi, I’m Lennart!</Heading>
             <Text variant="prominent" maxWidth="45ch" textAlign="center">
               <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
@@ -110,9 +113,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               project.
             </Text>
           </VStack>
-        </Container>
+        </FullWidthContainer>
         <FullWidthContainer variant="light">
-          <VStack alignItems="flex-start" spacing={24} py={[16, 24, null, 36, 40]}>
+          <VStack alignItems="flex-start" spacing={24} py={space.paddingMedium}>
             <VStack alignItems="flex-start" spacing={[6, 8]}>
               <Badge variant="light">Latest Post</Badge>
               <Box>
@@ -130,16 +133,14 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 {otherPosts.map((item, index) => (
                   <Link to={item.slug} key={item.slug}>
                     <MotionBox
+                      variants={cardVariants}
+                      initial="beforeHover"
+                      whileHover="onHover"
                       bgGradient={gradients[index]}
                       p={4}
                       borderRadius="lg"
                       height={[`150px`, null, null, `200px`, `250px`]}
                       boxShadow="lg"
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)`,
-                      }}
-                      whileTap={{ scale: 0.95 }}
                       display="flex"
                       alignItems="flex-end"
                       color="white"
@@ -160,11 +161,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               <Grid gridTemplateColumns={[`repeat(1, 1fr)`, null, `repeat(2, 1fr)`]} gap={[4, null, 8]}>
                 <Link to="/art/photography">
                   <MotionBox
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)`,
-                    }}
-                    whileTap={{ scale: 0.95 }}
+                    variants={cardVariants}
+                    initial="beforeHover"
+                    whileHover="onHover"
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
                       boxShadow: `lg`,
@@ -187,11 +186,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </Link>
                 <Link to="/art/3d">
                   <MotionBox
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)`,
-                    }}
-                    whileTap={{ scale: 0.95 }}
+                    variants={cardVariants}
+                    initial="beforeHover"
+                    whileHover="onHover"
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
                       boxShadow: `lg`,
@@ -217,7 +214,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
           </VStack>
         </FullWidthContainer>
         <Container>
-          <Flex alignItems="center" flexDirection="column" py={[20, 24, null, 40, 48]}>
+          <Flex alignItems="center" flexDirection="column" py={space.paddingLarge}>
             <Heading as="h2">Open Source</Heading>
             <Text variant="prominent" maxWidth="40ch" textAlign="center">
               Working in the open, interacting with the community & building projects that are accessible to everyone
@@ -232,7 +229,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`1fr`, null, null, `2fr 1fr`]} gap={6}>
-                <Box bg="brand.primary" color="#e7f1ff" p={6} borderRadius="lg">
+                <Box bg={primaryRepoBg} color="#e7f1ff" p={6} borderRadius="lg">
                   <Flex flexDirection="row" justifyContent="space-between" mb={6}>
                     <ChakraLink
                       fontSize={[`lg`, null, null, null, `21px`]}

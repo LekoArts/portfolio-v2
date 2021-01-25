@@ -15,7 +15,7 @@ const Prose = {
     },
     em: {
       fontWeight: `500`,
-      color: mode(`brand.primary`, `brand.dark.primary`)(props),
+      color: mode(`brand.textEmphasized`, `brand.dark.textEmphasized`)(props),
     },
     "figure img, img": {
       borderRadius: `lg`,

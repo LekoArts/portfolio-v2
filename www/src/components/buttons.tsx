@@ -12,7 +12,7 @@ const PrimaryButton: React.FC<{ to: string; isExternal?: boolean }> = ({ childre
     // @ts-ignore
     to={isExternal ? undefined : to}
     href={isExternal ? to : undefined}
-    colorScheme="blue"
+    variant="primary"
     rightIcon={<BsArrowRight />}
     sx={{
       span: {
