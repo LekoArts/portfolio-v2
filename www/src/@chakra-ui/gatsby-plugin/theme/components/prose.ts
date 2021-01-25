@@ -77,7 +77,7 @@ const Prose = {
       fontWeight: `700`,
       fontFamily: `heading`,
       letterSpacing: `wide`,
-      fontSize: em(40, 16), // Changed from 40
+      fontSize: em(40, 16), // Changed from 36
       marginTop: `0`,
       marginBottom: em(32, 36),
       lineHeight: round(40 / 36),
@@ -305,7 +305,7 @@ const Prose = {
         lineHeight: round(28 / 20),
       },
       h3: {
-        fontSize: em(21, 14), // Changed from 21
+        fontSize: em(21, 14), // Changed from 18
         marginTop: em(28, 18),
         marginBottom: em(8, 18),
         lineHeight: round(28 / 18),
