@@ -10,3 +10,10 @@ export const cardVariants = {
     },
   },
 }
+
+export const prefersReducedMotion = {
+  cardVariants: {
+    beforeHover: {},
+    onHover: {},
+  },
+}

@@ -1,10 +1,9 @@
 import * as React from "react"
-import { PageProps, graphql, Link } from "gatsby"
+import { PageProps, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import { FaStar } from "react-icons/fa"
 import {
   Container,
-  VStack,
   Stack,
   Text,
   Badge,
@@ -17,7 +16,9 @@ import {
   TagLeftIcon,
   TagLabel,
 } from "@chakra-ui/react"
+import { useReducedMotion } from "framer-motion"
 import { shuffle } from "utils"
+import Link from "../components/link"
 import Layout from "../components/blocks/layout"
 import MotionBox from "../components/blocks/motion-box"
 import FullWidthContainer from "../components/blocks/full-width-container"
@@ -26,7 +27,7 @@ import { SkipNavContent } from "../components/a11y/skip-nav"
 import Heading from "../components/heading"
 import { PrimaryButton, SubtleButton } from "../components/buttons"
 import space from "../styles/space"
-import { cardVariants } from "../styles/motion"
+import { cardVariants, prefersReducedMotion } from "../styles/motion"
 
 type RepositoryInfo = {
   stargazerCount: number
@@ -90,6 +91,7 @@ const openSourceRepos = [
 const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
   const primaryRepoBg = useColorModeValue(`brand.primaryBg`, `brand.dark.primaryBg`)
   const secondaryRepoBg = useColorModeValue(`blueGray.100`, `blueGray.800`)
+  const shouldReduceMotion = useReducedMotion()
   const [firstPost, ...rest] = data.posts.nodes
   const otherPosts = [...rest]
   const buildUnix = parseInt(data.site.buildTime, 10)
@@ -102,28 +104,28 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
     <Layout>
       <SkipNavContent>
         <FullWidthContainer variant="hero">
-          <VStack spacing="5" py={space.paddingLarge}>
+          <Stack align="center" spacing="5" py={space.paddingLarge}>
             <Heading as="h1">Hi, I’m Lennart!</Heading>
             <Text variant="prominent" maxWidth="45ch" textAlign="center">
               <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
               I’m passionate about working on open source products & building thriving communities around them.
             </Text>
             <Text variant="prominent" maxWidth="40ch" textAlign="center">
-              I’m currently working remotely at <a href="https://www.gatsbyjs.com">Gatsby</a> on the open source
-              project.
+              I’m currently working remotely at <ChakraLink href="https://www.gatsbyjs.com">Gatsby</ChakraLink> on the
+              open source project.
             </Text>
-          </VStack>
+          </Stack>
         </FullWidthContainer>
         <FullWidthContainer variant="light">
-          <VStack alignItems="flex-start" spacing={24} py={space.paddingMedium}>
-            <VStack alignItems="flex-start" spacing={[6, 8]}>
+          <Stack alignItems="flex-start" spacing={24} py={space.paddingMedium}>
+            <Stack alignItems="flex-start" spacing={[6, 8]}>
               <Badge variant="light">Latest Post</Badge>
               <Box>
                 <Heading as="h2">{firstPost.title}</Heading>
                 <Text variant="lightContainer">{firstPost.description}</Text>
               </Box>
               <PrimaryButton to={firstPost.slug}>Continue Reading</PrimaryButton>
-            </VStack>
+            </Stack>
             <Stack direction="column" width="100%" spacing={6}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Badge variant="light">More Posts</Badge>
@@ -131,9 +133,14 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               </Flex>
               <Grid templateColumns={[`repeat(1, 1fr)`, null, `repeat(3, 1fr)`]} gap={[4, null, 8]}>
                 {otherPosts.map((item, index) => (
-                  <Link to={item.slug} key={item.slug}>
+                  <Link
+                    to={item.slug}
+                    key={item.slug}
+                    borderRadius="lg"
+                    _hover={{ textDecoration: shouldReduceMotion ? `underline` : `none` }}
+                  >
                     <MotionBox
-                      variants={cardVariants}
+                      variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
                       initial="beforeHover"
                       whileHover="onHover"
                       bgGradient={gradients[index]}
@@ -159,9 +166,13 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 <SubtleButton to="/art">See all art</SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`repeat(1, 1fr)`, null, `repeat(2, 1fr)`]} gap={[4, null, 8]}>
-                <Link to="/art/photography">
+                <Link
+                  to="/art/photography"
+                  borderRadius="lg"
+                  _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
+                >
                   <MotionBox
-                    variants={cardVariants}
+                    variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
                     initial="beforeHover"
                     whileHover="onHover"
                     sx={{
@@ -184,9 +195,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     />
                   </MotionBox>
                 </Link>
-                <Link to="/art/3d">
+                <Link to="/art/3d" borderRadius="lg" _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}>
                   <MotionBox
-                    variants={cardVariants}
+                    variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
                     initial="beforeHover"
                     whileHover="onHover"
                     sx={{
@@ -211,7 +222,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </Link>
               </Grid>
             </Stack>
-          </VStack>
+          </Stack>
         </FullWidthContainer>
         <Container>
           <Flex alignItems="center" flexDirection="column" py={space.paddingLarge}>
@@ -278,7 +289,7 @@ export default Index
 
 export const query = graphql`
   {
-    posts: allPost(sort: { fields: date, order: DESC }, limit: 4) {
+    posts: allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC }, limit: 4) {
       nodes {
         title
         description

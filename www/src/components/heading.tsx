@@ -1,12 +1,16 @@
 import * as React from "react"
-import { Heading as ChakraHeading } from "@chakra-ui/react"
+import { Heading as ChakraHeading, HeadingProps as ChakraHeadingProps } from "@chakra-ui/react"
+
+interface HeadingProps extends ChakraHeadingProps {
+  as: "h1" | "h2" | "h3" | "h4"
+}
 
 /**
  * Heading component accepting heading levels
  * Wraps the Heading component from Chakra
  */
-const Heading: React.FC<{ as: "h1" | "h2" | "h3" | "h4" }> = ({ as, children }) => (
-  <ChakraHeading as={as} variant={as}>
+const Heading: React.FC<HeadingProps> = ({ as, children, ...rest }) => (
+  <ChakraHeading as={as} variant={as} {...rest}>
     {children}
   </ChakraHeading>
 )

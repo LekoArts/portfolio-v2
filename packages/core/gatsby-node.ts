@@ -40,6 +40,11 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
   })
 
   createTypes(`
+    enum PostTypeEnum {
+      prose
+      tutorial
+    }
+
     interface Post @nodeInterface {
       id: ID!
       slug: String! @slugify(fieldName: "category")
@@ -55,7 +60,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       published: Boolean!
       subtitle: String
       title: String!
-      type: String!
+      type: PostTypeEnum!
     }
 
     type MdxPost implements Node & Post {
@@ -72,7 +77,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       published: Boolean!
       subtitle: String
       title: String!
-      type: String!
+      type: PostTypeEnum!
     }
 
     type Category implements Node {
@@ -137,7 +142,7 @@ type BlogNode = {
   frontmatter: {
     slug?: string
     image: string
-    category: string
+    category: "React" | "Gatsby" | "JavaScript" | "Design" | "Community"
     date: string
     lastUpdated?: string
     description: string
@@ -195,13 +200,13 @@ export const onCreateNode = (
     createNode({
       id: createNodeId(`writing-category-${c}`),
       name: c,
-      parent: null,
+      parent: node.id, // Needs to be set, otherwise this node will be garbage collected
       children: [],
       internal: {
         type: `Category`,
         contentDigest: createContentDigest(c),
         content: JSON.stringify(c),
-        description: `Category of each Post`,
+        description: `Category that is used inside a Post`,
       },
     })
 

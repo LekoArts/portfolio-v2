@@ -1,31 +1,13 @@
 import * as React from "react"
-import { graphql, useStaticQuery } from "gatsby"
 import { Flex, HStack } from "@chakra-ui/react"
 import Link from "../link"
-
-type CategoryQueryResult = {
-  allCategory: {
-    nodes: {
-      name: string
-      slug: string
-    }[]
-  }
-}
+import useCategories from "../../hooks/use-categories"
 
 const WritingSubNavigation: React.FC = () => {
-  const data = useStaticQuery<CategoryQueryResult>(graphql`
-    {
-      allCategory(sort: { fields: name, order: ASC }) {
-        nodes {
-          name
-          slug
-        }
-      }
-    }
-  `)
+  const categories = useCategories()
 
   return (
-    <Flex alignItems="center" justifyContent="space-between" mt="2">
+    <Flex alignItems="center" mt="2" data-name="subnavigation">
       <HStack as="ul" listStyleType="none" spacing="2" ml="-2">
         <li>
           <Link
@@ -49,7 +31,7 @@ const WritingSubNavigation: React.FC = () => {
             Tutorials
           </Link>
         </li>
-        {data.allCategory.nodes.map((item) => (
+        {categories.map((item) => (
           <li key={item.slug}>
             <Link
               to={item.slug}
@@ -63,7 +45,6 @@ const WritingSubNavigation: React.FC = () => {
           </li>
         ))}
       </HStack>
-      <div>Search</div>
     </Flex>
   )
 }

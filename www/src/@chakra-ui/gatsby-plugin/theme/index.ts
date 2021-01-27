@@ -31,6 +31,7 @@ const theme = extendTheme({
   styles,
   colors,
   sizes,
+  space: sizes,
   fontWeights,
   fonts,
   fontSizes,

@@ -61,8 +61,12 @@ const FullWidthContainer = {
         backdropFilter: `blur(8px)`,
         position: `fixed`,
         display: `flex`,
-        height: `navigationHeight`,
         zIndex: `sticky`,
+      },
+      inner: {
+        header: {
+          color: mode(`black`, `white`)(props),
+        },
       },
     }),
     navigationWithSub: (props) => ({
@@ -71,10 +75,33 @@ const FullWidthContainer = {
         backdropFilter: `blur(8px)`,
         position: `fixed`,
         display: `flex`,
-        height: `navigationWithSubHeight`,
         zIndex: `sticky`,
       },
+      inner: {
+        header: {
+          color: mode(`black`, `white`)(props),
+        },
+      },
     }),
+    fullBleed: {
+      outer: {
+        bg: `transparent`,
+        color: `white`,
+        display: `flex`,
+        zIndex: `sticky`,
+      },
+      inner: {
+        button: {
+          color: `gray.100`,
+          _hover: {
+            color: `white`,
+          },
+        },
+        "[data-name='subnavigation']": {
+          color: `gray.100`,
+        },
+      },
+    },
   },
 }
 
