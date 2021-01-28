@@ -12,6 +12,8 @@
   "scripts": {
     "develop": "yarn workspace www develop",
     "clean": "yarn workspace www clean",
+    "build": "yarn workspace www build",
+    "serve": "yarn workspace www serve",
     "tsc": "tsc",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx,.js",

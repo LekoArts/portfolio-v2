@@ -29,6 +29,8 @@ const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
   const variant = subnavigation ? `navigationWithSub` : `navigation`
   const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
 
+  console.log(location)
+
   return (
     <>
       <FullWidthContainer variant={isCategoryPage ? `fullBleed` : variant} height={height}>

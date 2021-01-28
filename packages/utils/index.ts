@@ -21,6 +21,8 @@ export const mdxResolverPassthrough = (fieldName: string) => async (source, args
   return result
 }
 
+const singleSlashRegex = /\/\/+/g
+
 /**
  * Creates a slug out of incoming source
  * @param source
@@ -29,13 +31,13 @@ export const mdxResolverPassthrough = (fieldName: string) => async (source, args
  */
 export const slugify = (source: { slug?: string; title?: string }, prefix = ``): string => {
   if (!source.title) {
-    return `/${sindresorhusSlugify(prefix, slugifyOptions)}`
+    return `/${sindresorhusSlugify(prefix, slugifyOptions)}/`
   }
 
   const slug = source.slug ? source.slug : sindresorhusSlugify(source.title, slugifyOptions)
   const p = sindresorhusSlugify(prefix, slugifyOptions)
 
-  return `/${p}/${slug}`.replace(/\/\/+/g, `/`)
+  return `/${p}/${slug}/`.replace(singleSlashRegex, `/`)
 }
 
 const random = (seed: number): number => {

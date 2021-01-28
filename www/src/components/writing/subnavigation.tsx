@@ -11,7 +11,7 @@ const WritingSubNavigation: React.FC = () => {
       <HStack as="ul" listStyleType="none" spacing="2" ml="-2">
         <li>
           <Link
-            to="/writing"
+            to="/writing/"
             fontSize="md"
             p="2"
             activeClassName="active"
@@ -22,7 +22,7 @@ const WritingSubNavigation: React.FC = () => {
         </li>
         <li>
           <Link
-            to="/tutorials"
+            to="/tutorials/"
             fontSize="md"
             p="2"
             activeClassName="active"

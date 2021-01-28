@@ -33,6 +33,7 @@ const gatsbyConfig: GatsbyConfig = {
         ],
       },
     },
+    `gatsby-plugin-gatsby-cloud`,
   ],
 }
 

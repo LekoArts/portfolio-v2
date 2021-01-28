@@ -1,35 +1,35 @@
 - heading:
     name: Writing
-    link: /writing
+    link: /writing/
   items:
     - name: Digital Garden
-      link: /garden
+      link: /garden/
     - name: Tutorials
-      link: /tutorials
+      link: /tutorials/
     - name: React
-      link: /react
+      link: /react/
     - name: Community
-      link: /community
+      link: /community/
 - heading:
     name: Art
-    link: /art
+    link: /art/
   items:
     - name: UI
-      link: /art/ui
+      link: /art/ui/
     - name: 3D
-      link: /art/3d
+      link: /art/3d/
     - name: Photography
-      link: /art/photography
+      link: /art/photography/
 - heading:
     name: About
-    link: /about
+    link: /about/
   items:
     - name: Speaking
-      link: /speaking
+      link: /speaking/
     - name: Uses
-      link: /uses
+      link: /uses/
     - name: GitHub
-      link: /github
+      link: /github/
 - heading:
     name: Social
   items:
