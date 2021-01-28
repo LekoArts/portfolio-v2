@@ -21,7 +21,7 @@ const Community: React.FC<PageProps<CommunityProps>> = ({ data: { posts } }) => 
     <CategoryHero
       bgGradient="linear(to-b, red.900, orange.800, yellow.700, green.600, blue.500, purple.400)"
       title="Community"
-      description="description for this category goes here"
+      description="Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal."
       image={<div style={{ height: `250px`, width: `250px`, backgroundColor: `white` }} />}
     />
   </CategoryView>

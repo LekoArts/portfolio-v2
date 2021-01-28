@@ -26,8 +26,8 @@ const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts } }) => 
       title="React"
       description={
         <React.Fragment>
-          <Link href="https://reactjs.org/">React</Link> is a JavaScript library for building user interfaces. I'll
-          write about the ecosystem and its tools, about code patterns, and React in general.
+          <Link href="https://reactjs.org/">React</Link> is a JavaScript library for building user interfaces. I write
+          about the ecosystem and its tools, about code patterns, and React in general.
         </React.Fragment>
       }
       image={<div style={{ height: `250px`, width: `250px`, backgroundColor: `white` }} />}
