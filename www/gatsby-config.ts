@@ -9,6 +9,7 @@ const gatsbyConfig: GatsbyConfig = {
   },
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,
+    siteTitleAlt: `Lennart Jörgens - Software Engineer`,
   },
   plugins: [
     `gatsby-theme-core`,

@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Flex } from "@chakra-ui/react"
 import { useLocation } from "@reach/router"
-import useSiteMetadata from "../../hooks/use-site-metadata"
 import useDistinctCategories from "../../hooks/use-distinct-categories"
+import useSiteMetadata from "../../hooks/use-site-metadata"
 import Link from "../link"
-import Navigation from "../navigation"
+import Navigation from "./navigation"
 import FullWidthContainer from "./full-width-container"
 import Spacer from "./spacer"
 
@@ -28,8 +28,6 @@ const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
   const isCategoryPage = categorySlugs.includes(location.pathname)
   const variant = subnavigation ? `navigationWithSub` : `navigation`
   const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
-
-  console.log(location)
 
   return (
     <>

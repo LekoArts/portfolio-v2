@@ -2,7 +2,7 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import { useReducedMotion } from "framer-motion"
 import { Text, useColorModeValue } from "@chakra-ui/react"
-import { cardVariants, prefersReducedMotion } from "../../styles/motion"
+import { cardVariants, prefersReducedMotion } from "../../constants/motion"
 import MotionBox from "../blocks/motion-box"
 import Link from "../link"
 

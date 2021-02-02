@@ -24,10 +24,10 @@ import MotionBox from "../components/blocks/motion-box"
 import FullWidthContainer from "../components/blocks/full-width-container"
 import Spacer from "../components/blocks/spacer"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import Heading from "../components/heading"
+import Heading from "../components/typography/heading"
 import { PrimaryButton, SubtleButton } from "../components/buttons"
-import space from "../styles/space"
-import { cardVariants, prefersReducedMotion } from "../styles/motion"
+import space from "../constants/space"
+import { cardVariants, prefersReducedMotion } from "../constants/motion"
 
 type RepositoryInfo = {
   stargazerCount: number
@@ -168,6 +168,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               <Grid gridTemplateColumns={[`repeat(1, 1fr)`, null, `repeat(2, 1fr)`]} gap={[4, null, 8]}>
                 <Link
                   to="/art/photography/"
+                  aria-label="View my photography"
                   borderRadius="lg"
                   _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
                 >
@@ -195,7 +196,12 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     />
                   </MotionBox>
                 </Link>
-                <Link to="/art/3d/" borderRadius="lg" _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}>
+                <Link
+                  to="/art/3d/"
+                  aria-label="View my 3D art"
+                  borderRadius="lg"
+                  _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
+                >
                   <MotionBox
                     variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
                     initial="beforeHover"

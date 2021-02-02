@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Box, Container, Flex, Text, Grid } from "@chakra-ui/react"
 import { BackgroundProps } from "@chakra-ui/system"
-import space from "../../styles/space"
-import Heading from "../heading"
+import space from "../../constants/space"
+import Heading from "../typography/heading"
 
 type CategoryHeroProps = {
   bgGradient: BackgroundProps["bgGradient"]
