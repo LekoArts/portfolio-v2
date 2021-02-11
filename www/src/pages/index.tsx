@@ -129,7 +129,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Stack direction="column" width="100%" spacing={6}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Badge variant="light">More Posts</Badge>
-                <SubtleButton to="/writing/">Read all</SubtleButton>
+                <SubtleButton to="/writing">Read all</SubtleButton>
               </Flex>
               <Grid templateColumns={[`repeat(1, 1fr)`, null, `repeat(3, 1fr)`]} gap={[4, null, 8]}>
                 {otherPosts.map((item, index) => (
@@ -163,11 +163,11 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Stack direction="column" width="100%" spacing={6}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Badge variant="light">Art</Badge>
-                <SubtleButton to="/art/">See all art</SubtleButton>
+                <SubtleButton to="/art">See all art</SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`repeat(1, 1fr)`, null, `repeat(2, 1fr)`]} gap={[4, null, 8]}>
                 <Link
-                  to="/art/photography/"
+                  to="/art/photography"
                   aria-label="View my photography"
                   borderRadius="lg"
                   _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
@@ -197,7 +197,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   </MotionBox>
                 </Link>
                 <Link
-                  to="/art/3d/"
+                  to="/art/3d"
                   aria-label="View my 3D art"
                   borderRadius="lg"
                   _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
