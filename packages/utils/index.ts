@@ -31,13 +31,13 @@ const singleSlashRegex = /\/\/+/g
  */
 export const slugify = (source: { slug?: string; title?: string }, prefix = ``): string => {
   if (!source.title) {
-    return `/${sindresorhusSlugify(prefix, slugifyOptions)}/`
+    return `/${sindresorhusSlugify(prefix, slugifyOptions)}`
   }
 
   const slug = source.slug ? source.slug : sindresorhusSlugify(source.title, slugifyOptions)
   const p = sindresorhusSlugify(prefix, slugifyOptions)
 
-  return `/${p}/${slug}/`.replace(singleSlashRegex, `/`)
+  return `/${p}/${slug}`.replace(singleSlashRegex, `/`)
 }
 
 const random = (seed: number): number => {

@@ -3,20 +3,20 @@
 
 # German
 - fromPath: /projects
-  toPath: /art/
+  toPath: /art
 - fromPath: /blog
-  toPath: /writing/
+  toPath: /writing
 - fromPath: /tags/gatsby
-  toPath: /gatsby/
+  toPath: /gatsby
 
 # English
 - fromPath: /en
   toPath: /
 - fromPath: /en/projects
-  toPath: /art/
+  toPath: /art
 - fromPath: /en/blog
-  toPath: /writing/
+  toPath: /writing
 - fromPath: /en/contact
-  toPath: /contact/
+  toPath: /contact
 - fromPath: /en/tags/gatsby
-  toPath: /gatsby/
+  toPath: /gatsby

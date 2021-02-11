@@ -17,7 +17,7 @@ const useDistinctCategories = () => {
 
   const result = data.allCategory.distinct
 
-  return [...result, `/tutorials/`]
+  return [...result, `/tutorials`]
 }
 
 export default useDistinctCategories
