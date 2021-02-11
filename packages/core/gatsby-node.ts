@@ -57,7 +57,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       description: String
-      published: Boolean!
+      published: Boolean
       subtitle: String
       title: String!
       type: PostTypeEnum!
@@ -74,7 +74,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       description: String
-      published: Boolean!
+      published: Boolean
       subtitle: String
       title: String!
       type: PostTypeEnum!
@@ -84,6 +84,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       name: String!
       slug: String! @slugify(fieldName: "name")
       posts: [Post] @link(by: "category.name", from: "name")
+      description: String!
+      gradient: String!
+      image: File @fileByRelativePath
     }
 
     interface Garden @nodeInterface {
@@ -142,7 +145,7 @@ type BlogNode = {
   frontmatter: {
     slug?: string
     image: string
-    category: "React" | "Gatsby" | "JavaScript" | "Design" | "Community"
+    category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
     date: string
     lastUpdated?: string
     description: string
@@ -191,24 +194,9 @@ export const onCreateNode = (
       category: f.category,
       image: f.image,
       description: f.description,
-      published: f.published,
+      published: f.published ?? true,
       type: f.type,
     }
-
-    const c = fieldData.category
-
-    createNode({
-      id: createNodeId(`writing-category-${c}`),
-      name: c,
-      parent: node.id, // Needs to be set, otherwise this node will be garbage collected
-      children: [],
-      internal: {
-        type: `Category`,
-        contentDigest: createContentDigest(c),
-        content: JSON.stringify(c),
-        description: `Category that is used inside a Post`,
-      },
-    })
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`)
 

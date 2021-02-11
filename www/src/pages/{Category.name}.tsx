@@ -3,7 +3,7 @@ import { PageProps, graphql } from "gatsby"
 import CategoryHero from "../components/writing/category-hero"
 import CategoryView from "../components/writing/category-view"
 
-type JavaScriptProps = {
+type ReactProps = {
   posts: {
     nodes: {
       title: string
@@ -14,25 +14,35 @@ type JavaScriptProps = {
     }[]
     totalCount: number
   }
+  category: {
+    name: string
+    description: string
+    gradient: string
+  }
 }
 
-const JavaScript: React.FC<PageProps<JavaScriptProps>> = ({ data: { posts } }) => (
+const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
     <CategoryHero
-      bgGradient="linear(to-t, yellow.500, yellow.900)"
-      title="JavaScript"
-      description="description for this category goes here"
-      image={<div style={{ height: `250px`, width: `250px`, backgroundColor: `white` }} />}
+      bgGradient={category.gradient}
+      title={category.name}
+      description={category.description}
+      image={<div style={{ height: `200px`, width: `200px`, backgroundColor: `white` }} />}
     />
   </CategoryView>
 )
 
-export default JavaScript
+export default ReactCategory
 
 export const query = graphql`
-  {
+  query($name: String!) {
+    category(name: { eq: $name }) {
+      name
+      description
+      gradient
+    }
     posts: allPost(
-      filter: { published: { eq: true }, category: { name: { eq: "JavaScript" } } }
+      filter: { published: { eq: true }, category: { name: { eq: $name } } }
       sort: { fields: date, order: DESC }
     ) {
       nodes {

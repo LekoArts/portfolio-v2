@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from "gatsby"
 
 type Props = {
-  allFooterNavigationYaml: {
+  allFooterNavigation: {
     nodes: {
       heading: {
         link?: string
@@ -19,7 +19,7 @@ type Props = {
 const useFooterNavigation = () => {
   const data = useStaticQuery<Props>(graphql`
     query {
-      allFooterNavigationYaml {
+      allFooterNavigation {
         nodes {
           heading {
             link
@@ -35,7 +35,7 @@ const useFooterNavigation = () => {
     }
   `)
 
-  return data.allFooterNavigationYaml.nodes
+  return data.allFooterNavigation.nodes
 }
 
 export default useFooterNavigation

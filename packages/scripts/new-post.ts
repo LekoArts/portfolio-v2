@@ -9,7 +9,7 @@ import fs from "fs-extra"
 const currentDate = new Date().toISOString().split(`T`)[0]
 const typeChoices = [`prose`, `tutorial`] as const
 type Types = typeof typeChoices[number]
-const categoryChoices = [`React`, `Gatsby`, `JavaScript`, `Design`, `Community`] as const
+const categoryChoices = [`Community`, `Design`, `Gatsby`, `JavaScript`, `React`] as const
 type Categories = typeof categoryChoices[number]
 
 async function run() {
@@ -91,8 +91,8 @@ lastUpdated: ${res.date}
 description: "${res.description}"
 type: "${res.type}"
 category: "${res.category}"
-published: ${res.published}
 image: ./file-name.jpg
+${!res.published && `published: false`}
 ---`.trim()
 
   console.log(`The file ${filename} will be created with:

@@ -54,6 +54,7 @@ const textStyles: ThemeOverride["textStyles"] = {
     transition: `font-weight .3s ease-in-out`,
     _hover: {
       fontWeight: `semibold`,
+      textDecoration: `none`,
     },
   },
   prominent: {

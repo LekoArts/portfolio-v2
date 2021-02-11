@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from "gatsby"
 
 type Props = {
-  allPrimaryNavigationYaml: {
+  allPrimaryNavigation: {
     nodes: {
       name: string
       link: string
@@ -12,7 +12,7 @@ type Props = {
 const usePrimaryNavigation = () => {
   const data = useStaticQuery<Props>(graphql`
     query {
-      allPrimaryNavigationYaml {
+      allPrimaryNavigation {
         nodes {
           name
           link
@@ -21,7 +21,7 @@ const usePrimaryNavigation = () => {
     }
   `)
 
-  return data.allPrimaryNavigationYaml.nodes
+  return data.allPrimaryNavigation.nodes
 }
 
 export default usePrimaryNavigation

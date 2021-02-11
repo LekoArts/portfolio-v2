@@ -14,7 +14,7 @@ type CategoryHeroProps = {
 const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, description, image = undefined }) => (
   <Box mt="-navigationWithSubHeight" bgGradient={bgGradient} pt="navigationWithSubHeight">
     <Container py={space.paddingSmall}>
-      <Grid templateColumns="auto 250px" gap={12}>
+      <Grid templateColumns="auto 200px" gap={12}>
         <Flex direction="column">
           <Heading as="h1" color="white">
             {title}

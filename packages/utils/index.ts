@@ -1,6 +1,6 @@
 import sindresorhusSlugify, { Options } from "@sindresorhus/slugify"
 
-const slugifyOptions: Options = {
+export const slugifyOptions: Options = {
   decamelize: false,
 }
 
@@ -66,5 +66,7 @@ export const shuffle = <T>(array: T[], seed: number, count = 2): T[] => {
 
   return array.slice(0, count)
 }
+
+export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1)
 
 export { withDefaults } from "./with-defaults"

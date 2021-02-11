@@ -1,5 +1,6 @@
 import { GatsbyConfig, PluginOptions } from "gatsby"
-import { withDefaults } from "utils"
+import camelCase from "lodash.camelcase"
+import { withDefaults, capitalize, slugifyOptions } from "utils"
 
 const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
   const options = withDefaults(themeOptions)
@@ -7,6 +8,13 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
 
   return {
     plugins: [
+      {
+        resolve: `gatsby-plugin-page-creator`,
+        options: {
+          path: `src/pages`,
+          slugify: slugifyOptions,
+        },
+      },
       {
         resolve: `gatsby-source-filesystem`,
         options: {
@@ -68,7 +76,12 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
         },
       },
       `gatsby-transformer-sharp`,
-      `gatsby-transformer-yaml`,
+      {
+        resolve: `gatsby-transformer-yaml`,
+        options: {
+          typeName: ({ node }) => capitalize(camelCase(node.name)),
+        },
+      },
       `gatsby-plugin-sharp`,
     ],
   }

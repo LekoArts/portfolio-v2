@@ -1,0 +1,20 @@
+- name: Community
+  description: Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal.
+  gradient: linear(to-t, green.500, green.900)
+  image: ./category-images/placeholder.jpg
+- name: Design
+  description: description for this category goes here
+  gradient: linear(to-t, indigo.600, indigo.900)
+  image: ./category-images/placeholder.jpg
+- name: Gatsby
+  description: description for this category goes here
+  gradient: linear(to-t, violet.500, violet.900)
+  image: ./category-images/placeholder.jpg
+- name: JavaScript
+  description: description for this category goes here
+  gradient: linear(to-t, yellow.500, yellow.900)
+  image: ./category-images/placeholder.jpg
+- name: React
+  description: React is a JavaScript library for building user interfaces. I write about the ecosystem and its tools, about code patterns, and React in general.
+  gradient: linear(to-t, cyan.400, cyan.900)
+  image: ./category-images/placeholder.jpg

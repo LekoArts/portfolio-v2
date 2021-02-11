@@ -5,20 +5,20 @@
   "version": "0.0.1",
   "license": "GPLv3",
   "peerDependencies": {
-    "gatsby": "^2.27.0-next.0"
+    "gatsby": "^3.0.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "gatsby-plugin-mdx": "^1.10.0-next.0",
-    "gatsby-plugin-sharp": "^2.14.0-next.0",
-    "gatsby-remark-images": "^3.11.0-next.0",
-    "gatsby-source-filesystem": "^2.11.0-next.0",
-    "gatsby-source-graphql": "^2.14.0-next.0",
-    "gatsby-transformer-sharp": "^2.12.0-next.0",
-    "gatsby-transformer-yaml": "^2.11.0-next.0",
+    "gatsby-plugin-mdx": "^2.0.0-next.0",
+    "gatsby-plugin-sharp": "^3.0.0-next.1",
+    "gatsby-remark-images": "^4.0.0-next.0",
+    "gatsby-source-filesystem": "^3.0.0-next.0",
+    "gatsby-source-graphql": "^3.0.0-next.0",
+    "gatsby-transformer-sharp": "^3.0.0-next.0",
+    "gatsby-transformer-yaml": "^3.0.0-next.0",
     "lodash.get": "^4.4.2",
-    "lodash.kebabcase": "^4.1.1",
+    "lodash.camelcase": "^4.3.0",
     "prando": "^5.1.2"
   }
 }
