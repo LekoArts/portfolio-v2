@@ -16,7 +16,7 @@ type Props = {
   }
 }
 
-const useFooterNavigation = () => {
+export const useFooterNavigation = () => {
   const data = useStaticQuery<Props>(graphql`
     query {
       allFooterNavigation {
@@ -37,5 +37,3 @@ const useFooterNavigation = () => {
 
   return data.allFooterNavigation.nodes
 }
-
-export default useFooterNavigation

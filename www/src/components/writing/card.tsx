@@ -3,8 +3,8 @@ import { graphql } from "gatsby"
 import { useReducedMotion } from "framer-motion"
 import { Text, useColorModeValue } from "@chakra-ui/react"
 import { cardVariants, prefersReducedMotion } from "../../constants/motion"
-import MotionBox from "../blocks/motion-box"
-import Link from "../link"
+import { MotionBox } from "../blocks/motion-box"
+import { Link } from "../link"
 
 type CardProps = {
   slug: string
@@ -13,7 +13,7 @@ type CardProps = {
   description: string
 }
 
-const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => {
+export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => {
   const shouldReduceMotion = useReducedMotion()
   const cardBg = useColorModeValue(`white`, `blueGray.800`)
   const headingColor = useColorModeValue(`black`, `white`)
@@ -50,8 +50,6 @@ const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => {
     </MotionBox>
   )
 }
-
-export default Card
 
 export const query = graphql`
   fragment CardPostInformation on Post {

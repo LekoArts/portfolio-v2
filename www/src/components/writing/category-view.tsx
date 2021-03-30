@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Container, Grid } from "@chakra-ui/react"
-import space from "../../constants/space"
+import { space } from "../../constants/space"
 import { SkipNavContent } from "../a11y/skip-nav"
-import Layout from "../blocks/layout"
-import Card from "./card"
-import WritingSubNavigation from "./subnavigation"
+import { Layout } from "../blocks/layout"
+import { Card } from "./card"
+import { WritingSubNavigation } from "./subnavigation"
 
 type CategoryViewProps = {
   posts: {
@@ -15,11 +15,10 @@ type CategoryViewProps = {
       subtitle: string
       description: string
     }[]
-    totalCount: number
   }
 }
 
-const CategoryView: React.FC<CategoryViewProps> = ({ posts, children }) => (
+export const CategoryView: React.FC<CategoryViewProps> = ({ posts, children }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
     <SkipNavContent>
       {children}
@@ -39,5 +38,3 @@ const CategoryView: React.FC<CategoryViewProps> = ({ posts, children }) => (
     </SkipNavContent>
   </Layout>
 )
-
-export default CategoryView

@@ -20,6 +20,4 @@ const ChakraLink = chakra(GatsbyLink, {
 /**
  * ChakraLink with gatsby-link (no external links)
  */
-const Link = (props) => <ChakraLink {...props} />
-
-export default Link
+export const Link = (props) => <ChakraLink {...props} />

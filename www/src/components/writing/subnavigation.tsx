@@ -1,9 +1,9 @@
 import * as React from "react"
 import { Flex, HStack } from "@chakra-ui/react"
-import useCategories from "../../hooks/use-categories"
-import Link from "../link"
+import { useCategories } from "../../hooks/use-categories"
+import { Link } from "../link"
 
-const WritingSubNavigation: React.FC = () => {
+export const WritingSubNavigation: React.FC = () => {
   const categories = useCategories()
 
   return (
@@ -48,5 +48,3 @@ const WritingSubNavigation: React.FC = () => {
     </Flex>
   )
 }
-
-export default WritingSubNavigation

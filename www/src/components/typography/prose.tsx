@@ -9,7 +9,7 @@ interface IProseProps extends BoxProps {
  * Implementation of https://github.com/tailwindlabs/tailwindcss-typography.
  * Use the variant to choose from the different options (sm, default, lg, xl)
  */
-const Prose: React.FC<IProseProps> = ({ variant = `default`, children, ...rest }) => {
+export const Prose: React.FC<IProseProps> = ({ variant = `default`, children, ...rest }) => {
   const styles = useStyleConfig(`Prose`, { variant })
 
   return (
@@ -18,5 +18,3 @@ const Prose: React.FC<IProseProps> = ({ variant = `default`, children, ...rest }
     </Box>
   )
 }
-
-export default Prose

@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Box, Stack, Flex, Link as ExternalLink } from "@chakra-ui/react"
-import useFooterNavigation from "../../hooks/use-footer-navigation"
-import useSiteMetadata from "../../hooks/use-site-metadata"
-import Link from "../link"
-import FullWidthContainer from "./full-width-container"
+import { useFooterNavigation } from "../../hooks/use-footer-navigation"
+import { useSiteMetadata } from "../../hooks/use-site-metadata"
+import { Link } from "../link"
+import { FullWidthContainer } from "./full-width-container"
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   const { siteTitle } = useSiteMetadata()
   const footerNavigation = useFooterNavigation()
 
@@ -62,5 +62,3 @@ const Footer: React.FC = () => {
     </FullWidthContainer>
   )
 }
-
-export default Footer

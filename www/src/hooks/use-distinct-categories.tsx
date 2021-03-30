@@ -6,7 +6,7 @@ type DistinctCategoryQueryResult = {
   }
 }
 
-const useDistinctCategories = () => {
+export const useDistinctCategories = () => {
   const data = useStaticQuery<DistinctCategoryQueryResult>(graphql`
     {
       allCategory {
@@ -19,5 +19,3 @@ const useDistinctCategories = () => {
 
   return [...result, `/tutorials`]
 }
-
-export default useDistinctCategories

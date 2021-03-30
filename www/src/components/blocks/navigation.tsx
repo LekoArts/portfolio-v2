@@ -2,8 +2,8 @@ import * as React from "react"
 import { IconButton, useColorMode, HStack } from "@chakra-ui/react"
 import { FaMoon as Moon } from "react-icons/fa"
 import { MdWbSunny as Sun } from "react-icons/md"
-import usePrimaryNavigation from "../../hooks/use-primary-navigation"
-import Link from "../link"
+import { usePrimaryNavigation } from "../../hooks/use-primary-navigation"
+import { Link } from "../link"
 
 const Toggle: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -23,7 +23,7 @@ const Toggle: React.FC = () => {
 /**
  * Navigation component containing the primary links + Darkmode toggle
  */
-const Navigation: React.FC = () => {
+export const Navigation: React.FC = () => {
   const primaryNavigation = usePrimaryNavigation()
 
   return (
@@ -43,5 +43,3 @@ const Navigation: React.FC = () => {
     </HStack>
   )
 }
-
-export default Navigation

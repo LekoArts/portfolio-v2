@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
-import CategoryHero from "../components/writing/category-hero"
-import CategoryView from "../components/writing/category-view"
+import { CategoryHero } from "../components/writing/category-hero"
+import { CategoryView } from "../components/writing/category-view"
 
 type TutorialsProps = {
   posts: {
@@ -12,7 +12,6 @@ type TutorialsProps = {
       subtitle: string
       description: string
     }[]
-    totalCount: number
   }
 }
 
@@ -22,7 +21,6 @@ const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => 
       bgGradient="linear(to-t, blueGray.600, blueGray.900)"
       title="Tutorials"
       description="description for this category goes here"
-      image={<div style={{ height: `250px`, width: `250px`, backgroundColor: `white` }} />}
     />
   </CategoryView>
 )
@@ -35,7 +33,6 @@ export const query = graphql`
       nodes {
         ...CardPostInformation
       }
-      totalCount
     }
   }
 `

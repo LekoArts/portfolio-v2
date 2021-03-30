@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
-import CategoryHero from "../components/writing/category-hero"
-import CategoryView from "../components/writing/category-view"
+import { CategoryHero } from "../components/writing/category-hero"
+import { CategoryView } from "../components/writing/category-view"
 
 type ReactProps = {
   posts: {
@@ -23,12 +23,7 @@ type ReactProps = {
 
 const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
-    <CategoryHero
-      bgGradient={category.gradient}
-      title={category.name}
-      description={category.description}
-      image={<div style={{ height: `200px`, width: `200px`, backgroundColor: `white` }} />}
-    />
+    <CategoryHero bgGradient={category.gradient} title={category.name} description={category.description} />
   </CategoryView>
 )
 

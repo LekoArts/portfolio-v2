@@ -9,7 +9,7 @@ type Props = {
   }
 }
 
-const usePrimaryNavigation = () => {
+export const usePrimaryNavigation = () => {
   const data = useStaticQuery<Props>(graphql`
     query {
       allPrimaryNavigation {
@@ -23,5 +23,3 @@ const usePrimaryNavigation = () => {
 
   return data.allPrimaryNavigation.nodes
 }
-
-export default usePrimaryNavigation

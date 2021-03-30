@@ -1,12 +1,12 @@
 import * as React from "react"
 import { Flex } from "@chakra-ui/react"
 import { useLocation } from "@reach/router"
-import useDistinctCategories from "../../hooks/use-distinct-categories"
-import useSiteMetadata from "../../hooks/use-site-metadata"
-import Link from "../link"
-import Navigation from "./navigation"
-import FullWidthContainer from "./full-width-container"
-import Spacer from "./spacer"
+import { useDistinctCategories } from "../../hooks/use-distinct-categories"
+import { useSiteMetadata } from "../../hooks/use-site-metadata"
+import { Link } from "../link"
+import { Navigation } from "./navigation"
+import { FullWidthContainer } from "./full-width-container"
+import { Spacer } from "./spacer"
 
 const Logo: React.FC = () => {
   const { siteTitle } = useSiteMetadata()
@@ -22,7 +22,7 @@ type HeaderProps = {
   subnavigation?: React.ReactNode
 }
 
-const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
+export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
   const categorySlugs = useDistinctCategories()
   const location = useLocation()
   const isCategoryPage = categorySlugs.includes(location.pathname)
@@ -42,5 +42,3 @@ const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
     </>
   )
 }
-
-export default Header

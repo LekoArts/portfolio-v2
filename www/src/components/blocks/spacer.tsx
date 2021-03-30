@@ -6,10 +6,8 @@ interface ISpacerProps extends BoxProps {
   axis: "vertical" | "horizontal"
 }
 
-const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
+export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
   const width = axis === `vertical` ? `1px` : size
   const height = axis === `horizontal` ? `1px` : size
   return <Box as="span" width={width} height={height} minWidth={width} minHeight={height} display="block" {...rest} />
 }
-
-export default Spacer

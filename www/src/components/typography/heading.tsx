@@ -9,10 +9,8 @@ interface HeadingProps extends ChakraHeadingProps {
  * Heading component accepting heading levels
  * Wraps the Heading component from Chakra
  */
-const Heading: React.FC<HeadingProps> = ({ as, children, ...rest }) => (
+export const Heading: React.FC<HeadingProps> = ({ as, children, ...rest }) => (
   <ChakraHeading as={as} variant={as} {...rest}>
     {children}
   </ChakraHeading>
 )
-
-export default Heading

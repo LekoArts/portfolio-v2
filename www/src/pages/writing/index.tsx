@@ -1,13 +1,13 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { Container, Stack, Text, Grid } from "@chakra-ui/react"
-import Layout from "../../components/blocks/layout"
+import { Layout } from "../../components/blocks/layout"
 import { SkipNavContent } from "../../components/a11y/skip-nav"
-import WritingSubNavigation from "../../components/writing/subnavigation"
-import Heading from "../../components/typography/heading"
-import Link from "../../components/link"
-import space from "../../constants/space"
-import Card from "../../components/writing/card"
+import { WritingSubNavigation } from "../../components/writing/subnavigation"
+import { Heading } from "../../components/typography/heading"
+import { Link } from "../../components/link"
+import { space } from "../../constants/space"
+import { Card } from "../../components/writing/card"
 
 type WritingProps = {
   posts: {
