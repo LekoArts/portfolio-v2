@@ -9,12 +9,17 @@ const gatsbyConfig: GatsbyConfig = {
   },
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,
-    siteTitleAlt: `Lennart Jörgens - Software Engineer`,
+    siteTitleDefault: `Lennart Jörgens - Software Engineer`,
+    siteUrl: `https://www.lekoarts.de`,
+    siteDescription: `Lennart is a software engineer and passionate about working on open source products & building communities around them. He currently works at Gatsby on the open source project.`,
+    siteImage: `/default-og-image.png?v=1`,
+    twitter: `@lekoarts_de`,
   },
   plugins: [
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-image`,
+    // Overwrite the default "slugify" option
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
@@ -37,6 +42,30 @@ const gatsbyConfig: GatsbyConfig = {
           {
             name: `Crimson Pro`,
             file: `https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600..800&display=swap`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Lennart Jörgens - Software Engineer`,
+        short_name: `Lennart Jörgens`,
+        description: `Lennart is a software engineer and passionate about working on open source products & building communities around them. He currently works at Gatsby on the open source project.`,
+        start_url: `/`,
+        background_color: `#0f172a`,
+        theme_color: `#ea580c`,
+        display: `standalone`,
+        icons: [
+          {
+            src: `/android-chrome-192x192.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
           },
         ],
       },
