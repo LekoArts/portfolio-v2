@@ -1,10 +1,10 @@
 import { GatsbyConfig } from "gatsby"
+import { slugifyOptions } from "utils"
 
 require(`dotenv`).config()
 
 const gatsbyConfig: GatsbyConfig = {
   flags: {
-    FAST_REFRESH: false,
     DEV_SSR: true,
   },
   siteMetadata: {
@@ -15,6 +15,13 @@ const gatsbyConfig: GatsbyConfig = {
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-image`,
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+        slugify: slugifyOptions,
+      },
+    },
     {
       resolve: `gatsby-omni-font-loader`,
       options: {

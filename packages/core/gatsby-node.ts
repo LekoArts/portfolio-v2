@@ -45,7 +45,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       tutorial
     }
 
-    interface Post @nodeInterface {
+    interface Post implements Node {
       id: ID!
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 160): String!
@@ -89,7 +89,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       image: File @fileByRelativePath
     }
 
-    interface Garden @nodeInterface {
+    interface Garden implements Node {
       id: ID!
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 160): String!
