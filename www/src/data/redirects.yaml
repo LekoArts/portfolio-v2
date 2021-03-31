@@ -1,22 +1,99 @@
 # 2021 portfolio v2 redirects. Switched from two languages to english only, changed blog paths from /blog/<slug> to /<category>/<slug>
-# Added also a /garden for smaller entries, switched /projects to /art
+# Added also a /garden for smaller entries, switched /projects to /art, switched names of individual pages like /privacy to /privacy-policy
+# Removed tags all together and reduced amount of categories
 
 # German
+# Top Level
 - fromPath: /projects
+  toPath: /art
+- fromPath: /projects/*
   toPath: /art
 - fromPath: /blog
   toPath: /writing
+- fromPath: /blog/*
+  toPath: /writing
+- fromPath: /tags
+  toPath: /writing
+- fromPath: /tags/*
+  toPath: /writing
+- fromPath: /categories/*
+  toPath: /writing
+- fromPath: /privacy
+  toPath: /privacy-policy
+- fromPath: /imprint
+  toPath: /legal-notice
+# Tags
 - fromPath: /tags/gatsby
   toPath: /gatsby
+- fromPath: /tags/gatsby-starter
+  toPath: /gatsby
+- fromPath: /tags/gatsby-themes
+  toPath: /gatsby
+- fromPath: /tags/compositing
+  toPath: /design
+- fromPath: /tags/photoshop
+  toPath: /design
+- fromPath: /tags/react
+  toPath: /react
+# Categories
+- fromPath: /categories/tutorial
+  toPath: /tutorials
+- fromPath: /categories/freebie
+  toPath: /garden # TODO: Search param to "freebie"
+# Blog content German
+- fromPath: /blog/proprius-wallpaper-01
+  toPath: /garden/proprious-wallpaper-01
+- fromPath: /blog/elitepvpers-wallpaper-2017
+  toPath: /garden/elitepvpers-wallpaper-2017
+# Old legacy German
+- fromPath: /kontakt
+  toPath: /contact
+- fromPath: /impressum
+  toPath: /legal-notice
+- fromPath: /datenschutz
+  toPath: /privacy-policy
+- fromPath: /projekte
+  toPath: /art
+- fromPath: /projekte/*
+  toPath: /art/*
 
 # English
+# Top Level
 - fromPath: /en
   toPath: /
 - fromPath: /en/projects
   toPath: /art
+- fromPath: /en/projects/*
+  toPath: /art
+- fromPath: /en/blog/*
+  toPath: /writing
 - fromPath: /en/blog
   toPath: /writing
 - fromPath: /en/contact
   toPath: /contact
+- fromPath: /en/tags/*
+  toPath: /writing
+- fromPath: /en/categories/*
+  toPath: /writing
+- fromPath: /en/privacy
+  toPath: /privacy-policy
+- fromPath: /en/imprint
+  toPath: /legal-notice
+# Tags
 - fromPath: /en/tags/gatsby
   toPath: /gatsby
+- fromPath: /en/tags/gatsby-starter
+  toPath: /gatsby
+- fromPath: /en/tags/gatsby-themes
+  toPath: /gatsby
+- fromPath: /en/tags/photoshop
+  toPath: /design
+- fromPath: /en/tags/react
+  toPath: /react
+- fromPath: /en/tags/type-script
+  toPath: /javascript
+# Categories
+- fromPath: /en/categories/tutorial
+  toPath: /tutorials
+- fromPath: /en/categories/freebie
+  toPath: /garden # TODO: Search param to "freebie"

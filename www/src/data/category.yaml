@@ -11,7 +11,7 @@
   gradient: linear(to-t, violet.500, violet.900)
   image: ./category-images/placeholder.jpg
 - name: JavaScript
-  description: At this point one can build nearly everything with JavaScript. I write about different frameworks & experiments here.
+  description: At this point one can build nearly everything with JavaScript. I write about different frameworks, supersets & experiments here, including TypeScript.
   gradient: linear(to-t, yellow.500, yellow.900)
   image: ./category-images/placeholder.jpg
 - name: React
