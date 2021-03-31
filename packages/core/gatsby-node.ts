@@ -141,7 +141,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
   })
 }
 
-type BlogNode = {
+type WritingNode = {
   frontmatter: {
     slug?: string
     image: string
@@ -167,7 +167,7 @@ type GardenNode = {
   }
 }
 
-type MdxNode = BlogNode | GardenNode
+type MdxNode = WritingNode | GardenNode
 
 export const onCreateNode = (
   { node, actions, getNode, createNodeId, createContentDigest }: CreateNodeArgs<MdxNode>,
@@ -184,8 +184,8 @@ export const onCreateNode = (
   const source = fileNode.sourceInstanceName
 
   if (source === writingSource) {
-    const f = node.frontmatter as BlogNode["frontmatter"]
-    const fieldData: BlogNode["frontmatter"] = {
+    const f = node.frontmatter as WritingNode["frontmatter"]
+    const fieldData: WritingNode["frontmatter"] = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       subtitle: f.subtitle ? f.subtitle : undefined,

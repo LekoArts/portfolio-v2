@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} by {siteTitle}. All rights reserved.
             </div>
             <div>
-              <Link to="/privacy-policy">Privacy</Link>. <Link to="/imprint">Imprint</Link>.
+              <Link to="/privacy-policy">Privacy Policy</Link>. <Link to="/legal-notice">Legal Notice</Link>.
             </div>
           </Flex>
         </Stack>

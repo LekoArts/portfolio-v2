@@ -20,7 +20,7 @@ const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => 
     <CategoryHero
       bgGradient="linear(to-t, blueGray.600, blueGray.900)"
       title="Tutorials"
-      description="description for this category goes here"
+      description="Tutorials across different categories in a longform format & interactive elements"
     />
   </CategoryView>
 )

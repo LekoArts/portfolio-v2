@@ -19,7 +19,7 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
           <Heading as="h1" color="white">
             {title}
           </Heading>
-          <Text textStyle="prominent" color="gray.100" maxWidth="45ch">
+          <Text textStyle="prominent" color="gray.100" maxWidth="65ch">
             {description}
           </Text>
         </Flex>
