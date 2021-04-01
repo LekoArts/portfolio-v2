@@ -10,7 +10,7 @@ export const MDXLayout: React.FC<PageProps> = ({ children }) => {
 
   return (
     <Layout>
-      <Container pt={12} pb={16}>
+      <Container variant="proseRoot">
         <SkipNavContent>
           <Prose variant={variant}>{children}</Prose>
         </SkipNavContent>
