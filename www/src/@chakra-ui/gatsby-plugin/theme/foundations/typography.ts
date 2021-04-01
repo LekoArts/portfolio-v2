@@ -47,7 +47,7 @@ const lineHeights: ThemeOverride["lineHeights"] = {
   "8xl": 1,
 }
 
-const textStyles: ThemeOverride["textStyles"] = {
+const textStyles = {
   logo: {
     fontSize: [`md`, null, null, `lg`],
     fontWeight: `normal`,

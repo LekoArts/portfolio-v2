@@ -1,4 +1,3 @@
-import { ThemeOverride } from "@chakra-ui/react"
 import { transparentize } from "@chakra-ui/theme-tools"
 
 const colorPalette = {
@@ -275,8 +274,7 @@ const colorPalette = {
 
 const navBgTransparency = 0.85
 
-// @ts-ignore
-const colors: ThemeOverride["colors"] = {
+const colors = {
   brand: {
     primary: colorPalette.colors.blue[`600`],
     primaryAlpha: transparentize(`blueGray.400`, 0.25)(colorPalette),
