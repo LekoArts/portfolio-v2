@@ -21,7 +21,7 @@ type DataProps = {
 
 const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => (
   <Layout>
-    <SEO title={garden.title} description={garden.excerpt}>
+    <SEO title={garden.title} description={garden.excerpt} image="/social/digital-garden.png">
       <meta name="twitter:label1" value="Time To Read" />
       <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
       <meta name="twitter:label2" value="Category" />
@@ -32,6 +32,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => (
     <Container variant="proseRoot">
       <SkipNavContent>
         <Prose>
+          <h1>Garden Template</h1>
           <pre>{JSON.stringify(garden, null, 2)}</pre>
         </Prose>
       </SkipNavContent>

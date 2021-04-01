@@ -19,9 +19,17 @@ type CreatePagesResult = {
       slug: string
     }[]
   }
+  writing: {
+    nodes: {
+      slug: string
+      type: "prose" | "tutorial"
+    }[]
+  }
 }
 
 const gardenTemplate = require.resolve(`./src/templates/garden.tsx`)
+const proseTemplate = require.resolve(`./src/templates/prose.tsx`)
+const tutorialTemplate = require.resolve(`./src/templates/tutorial.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
@@ -37,6 +45,12 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       garden: allGarden {
         nodes {
           slug
+        }
+      }
+      writing: allPost(filter: { published: { eq: true } }) {
+        nodes {
+          slug
+          type
         }
       }
     }
@@ -57,6 +71,18 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       component: gardenTemplate,
       context: {
         slug: garden.slug,
+      },
+    })
+  })
+
+  result.data.writing.nodes.forEach((article) => {
+    const component = article.type === `tutorial` ? tutorialTemplate : proseTemplate
+
+    createPage({
+      path: article.slug,
+      component,
+      context: {
+        slug: article.slug,
       },
     })
   })
