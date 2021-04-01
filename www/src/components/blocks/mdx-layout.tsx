@@ -1,20 +1,16 @@
 import * as React from "react"
 import { PageProps } from "gatsby"
-import { Container, useBreakpointValue } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { Prose } from "../typography/prose"
 import { Layout } from "./layout"
 import { SkipNavContent } from "../a11y/skip-nav"
 
-export const MDXLayout: React.FC<PageProps> = ({ children }) => {
-  const variant = useBreakpointValue([`sm`, `default`, `default`, `lg`, `xl`]) as "sm" | "default" | "lg" | "xl"
-
-  return (
-    <Layout>
-      <Container variant="proseRoot">
-        <SkipNavContent>
-          <Prose variant={variant}>{children}</Prose>
-        </SkipNavContent>
-      </Container>
-    </Layout>
-  )
-}
+export const MDXLayout: React.FC<PageProps> = ({ children }) => (
+  <Layout>
+    <Container variant="proseRoot">
+      <SkipNavContent>
+        <Prose>{children}</Prose>
+      </SkipNavContent>
+    </Container>
+  </Layout>
+)
