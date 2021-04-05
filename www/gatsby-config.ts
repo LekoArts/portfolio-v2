@@ -5,7 +5,7 @@ require(`dotenv`).config()
 
 const gatsbyConfig: GatsbyConfig = {
   flags: {
-    DEV_SSR: true,
+    DEV_SSR: false,
   },
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,

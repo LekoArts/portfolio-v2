@@ -27,7 +27,7 @@ interface State {
 
 type Action = { type: `ADD_TAG`; payload: string } | { type: `REMOVE_TAG`; payload: string }
 
-const initialState = {
+const initialState: State = {
   tags: [],
 }
 

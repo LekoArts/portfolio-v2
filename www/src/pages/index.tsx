@@ -71,8 +71,8 @@ const cardGradients = [
 
 const openSourceRepos = [
   {
-    name: `bare-instagram`,
-    url: `https://github.com/LekoArts/bare-instagram`,
+    name: `gatsby-source-tmdb`,
+    url: `https://github.com/LekoArts/gatsby-source-tmdb`,
   },
   {
     name: `thanks-contributors`,
