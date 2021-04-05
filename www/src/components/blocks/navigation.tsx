@@ -27,9 +27,9 @@ export const Navigation: React.FC = () => {
   const primaryNavigation = usePrimaryNavigation()
 
   return (
-    <HStack spacing="4">
+    <HStack spacing={[`2`, `4`]}>
       <nav aria-label="Primary navigation">
-        <HStack as="ul" listStyleType="none" spacing="4">
+        <HStack as="ul" listStyleType="none" spacing={[`2`, `4`]}>
           {primaryNavigation.map((item) => (
             <li key={item.link}>
               <Link to={item.link} fontSize={[`md`, null, null, `lg`]} p="2" activeClassName="active">
