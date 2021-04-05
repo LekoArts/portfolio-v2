@@ -11,18 +11,12 @@ export const Footer: React.FC = () => {
     <FullWidthContainer variant="dark">
       <Box as="footer" py={16} role="contentinfo">
         <Stack direction="column" spacing={16}>
-          <Flex flexDirection="row" flexWrap="wrap" justifyContent="space-between">
-            {footerNavigation.map((section, index) => {
+          <Flex flexDirection={[`column`, `row`]} flexWrap="wrap" justifyContent="space-between">
+            {footerNavigation.map((section) => {
               const { heading } = section
 
               return (
-                <Flex
-                  key={heading.name}
-                  flexDirection="column"
-                  alignItems={[`center`, `flex-start`]}
-                  flexBasis={[`50%`, `initial`]}
-                  mb={[index > 1 ? 0 : 8, 0]}
-                >
+                <Flex key={heading.name} flexDirection="column" alignItems="flex-start" mb={[8, 0]}>
                   {heading.link ? (
                     <Link to={heading.link} color="white" fontSize={[`18px`, null, `21px`]} mb={3}>
                       {heading.name}
@@ -32,13 +26,17 @@ export const Footer: React.FC = () => {
                       {heading.name}
                     </Box>
                   )}
-                  <Flex flexDirection="column" alignItems={[`center`, `flex-start`]}>
+                  <Flex flexDirection={[`row`, `column`]} alignItems="flex-start" flexWrap={[`wrap`, `nowrap`]}>
                     {section.items.map((item) => (
                       <React.Fragment key={item.link}>
                         {item.isExternal ? (
-                          <ExternalLink href={item.link}>{item.name}</ExternalLink>
+                          <ExternalLink mr={[2, 0]} href={item.link}>
+                            {item.name}
+                          </ExternalLink>
                         ) : (
-                          <Link to={item.link}>{item.name}</Link>
+                          <Link mr={[2, 0]} to={item.link}>
+                            {item.name}
+                          </Link>
                         )}
                       </React.Fragment>
                     ))}
