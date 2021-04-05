@@ -7,7 +7,18 @@ import slugify from "@sindresorhus/slugify"
 import fs from "fs-extra"
 
 const currentDate = new Date().toISOString().split(`T`)[0]
-const iconChoices = [`general`, `cli`, `gatsby`, `javascript`, `react`, `typescript`] as const
+const iconChoices = [
+  `general`,
+  `cli`,
+  `gatsby`,
+  `javascript`,
+  `react`,
+  `typescript`,
+  `mdx`,
+  `discord`,
+  `elitepvpers`,
+  `python`,
+] as const
 type Icons = typeof iconChoices[number]
 
 async function run() {
@@ -16,7 +27,7 @@ async function run() {
     tags,
     icon,
   }: {
-    form: { title: string; date: string }
+    form: { title: string; date: string; lastUpdated: string }
     tags: Record<string, string>
     icon: Icons
   } = await prompt([
@@ -35,6 +46,12 @@ async function run() {
           // @ts-ignore
           initial: currentDate,
         },
+        {
+          name: `lastUpdated`,
+          message: `Last Updated`,
+          // @ts-ignore
+          initial: currentDate,
+        },
       ],
     },
     {
@@ -47,6 +64,11 @@ async function run() {
         { name: `JavaScript`, value: `javascript` },
         { name: `TypeScript`, value: `typescript` },
         { name: `React`, value: `react` },
+        { name: `MDX`, value: `mdx` },
+        { name: `Discord`, value: `discord` },
+        { name: `elitepvpers`, value: `elitepvpers` },
+        { name: `Freebie`, value: `freebie` },
+        { name: `Python`, value: `python` },
       ],
       // @ts-ignore
       result(names: string[]): Record<string, string> {
@@ -76,7 +98,7 @@ async function run() {
   const frontmatter = `---
 title: "${res.title}"
 date: ${res.date}
-lastUpdated: ${res.date}
+lastUpdated: ${res.lastUpdated}
 icon: "${res.icon}"
 tags:
 ${res.tags.map((t) => `  - ${t}`).join(`

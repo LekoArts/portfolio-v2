@@ -92,7 +92,7 @@ description: "${res.description}"
 type: "${res.type}"
 category: "${res.category}"
 image: ./file-name.jpg
-${!res.published && `published: false`}
+published: ${res.published ? `true` : `false`}
 ---`.trim()
 
   console.log(`The file ${filename} will be created with:
