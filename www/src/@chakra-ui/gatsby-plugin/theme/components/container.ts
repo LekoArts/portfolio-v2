@@ -11,7 +11,7 @@ const Container = {
   variants: {
     proseRoot: {
       pt: 16,
-      pb: 16,
+      pb: [20, null, null, 24],
     },
   },
 }

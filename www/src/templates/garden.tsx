@@ -31,13 +31,7 @@ type DataProps = {
   }
 }
 
-const getTwitterShareLink = (path: string): string =>
-  `https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${path}`)}`
-
-const getGitHubEditLink = (path: string): string =>
-  `https://github.com/LekoArts/portfolio-v2/edit/master/www/content/garden/${path}`
-
-const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { pathname } }) => (
+const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { pathname } }) => (
   <Layout>
     <SEO title={garden.title} description={garden.excerpt} image="/social/digital-garden.png">
       <meta name="twitter:label1" value="Time To Read" />
@@ -53,7 +47,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { 
         <Spacer size={6} axis="vertical" />
         <Divider />
         <Spacer size={4} axis="vertical" />
-        {garden.slug}
         <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]}>
           <Text>
             Created {garden.date} – Last Updated {garden.lastUpdated}
@@ -75,16 +68,30 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { 
         <Prose>
           <MDXRenderer>{garden.body}</MDXRenderer>
         </Prose>
-        <div>
-          <ExternalLink href={getGitHubEditLink(garden.parent.parent.relativePath)}>Edit on GitHub</ExternalLink> -{` `}
-          <ExternalLink href={getTwitterShareLink(pathname)}>Discuss on Twitter</ExternalLink>
-        </div>
+        <Spacer size={12} axis="vertical" />
+        <Divider />
+        <Spacer size={6} axis="vertical" />
+        <ExternalLink
+          fontSize={[`md`, null, null, `18px`]}
+          fontWeight="medium"
+          href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/garden/${garden.parent.parent.relativePath}`}
+        >
+          Edit on GitHub
+        </ExternalLink>
+        {` `}-{` `}
+        <ExternalLink
+          fontSize={[`md`, null, null, `18px`]}
+          fontWeight="medium"
+          href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
+        >
+          Discuss on Twitter
+        </ExternalLink>
       </SkipNavContent>
     </Container>
   </Layout>
 )
 
-export default Garden
+export default GardenTemplate
 
 export const query = graphql`
   query GardenTemplate($slug: String!) {
