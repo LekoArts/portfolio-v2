@@ -51,6 +51,11 @@ const Heading = {
     h4: {
       ...headingBaseStyles.h4,
     },
+    gardenItem: {
+      fontSize: [`md`, null, null, `18px`, `21px`],
+      fontFamily: `body`,
+      fontWeight: `medium`,
+    },
   },
 }
 

@@ -1,10 +1,26 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
-import { Container, Tag, TagLabel, TagCloseButton, Wrap, WrapItem, Grid, Box } from "@chakra-ui/react"
+import { BsArrowRight } from "react-icons/bs"
+import {
+  Container,
+  Tag,
+  TagLabel,
+  TagCloseButton,
+  Wrap,
+  WrapItem,
+  Heading as ChakraHeading,
+  Stack,
+  Text,
+  Box,
+  useColorModeValue,
+  usePrefersReducedMotion,
+} from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
+import { Link } from "../components/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
+import { Spacer } from "../components/blocks/spacer"
 
 type DataProps = {
   garden: {
@@ -44,12 +60,19 @@ const reducer = (state: State, action: Action) => {
 
 const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
+  const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
 
   return (
     <Layout>
       <SkipNavContent>
         <Container py={space.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
+          <Text textStyle="prominent">
+            <Link to="/garden/what-is-a-digital-garden">What is a Digital Garden?</Link> Select tags to filter posts:
+          </Text>
+          <Spacer size={6} axis="vertical" />
           <Wrap>
             {garden.group.map((tag) => {
               const isActive = state.tags.includes(tag.title)
@@ -82,7 +105,12 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
               )
             })}
           </Wrap>
-          <Grid pt={16} gridTemplateColumns="1fr 1fr 1fr" gap={8}>
+          <Spacer size={20} axis="vertical" />
+          <Stack
+            spacing={0}
+            divider={<Spacer axis="horizontal" size="100%" bg={dividerColor} border="none" />}
+            mx={[`-2`, null, null, `-6`]}
+          >
             {garden.nodes
               .filter(({ tags = [] }) => {
                 if (state.tags.length === 0) {
@@ -98,12 +126,51 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
                 return a > b ? -1 : a < b ? 1 : 0
               })
               .map((post) => (
-                <Box key={post.slug} display="flex" flexDirection="column">
-                  <Heading as="h2">{post.title}</Heading>
-                  <p>{post.lastUpdated}</p>
-                </Box>
+                <Link
+                  to={post.slug}
+                  key={post.slug}
+                  display="grid"
+                  gridTemplateColumns={[`25px 1fr 20px`, `35px 1fr 20px`, null, `50px 1fr 24px`]}
+                  alignItems="center"
+                  gridGap={6}
+                  px={[2, null, null, 6]}
+                  py={[2, null, null, 6]}
+                  borderRadius="lg"
+                  _hover={{
+                    textDecoration: `none`,
+                    backgroundColor: bgHoverColor,
+                  }}
+                  sx={{
+                    span: {
+                      transform: `translate3d(0px, 0px, 0px)`,
+                      transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
+                    },
+                    "&:hover": {
+                      span: {
+                        transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
+                      },
+                    },
+                    svg: {
+                      height: [`1.25em`, null, null, `1.5em`],
+                      width: [`1.25em`, null, null, `1.5em`],
+                    },
+                  }}
+                >
+                  <Box width={[25, 35, null, 50]} height={[25, 35, null, 50]}>
+                    <img alt="" src={`/icons/${post.icon}.svg`} width="100%" height="100%" />
+                  </Box>
+                  <Box>
+                    <ChakraHeading as="h2" variant="gardenItem">
+                      {post.title}
+                    </ChakraHeading>
+                    <Text fontSize={[`14px`, null, null, `1rem`]}>{post.lastUpdated}</Text>
+                  </Box>
+                  <span>
+                    <BsArrowRight />
+                  </span>
+                </Link>
               ))}
-          </Grid>
+          </Stack>
         </Container>
       </SkipNavContent>
     </Layout>
