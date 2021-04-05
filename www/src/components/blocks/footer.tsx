@@ -1,12 +1,10 @@
 import * as React from "react"
 import { Box, Stack, Flex, Link as ExternalLink } from "@chakra-ui/react"
 import { useFooterNavigation } from "../../hooks/use-footer-navigation"
-import { useSiteMetadata } from "../../hooks/use-site-metadata"
 import { Link } from "../link"
 import { FullWidthContainer } from "./full-width-container"
 
 export const Footer: React.FC = () => {
-  const { siteTitle } = useSiteMetadata()
   const footerNavigation = useFooterNavigation()
 
   return (
@@ -50,9 +48,7 @@ export const Footer: React.FC = () => {
             })}
           </Flex>
           <Flex flexDirection={[`column`, `row`]} textAlign="center" alignItems="center" justifyContent="space-between">
-            <div>
-              &copy; {new Date().getFullYear()} by {siteTitle}. All rights reserved.
-            </div>
+            <div>&copy; {new Date().getFullYear()} by lekoarts.de. All rights reserved.</div>
             <div>
               <Link to="/privacy-policy">Privacy Policy</Link>. <Link to="/legal-notice">Legal Notice</Link>.
             </div>

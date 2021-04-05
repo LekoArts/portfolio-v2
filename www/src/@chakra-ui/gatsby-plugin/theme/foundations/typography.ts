@@ -48,15 +48,6 @@ const lineHeights: ThemeOverride["lineHeights"] = {
 }
 
 const textStyles = {
-  logo: {
-    fontSize: [`md`, null, null, `lg`],
-    fontWeight: `normal`,
-    transition: `font-weight .3s ease-in-out`,
-    _hover: {
-      fontWeight: `semibold`,
-      textDecoration: `none`,
-    },
-  },
   prominent: {
     fontSize: [`md`, null, null, `18px`, `21px`],
     strong: {
