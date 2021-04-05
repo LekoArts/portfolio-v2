@@ -42,7 +42,7 @@
     - name: GitHub
       link: https://www.github.com/LekoArts
       isExternal: true
-    - name: RSS Feed
+    - name: RSS
       link: /rss.xml
     - name: LinkedIn
       link: https://www.linkedin.com
