@@ -50,9 +50,9 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
             {
               resolve: `gatsby-remark-images`,
               options: {
-                maxWidth: 960,
+                maxWidth: 1024,
                 quality: 90,
-                linkImagesToOriginal: false,
+                linkImagesToOriginal: true,
               },
             },
           ],
@@ -60,9 +60,9 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
             {
               resolve: `gatsby-remark-images`,
               options: {
-                maxWidth: 960,
+                maxWidth: 1024,
                 quality: 90,
-                linkImagesToOriginal: false,
+                linkImagesToOriginal: true,
               },
             },
           ],

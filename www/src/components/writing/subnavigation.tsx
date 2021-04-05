@@ -11,14 +11,13 @@ export const WritingSubNavigation: React.FC = () => {
   return (
     <Flex
       alignItems="center"
-      mt="2"
+      py="2"
       data-name="subnavigation"
       sx={{
         overflowX: `auto`,
         overflowY: `hidden`,
         scrollbarWidth: `thin`,
         scrollbarColor: `${thumbBG} ${scrollbarBG}`,
-        paddingBottom: `0.25rem`,
         "::-webkit-scrollbar": {
           height: `12px`,
         },

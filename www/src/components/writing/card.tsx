@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }
   const cardBg = useColorModeValue(`white`, `blueGray.800`)
   const headingColor = useColorModeValue(`black`, `white`)
   const headingHoverColor = useColorModeValue(`brand.primary`, `brand.dark.primary`)
-  const subheadingColor = useColorModeValue(`blueGray.900`, `blueGray.400`)
+  const subheadingColor = useColorModeValue(`blueGray.700`, `blueGray.400`)
 
   return (
     <MotionBox
