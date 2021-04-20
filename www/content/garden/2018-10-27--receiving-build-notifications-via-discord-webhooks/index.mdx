@@ -1,49 +1,32 @@
 ---
 title: "Receiving build notifications via Discord webhooks"
 date: 2018-10-27
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-20
 icon: "discord"
 tags:
   - Discord
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+Many CI/CD services support both incoming and outgoing webhooks for the communication with external services. Also [Discord](https://discord.com/) allows the usage of webhooks to display messages -- so receiving build notifications in your Discord server is totally doable! For this example I'm using [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/) but the same steps (albeit with a different UI) also apply to services like [Netlify](https://www.netlify.com/) or [CircleCI](https://circleci.com/).
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+## Step 1: Create the Discord webhook
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+Choose a channel on your server in which the messages should come in. Right-click on the channel => _Edit Channel_ => _Integrations_ => _Webhooks_. Click on _New Webhook_. Press the _Copy Webhook URL_ button to have the webhook URL in your clipboard.
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+## Step 2: Go to your CI/CD service
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+Visit your dashboard where you can set Notifications:
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
-```
+![Add notification of type webhook](./add-notification.jpg)
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+Paste the webhook URL from your clipboard to the input for the outgoing webhook URL.
 
----
+![Choose an event to listen to and add the copied webhook URL to the input of "outgoing webhook URL"](./add-webhook-url.jpg)
 
-## What to expect from here on out
+## Step 3: Add `/slack` to the webhook URL
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+Discord explains in their [developer documentation](https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook) that you need to add `/slack` to the end of the webhook URL to receive webhook messages in the proper format.
 
-It's important to cover all of these use cases for a few reasons:
+![The final input field with the added slack postfix](./final-webhook-url-input.jpg)
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+You can use the same webhook URL multiple times to get notifications from multiple builds into the same channel.
