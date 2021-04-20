@@ -511,6 +511,9 @@ const Prose = {
       color: mode(`gray.900`, `gray.100`)(props),
       fontWeight: `500`,
       textDecoration: `underline`,
+      "&:hover": {
+        textDecoration: `none`,
+      },
     },
     strong: {
       color: mode(`gray.900`, `gray.100`)(props),
@@ -522,7 +525,12 @@ const Prose = {
     },
     "figure img, img": {
       borderRadius: `lg`,
+    },
+    ".gatsby-resp-image-wrapper": {
       boxShadow: `lg`,
+    },
+    ".gatsby-resp-image-background-image": {
+      borderRadius: `lg`,
     },
     "ol, ul": {
       listStyle: `none`,

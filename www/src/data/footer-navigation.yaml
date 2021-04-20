@@ -36,14 +36,8 @@
     - name: Twitter
       link: https://www.twitter.com/lekoarts_de
       isExternal: true
-    - name: Instagram
-      link: https://www.instagram.com/lekoarts.de
-      isExternal: true
     - name: GitHub
       link: https://www.github.com/LekoArts
       isExternal: true
     - name: RSS
       link: /rss.xml
-    - name: LinkedIn
-      link: https://www.linkedin.com
-      isExternal: true

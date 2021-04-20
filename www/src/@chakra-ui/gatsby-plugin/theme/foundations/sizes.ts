@@ -1,7 +1,7 @@
 // Will also be used for 'space'
 const sizes = {
-  navigationHeight: `60px`,
-  navigationWithSubHeight: `110px`,
+  navigationHeight: `61px`,
+  navigationWithSubHeight: `111px`,
 }
 
 export default sizes

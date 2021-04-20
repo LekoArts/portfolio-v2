@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => 
   return (
     <>
       <FullWidthContainer variant={isCategoryPage ? `fullBleed` : variant} height={height}>
-        <Flex as="header" alignItems="center" justifyContent="space-between" py="14px">
+        <Flex as="header" alignItems="center" justifyContent="space-between" py="13px">
           <Logo />
           <Navigation />
         </Flex>
