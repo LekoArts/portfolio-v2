@@ -1,7 +1,9 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { Container, Text, Divider, Flex, Tag, TagLabel, Grid, Box, Link as ExternalLink } from "@chakra-ui/react"
+import { MDXProvider } from "@mdx-js/react"
+import { RiPlantFill as PlantIcon } from "react-icons/ri"
+import { Container, Text, Divider, Flex, Tag, TagLabel, Grid, Box, Link as ExternalLink, Icon } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { Link } from "../components/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
@@ -9,6 +11,7 @@ import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
 import { Heading } from "../components/typography/heading"
 import { Spacer } from "../components/blocks/spacer"
+import { components } from "../components/mdx"
 
 type DataProps = {
   garden: {
@@ -66,7 +69,9 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
         </Grid>
         <Spacer size={12} axis="vertical" />
         <Prose>
-          <MDXRenderer>{garden.body}</MDXRenderer>
+          <MDXProvider components={components}>
+            <MDXRenderer>{garden.body}</MDXRenderer>
+          </MDXProvider>
         </Prose>
         <Spacer size={12} axis="vertical" />
         <Divider />
@@ -86,6 +91,34 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
         >
           Discuss on Twitter
         </ExternalLink>
+        <Spacer size={12} axis="vertical" />
+        <Box
+          textStyle="prominent"
+          bgGradient="linear(to-tr, green.800, lime.600)"
+          borderRadius="xl"
+          p={6}
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          color="green.100"
+          boxShadow="xl"
+          textShadow="0px 2px 0px rgba(0, 0, 0, 0.35)"
+        >
+          <Icon
+            as={PlantIcon}
+            height={[6, 8, 12]}
+            width={[6, 8, 12]}
+            mr={6}
+            color="lime.300"
+            sx={{ filter: `drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.25))` }}
+          />
+          <Box>
+            Want to learn more?{` `}
+            <Link to="/garden" color="white">
+              Browse my Digital Garden
+            </Link>
+          </Box>
+        </Box>
       </SkipNavContent>
     </Container>
   </Layout>

@@ -167,6 +167,18 @@ const smVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
+  ".gatsby-highlight-header": {
+    fontSize: em(12, 14),
+    marginTop: em(20, 12),
+    paddingRight: em(12, 12),
+    paddingLeft: em(12, 12),
+  },
+  ".gatsby-highlight[data-prism-renderer='true']": {
+    ".token-line": {
+      px: em(12, 12),
+      mx: `-${em(12, 12)}`,
+    },
+  },
 }
 const mdVariant = {}
 const lgVariant = {
@@ -335,6 +347,18 @@ const lgVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
+  ".gatsby-highlight-header": {
+    fontSize: em(14, 18),
+    marginTop: em(32, 16),
+    paddingRight: em(24, 14),
+    paddingLeft: em(24, 14),
+  },
+  ".gatsby-highlight[data-prism-renderer='true']": {
+    ".token-line": {
+      px: em(24, 16),
+      mx: `-${em(24, 16)}`,
+    },
+  },
 }
 const xlVariant = {
   fontSize: rem(20),
@@ -502,6 +526,18 @@ const xlVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
+  ".gatsby-highlight-header": {
+    fontSize: em(15, 20),
+    marginTop: em(36, 18),
+    paddingRight: em(24, 15),
+    paddingLeft: em(24, 15),
+  },
+  ".gatsby-highlight[data-prism-renderer='true']": {
+    ".token-line": {
+      px: em(24, 18),
+      mx: `-${em(24, 18)}`,
+    },
+  },
 }
 
 const Prose = {
@@ -584,7 +620,7 @@ const Prose = {
       content: `close-quote`,
     },
     h1: {
-      color: mode(`gray.900`, `gray.100`)(props),
+      color: mode(`brand.heading`, `brand.dark.heading`)(props),
       fontWeight: `700`,
       fontFamily: `heading`,
       letterSpacing: `wide`,
@@ -594,7 +630,7 @@ const Prose = {
       lineHeight: round(40 / 36),
     },
     h2: {
-      color: mode(`gray.900`, `gray.100`)(props),
+      color: mode(`brand.heading`, `brand.dark.heading`)(props),
       fontWeight: `700`,
       fontFamily: `heading`,
       fontSize: em(28, 16), // Changed from 24
@@ -603,7 +639,7 @@ const Prose = {
       lineHeight: round(32 / 24),
     },
     h3: {
-      color: mode(`gray.900`, `gray.100`)(props),
+      color: mode(`brand.heading`, `brand.dark.heading`)(props),
       fontWeight: `600`,
       fontFamily: `heading`,
       fontSize: em(24, 16), // Changed from 20
@@ -612,7 +648,7 @@ const Prose = {
       lineHeight: round(32 / 20),
     },
     h4: {
-      color: mode(`gray.900`, `gray.100`)(props),
+      color: mode(`brand.heading`, `brand.dark.heading`)(props),
       fontWeight: `600`,
       fontFamily: `heading`,
       marginTop: em(24, 16),
@@ -627,7 +663,7 @@ const Prose = {
     },
     code: {
       color: mode(`gray.900`, `gray.100`)(props),
-      fontWeight: `600`,
+      fontWeight: `medium`,
       fontSize: em(14, 16),
       fontFamily: `mono`,
       bg: mode(`brand.primaryAlpha`, `brand.dark.primaryAlpha`)(props),
@@ -787,6 +823,151 @@ const Prose = {
     },
     "tbody td:last-of-type": {
       paddingRight: `0`,
+    },
+    ".gatsby-highlight[data-prism-renderer='true']": {
+      pre: {
+        marginTop: 0,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        wordSpacing: `normal`,
+        wordBreak: `normal`,
+        overflowWrap: `normal`,
+        tabSize: 4,
+        minWidth: `100%`,
+        hyphens: `none`,
+        webkitOverflowScrolling: `touch`,
+        scrollbarWidth: `thin`,
+        scrollbarColor: mode(`blueGray.400 blueGray.200`, `blueGray.400 blueGray.700`)(props),
+        "::-webkit-scrollbar": {
+          width: `12px`,
+        },
+        "::-webkit-scrollbar-track": {
+          backgroundColor: mode(`blueGray.200`, `blueGray.700`)(props),
+          borderBottomLeftRadius: [rem(4), rem(6)],
+          borderBottomRightRadius: [rem(4), rem(6)],
+        },
+        "::-webkit-scrollbar-thumb": {
+          backgroundColor: mode(`blueGray.400`, `blueGray.400`)(props),
+          borderRadius: rem(6),
+          borderWidth: `4px`,
+          borderStyle: `solid`,
+          borderColor: mode(`blueGray.200`, `blueGray.700`)(props),
+        },
+      },
+      code: {
+        wordSpacing: `normal`,
+        wordBreak: `normal`,
+        overflowWrap: `normal`,
+        tabSize: 4,
+        hyphens: `none`,
+        float: `left`,
+        minWidth: `100%`,
+      },
+      ".line-number-style": {
+        display: `inline-block`,
+        width: `2em`,
+        userSelect: `none`,
+        opacity: 0.3,
+        textAlign: `left`,
+        position: `relative`,
+      },
+      ".token-line": {
+        px: em(16, 14),
+        mx: `-${em(16, 14)}`,
+      },
+      ".token-line.highlight-line": {
+        backgroundColor: `rgb(2, 55, 81)`,
+        ".line-number-style": {
+          opacity: 0.5,
+        },
+      },
+      ".token": {
+        display: `inline-block`,
+      },
+    },
+    ".gatsby-highlight-header": {
+      fontSize: em(14, 16),
+      marginTop: em(24, 14),
+      borderTopLeftRadius: rem(6),
+      borderTopRightRadius: rem(6),
+      color: `rgb(214, 222, 235)`,
+      background: `linear-gradient(to bottom, rgb(2, 38, 67) 0%, rgb(1, 22, 39) 100%)`,
+      borderBottom: `1px solid rgba(214, 222, 235, 0.15)`,
+      paddingTop: em(6, 14),
+      paddingRight: em(16, 14),
+      paddingBottom: em(6, 14),
+      paddingLeft: em(16, 14),
+    },
+    ".language-display": {
+      borderRadius: rem(6),
+      paddingRight: em(6, 14),
+      paddingLeft: em(6, 14),
+      "--display-opacity": 0.2,
+      "&[data-lang='js'], &[data-lang='javascript']": {
+        background: `rgba(247, 223, 30, var(--display-opacity))`,
+        color: `rgb(247, 223, 30)`,
+      },
+      "&[data-lang='jsx']": {
+        background: `rgba(97, 218, 251, var(--display-opacity))`,
+        color: `rgb(97, 218, 251)`,
+      },
+      "&[data-lang='ts']": {
+        background: `rgba(97, 218, 251, var(--display-opacity))`,
+        color: `rgb(97, 218, 251)`,
+      },
+      "&[data-lang='tsx']": {
+        background: `rgba(97, 218, 251, var(--display-opacity))`,
+        color: `rgb(97, 218, 251)`,
+      },
+      "&[data-lang='html']": {
+        background: `rgba(0, 90, 156, var(--display-opacity))`,
+        color: `rgb(83, 180, 255)`,
+      },
+      "&[data-lang='xml']": {
+        background: `rgba(0, 90, 156, var(--display-opacity))`,
+        color: `rgb(83, 180, 255)`,
+      },
+      "&[data-lang='svg']": {
+        background: `rgba(0, 90, 156, var(--display-opacity))`,
+        color: `rgb(83, 180, 255)`,
+      },
+      "&[data-lang='graphql']": {
+        background: `rgba(225, 0, 152, var(--display-opacity))`,
+        color: `rgb(255, 55, 176)`,
+      },
+      "&[data-lang='css']": {
+        background: `rgba(255, 152, 0, var(--display-opacity))`,
+        color: `rgb(255, 165, 48)`,
+      },
+      "&[data-lang='mdx']": {
+        background: `rgba(249, 172, 0, var(--display-opacity))`,
+        color: `rgb(255, 165, 48)`,
+      },
+      "&[data-lang='py']": {
+        background: `rgba(51, 111, 160, var(--display-opacity))`,
+        color: `rgb(255, 229, 194)`,
+      },
+      "&[data-lang='text']": {
+        background: `rgba(255, 255, 255, var(--display-opacity))`,
+      },
+      "&[data-lang='sh']": {
+        background: `rgba(255, 255, 255, var(--display-opacity))`,
+      },
+      "&[data-lang='yaml']": {
+        background: `rgba(255, 168, 223, var(--display-opacity))`,
+        color: `rgb(255, 168, 223)`,
+      },
+      "&[data-lang='md']": {
+        background: `rgba(255, 255, 255, var(--display-opacity))`,
+      },
+      "&[data-lang='json']": {
+        background: `rgba(250, 240, 230, var(--display-opacity))`,
+        color: `rgb(250, 240, 230)`,
+      },
+      "&[data-lang='diff']": {
+        background: `rgba(230, 255, 237, var(--display-opacity))`,
+        color: `rgb(230, 255, 237)`,
+      },
     },
   }),
   variants: {

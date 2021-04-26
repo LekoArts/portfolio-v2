@@ -1,50 +1,124 @@
 ---
 title: "Language tabs for Markdown & MDX code blocks"
 date: 2019-09-07
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-23
 icon: "mdx"
 tags:
   - Gatsby
   - MDX
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+Integrating syntax highlighting in Gatsby is solvable with solutions like [`gatsby-remark-prismjs`](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) or [`prism-react-renderer`](https://github.com/FormidableLabs/prism-react-renderer). When creating the code block in Markdown you specify the desired language (e.g. js or css) after the opening three backticks. It's a nice touch to display the specified language also in the code block itself, like I do it on my blog here:
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
-
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
-
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
-
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
-
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+```js
+const harry = spell(`lumos`);
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+The following two quick tips explain how to integrate this feature with `gatsby-remark-prismjs` or `prism-react-renderer` (Markdown or MDX respectively).
 
----
+## Markdown & gatsby-remark-prismjs
 
-## What to expect from here on out
+I created the codesandbox [language-tabs-for-gatsby-remark-prismjs](https://codesandbox.io/s/language-tabs-for-gatsby-remark-prismjs-lvcny) which you can have a look at the final and working code if you prefer to jump straight to the solution.
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+Set up a Gatsby project which allows you to source data from Markdown. You can e.g. run `npm init gatsby` and select the Markdown option. Now install `gatsby-remark-prismjs` and configure your `gatsby-config.js` & `gatsby-browser.js` accordingly. Add some dummy content to one of your markdown files to see something happen, e.g.:
 
-It's important to cover all of these use cases for a few reasons:
+````md
+```js
+const harry = spell("lumos");
+```
+````
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+After starting your Gatsby dev server you should have a syntax highlighted code block. Now do a right-click on the code block, followed up by a click on _Inspect element_ to view the block in the developer tools. You see something like:
+
+```html
+<div class="gatsby-highlight" data-language="js">
+  <pre
+    class="language-js"
+  ><code class="language-js">YOUR_CONTENT_HERE</code></pre>
+</div>
+```
+
+You need to target the `.gatsby-highlight` class and `pre` tag to add the label via the pseudo-selector `::before`.
+
+Create a CSS file and include it in your `gatsby-browser.js` file. The CSS itself is:
+
+```css:title=custom-prism-styles.css withLineNumbers
+.gatsby-highlight {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.gatsby-highlight pre[class*="language-"] {
+  -webkit-overflow-scrolling: touch;
+}
+.gatsby-highlight pre[class*="language-"]::before {
+  background: black;
+  border-radius: 0 0 0.25rem 0.25rem;
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.025rem;
+  padding: 0.1rem 0.5rem;
+  position: absolute;
+  right: 1rem;
+  text-align: right;
+  text-transform: uppercase;
+  top: 0;
+}
+.gatsby-highlight pre[class="language-js"]::before {
+  content: "js";
+  background: #f7df1e;
+  color: black;
+}
+```
+
+The wrapping `div` has a relative position so that the tab itself can be positioned absolutely. The CSS also makes use of [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) to target every `pre` tag with `language-*` classes. Every language will be targeted by this (your default styling), hence for specific languages you overwrite some of the styling.
+
+If you want to add tabs for other languages, copy the existing `language-js` version (you can again inspect the DOM before to know what to target).
+
+## MDX & prism-react-renderer
+
+When using MDX and `gatsby-plugin-mdx` you could also use the aforementioned `gatsby-remark-prismjs`, however MDX offers you more possibilities, so why not use them, e.g. for a live editor?
+Set up a new project with `npm init gatsby` and choose MDX this time. Also install `prism-react-renderer`. You can copy `custom-prism-styles.css` from the first quick tip to this project and also import it inside `gatsby-browser.js`.
+
+To get the CSS from `custom-prism-styles.css` to work, you'll need to think of adding a `div` with `.gatsby-highlight` when using `prism-react-renderer`.
+
+The main part is to create a `<Code />` component and mapping it to the `pre` tag in MDX. The [language-tabs-mdx](https://codesandbox.io/s/language-tabs-mdx-g03g6) codesandbox shows the complete setup, here's the code component as a snippet:
+
+```js:title=src/components/code.js
+import React from "react";
+import Highlight, { defaultProps } from "prism-react-renderer";
+
+const Code = () => (
+  <Highlight
+    {...defaultProps}
+    code={codeString}
+    language={language}
+  >
+    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      <div className="gatsby-highlight" data-language={language} data-another-long-name-here="foobar-foobar-asdf-asdf">
+        <pre className={className} style={style}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span
+                  {...getTokenProps({ token, key })}
+                />
+               ))}
+             </div>
+          ))}
+        </pre>
+      </div>
+    )}
+  </Highlight>
+)
+
+export default Code
+```
+
+If you now start the development server and inspect the HTML the extra container will be in the DOM. Should work with the above CSS now, right? Not quite yet, one small adjustment needs to be made. As you can see in the DOM, the pre element now has two classes:
+
+```html
+<pre class="prism-code language-js">YOUR_CONTENT</pre>
+```
+
+Therefore the previous `pre[class="language-js"]` selector won't work anymore as it expects only this one class. By changing this to `pre[class~="language-js"]` you say:
+When one of the class names is language-js, please do the following.

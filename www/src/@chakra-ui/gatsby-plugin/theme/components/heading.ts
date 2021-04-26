@@ -6,7 +6,7 @@ const Heading = {
   baseStyle: (props) => ({
     fontFamily: `heading`,
     fontWeight: `bold`,
-    color: mode(`black`, `white`)(props),
+    color: mode(`brand.heading`, `brand.dark.heading`)(props),
   }),
   sizes: {
     "4xl": {

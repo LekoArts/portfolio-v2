@@ -96,4 +96,4 @@
 - fromPath: /en/categories/tutorial
   toPath: /tutorials
 - fromPath: /en/categories/freebie
-  toPath: /garden # TODO: Search param to "freebie"
+  toPath: /garden

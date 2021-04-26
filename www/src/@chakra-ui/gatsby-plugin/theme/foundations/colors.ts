@@ -283,6 +283,7 @@ const colors = {
     text: colorPalette.colors.blueGray[`800`],
     textMuted: colorPalette.colors.blueGray[`700`],
     textEmphasized: colorPalette.colors.blue[`600`],
+    heading: colorPalette.colors.black,
     bg: colorPalette.colors.white,
     bgAlpha: transparentize(`white`, navBgTransparency)(colorPalette),
     dark: {
@@ -293,6 +294,7 @@ const colors = {
       text: colorPalette.colors.blueGray[`300`],
       textMuted: colorPalette.colors.blueGray[`400`],
       textEmphasized: colorPalette.colors.orange[`500`],
+      heading: colorPalette.colors.white,
       bg: colorPalette.colors.blueGray[`900`],
       bgAlpha: transparentize(`blueGray.900`, navBgTransparency)(colorPalette),
     },

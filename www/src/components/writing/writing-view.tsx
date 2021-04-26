@@ -1,12 +1,14 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Container, Divider, Link as ExternalLink } from "@chakra-ui/react"
+import { Container, Divider, Link as ExternalLink, Text } from "@chakra-ui/react"
+import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Layout } from "../blocks/layout"
 import { SEO } from "../seo"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Spacer } from "../blocks/spacer"
 import { Prose } from "../typography/prose"
+import { components } from "../mdx"
 
 export type WritingViewDataProps = {
   post: {
@@ -35,7 +37,7 @@ export type WritingViewDataProps = {
   type: "prose" | "tutorial"
 }
 
-const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children }) => (
+const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children, type }) => (
   <Layout>
     <SEO title={post.title} description={post.description ? post.description : post.excerpt}>
       <meta name="twitter:label1" value="Time To Read" />
@@ -49,7 +51,9 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children 
       <SkipNavContent>
         {children}
         <Prose>
-          <MDXRenderer>{post.body}</MDXRenderer>
+          <MDXProvider components={components}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
         </Prose>
         <Spacer size={12} axis="vertical" />
         <Divider />
@@ -69,6 +73,11 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children 
         >
           Discuss on Twitter
         </ExternalLink>
+        {type === `prose` && (
+          <Text mt={6} fontSize={[`md`, null, null, `18px`]}>
+            Last updated: {post.lastUpdated}
+          </Text>
+        )}
       </SkipNavContent>
     </Container>
   </Layout>
