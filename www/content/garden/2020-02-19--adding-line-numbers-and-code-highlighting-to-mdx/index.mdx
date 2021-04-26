@@ -1,50 +1,213 @@
 ---
 title: "Adding line numbers and code highlighting to MDX"
 date: 2020-02-19
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-26
 icon: "mdx"
 tags:
   - Gatsby
   - MDX
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+In this very short quick tip you'll learn how to set up code blocks in [MDX](https://mdxjs.com/) and Gatsby that support line numbers and code highlighting using the code renderer [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer). A preview can be found on [CodeSandbox](https://codesandbox.io/s/mdx-line-numbers-code-highlighting-99wb5).
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+First, make sure that you have a MDX blog set up. If you have that already, you can skip to the packages. If not, you should first read [Getting Started with MDX](https://www.gatsbyjs.com/docs/mdx/getting-started/) on Gatsby's documentation.
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+Install the necessary packages for this quick tip:
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
-
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
-
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+```sh
+npm install mdx-utils prism-react-renderer
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+Create a Code React component in `src/components/code.js` and leave the file empty for now.
 
----
+Also create a CSS file:
 
-## What to expect from here on out
+```css:title=src/components/layout.css
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 
-It's important to cover all of these use cases for a few reasons:
+.prism-code {
+  font-size: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+  background-color: transparent;
+  overflow: initial;
+}
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+.token {
+  display: inline-block;
+}
+
+p > code,
+li > code {
+  background: rgb(1, 22, 39);
+  color: rgb(214, 222, 235);
+  padding: 0.4em 0.3rem;
+}
+
+.gatsby-highlight {
+  font-size: 1rem;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+
+gatsby-highlight > code[class*="language-"],
+.gatsby-highlight > pre[class*="language-"] {
+  word-spacing: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+.line-number-style {
+  display: inline-block;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 1.2em;
+  user-select: none;
+  opacity: 0.3;
+  text-align: center;
+  position: relative;
+}
+
+.highlight-line {
+  background-color: rgb(2, 55, 81);
+  border-left: 4px solid rgb(2, 155, 206);
+}
+
+.highlight-line .line-number-style {
+  opacity: 0.5;
+  width: calc(1.2em - 4px);
+  left: -2px;
+}
+```
+
+Switch to your file that contains the `MDXProvider`. If you use e.g. the `defaultLayouts` option inside `gatsby-plugin-mdx` of `gatsby-config.js`:
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        defaultLayouts: {
+          default: require.resolve("./src/components/layout.js"),
+        },
+      }
+    }
+  ]
+}
+```
+
+You'll need to add the `MDXProvider` and the rest of the following code (it's essentially the components placed into the wrapping `MDXProvider`) to your Layout file:
+
+```js:title=src/components/layout.js
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { preToCodeBlock } from "mdx-utils"
+import Code from "./code"
+import "./layout.css"
+
+const components = {
+  pre: preProps => {
+    const props = preToCodeBlock(preProps)
+    if (props) {
+      return <Code {...props} />
+    } else {
+      return <pre {...preProps} />
+    }
+  },
+}
+
+const Layout = ({ children }) => (
+  <MDXProvider components={components}>
+    <div style={{ margin: `0 auto`, maxWidth: 960, padding: `2rem` }}>
+      {children}
+    </div>
+  </MDXProvider>
+)
+
+export default Layout
+```
+
+The important bit is that you pass `components` into the provider and the previously created Code React component is used.
+
+Add the following to said component:
+
+```js:title=src/components/code.js
+import React from "react"
+import Highlight, { defaultProps } from "prism-react-renderer"
+import theme from "prism-react-renderer/themes/nightOwl"
+
+const RE = /{([\d,-]+)}/
+
+const calculateLinesToHighlight = meta => {
+  if (!RE.test(meta)) {
+    return () => false
+  }
+  const lineNumbers = RE.exec(meta)[1]
+    .split(`,`)
+    .map(v => v.split(`-`).map(x => parseInt(x, 10)))
+  return index => {
+    const lineNumber = index + 1
+    const inRange = lineNumbers.some(([start, end]) =>
+      end ? lineNumber >= start && lineNumber <= end : lineNumber === start
+    )
+    return inRange
+  }
+}
+
+const Code = ({ codeString, language, metastring, ...props }) => {
+  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+
+  return (
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      language={language}
+      theme={theme}
+      {...props}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <div className="gatsby-highlight" data-language={language}>
+          <pre className={className} style={style}>
+            {tokens.map((line, i) => {
+              const lineProps = getLineProps({ line, key: i })
+
+              if (shouldHighlightLine(i)) {
+                lineProps.className = `${lineProps.className} highlight-line`
+              }
+
+              return (
+                <div {...lineProps}>
+                  <span className="line-number-style">{i + 1}</span>
+                  {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              )
+            })}
+          </pre>
+        </div>
+      )}
+    </Highlight>
+  )
+}
+
+export default Code
+```
+
+The `calculateLinesToHighlight` helper function gets the `metastring` as an input which is the notation for the line highlighting. As you can see in the linked [CodeSandbox](https://codesandbox.io/s/mdx-line-numbers-code-highlighting-99wb5) example you can write `{1,9-12}` to highlight the first and 9th to 12th line.

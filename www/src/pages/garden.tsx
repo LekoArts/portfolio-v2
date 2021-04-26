@@ -63,6 +63,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
   const prefersReducedMotion = usePrefersReducedMotion()
   const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
+  const prominentLink = useColorModeValue(`brand.heading`, `brand.dark.heading`)
 
   return (
     <Layout>
@@ -70,7 +71,11 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
         <Container py={space.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
           <Text textStyle="prominent">
-            <Link to="/garden/what-is-a-digital-garden">What is a Digital Garden?</Link> Select tags to filter posts:
+            <Link to="/garden/what-is-a-digital-garden" color={prominentLink}>
+              What is a Digital Garden?
+            </Link>
+            {` `}
+            Select tags to filter posts:
           </Text>
           <Spacer size={6} axis="vertical" />
           <Wrap>

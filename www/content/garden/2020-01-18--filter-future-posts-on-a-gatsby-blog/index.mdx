@@ -1,49 +1,203 @@
 ---
 title: "Filter future posts on a Gatsby blog"
 date: 2020-01-18
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-26
 icon: "gatsby"
 tags:
   - Gatsby
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+You can leverage Gatsby's GraphQL data layer to filter blog posts that are in the future. This _TODAY_ variable allows you to e.g. build your site once a day and automatically have it published. A use case would be a podcast website where the author recorded the episode and already has written the description in advance. This way you also don't have to worry about remembering setting a "draft" variable or to be able to push changes up when you want something published.
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+**If you need a TL;DR:** You can visit the final example on [Codesandbox](https://codesandbox.io/s/blogposts-in-future-field-4iuvp) (have a look at `gatsby-node.js` and the filtering in `src/pages/index.js`).
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+## Setup
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+Install [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) with Gatsby's CLI:
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
-
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+```sh
+gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+When starting the development server you'll see an overview of all posts on the index page. The end goal is to filter out all future posts from this list.
 
----
+First, you should change the date on one post inside `content/blog` to a future date. In the linked Codesandbox the post `new-beginnings` was changed. You will still see all posts in the overview.
 
-## What to expect from here on out
+Stop the development server and install a function from [Lodash](https://lodash.com/) that you'll use in the next step:
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+```sh
+npm install lodash.get
+```
 
-It's important to cover all of these use cases for a few reasons:
+## Creating the extension
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+Open your `gatsby-node.js` file and add the installed package, and the boilerplate to use [Gatsby's schema customization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/):
+
+```js:title=gatsby-node.js
+const get = require(`lodash.get`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+}
+```
+
+With the function `createTypes` you'll explicitly define the GraphQL types (in this case in GraphQL [SDL](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) syntax), with `createFieldExtension` you'll create a so called directive/extension that you then can reuse throughout your types.
+
+Since gatsby-starter-blog is powered by Markdown you'll want to add your `isFuture` field to the markdown type. It's called `MarkdownRemark` — you are probably used to querying that in GraphQL queries. Going to GraphiQL (`localhost:8000/___graphql`) and _Docs_ (top right corner) => _Query_ also reveals all available types.
+
+Adding this type definition defines the mentioned field at the root of the Markdown type:
+
+```js:title=gatsby-node.js {6-10}
+const get = require(`lodash.get`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      isFuture: Boolean!
+    }
+  `)
+}
+```
+
+The notation `Boolean!` means that the field is of type Boolean and is Non-Nullable.
+
+### Creating the helper function
+
+In the next step you'll create the helper function that returns either true or false depending on whether the input date is in the future or not.
+
+```js:title=gatsby-node.js {6-9}
+const get = require(`lodash.get`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+
+  const isFuture = fieldName => source => {
+    const date = get(source, fieldName)
+    return new Date(date) > new Date()
+  }
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      isFuture: Boolean!
+    }
+  `)
+}
+```
+
+The concept used there is called [Currying](https://en.wikipedia.org/wiki/Currying). For this example it means:
+
+If you run `isFuture("myName")` you'll receive a function:
+
+```js
+(source) => {
+  const date = get(source, "myName");
+  return new Date(date) > new Date();
+};
+```
+
+So what is that function doing? With the `lodash.get` function you're able to input a string with only one word (e.g. _myName_) or a word with dot notation (e.g. _myName.field_). The latter is used to access information in objects. The `lodash.get` function translates the string and enables you to access that information. If you later `console.log(source)` you'll see that you have access to `source.frontmatter` and other fields. It then checks the date with the current date and returns true if it's in the future, otherwise false.
+
+Next, use `createFieldExtension` and the just created `isFuture` function:
+
+```js:title=gatsby-node.js {11-21}
+const get = require(`lodash.get`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+
+  const isFuture = fieldName => source => {
+    const date = get(source, fieldName)
+    return new Date(date) > new Date()
+  }
+
+  createFieldExtension({
+    name: `isFuture`,
+    args: {
+      fieldName: "String!",
+    },
+    extend({ fieldName }) {
+      return {
+        resolve: isFuture(fieldName),
+      }
+    },
+  })
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      isFuture: Boolean!
+    }
+  `)
+}
+```
+
+`createFieldExtension` accepts three arguments. `name` will be name of the directive, `args` the information you can give it and `extend` is a function that has to return a (partial) field config. In more verbose terms (including `isFuture`) you could write it like this:
+
+```js
+const isFuture = (fieldName, source) => {
+  const date = get(source, fieldName);
+  return new Date(date) > new Date();
+};
+
+createFieldExtension({
+  name: `isFuture`,
+  args: {
+    fieldName: "String!",
+  },
+  extend(options) {
+    return {
+      resolve(source) {
+        return isFuture(options.fieldName, source);
+      },
+    };
+  },
+});
+```
+
+So the the code you'll be using is destructuring the `options` and passing `source` via _Currying_ to `isFuture`.
+
+After adding the field extension to the field, the final code should look like:
+
+```js:title=gatsby-node.js {25}
+const get = require(`lodash.get`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+
+  const isFuture = fieldName => source => {
+    const date = get(source, fieldName)
+    return new Date(date) > new Date()
+  }
+
+  createFieldExtension({
+    name: `isFuture`,
+    args: {
+      fieldName: "String!",
+    },
+    extend({ fieldName }) {
+      return {
+        resolve: isFuture(fieldName),
+      }
+    },
+  })
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      isFuture: Boolean! @isFuture(fieldName: "frontmatter.date")
+    }
+  `)
+}
+```
+
+As the date is defined in the frontmatter the fieldName is `frontmatter.date`. If you would place the `isFuture` field in the frontmatter itself you would use only `date` for the `fieldName`.
+
+Start the development server, head to GraphiQL and see that you now can query `isFuture` on `MarkdownRemark` nodes!
+
+You now can filter `allMarkdownRemark` with `filter: { isFuture: { eq: false } }` to hide posts. See an example on [Codesandbox](https://codesandbox.io/s/blogposts-in-future-field-4iuvp).
+
+## Where to go from here
+
+Congrats, you just created a generic field extension that allows you to generate a `isFuture` field! You can not only use that with Markdown files but with any type in the GraphQL schema.
+
+Lookup the type you want to modify in GraphiQL and add the `isFuture` field where appropriate. If you're unsure what value you have to pass into `fieldName`, you can inspect the passed `source` and see what's available.

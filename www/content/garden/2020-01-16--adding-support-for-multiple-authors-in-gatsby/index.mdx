@@ -1,50 +1,102 @@
 ---
 title: "Adding support for multiple authors in Gatsby"
 date: 2020-01-16
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-26
 icon: "gatsby"
 tags:
   - Gatsby
   - MDX
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+This quick tip will explain how you can have multiple authors for your blog posts. It's not limited to Markdown but the example Gatsby site will use that. You can apply the general technique also to your site that is powered by a CMS or other data source. [See the example project on Codesandbox](https://codesandbox.io/s/markdown-multiple-authors-b3s64).
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+Please note that this article won't walk you through an example from start to finish but rather explain the concepts behind it. Feel free to clone [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) and try it yourself after reading this blog post.
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+## Setup
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+So, what's the starting point? For this example you'll start of with a markdown powered Gatsby site and each blog post has a `frontmatter` with things like title, slug, and author. Now you want to add the ability to add multiple authors to one blog post and also provide some additional information about the authors.
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+So the `frontmatter` of each blog post could look like:
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+```md
+---
+title: "Second blog post"
+date: 2020-01-02
+slug: "/second-blog-post"
+authors:
+  - "Hermione"
+  - "Ron"
+---
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+For the detailed information (description, image) of each author you can use something like an `authors.yml` file. YAML files are a great fit for that usecase (e.g. allow comments, easy to parse and lint). Put the file together with some images into the same folder, set up `gatsby-source-filesystem` and `gatsby-transformer-yaml` and paste something in like:
 
----
+```yaml
+- name: "Harry"
+  description: "The chosen one"
+  image: "./harry.jpg"
+- name: "Ron"
+  description: "Harry's best friend"
+  image: "./ron.jpg"
+- name: "Hermione"
+  description: "Smartest girl"
+  image: "./hermione.jpg"
+```
 
-## What to expect from here on out
+The important bit here is that the `name` is unique and the `frontmatter` only references available names.
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+## Creating the link
 
-It's important to cover all of these use cases for a few reasons:
+Now it's time for [Gatsby's schema customization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/) to shine. The end goal is that you can query something like this:
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+```graphql
+{
+  query {
+    markdownRemark {
+      frontmatter {
+        title
+        authors {
+          description
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+For this to work you'll need to create a foreign-key relationship between the blog posts and the authors. Or in other words: Between `MarkdownRemark` and `AuthorsYaml`. Because those are the respective types - you can see them by going to your GraphiQL instance at `localhost:8000/___graphql`.
+
+Add to your `gatsby-node.js` file:
+
+```js:title=gatsby-node.js {9}
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }
+
+    type Frontmatter {
+      authors: [AuthorsYaml] @link(by: "name")
+    }
+  `
+  createTypes(typeDefs)
+}
+```
+
+In order to explicitly define the nested frontmatter you first need define root type `MarkdownRemark` that then has the custom type `Frontmatter`. The part `implements Node` means that the type will use the `Node` interface that defines set of fields common to node objects created by source plugins/transformers.
+
+The important bit here is:
+
+```graphql
+authors: [AuthorsYaml] @link(by: "name")
+```
+
+`AuthorsYaml` is the type for your yaml file, the bracket notation means that authors is having an array of items with the type of AuthorsYaml. Now you're saying that both should be linked by name. Remember: The name is common in both files and unique.
+
+Learn more about it in-depth here: [Gatsby's docs about schema customization](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/).
+
+## Other data sources
+
+This quick tip explained the concept with markdown files and a yaml file. But what about CMSs or other local files? You'll want to get the type names (e.g. from GraphiQL) and also type until you reached the nested type. Use a unique property for linking.

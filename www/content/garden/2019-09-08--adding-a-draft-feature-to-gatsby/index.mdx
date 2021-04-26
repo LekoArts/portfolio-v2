@@ -1,50 +1,85 @@
 ---
 title: "Adding a draft feature to Gatsby"
 date: 2019-09-08
-lastUpdated: 2021-04-05
+lastUpdated: 2021-04-26
 icon: "gatsby"
 tags:
   - Gatsby
   - MDX
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+There are a lot of guides on the internet on how to add default values to your Gatsby schema, e.g. a draft entry in the frontmatter to hide posts that are still work-in-progress. However, all these solutions are kinda hacky, as they for example require you to use environment variables or even define the draft entry in every single frontmatter you have. Since Gatsby implemented its [schema customization API](https://www.gatsbyjs.com/blog/2019-03-18-releasing-new-schema-customization/) there is an easy solution (and not hacky at all!) available. Most importantly: This quick tip is applicable to all data sources you have, not only markdown (and its frontmatter).
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+You can have a look at the codesandbox [gatsby-draft-default-values](https://codesandbox.io/s/gatsby-draft-default-values-3dd2l) to see the working code in a minimal example.
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+If you want to follow the example along, you can install the default blog starter by running `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog` with `gatsby-cli`.
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+## Setup
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+The default blog starter uses markdown for its content and you can use the so called frontmatter in markdown files to define additional data, such as e.g. a draft status (true or false). The goal is to define a default value for this draft status so that you don't have to define it in every markdown file but only in the ones you'd like to be a draft.
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+Add this to the existing `gatsby-node.js` file:
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions
+
+  createFieldExtension({
+    name: `defaultFalse`,
+    extend() {
+      return {
+        resolve(source, args, context, info) {
+          if (source[info.fieldName] == null) {
+            return false
+          }
+          return source[info.fieldName]
+        },
+      }
+    },
+  })
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }
+    type Frontmatter {
+      draft: Boolean @defaultFalse
+    }
+  `)
+}
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+In the `createTypes` function you have to define a nested type on the `MarkdownRemark` type (read [Nested types](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#nested-types) for more info) to be able to type the draft field. On the draft field itself the custom extension is used as a directive. The directive allows you to reuse this action on other fields, too. In case you're using a CMS or other datasource than markdown you'll need to find and define your type (instead of `MarkdownRemark`) to have this working. I'd recommend using GraphiQL (`localhost:8000/___graphql`) if you're unsure about the names!
 
+To be able to use the _@defaultFalse_ directive, you need to define a custom extension with `createFieldExtension`. The `source` contains all fields from the frontmatter (in this case: title, description, date, and draft). `info.fieldName` is the name of the field you're applying the directive to – in this case `draft`. Fields that are not provided are null by default but because draft should be a boolean you need to return `false` in this case. If it's provided simply return the value.
+
+Read the complete guide on [Creating type definitions](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#creating-type-definitions) to get in-depth knowledge of how and why it works this way.
+
+## Usage
+
+Now that the draft field is set up and defaults to false, you can go ahead and add a `draft: true` to the frontmatter of a blogpost.
+
+```md
 ---
+title: My Second Post!
+date: "2015-05-06T23:46:37.121Z"
+draft: true
+---
+```
 
-## What to expect from here on out
+When opening GraphiQL you also should be able to query the draft field now and filter by it. A query to list all markdown posts that are not a draft looks like:
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
-
-It's important to cover all of these use cases for a few reasons:
-
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+```graphql
+query {
+  allMarkdownRemark(filter: { frontmatter: { draft: { eq: false } } }) {
+    nodes {
+      frontmatter {
+        title
+        description
+        date
+        draft
+      }
+    }
+  }
+}
+```
