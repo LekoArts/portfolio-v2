@@ -2,7 +2,7 @@
 title: "Tips & Tricks for Gatsby"
 subtitle: ""
 date: 2019-03-02
-lastUpdated: 2019-03-02
+lastUpdated: 2021-05-01
 description: "A collection of short, but useful quick tips shared by me and the community about Gatsby. From GraphQL over local development to deployment."
 type: "tutorial"
 category: "Gatsby"
@@ -10,43 +10,376 @@ image: ./file-name.jpg
 published: true
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+For some time now I've been trying to publish quick tips about Gatsby on Twitter, because the community loves such short, useful tips. Accordingly, I had already created a [Twitter moment](https://twitter.com/i/moments/1024936211444576258) back then -- but why only content from me? On January 6th of this year I also called the community to share their quick tips (with great success). As promised, this blogpost is supposed to be a collection of these (and other) tips. You can also tag me on [Twitter](https://twitter.com/lekoarts_de) if you want to add your tip to the moment!
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+Some tips are also accompanied by [CodeSandbox](https://codesandbox.io) examples.
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+<Alert status="info" title="Tweet's contents">
+  Most tips on Twitter are code examples embedded in an image. For a blog post
+  it wouldn't make much sense to display images instead of copy-able code --
+  therefore the tweets are not embedded here, but the authors are quoted
+  differently. If you are the author of one of these tweets and disagree, please
+  contact me. Thanks a lot!
+</Alert>
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+## Date of last Build
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+Gives you the date for when you last used gatsby build. In the case of e.g. Gatsby Cloud that would be the last time you deployed your site (hence buildTime).
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+[CodeSandbox](https://codesandbox.io/s/ypmxy84nlx)
+
+```jsx
+import * as React from "react";
+import { graphql } from "gatsby";
+
+const IndexPage = ({ data }) => {
+  return (
+    <main>
+      <p>This site was last built on:</p>
+      <p>{data.site.buildTime}</p>
+    </main>
+  );
+};
+
+export default IndexPage;
+
+export const query = graphql`
+  query {
+    site {
+      buildTime(formatString: "DD/MM/YYYY")
+    }
+  }
+`;
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+## Date of last modification
 
+For open source docs it's good to know when a document was last modified. You can get that information via the `parent` if you use local files like Markdown, MDX, YAML etc. Use the `___graphql` endpoint to explore that information on your own project.
+
+[CodeSandbox](https://codesandbox.io/s/vjp58m9r50)
+
+```graphql
+query {
+  allMdx {
+    nodes {
+      parent {
+        ... on File {
+          modifiedTime(formatString: "MM/DD/YYYY")
+        }
+      }
+    }
+  }
+}
+```
+
+## Same Source, different Queries
+
+When you define two (or more) `gatsby-source-filesystem` entries in your config you can filter your GraphQL queries to only get the result of one source.
+
+[CodeSandbox](https://codesandbox.io/s/ykpjk9333j)
+
+```js title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "assets",
+        path: `${__dirname}/src/assets`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "logos",
+        path: `${__dirname}/src/logos`,
+      },
+    },
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
+  ],
+};
+```
+
+Now place one image file in the `src/logos` folder and two or more image files in the `src/assets` folder. This should show the difference between the `file` and `allFile` query (of course you can put any number of files into one folder). You can address both folders individually, as shown in the following example:
+
+```js
+import * as React from "react";
+import { graphql } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+
+const IndexPage = ({ data }) => {
+  return (
+    <main>
+      <p>First image (logo):</p>
+      <GatsbyImage image={getImage(data.logo)} />
+      <p>Assets images (two):</p>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {data.assets.nodes.map((img) => (
+          <GatsbyImage image={getImage(img.childImageSharp)} />
+        ))}
+      </div>
+    </main>
+  );
+};
+
+export default IndexPage;
+
+export const query = graphql`
+  query {
+    logo: file(sourceInstanceName: { eq: "logos" }) {
+      childImageSharp {
+        gatsbyImageData(width: 200, quality: 100)
+      }
+    }
+    assets: allFile(filter: { sourceInstanceName: { eq: "assets" } }) {
+      nodes {
+        childImageSharp {
+          gatsbyImageData(width: 200, quality: 100)
+        }
+      }
+    }
+  }
+`;
+```
+
+## Gatsby's reporter API
+
+You can not only use async/await in `gatsby-node.js` but also use Gatsby's reporter API. Use this to throw errors. You should use `panicOnBuild` to only stop the process on `gatsby build` (so that you can debug it with GraphiQL).
+
+```js title=gatsby-node.js
+const yourTemplate = require.resolve("./src/templates/yourTemplate.js");
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions;
+
+  const result = await graphql(`
+    {
+      ...your
+      GraphQL
+      query
+    }
+  `);
+
+  if (result.errors) {
+    reporter.panicOnBuild("Error while running GraphQL query.");
+    return;
+  }
+
+  result.data.yourNode.nodes.forEach((node) => {
+    // createPage function
+  });
+};
+```
+
+## Previous/Next - Links
+
+Most of the time you want to show a previous/next post under your blog post to keep the visitor reading. For that you can use `pageContext`.
+
+[CodeSandbox](https://codesandbox.io/s/5k7r3ok7k)
+
+```js title=gatsby-node.js
+const bookTemplate = require.resolve("./src/templates/book.js");
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions;
+
+  const result = await graphql(
+    graphql(`
+      {
+        allBooksYaml(sort: { fields: [title], order: ASC }) {
+          nodes {
+            slug
+            title
+          }
+        }
+      }
+    `)
+  );
+
+  if (result.errors) {
+    reporter.panicOnBuild("Error while running GraphQL query.");
+    return;
+  }
+
+  const books = result.data.allBooksYaml.nodes;
+
+  books.forEach((node, index) => {
+    // Set the prev/next variable for every node so
+    // that you can directly access slug & title
+
+    const prev = index === 0 ? null : books[index - 1];
+    const next = index === books.length - 1 ? null : books[index + 1];
+
+    createPage({
+      path: node.slug,
+      component: bookTemplate,
+      context: {
+        slug: node.slug,
+        prev,
+        next,
+      },
+    });
+  });
+};
+```
+
+```js title=src/templates/book.js
+import * as React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
+
+const BookTemplate = ({ data: { booksYaml }, pageContext: { prev, next } }) => {
+  return (
+    <Layout>
+      <h2>{booksYaml.title}</h2>
+      <div>
+        {prev && (
+          <div>
+            <span>Previous</span>
+            <Link to={prev.slug}>{prev.title}</Link>
+          </div>
+        )}
+        {next && (
+          <div>
+            <span>Next</span>
+            <Link to={next.slug}>{next.title}</Link>
+          </div>
+        )}
+      </div>
+    </Layout>
+  );
+};
+
+export default BookTemplate;
+
+export const pageQuery = graphql`
+  query BookBySlug($slug: String!) {
+    booksYaml(slug: { eq: $slug }) {
+      title
+      content
+    }
+  }
+`;
+```
+
+## Random Links
+
+In contrast to the previous tip you can also show two (or more) random posts by changing `gatsby-node.js`.
+
+[CodeSandbox](https://codesandbox.io/s/520jv2nylk)
+
+```js title=gatsby-node.js
+const _ = require("lodash");
+
+const prevNext = (list, item) => {
+  // Create a random selection of other posts (excluding the current post)
+  const filterUnique = _.filter(list, (input) => input.slug !== item.slug);
+  const sample = _.sampleSize(filterUnique, 2);
+
+  return {
+    prev: sample[0],
+    next: sample[1],
+  };
+};
+
+const bookTemplate = require.resolve("./src/templates/book.js");
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions;
+
+  const result = await graphql(
+    graphql(`
+      {
+        allBooksYaml(sort: { fields: [title], order: ASC }) {
+          nodes {
+            slug
+            title
+          }
+        }
+      }
+    `)
+  );
+
+  if (result.errors) {
+    reporter.panicOnBuild("Error while running GraphQL query.");
+    return;
+  }
+
+  const books = result.data.allBooksYaml.nodes;
+
+  books.forEach((node) => {
+    const { prev, next } = prevNext(books, node);
+
+    createPage({
+      path: node.slug,
+      component: bookTemplate,
+      context: {
+        slug: node.slug,
+        prev,
+        next,
+      },
+    });
+  });
+};
+```
+
+## Download Images from a CDN
+
+If your images are hosted on a CDN and you want to use `gatsby-plugin-image`, you can download them using the `createRemoteFileNode` helper. Then add the image to the respective node.
+
+This example assumes that you have Gatsby set up with Markdown and want to use the following frontmatter:
+
+```md
 ---
+title: My first blog post!
+featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
+featuredImgAlt: Mountains with a starry sky
+---
+```
 
-## What to expect from here on out
+```js title=gatsby-node.js
+const { createRemoteFileNode } = require("gatsby-source-filesystem");
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
-
-It's important to cover all of these use cases for a few reasons:
-
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+      featuredImg: File @link(from: "featuredImg___NODE")
+    }
+    type Frontmatter {
+      title: String!
+      featuredImgUrl: String
+      featuredImgAlt: String
+    }
+  `);
+};
+exports.onCreateNode = async ({
+  node,
+  actions: { createNode },
+  store,
+  cache,
+  createNodeId,
+}) => {
+  // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
+  if (
+    node.internal.type === "MarkdownRemark" &&
+    node.frontmatter.featuredImgUrl !== null
+  ) {
+    let fileNode = await createRemoteFileNode({
+      url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
+      parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
+      createNode, // helper function in gatsby-node to generate the node
+      createNodeId, // helper function in gatsby-node to generate the node id
+      cache, // Gatsby's cache
+      store, // Gatsby's Redux store
+    });
+    // if the file was created, attach the new node to the parent node
+    if (fileNode) {
+      node.featuredImg___NODE = fileNode.id;
+    }
+  }
+};
+```

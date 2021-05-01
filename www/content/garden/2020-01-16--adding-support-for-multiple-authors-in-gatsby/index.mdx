@@ -69,9 +69,9 @@ For this to work you'll need to create a foreign-key relationship between the bl
 
 Add to your `gatsby-node.js` file:
 
-```js:title=gatsby-node.js {9}
+```js title=gatsby-node.js {9}
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
   const typeDefs = `
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
@@ -80,9 +80,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       authors: [AuthorsYaml] @link(by: "name")
     }
-  `
-  createTypes(typeDefs)
-}
+  `;
+  createTypes(typeDefs);
+};
 ```
 
 In order to explicitly define the nested frontmatter you first need define root type `MarkdownRemark` that then has the custom type `Frontmatter`. The part `implements Node` means that the type will use the `Node` interface that defines set of fields common to node objects created by source plugins/transformers.

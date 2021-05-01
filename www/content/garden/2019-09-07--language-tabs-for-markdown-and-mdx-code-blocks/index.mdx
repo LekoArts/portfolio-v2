@@ -11,7 +11,7 @@ tags:
 Integrating syntax highlighting in Gatsby is solvable with solutions like [`gatsby-remark-prismjs`](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) or [`prism-react-renderer`](https://github.com/FormidableLabs/prism-react-renderer). When creating the code block in Markdown you specify the desired language (e.g. js or css) after the opening three backticks. It's a nice touch to display the specified language also in the code block itself, like I do it on my blog here:
 
 ```js
-const harry = spell(`lumos`);
+const harry = spell("lumos");
 ```
 
 The following two quick tips explain how to integrate this feature with `gatsby-remark-prismjs` or `prism-react-renderer` (Markdown or MDX respectively).
@@ -42,7 +42,7 @@ You need to target the `.gatsby-highlight` class and `pre` tag to add the label 
 
 Create a CSS file and include it in your `gatsby-browser.js` file. The CSS itself is:
 
-```css:title=custom-prism-styles.css withLineNumbers
+```css title=custom-prism-styles.css withLineNumbers
 .gatsby-highlight {
   position: relative;
   -webkit-overflow-scrolling: touch;
@@ -120,5 +120,4 @@ If you now start the development server and inspect the HTML the extra container
 <pre class="prism-code language-js">YOUR_CONTENT</pre>
 ```
 
-Therefore the previous `pre[class="language-js"]` selector won't work anymore as it expects only this one class. By changing this to `pre[class~="language-js"]` you say:
-When one of the class names is language-js, please do the following.
+Therefore the previous `pre[class="language-js"]` selector won't work anymore as it expects only this one class. By changing this to `pre[class~="language-js"]` you say: When one of the class names is language-js, please do the following.

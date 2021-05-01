@@ -20,23 +20,23 @@ The default blog starter uses markdown for its content and you can use the so ca
 
 Add this to the existing `gatsby-node.js` file:
 
-```js:title=gatsby-node.js
+```js title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
+  const { createTypes, createFieldExtension } = actions;
 
   createFieldExtension({
-    name: `defaultFalse`,
+    name: "defaultFalse",
     extend() {
       return {
         resolve(source, args, context, info) {
           if (source[info.fieldName] == null) {
-            return false
+            return false;
           }
-          return source[info.fieldName]
+          return source[info.fieldName];
         },
-      }
+      };
     },
-  })
+  });
 
   createTypes(`
     type MarkdownRemark implements Node {
@@ -45,8 +45,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       draft: Boolean @defaultFalse
     }
-  `)
-}
+  `);
+};
 ```
 
 In the `createTypes` function you have to define a nested type on the `MarkdownRemark` type (read [Nested types](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#nested-types) for more info) to be able to type the draft field. On the draft field itself the custom extension is used as a directive. The directive allows you to reuse this action on other fields, too. In case you're using a CMS or other datasource than markdown you'll need to find and define your type (instead of `MarkdownRemark`) to have this working. I'd recommend using GraphiQL (`localhost:8000/___graphql`) if you're unsure about the names!

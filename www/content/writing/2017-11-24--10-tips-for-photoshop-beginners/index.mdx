@@ -2,7 +2,7 @@
 title: "10 Tips for Photoshop beginners"
 subtitle: ""
 date: 2017-11-24
-lastUpdated: 2021-04-05
+lastUpdated: 2021-05-01
 description: "Some basic, but important principles that will help you create more enjoyable projects during and after the editing."
 type: "prose"
 category: "Design"
@@ -10,43 +10,53 @@ image: ./file-name.jpg
 published: true
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+The user interface of Photoshop can be as overwhelming at the beginning as the number of available tutorials. The quality of the tutorials differs a lot -- that's why these 10 tips are meant especially for beginners, but also for old hands with bad habits. If you internalize these basic principles, your projects will be more pleasant to use during and after editing. And that saves unnecessary stress.
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+## Mask, not erase
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+If possible you should always prefer the use of a mask instead of the eraser tool. The mask allows you to change or access the original image even later, has a comprehensive dialog window to improve the edges (very useful when removing objects from their background) and allows fine adjustments of transparencies. You can use masks not only on layers but also on groups and hence modify multiple layers at once. The dialog window for improving the edges features non-destructive ways of modifying the edge itself, e.g. rounding the edges, moving the edge in/out or letting the AI do the work.
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+## Smart Objects
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+With a _Right Click_ and _Convert to Smart Object_ you can bundle single/multiple layers, groups or other Smart Objects into a new Smart Object. All changes made to such Smart Objects are non-destructive, i.e. you can also change the parameters at a later time or remove the change completely. These include transformations (scaling, adjustments etc.) or filters (gaussian blur, stylized filters etc.). But it would be nonsense to convert every layer into a Smart Object -- you can still use the layer system and leverage it to your advantage. All adjustments (like hue/saturation) are also available as their own adjustment layers.
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
-```
+Here are some real-world examples where I'd like to use Smart Objects:
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+- At the end of an image manipulation project I create a flattened copy of all layers and convert it to a Smart Object. Onto this layer I then apply things like the Camera RAW filter.
+- You can define variants for a layer setup inside a Smart Object and then can use this list of variants to display different versions of the same Smart Object
 
----
+See [Adobe's help page](https://helpx.adobe.com/photoshop/using/create-smart-objects.html) for more information.
 
-## What to expect from here on out
+## Adjustment layers
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+There are two ways to change the brightness/contrast of an image: Once via Image → Adjustments → Brightness/Contrast or via Layer → New Adjustment Layer → Brightness/Contrast. Better use adjustment layers, because they are non-destructive! Although one could also apply the first command to a Smart Object, it would not be possible to mask out the effect separately with several filters. The setting levels (incl. cutting mask) are often the better choice.
 
-It's important to cover all of these use cases for a few reasons:
+If you work across multiple projects that should have the same color grading you will also be able to copy the adjustments between projects as they are _just_ layers.
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+## Organize your project
+
+That's where it should have arrived by now: Do not work on a single level! Create as many layers as you like, arrange them with groups and mark important layers/groups with color - and name your layers/groups! It may sound like extra work to name your layers, but this will save you stress later if you have to change something in the file again. If you are absolutely lazy, you should at least name your groups... This also includes that you should name your Photoshop files properly. Image Final Final Really Final v2 Change.psd is not a good name! In such cases just use an increasing version number like Image_v01.psd.
+
+## Keyboard shortcuts
+
+You'll work so much faster when you don't have to use the mouse for frequently used tools. The only thing that really helps here is: practice, practice, practice.
+
+## Pen Tool
+
+The Pen Tool seems a bit bulky and complicated at first, unlike a magic wand tool or something similar. But when used correctly, the Pen Tool tool gives the best results for masks. Learn to use the tool, learn to create curves. The tool is not there to set a point every 10 pixels!
+
+## Watch out: Saturation and Sharpness
+
+Far too often you see images that are extremely oversharpened or where the saturation of the image has been extremely increased. Use a halfway calibrated monitor (i.e. it should display colors correctly in the best case) and sharpen your image with a 100% view.
+
+## Internet ≠ Print
+
+Media for the Internet are not automatically suitable for printing and vice versa. Before you put your poster idea into practice, you should read carefully what the printer's requirements are. Find out about the meaning of dpi/ppi/resolution, raster and vector graphics so you don't end up in a jam and your image is too low-resolution.
+
+## Understand what you do
+
+Sounds stupid, but is still important: Understand what you're doing and why you're doing it. Don't memorize the steps to achieve an effect, but understand why you are doing these steps.
+
+## Photoshop is not a jack of all trades
+
+You should realize that Photoshop is not your jack of all trades device for all your problems. Videos are easier to edit in video editing programs, UI interfaces are easier to create in Sketch/Adobe XD/Figma, magazines/business cards/flyers should be created with InDesign. Better take a look around before you torture yourself to your goal with Photoshop.

@@ -33,12 +33,12 @@ npm install lodash.get
 
 Open your `gatsby-node.js` file and add the installed package, and the boilerplate to use [Gatsby's schema customization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/):
 
-```js:title=gatsby-node.js
-const get = require(`lodash.get`)
+```js title=gatsby-node.js
+const get = require("lodash.get");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
-}
+  const { createTypes, createFieldExtension } = actions;
+};
 ```
 
 With the function `createTypes` you'll explicitly define the GraphQL types (in this case in GraphQL [SDL](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) syntax), with `createFieldExtension` you'll create a so called directive/extension that you then can reuse throughout your types.
@@ -47,18 +47,18 @@ Since gatsby-starter-blog is powered by Markdown you'll want to add your `isFutu
 
 Adding this type definition defines the mentioned field at the root of the Markdown type:
 
-```js:title=gatsby-node.js {6-10}
-const get = require(`lodash.get`)
+```js title=gatsby-node.js {6-10}
+const get = require("lodash.get");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
+  const { createTypes, createFieldExtension } = actions;
 
   createTypes(`
     type MarkdownRemark implements Node {
       isFuture: Boolean!
     }
-  `)
-}
+  `);
+};
 ```
 
 The notation `Boolean!` means that the field is of type Boolean and is Non-Nullable.
@@ -67,23 +67,23 @@ The notation `Boolean!` means that the field is of type Boolean and is Non-Nulla
 
 In the next step you'll create the helper function that returns either true or false depending on whether the input date is in the future or not.
 
-```js:title=gatsby-node.js {6-9}
-const get = require(`lodash.get`)
+```js title=gatsby-node.js {6-9}
+const get = require("lodash.get");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
+  const { createTypes, createFieldExtension } = actions;
 
-  const isFuture = fieldName => source => {
-    const date = get(source, fieldName)
-    return new Date(date) > new Date()
-  }
+  const isFuture = (fieldName) => (source) => {
+    const date = get(source, fieldName);
+    return new Date(date) > new Date();
+  };
 
   createTypes(`
     type MarkdownRemark implements Node {
       isFuture: Boolean!
     }
-  `)
-}
+  `);
+};
 ```
 
 The concept used there is called [Currying](https://en.wikipedia.org/wiki/Currying). For this example it means:
@@ -101,35 +101,35 @@ So what is that function doing? With the `lodash.get` function you're able to in
 
 Next, use `createFieldExtension` and the just created `isFuture` function:
 
-```js:title=gatsby-node.js {11-21}
-const get = require(`lodash.get`)
+```js title=gatsby-node.js {11-21}
+const get = require("lodash.get");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
+  const { createTypes, createFieldExtension } = actions;
 
-  const isFuture = fieldName => source => {
-    const date = get(source, fieldName)
-    return new Date(date) > new Date()
-  }
+  const isFuture = (fieldName) => (source) => {
+    const date = get(source, fieldName);
+    return new Date(date) > new Date();
+  };
 
   createFieldExtension({
-    name: `isFuture`,
+    name: "isFuture",
     args: {
       fieldName: "String!",
     },
     extend({ fieldName }) {
       return {
         resolve: isFuture(fieldName),
-      }
+      };
     },
-  })
+  });
 
   createTypes(`
     type MarkdownRemark implements Node {
       isFuture: Boolean!
     }
-  `)
-}
+  `);
+};
 ```
 
 `createFieldExtension` accepts three arguments. `name` will be name of the directive, `args` the information you can give it and `extend` is a function that has to return a (partial) field config. In more verbose terms (including `isFuture`) you could write it like this:
@@ -141,7 +141,7 @@ const isFuture = (fieldName, source) => {
 };
 
 createFieldExtension({
-  name: `isFuture`,
+  name: "isFuture",
   args: {
     fieldName: "String!",
   },
@@ -159,35 +159,35 @@ So the the code you'll be using is destructuring the `options` and passing `sour
 
 After adding the field extension to the field, the final code should look like:
 
-```js:title=gatsby-node.js {25}
-const get = require(`lodash.get`)
+```js title=gatsby-node.js {25}
+const get = require("lodash.get");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions
+  const { createTypes, createFieldExtension } = actions;
 
-  const isFuture = fieldName => source => {
-    const date = get(source, fieldName)
-    return new Date(date) > new Date()
-  }
+  const isFuture = (fieldName) => (source) => {
+    const date = get(source, fieldName);
+    return new Date(date) > new Date();
+  };
 
   createFieldExtension({
-    name: `isFuture`,
+    name: "isFuture",
     args: {
       fieldName: "String!",
     },
     extend({ fieldName }) {
       return {
         resolve: isFuture(fieldName),
-      }
+      };
     },
-  })
+  });
 
   createTypes(`
     type MarkdownRemark implements Node {
       isFuture: Boolean! @isFuture(fieldName: "frontmatter.date")
     }
-  `)
-}
+  `);
+};
 ```
 
 As the date is defined in the frontmatter the fieldName is `frontmatter.date`. If you would place the `isFuture` field in the frontmatter itself you would use only `date` for the `fieldName`.
