@@ -1,32 +1,10 @@
-type getParamsResponse = {
-  language: string
-  params: {
-    title?: string
-    [key: string]: string
-  }
-}
-
 /**
  * Get the language and optional parameters back
  * @param className
  * @example
  * getParams('language-js:title=src/components/code.js')
  */
-export const getParams = (className = ``): getParamsResponse => {
-  const [lang = ``, params = ``] = className.split(`:`)
-
-  const extractedLanguage = lang.split(`language-`).pop()
-  const extractedParams = params.split(`&`).reduce((merged, param) => {
-    const [key, value] = param.split(`=`)
-    merged[key] = value
-    return merged
-  }, {})
-
-  return {
-    language: extractedLanguage,
-    params: extractedParams,
-  }
-}
+export const getLanguage = (className = ``): string => className.split(`language-`).pop()
 
 export const preToCodeBlock = (preProps) => {
   if (preProps?.children?.props?.mdxType === `code`) {

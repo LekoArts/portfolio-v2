@@ -1,6 +1,7 @@
 import * as React from "react"
 import { headings } from "./heading"
 import { Code } from "./code"
+import { Alert } from "./alert"
 import { preToCodeBlock } from "../../utils/code"
 
 export const components = {
@@ -13,6 +14,7 @@ export const components = {
     // it's possible to have a pre without a code in it
     return <pre {...preProps} />
   },
+  Alert,
   wrapper: ({ children }) => <>{children}</>,
   ...headings,
 }

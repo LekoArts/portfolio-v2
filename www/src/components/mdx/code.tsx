@@ -1,9 +1,10 @@
 import * as React from "react"
 import Highlight, { defaultProps, Language } from "prism-react-renderer"
-import theme from "prism-react-renderer/themes/nightOwl"
-import { Stack, Box } from "@chakra-ui/react"
+import lightTheme from "prism-react-renderer/themes/nightOwlLight"
+import darkTheme from "prism-react-renderer/themes/nightOwl"
+import { Stack, Box, useColorMode } from "@chakra-ui/react"
 import { Copy } from "./copy"
-import { calculateLinesToHighlight, getParams } from "../../utils/code"
+import { calculateLinesToHighlight, getLanguage } from "../../utils/code"
 
 type CodeProps = {
   codeString: string
@@ -16,18 +17,22 @@ type CodeProps = {
 export const Code = ({
   codeString,
   withLineNumbers = false,
+  title = undefined,
   className: blockClassName,
   metastring = ``,
 }: CodeProps) => {
-  const {
-    language,
-    params: { title = `` },
-  } = getParams(blockClassName)
+  const { colorMode } = useColorMode()
+  const language = getLanguage(blockClassName)
   const shouldHighlightLine = calculateLinesToHighlight(metastring)
   const hasLineNumbers = withLineNumbers && language !== `withLineNumbers`
 
   return (
-    <Highlight {...defaultProps} code={codeString} language={language as Language} theme={theme}>
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      language={language as Language}
+      theme={colorMode === `light` ? lightTheme : darkTheme}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <React.Fragment>
           {(title || language) && (

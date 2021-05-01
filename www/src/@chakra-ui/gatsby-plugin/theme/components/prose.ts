@@ -256,6 +256,7 @@ const lgVariant = {
     paddingRight: em(24, 16),
     paddingBottom: em(16, 16),
     paddingLeft: em(24, 16),
+    mx: `-${em(24, 16)}`,
   },
   ol: {
     marginTop: em(24, 18),
@@ -352,6 +353,7 @@ const lgVariant = {
     marginTop: em(32, 16),
     paddingRight: em(24, 14),
     paddingLeft: em(24, 14),
+    mx: `-${em(24, 14)}`,
   },
   ".gatsby-highlight[data-prism-renderer='true']": {
     ".token-line": {
@@ -435,6 +437,7 @@ const xlVariant = {
     paddingRight: em(24, 18),
     paddingBottom: em(20, 18),
     paddingLeft: em(24, 18),
+    mx: `-${em(24, 18)}`,
   },
   ol: {
     marginTop: em(24, 20),
@@ -531,6 +534,7 @@ const xlVariant = {
     marginTop: em(36, 18),
     paddingRight: em(24, 15),
     paddingLeft: em(24, 15),
+    mx: `-${em(24, 15)}`,
   },
   ".gatsby-highlight[data-prism-renderer='true']": {
     ".token-line": {
@@ -564,6 +568,7 @@ const Prose = {
     },
     ".gatsby-resp-image-wrapper": {
       boxShadow: `lg`,
+      borderRadius: `lg`,
     },
     ".gatsby-resp-image-background-image": {
       borderRadius: `lg`,
@@ -826,6 +831,7 @@ const Prose = {
     },
     ".gatsby-highlight[data-prism-renderer='true']": {
       pre: {
+        // backgroundColor: `rgb(1 28 49) !important`,
         marginTop: 0,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
@@ -876,7 +882,10 @@ const Prose = {
         mx: `-${em(16, 14)}`,
       },
       ".token-line.highlight-line": {
-        backgroundColor: `rgb(2, 55, 81)`,
+        background: mode(
+          `linear-gradient(90deg, rgb(140, 175, 255) 0% .5%, rgb(243, 242, 248) .5% 100%)`,
+          `linear-gradient(90deg, rgb(11, 142, 215) 0% .5%, rgb(3, 46, 67) .5% 100%)`
+        )(props),
         ".line-number-style": {
           opacity: 0.5,
         },
@@ -890,9 +899,12 @@ const Prose = {
       marginTop: em(24, 14),
       borderTopLeftRadius: rem(6),
       borderTopRightRadius: rem(6),
-      color: `rgb(214, 222, 235)`,
-      background: `linear-gradient(to bottom, rgb(2, 38, 67) 0%, rgb(1, 22, 39) 100%)`,
-      borderBottom: `1px solid rgba(214, 222, 235, 0.15)`,
+      color: mode(`rgb(64, 63, 83)`, `rgb(214, 222, 235)`)(props),
+      background: mode(
+        `linear-gradient(to bottom, rgb(253, 253, 253) 0%, rgb(243, 243, 243) 100%)`,
+        `linear-gradient(to bottom, rgb(2, 38, 67) 0%, rgb(1, 22, 39) 100%)`
+      )(props),
+      borderBottom: mode(`1px solid rgba(107, 111, 117, 0.15)`, `1px solid rgba(214, 222, 235, 0.15)`)(props),
       paddingTop: em(6, 14),
       paddingRight: em(16, 14),
       paddingBottom: em(6, 14),
@@ -902,71 +914,71 @@ const Prose = {
       borderRadius: rem(6),
       paddingRight: em(6, 14),
       paddingLeft: em(6, 14),
-      "--display-opacity": 0.2,
+      "--display-opacity": mode(0.75, 0.25)(props),
       "&[data-lang='js'], &[data-lang='javascript']": {
         background: `rgba(247, 223, 30, var(--display-opacity))`,
-        color: `rgb(247, 223, 30)`,
+        color: mode(`black`, `rgb(247, 223, 30)`)(props),
       },
       "&[data-lang='jsx']": {
         background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: `rgb(97, 218, 251)`,
+        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
       },
       "&[data-lang='ts']": {
         background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: `rgb(97, 218, 251)`,
+        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
       },
       "&[data-lang='tsx']": {
         background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: `rgb(97, 218, 251)`,
+        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
       },
       "&[data-lang='html']": {
         background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: `rgb(83, 180, 255)`,
+        color: mode(`white`, `rgb(114, 192, 253)`)(props),
       },
       "&[data-lang='xml']": {
         background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: `rgb(83, 180, 255)`,
+        color: mode(`white`, `rgb(114, 192, 253)`)(props),
       },
       "&[data-lang='svg']": {
         background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: `rgb(83, 180, 255)`,
+        color: mode(`white`, `rgb(114, 192, 253)`)(props),
       },
       "&[data-lang='graphql']": {
         background: `rgba(225, 0, 152, var(--display-opacity))`,
-        color: `rgb(255, 55, 176)`,
+        color: mode(`white`, `rgb(255, 82, 181)`)(props),
       },
       "&[data-lang='css']": {
         background: `rgba(255, 152, 0, var(--display-opacity))`,
-        color: `rgb(255, 165, 48)`,
+        color: mode(`white`, `rgb(255, 165, 48)`)(props),
       },
       "&[data-lang='mdx']": {
         background: `rgba(249, 172, 0, var(--display-opacity))`,
-        color: `rgb(255, 165, 48)`,
+        color: mode(`white`, `rgb(255, 165, 48)`)(props),
       },
       "&[data-lang='py']": {
         background: `rgba(51, 111, 160, var(--display-opacity))`,
         color: `rgb(255, 229, 194)`,
       },
       "&[data-lang='text']": {
-        background: `rgba(255, 255, 255, var(--display-opacity))`,
+        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
       },
       "&[data-lang='sh']": {
-        background: `rgba(255, 255, 255, var(--display-opacity))`,
+        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
       },
       "&[data-lang='yaml']": {
         background: `rgba(255, 168, 223, var(--display-opacity))`,
-        color: `rgb(255, 168, 223)`,
+        color: mode(`blueGray.800`, `rgb(255, 168, 223)`)(props),
       },
       "&[data-lang='md']": {
-        background: `rgba(255, 255, 255, var(--display-opacity))`,
+        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
       },
       "&[data-lang='json']": {
         background: `rgba(250, 240, 230, var(--display-opacity))`,
-        color: `rgb(250, 240, 230)`,
+        color: mode(`blueGray.800`, `rgb(250, 240, 230)`)(props),
       },
       "&[data-lang='diff']": {
         background: `rgba(230, 255, 237, var(--display-opacity))`,
-        color: `rgb(230, 255, 237)`,
+        color: mode(`blueGray.800`, `rgb(230, 255, 237)`)(props),
       },
     },
   }),
