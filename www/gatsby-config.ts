@@ -3,6 +3,8 @@ import { slugifyOptions } from "utils"
 
 require(`dotenv`).config()
 
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
+
 const gatsbyConfig: GatsbyConfig = {
   flags: {
     DEV_SSR: false,
@@ -70,8 +72,21 @@ const gatsbyConfig: GatsbyConfig = {
         ],
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
-  ],
+    {
+      resolve: `gatsby-plugin-gatsby-cloud`,
+      options: {
+        allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
+      },
+    },
+    shouldAnalyseBundle && {
+      resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
+      options: {
+        analyzerMode: `static`,
+        reportFilename: `_bundle.html`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
 }
 
 export default gatsbyConfig

@@ -10,7 +10,7 @@ const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({ data: { post
 
   return (
     <WritingView post={post} pathname={pathname} type="prose">
-      <Text color={primary} fontWeight={500} textAlign="center" fontSize={[`md`, null, null, `18px`, `21px`]}>
+      <Text color={primary} fontWeight={500} textAlign="center" fontSize={[`md`, null, null, `1.125rem`, `1.3125rem`]}>
         {post.category.name}
       </Text>
       <Spacer size={6} axis="vertical" />

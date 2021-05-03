@@ -77,7 +77,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
         <Divider />
         <Spacer size={6} axis="vertical" />
         <ExternalLink
-          fontSize={[`md`, null, null, `18px`]}
+          fontSize={[`md`, null, null, `1.125rem`]}
           fontWeight="medium"
           href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/garden/${garden.parent.parent.relativePath}`}
         >
@@ -85,7 +85,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
         </ExternalLink>
         {` `}-{` `}
         <ExternalLink
-          fontSize={[`md`, null, null, `18px`]}
+          fontSize={[`md`, null, null, `1.125rem`]}
           fontWeight="medium"
           href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
         >

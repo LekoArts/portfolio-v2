@@ -33,6 +33,13 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
         },
       },
       {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: `src/pages`,
+          path: `src/pages`,
+        },
+      },
+      {
         resolve: `gatsby-source-graphql`,
         options: {
           typeName: `GitHub`,
@@ -44,22 +51,13 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
           fetchOptions: {},
         },
       },
+      `gatsby-remark-images`,
       mdx && {
         resolve: `gatsby-plugin-mdx`,
         options: {
           lessBabel: true,
           extensions: [`.mdx`, `.md`],
           gatsbyRemarkPlugins: [
-            {
-              resolve: `gatsby-remark-images`,
-              options: {
-                maxWidth: 1024,
-                quality: 90,
-                linkImagesToOriginal: true,
-              },
-            },
-          ],
-          plugins: [
             {
               resolve: `gatsby-remark-images`,
               options: {

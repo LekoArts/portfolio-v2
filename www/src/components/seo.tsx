@@ -8,9 +8,10 @@ type SEOProps = {
   description?: string
   pathname?: string
   image?: string
+  noIndex?: boolean
 }
 
-export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, children }) => {
+export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, noIndex = false, children }) => {
   const location = useLocation()
 
   const {
@@ -61,6 +62,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, c
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f172a" />
       <meta name="msapplication-TileColor" content="#0f172a" />
+      {noIndex && <meta name="robots" content="noindex" />}
       {children}
     </Helmet>
   )

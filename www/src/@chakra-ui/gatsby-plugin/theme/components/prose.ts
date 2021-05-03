@@ -546,11 +546,15 @@ const xlVariant = {
 
 const Prose = {
   baseStyle: (props) => ({
-    color: mode(`gray.700`, `gray.300`)(props),
+    color: mode(`brand.proseText`, `brand.dark.proseText`)(props),
     a: {
-      color: mode(`gray.900`, `gray.100`)(props),
+      color: mode(`brand.proseLink`, `brand.dark.proseLink`)(props),
       fontWeight: `500`,
       textDecoration: `underline`,
+      textDecorationColor: mode(
+        `var(--chakra-colors-brand-proseLinkDecoration)`,
+        `var(--chakra-colors-brand-dark-proseLinkDecoration)`
+      )(props),
       "&:hover": {
         textDecoration: `none`,
       },
@@ -980,6 +984,11 @@ const Prose = {
         background: `rgba(230, 255, 237, var(--display-opacity))`,
         color: mode(`blueGray.800`, `rgb(230, 255, 237)`)(props),
       },
+    },
+    ".img-left-wrap-text": {
+      display: `grid`,
+      gridTemplateColumns: [`1fr`, `1fr 2fr`, `1fr 1.75fr`],
+      gridGap: [4, 6, 12],
     },
   }),
   variants: {

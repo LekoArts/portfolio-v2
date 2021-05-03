@@ -18,11 +18,11 @@ export const Footer: React.FC = () => {
               return (
                 <Flex key={heading.name} flexDirection="column" alignItems="flex-start" mb={[8, 0]}>
                   {heading.link ? (
-                    <Link to={heading.link} color="white" fontSize={[`18px`, null, `21px`]} mb={3}>
+                    <Link to={heading.link} p={1} color="white" fontSize={[`1.125rem`, null, `1.3125rem`]} mb={[2, 3]}>
                       {heading.name}
                     </Link>
                   ) : (
-                    <Box color="white" fontSize={[`18px`, null, `21px`]} mb={3}>
+                    <Box color="white" p={1} fontSize={[`1.125rem`, null, `1.3125rem`]} mb={[2, 3]}>
                       {heading.name}
                     </Box>
                   )}
@@ -30,11 +30,11 @@ export const Footer: React.FC = () => {
                     {section.items.map((item) => (
                       <React.Fragment key={item.link}>
                         {item.isExternal ? (
-                          <ExternalLink mr={[2, 0]} href={item.link}>
+                          <ExternalLink mr={[2, 0]} p={1} href={item.link}>
                             {item.name}
                           </ExternalLink>
                         ) : (
-                          <Link mr={[2, 0]} to={item.link}>
+                          <Link mr={[2, 0]} p={1} to={item.link}>
                             {item.name}
                           </Link>
                         )}

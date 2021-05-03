@@ -49,7 +49,7 @@ const lineHeights: ThemeOverride["lineHeights"] = {
 
 const textStyles = {
   prominent: {
-    fontSize: [`md`, null, null, `18px`, `21px`],
+    fontSize: [`md`, null, null, `1.125rem`, `1.3125rem`],
     strong: {
       fontWeight: `medium`,
     },

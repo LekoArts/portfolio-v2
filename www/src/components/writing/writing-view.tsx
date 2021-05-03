@@ -59,7 +59,7 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
         <Divider />
         <Spacer size={6} axis="vertical" />
         <ExternalLink
-          fontSize={[`md`, null, null, `18px`]}
+          fontSize={[`md`, null, null, `1.125rem`]}
           fontWeight="medium"
           href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/writing/${post.parent.parent.relativePath}`}
         >
@@ -67,14 +67,14 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
         </ExternalLink>
         {` `}-{` `}
         <ExternalLink
-          fontSize={[`md`, null, null, `18px`]}
+          fontSize={[`md`, null, null, `1.125rem`]}
           fontWeight="medium"
           href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
         >
           Discuss on Twitter
         </ExternalLink>
         {type === `prose` && (
-          <Text mt={6} fontSize={[`md`, null, null, `18px`]}>
+          <Text mt={6} fontSize={[`md`, null, null, `1.125rem`]}>
             Last updated: {post.lastUpdated}
           </Text>
         )}

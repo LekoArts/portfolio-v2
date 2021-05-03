@@ -15,8 +15,8 @@ import {
   Tag,
   TagLeftIcon,
   TagLabel,
+  usePrefersReducedMotion,
 } from "@chakra-ui/react"
-import { useReducedMotion } from "framer-motion"
 import { shuffle } from "utils"
 import { Link } from "../components/link"
 import { Layout } from "../components/blocks/layout"
@@ -27,7 +27,6 @@ import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Heading } from "../components/typography/heading"
 import { PrimaryButton, SubtleButton } from "../components/buttons"
 import { space } from "../constants/space"
-import { cardVariants, prefersReducedMotion } from "../constants/motion"
 
 type RepositoryInfo = {
   stargazerCount: number
@@ -91,7 +90,7 @@ const openSourceRepos = [
 const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
   const primaryRepoBg = useColorModeValue(`brand.primaryBg`, `brand.dark.primaryBg`)
   const secondaryRepoBg = useColorModeValue(`blueGray.100`, `blueGray.800`)
-  const shouldReduceMotion = useReducedMotion()
+  const shouldReduceMotion = usePrefersReducedMotion()
   const [firstPost, ...rest] = data.posts.nodes
   const otherPosts = [...rest]
   const buildUnix = parseInt(data.site.buildTime, 10)
@@ -137,12 +136,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     to={item.slug}
                     key={item.slug}
                     borderRadius="lg"
-                    _hover={{ textDecoration: shouldReduceMotion ? `underline` : `none` }}
+                    _hover={{ textDecoration: `none`, boxShadow: shouldReduceMotion ? `outline` : null }}
                   >
                     <MotionBox
-                      variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
-                      initial="beforeHover"
-                      whileHover="onHover"
                       bgGradient={gradients[index]}
                       p={4}
                       borderRadius="lg"
@@ -151,7 +147,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       display="flex"
                       alignItems="flex-end"
                       color="white"
-                      fontSize={[`lg`, null, `md`, `18px`, `21px`]}
+                      fontSize={[`lg`, null, `md`, `1.125rem`, `1.3125rem`]}
                       sx={{ textShadow: `0 1px 2px rgba(0, 0, 0, 0.25)` }}
                     >
                       {item.title}
@@ -173,9 +169,6 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
                 >
                   <MotionBox
-                    variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
-                    initial="beforeHover"
-                    whileHover="onHover"
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
                       boxShadow: `lg`,
@@ -191,7 +184,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       quality={90}
                       formats={[`auto`, `webp`, `avif`]}
                       placeholder="blurred"
-                      width={500}
+                      width={720}
                       aspectRatio={16 / 9}
                     />
                   </MotionBox>
@@ -203,9 +196,6 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   _hover={{ boxShadow: shouldReduceMotion ? `outline` : null }}
                 >
                   <MotionBox
-                    variants={shouldReduceMotion ? prefersReducedMotion.cardVariants : cardVariants}
-                    initial="beforeHover"
-                    whileHover="onHover"
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
                       boxShadow: `lg`,
@@ -221,7 +211,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       quality={90}
                       formats={[`auto`, `webp`, `avif`]}
                       placeholder="blurred"
-                      width={500}
+                      width={720}
                       aspectRatio={16 / 9}
                     />
                   </MotionBox>
@@ -249,7 +239,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 <Box bg={primaryRepoBg} color="#e7f1ff" p={6} borderRadius="lg">
                   <Flex flexDirection="row" justifyContent="space-between" mb={6}>
                     <ChakraLink
-                      fontSize={[`lg`, null, null, null, `21px`]}
+                      fontSize={[`lg`, null, null, null, `1.3125rem`]}
                       color="white"
                       fontWeight="bold"
                       href={primRepo.url}
@@ -265,7 +255,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </Box>
                 <Box bg={secondaryRepoBg} p={6} borderRadius="lg">
                   <Flex flexDirection="row" justifyContent="space-between" mb={6}>
-                    <ChakraLink fontSize={[`lg`, null, null, null, `21px`]} fontWeight="bold" href={secRepo.url}>
+                    <ChakraLink fontSize={[`lg`, null, null, null, `1.3125rem`]} fontWeight="bold" href={secRepo.url}>
                       {secRepo.name}
                     </ChakraLink>
                     <Tag variant="subtle" colorScheme="gray">
@@ -278,7 +268,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               </Grid>
               <Flex justifyContent="space-between" flexWrap="wrap">
                 {openSourceRepos.map((repo) => (
-                  <ChakraLink key={repo.url} href={repo.url}>
+                  <ChakraLink key={repo.url} href={repo.url} p={2}>
                     {repo.name}
                   </ChakraLink>
                 ))}

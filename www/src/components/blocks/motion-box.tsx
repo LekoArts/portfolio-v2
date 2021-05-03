@@ -1,8 +1,20 @@
 import * as React from "react"
-import { HTMLChakraProps, chakra } from "@chakra-ui/react"
-import { motion, HTMLMotionProps } from "framer-motion"
+import { Box, BoxProps, usePrefersReducedMotion } from "@chakra-ui/react"
+import { transforms } from "../../constants/motion"
 
-type Merge<P, T> = Omit<P, keyof T> & T
-type MotionBoxProps = Merge<HTMLChakraProps<"div">, HTMLMotionProps<"div">>
+export const MotionBox: React.FC<BoxProps> = ({ children, ...rest }) => {
+  const shouldReduceMotion = usePrefersReducedMotion()
 
-export const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
+  return (
+    <Box
+      transition={transforms.beforeHover.transition}
+      transform={transforms.beforeHover.transform}
+      _hover={
+        shouldReduceMotion ? {} : { transform: transforms.onHover.transform, boxShadow: transforms.onHover.boxShadow }
+      }
+      {...rest}
+    >
+      {children}
+    </Box>
+  )
+}
