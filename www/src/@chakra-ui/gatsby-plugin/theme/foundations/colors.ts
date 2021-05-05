@@ -289,6 +289,8 @@ const colors = {
     heading: colorPalette.colors.black,
     bg: colorPalette.colors.white,
     bgAlpha: transparentize(`white`, navBgTransparency)(colorPalette),
+    cardBg: colorPalette.colors.white,
+    cardSubheading: colorPalette.colors.blueGray[`700`],
     dark: {
       primary: colorPalette.colors.orange[`600`],
       primaryAlpha: transparentize(`blueGray.400`, 0.25)(colorPalette),
@@ -303,6 +305,8 @@ const colors = {
       heading: colorPalette.colors.white,
       bg: colorPalette.colors.blueGray[`900`],
       bgAlpha: transparentize(`blueGray.900`, navBgTransparency)(colorPalette),
+      cardBg: colorPalette.colors.blueGray[`800`],
+      cardSubheading: colorPalette.colors.blueGray[`400`],
     },
   },
   ...colorPalette.colors,

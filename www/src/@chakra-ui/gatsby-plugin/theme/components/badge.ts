@@ -13,11 +13,11 @@ const Badge = {
   variants: {
     default: (props) => ({
       ...baseStyles,
-      bg: mode(`white`, `blueGray.900`)(props),
+      bg: mode(`brand.bg`, `brand.dark.bg`)(props),
     }),
     light: (props) => ({
       ...baseStyles,
-      bg: mode(`white`, `blueGray.900`)(props),
+      bg: mode(`brand.bg`, `brand.dark.bg`)(props),
       color: mode(`blueGray.500`, `blueGray.400`)(props),
       px: `1rem`,
       py: `4px`,

@@ -2,7 +2,7 @@
 title: "Setting up a yarn workspace with TypeScript, ESLint & Cypress"
 subtitle: "A robust solution for multi-package repositories"
 date: 2019-08-05
-lastUpdated: 2021-04-05
+lastUpdated: 2021-05-04
 description: "A guide on how to set up a multi-package repository with TypeScript support, linting with ESLint and end-to-end testing with Cypress. Great stack to build front-end packages or Gatsby themes."
 type: "tutorial"
 category: "JavaScript"
@@ -10,43 +10,80 @@ image: ./file-name.jpg
 published: true
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+If you want to build an npm package there are a myriad of options available to you. One of my favourite ways is to use yarn & [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). For smaller or single packages it might be overkill but once you plan on publishing multiple packages a monorepo managed by yarn workspaces can simplify many things. For the purpose of this post I'm showing an example of using [Gatsby Themes](https://www.gatsbyjs.com/docs/themes/) with yarn workspaces. This enables the author to quickly test the _theme_ inside an _example_ site.
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+At the end of this tutorial you should have a yarn workspace with ESLint linting + Cypress tests + TypeScript for both the example and theme. You can write your theme with TypeScript and have the same ESLint config everywhere.
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+## Prerequisites
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+You'll need to have yarn installed, if you haven't already you can [see their installation guide](https://classic.yarnpkg.com/en/docs/install#windows-stable). Since I'll use Gatsby as an example for this guide you can clone [this GitHub starter](https://github.com/gatsbyjs/gatsby-starter-theme-workspace). It'll spare you some boilerplate to set up, but the fundamental concept for starting a yarn workspace is quite short.
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+Initialize a `package.json` in the root of your site with `yarn init`. Once you have a `package.json` you can add the `workspaces` key:
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+```json title=package.json
+{
+  "name": "gatsby-starter-theme-workspace",
+  "private": true,
+  "version": "0.0.1",
+  "license": "0BSD",
+  "workspaces": ["gatsby-theme-minimal", "example"]
+}
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+In this configuration the folders `gatsby-theme-minimal` and `example` are each a package inside the yarn workspace. If you'd have multiple packages inside a folder (e.g. `folder/package-01`, `folder/package-02` etc.) you can write:
 
----
+```json
+{
+  "workspaces": ["folder/*", "another-folder/*"]
+}
+```
 
-## What to expect from here on out
+To be able to follow the rest of the guide please clone [the GitHub starter](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) so that Gatsby is correctly configured and run `yarn` to install the dependencies.
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+## TypeScript
 
-It's important to cover all of these use cases for a few reasons:
+Gatsby itself has TypeScript support and you can write your React components with TypeScript. For linting and type checking to work correctly you'll need to install the necessary types. In this small workspace it makes sense to install them at the root, for bigger monorepos you might want to install the types for each package.
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+```sh
+yarn add -D -W @types/node @types/react @types/react-dom
+```
+
+The `-D` flag is for installing them as devDependencies, the `-W` flag tells yarn to install them in the workspace root.
+
+To also get type checking you'll need to add the `typescript` package, a `tsconfig.json` and a npm script:
+
+```sh
+yarn add -D -W typescript
+```
+
+Add two scripts to the root `package.json`:
+
+```json
+{
+  "scripts": {
+    "tsc": "tsc",
+    "type-check": "tsc --noEmit"
+  }
+}
+```
+
+To initialize a `tsconfig.json` file you can run `yarn tsc --init`. For this guide you can change the values below and leave the rest alone or change it to your liking.
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "react",
+    "lib": ["dom", "es2015", "es2017"],
+    "moduleResolution": "node",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "include": ["./gatsby-theme-minimal/src/**/*"]
+}
+```
+
+## ESLint

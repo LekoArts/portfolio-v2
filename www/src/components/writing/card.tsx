@@ -12,10 +12,10 @@ type CardProps = {
 }
 
 export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => {
-  const cardBg = useColorModeValue(`white`, `blueGray.800`)
+  const cardBg = useColorModeValue(`brand.cardBg`, `brand.dark.cardBg`)
   const headingColor = useColorModeValue(`black`, `white`)
   const headingHoverColor = useColorModeValue(`brand.primary`, `brand.dark.primary`)
-  const subheadingColor = useColorModeValue(`blueGray.700`, `blueGray.400`)
+  const subheadingColor = useColorModeValue(`brand.cardSubheading`, `brand.dark.cardSubheading`)
 
   return (
     <MotionBox p={6} borderRadius="lg" boxShadow="lg" bg={cardBg} key={slug} _focusWithin={{ boxShadow: `outline` }}>
