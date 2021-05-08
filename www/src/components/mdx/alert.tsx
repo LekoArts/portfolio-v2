@@ -7,6 +7,7 @@ export const Alert: React.FC<{ title: string; status: AlertStatus }> = ({ title,
     flexDirection="column"
     alignItems="flex-start"
     borderRadius="lg"
+    my={[6, null, null, 12]}
     mx={[0, null, null, -4]}
     width="auto"
   >

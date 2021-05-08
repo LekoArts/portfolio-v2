@@ -2,7 +2,7 @@
 title: "Setting up a yarn workspace with TypeScript, ESLint & Cypress"
 subtitle: "A robust solution for multi-package repositories"
 date: 2019-08-05
-lastUpdated: 2021-05-04
+lastUpdated: 2021-05-08
 description: "A guide on how to set up a multi-package repository with TypeScript support, linting with ESLint and end-to-end testing with Cypress. Great stack to build front-end packages or Gatsby themes."
 type: "tutorial"
 category: "JavaScript"
@@ -32,7 +32,7 @@ Initialize a `package.json` in the root of your site with `yarn init`. Once you 
 
 In this configuration the folders `gatsby-theme-minimal` and `example` are each a package inside the yarn workspace. If you'd have multiple packages inside a folder (e.g. `folder/package-01`, `folder/package-02` etc.) you can write:
 
-```json
+```json title=package.json
 {
   "workspaces": ["folder/*", "another-folder/*"]
 }
@@ -58,7 +58,7 @@ yarn add -D -W typescript
 
 Add two scripts to the root `package.json`:
 
-```json
+```json title=package.json
 {
   "scripts": {
     "tsc": "tsc",
@@ -69,7 +69,7 @@ Add two scripts to the root `package.json`:
 
 To initialize a `tsconfig.json` file you can run `yarn tsc --init`. For this guide you can change the values below and leave the rest alone or change it to your liking.
 
-```json
+```json title=tsconfig.json
 {
   "compilerOptions": {
     "target": "esnext",
@@ -87,3 +87,333 @@ To initialize a `tsconfig.json` file you can run `yarn tsc --init`. For this gui
 ```
 
 ## ESLint
+
+ESLint in combination with Prettier will both lint and format your code with a specific style guide and checks in place. This way your code stays consistent, some smaller issues/bugs are instantly highlighted and you don't need to worry about formatting the code yourself. As the code will be mainly written in TypeScript you'll need to set up `@typescript-eslint/eslint-plugin` and its packages. It'll also lint & format JavaScript code.
+
+I personally like to use the AirBnB config but feel free to swap it out for your preferred config! The other packages are for accessibility (a11y) checking and checks for React.
+
+```sh
+yarn add -D -W @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier
+```
+
+Add an `.eslintrc.js` file at the root of the project:
+
+```js title=.eslintrc.js
+module.exports = {
+  parser: `@typescript-eslint/parser`,
+  extends: [`airbnb`, `plugin:prettier/recommended`],
+  plugins: [`@typescript-eslint`, `prettier`, `react-hooks`],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: `module`,
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    browser: true,
+    jest: true,
+    node: true,
+  },
+  globals: {
+    cy: true,
+    Cypress: true,
+  },
+  rules: {
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      {
+        argsIgnorePattern: `res|next|stage|^err|on|config|e|_`,
+      },
+    ],
+    "arrow-body-style": [2, `as-needed`],
+    "no-param-reassign": [
+      2,
+      {
+        props: false,
+      },
+    ],
+    "no-unused-expressions": [
+      1,
+      {
+        allowTaggedTemplates: true,
+      },
+    ],
+    quotes: `off`,
+    "@typescript-eslint/quotes": [
+      2,
+      `backtick`,
+      {
+        avoidEscape: true,
+      },
+    ],
+    "no-console": [`warn`, { allow: [`warn`] }],
+    "spaced-comment": [2, `always`, { exceptions: [`-`, `+`], markers: [`/`] }],
+    "no-use-before-define": 0,
+    "no-plusplus": 0,
+    "no-continue": 0,
+    "linebreak-style": 0,
+    import: 0,
+    camelcase: 1,
+    "import/no-unresolved": 0,
+    "func-names": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0,
+    "import/no-cycle": 0,
+    "space-before-function-paren": 0,
+    "import/extensions": 0,
+    "import/no-anonymous-default-export": 2,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        extensions: [`.js`, `.jsx`, `.tsx`],
+      },
+    ],
+    "react-hooks/rules-of-hooks": `error`,
+    "react-hooks/exhaustive-deps": `warn`,
+    indent: [`error`, 2, { SwitchCase: 1 }],
+    "jsx-a11y/href-no-hash": `off`,
+    "jsx-a11y/anchor-is-valid": [
+      `warn`,
+      {
+        aspects: [`invalidHref`],
+      },
+    ],
+    "prettier/prettier": [
+      `error`,
+      {
+        trailingComma: `es5`,
+        semi: false,
+        singleQuote: false,
+        printWidth: 120,
+      },
+    ],
+  },
+};
+```
+
+Depending on how you set up your code editor you'll already have ESLint working in your project. If you want to run it in the terminal (or in CI) you can add two npm scripts:
+
+```json title=package.json
+{
+  "scripts": {
+    "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js",
+    "lint:fix": "yarn lint --fix"
+  }
+}
+```
+
+The `lint` command will run ESLint on all files (with the ts/tsx/js/jsx file ending) except the ones defined in `.gitignore`. The `--fix` flag tries to automatically fix your errors. When running `yarn lint` you should get some errors from Prettier. Run `yarn lint:fix` to clean that up!
+
+## Cypress
+
+The popular End to End testing framework (at [cypress.io](https://www.cypress.io)) is a great tool to test React applications in real-world scenarios compared to unit or integration testing approaches. For Gatsby Themes or any other package that mainly gets used as a template I personally care more about that everything works correctly in the complete set up to ensure that the theme itself isn't broken. You can also check components like a dark mode toggle with Cypress, too!
+And that is exactly what you'll set up now: A Cypress test suite to run tests against the example site.
+
+First, you need to install the necessary packages. Besides the obvious one `cypress`, you'll also install [`@testing-library/cypress`](https://testing-library.com/docs/cypress-testing-library/intro/). Both extend the commands of Cypress, the former improves the process of selecting elements, the latter provides a useful helper function.
+
+```sh
+yarn add -D -W @testing-library/cypress cross-env cypress start-server-and-test
+```
+
+The package `start-server-and-test` enables you to first run the development server of Gatsby (or build command) and then the fitting Cypress command. It's a really handy little tool! Both `@testing-library/cypress` and `cypress` ship with their own TypeScript typings. That is important to know when writing the Cypress tests in TypeScript.
+
+Once again you need to add some scripts to your root `package.json`:
+
+```sh title=package.json
+{
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cross-env CYPRESS_baseUrl=http://localhost:9000 cypress run"
+  }
+}
+```
+
+Run `yarn cy:open` to initialize Cypress. It will automatically add files to your repository, like a `cypress.json` or the `cypress` folder. Quit the app before continuing this tutorial.
+
+<Alert status="info" title="Note">
+  At the time of writing this guide WSL (Linux subsystem for Windows) can't open
+  the Cypress electron app when running `cypress open`. You'll need to download
+  the executable and run it yourself.
+</Alert>
+
+Delete the contents of `cypress/integration` (it contains example data) and rename it to `e2e`. Edit the `cypress.json` file:
+
+```json title=cypress.json
+{
+  "baseUrl": "http://localhost:8000",
+  "integrationFolder": "cypress/e2e/build",
+  "viewportHeight": 900,
+  "viewportWidth": 1440
+}
+```
+
+As TypeScript will compile the tests and output it to `cypress/e2e/build` you have to tell Cypress to look into that folder.
+
+Now configure the `cypress/support` folder. First, add the the custom commands from testing-library, secondly add an import for a new file you'll create later. Lastly, create a `.d.ts` file to add types for your custom command.
+
+```js title=cypress/support/index.js
+import "@testing-library/cypress/add-commands";
+import "./commands";
+```
+
+The `assertRoute` command let's you check the current URL.
+
+```js title=cypress/support/commands.js
+Cypress.Commands.add(`assertRoute`, (route) => {
+  cy.url().should(`equal`, `${window.location.origin}${route}`);
+});
+```
+
+```ts title=cypress/support/index.d.ts
+/// <reference types="cypress" />
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    /**
+     * Assert the current URL
+     * @param route
+     * @example cy.assertRoute('/page-2')
+     */
+    assertRoute(route: string): Chainable<any>;
+  }
+}
+```
+
+### Using Cypress with TypeScript
+
+After the basic setup is done you now can proceed to the final steps before writing tests! Keep it up :)
+
+Create a `tsconfig.json` file inside the cypress directory:
+
+```json title=cypress/tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": "../node_modules",
+    "outDir": "e2e/build",
+    "module": "commonjs",
+    "removeComments": true,
+    "strict": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "target": "es5",
+    "lib": ["es2015", "es2017", "dom"],
+    "types": ["cypress", "@testing-library/cypress"]
+  },
+  "include": ["**/*.ts", "support/*.ts"]
+}
+```
+
+When later running the `tsc` scripts this tsconfig will be used, not the one in the root of the repository.
+
+To see if everything works you can add a smoke test (a file to test if bare minimum works, e.g. the site index loads):
+
+```ts title=cypress/e2e/smoke.ts
+/// <reference types="../support/index" />
+/// <reference types="cypress" />
+/// <reference types="@testing-library/cypress" />
+
+describe(`app`, () => {
+  it(`should work`, () => {
+    cy.visit(`/`).assertRoute(`/`);
+  });
+});
+```
+
+The `///` means that this file should reference the TypeScript typings from these places/packages. Also: Try to hover over the `assertRoute` function. Your IDE should display the typings & description. That's what you added in the previous step. Isn't that cool?
+
+Add the package `concurrently` to run multiple commands at the same time.
+
+```sh
+yarn add -D -W concurrently
+```
+
+To complete this portion of the guide you'll need to add some npm scripts again to run the test suite now. The goal is to use one command to start the TypeScript compiler, the Gatsby development server of the `example` and Cypress.
+
+Add the following scripts to your root `package.json`.
+
+```json title=package.json
+{
+  "scripts": {
+    "tsc:compile": "tsc --project cypress/tsconfig.json",
+    "tsc:compile:watch": "tsc --watch --project cypress/tsconfig.json"
+  }
+}
+```
+
+TypeScript should use the `cypress/tsconfig.json` which in turn tells it to compile the files inside `cypress/e2e`. The `--watch` flag enables automatic re-compilation when saving a file.
+
+```json title=package.json
+{
+  "scripts": {
+    "example:dev": "yarn workspace example develop"
+  }
+}
+```
+
+Run the `develop` npm script inside `example/package.json` to run the example Gatsby site.
+
+```json title=package.json
+{
+  "scripts": {
+    "ssat:example:dev": "start-server-and-test example:dev http://localhost:8000 cy:open"
+  }
+}
+```
+
+`start-server-and-test` expects the server script, then the URL it should listen to and finally the test script itself.
+
+```json title=package.json
+{
+  "scripts": {
+    "e2e:dev": "concurrently --kill-others 'yarn tsc:compile:watch' 'yarn ssat:example:dev'"
+  }
+}
+```
+
+Use `concurrently` to both run the TypeScript compiler (watching your test files) and Cypress at the same time.
+
+Your scripts section should have these new entries now after this section:
+
+```json title=package.json
+{
+  "scripts": {
+    "tsc:compile": "tsc --project cypress/tsconfig.json",
+    "tsc:compile:watch": "tsc --watch --project cypress/tsconfig.json",
+    "example:dev": "yarn workspace example develop",
+    "ssat:example:dev": "start-server-and-test example:dev http://localhost:8000 cy:open",
+    "e2e:dev": "concurrently --kill-others 'yarn tsc:compile:watch' 'yarn ssat:example:dev'"
+  }
+}
+```
+
+## Write tests!
+
+Finally you're able to write tests! Let's do that. Create a `home.ts` inside the `e2e` folder with the following content:
+
+```ts title=cypress/e2e/home.ts
+/// <reference types="../support/index" />
+/// <reference types="cypress" />
+/// <reference types="@types/testing-library__cypress" />
+
+describe(`example`, () => {
+  it(`contains keyword on homepage`, () => {
+    cy.visit(`/`).getByText(/Homepage in a user's site/i);
+  });
+});
+```
+
+Run `yarn e2e:dev`, click on `home.js` in the Cypress electron app and hopefully see the test working 🎉
+
+## Where to go from here
+
+Yeah, you finished this guide 👍🏻Thanks for following through – I want to give you some ideas on what to do next or how you can adapt this guide for other usecases:
+
+- Run the linting and tests on a CI provider (e.g. CircleCI) to have more confidence into your PRs
+- Modify the npm scripts to not only test against `gatsby develop` but also `gatsby build`
+- Modify the ESLint config to your liking as it's certainly opinionated to my preferred code style
+- Add Cypress tests testing the theme options
+- Add husky + lint-staged to run the linter before commiting your files
+
+You can see an implementation of this pattern in my themes repository: https://github.com/LekoArts/gatsby-themes
