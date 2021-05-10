@@ -79,12 +79,12 @@ const gatsbyConfig: GatsbyConfig = {
       },
     },
     shouldAnalyseBundle && {
+      resolve: `gatsby-plugin-perf-budgets`,
+      options: {},
+    },
+    shouldAnalyseBundle && {
       resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
-      options: {
-        analyzerMode: `static`,
-        reportFilename: `_bundle.html`,
-        openAnalyzer: false,
-      },
+      options: {},
     },
   ].filter(Boolean),
 }

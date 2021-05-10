@@ -570,6 +570,9 @@ const Prose = {
     "figure img, img": {
       borderRadius: `lg`,
     },
+    "[data-drop-shadow='true']": {
+      boxShadow: `lg`,
+    },
     ".gatsby-resp-image-wrapper": {
       boxShadow: `lg`,
       borderRadius: `lg`,
