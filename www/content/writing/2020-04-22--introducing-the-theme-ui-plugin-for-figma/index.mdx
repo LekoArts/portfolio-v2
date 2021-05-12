@@ -1,8 +1,8 @@
 ---
-title: "Introducing the Theme UI plugin for Figma"
+title: "Introducing the Theme UI Plugin for Figma"
 subtitle: ""
 date: 2020-04-22
-lastUpdated: 2020-04-22
+lastUpdated: 2020-05-11
 description: "The Theme UI plugin for Figma allows for a workflow where Theme UI is the starting point both for design & development."
 type: "prose"
 category: "Design"
@@ -10,43 +10,83 @@ image: ./file-name.jpg
 published: true
 ---
 
-We get lots of complaints about it actually, with people regularly asking us things like:
+In the process of solidifying my knowledge about Svelte and TypeScript I did what most open source developers do: Solve their own problems! For many projects I use [Figma](https://www.figma.com/) in the design phase and [Theme UI](http://theme-ui.com/) as the styling library for the project. I often times start with an implementation of the TailwindCSS config (colors, spacing, etc.) and modify it to the individual project's needs. Out of this comes an already finished Theme UI theme file.
 
-> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too?
+To be able to import this theme file into Figma and automatically create color & text styles I created a new plugin for Figma!
 
-We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look _awesome_, not awful.
+Introducing the [Theme UI plugin for Figma](https://www.figma.com/community/plugin/797015796747379907/Theme-UI) 🎉
 
-The `@tailwindcss/typography` plugin is our attempt to give you what you _actually_ want, without any of the downsides of doing something stupid like disabling our base styles.
+![Theme UI header graphic saying on the left: "Use your Theme UI config to quickly create color and text styles". On the right a preview of the interface is shown.](./theme-ui_header.jpg)
 
-It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
+You can install the plugin directly in Figma via the Community hub. Since the plugin is still in its early stages I'd appreciate feedback or contributions to the plugin itself. The source code is on GitHub: https://github.com/LekoArts/figma-theme-ui
 
-```html
-<article class="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>
-    For years parents have espoused the health benefits of eating garlic bread
-    with cheese to their children, with the food earning such an iconic status
-    in our culture that kids will often dress up as warm, cheesy loaf for
-    Halloween.
-  </p>
-  <p>
-    But a recent study shows that the celebrated appetizer may be linked to a
-    series of rabies cases springing up around the country.
-  </p>
-  <!-- ... -->
-</article>
+## How a typical workflow looks like
+
+So, what even is Theme UI? For me personally it's a great abstraction on top of existing CSS-in-JS styling solutions. Using plain Emotion still enabled me to get into bad habits of e.g. using different CSS for things that actually should look the same / feel consistent. Designing with constraints -- but still being able to break out of those in one-off cases -- is a huge step forward in creating interfaces more quickly and coherent. I think the [motivation docs](https://theme-ui.com/guides/motivation/) also phrase it in a clear way:
+
+> One of the primary motivations behind Theme UI is to make building themeable, constraint-based user interfaces in React as simple and as interoperable as possible. [...] While some of the ideas encapsulated within this library may seem familiar, the intent here is to combine modern CSS tooling into a single "mini-framework" with good guidance on how to fall into the pit of success for creating white-label products, themed component libraries, and even full websites.
+
+### Creating a theme file
+
+You should begin by creating a theme file in JavaScript with a default export in the `module.exports` syntax. It can be as minimal as:
+
+```js title=index.js
+module.exports = {
+  space: [0, 4, 8, 16, 32, 64],
+  fonts: {
+    body:
+      '-apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+    heading: "inherit",
+  },
+  fontSizes: [12, 14, 16, 20, 24, 32],
+  fontWeights: {
+    body: 400,
+    heading: 700,
+  },
+  lineHeights: {
+    body: 1.5,
+    heading: 1.125,
+  },
+  colors: {
+    text: "#000",
+    background: "#fff",
+    brand: {
+      primary: "#07c",
+      secondary: "#30c",
+    },
+    teal: [null, "#e6fffa", "#b2f5ea", "#81e6d9"],
+  },
+};
 ```
 
-For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
+Save the file as `index.js` somewhere (e.g. in your React project where you use Theme UI). The content is from [an example config](https://github.com/LekoArts/figma-theme-ui/blob/master/example-config.js). The theme file itself can be extended of course, following the [official spec](https://theme-ui.com/theme-spec/).
 
----
+<Alert status="info" title="Note">
+  You need to make sure to use `module.exports` syntax and no other content than
+  the config is allowed in the file. Otherwise the Figma plugin has problems
+  parsing your config.
+</Alert>
 
-## What to expect from here on out
+### Using the Figma plugin
 
-What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+If you haven't done so, you can install the plugin in the community tab: [Theme UI plugin for Figma](https://www.figma.com/community/plugin/797015796747379907/Theme-UI). Or find it via the search.
 
-It's important to cover all of these use cases for a few reasons:
+Open the plugin by doing a _Right click_ => _Plugins_ => _Theme UI_.
 
-1. We want everything to look good out of the box.
-2. Really just the first reason, that's the whole point of the plugin.
-3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+![A window showing the interface for the Theme UI plugin. One can upload the config, optionally only apply colors or typography and then press a "Add styles" button.](./theme-ui_step-01.jpg)
+
+The only option in the initial window is pressing the "Upload config" button. Choose the `index.js` file you created in the previous step. When it successfully loaded you'll be able to toggle two options:
+
+![After uploading the theme file you then can activate/deactive "colors" and "typography" and then press "Add styles" to close the dialog.](./theme-ui_step-02.jpg)
+
+Toggling the _Colors_ and _Typography_ checkboxes enables you to conditionally convert the config to Figma styles. After pressing the "Add Styles" button the window will close and you see the new styles on the right sidebar:
+
+![Figma interface showing the generated styles in the right sidebar and the middle shows a box that has a color from that library applied.](./theme-ui_step-03.jpg)
+
+## The future of the plugin
+
+You might (rightfully) say now: "But wait, this only works in one direction!". And that's true as the plugin currently only works by providing a Theme UI config file and putting that into Figma. The other way around of exporting a Theme UI file from Figma styles is in the initial release not available.
+
+But I see great value in adding this workflow! You can follow the [issue describing this request](https://github.com/LekoArts/figma-theme-ui/issues/16) to see when it's done 😊
+
+Besides that I'd appreciate any feedback you might have (you can post an issue or contact me on [Twitter](https://www.twitter.com/lekoarts_de)) and would be happy to review PRs that implement or fix something you saw.
