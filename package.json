@@ -20,7 +20,8 @@
     "lint:fix": "yarn lint --fix",
     "format": "prettier \"**/*.{md,mdx,json,yaml}\" --write",
     "new-post": "ts-node packages/scripts/new-post.ts",
-    "new-garden": "ts-node packages/scripts/new-garden.ts"
+    "new-garden": "ts-node packages/scripts/new-garden.ts",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.169",
@@ -42,10 +43,5 @@
     "prettier": "^2.3.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
