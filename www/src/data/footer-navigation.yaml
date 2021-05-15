@@ -26,6 +26,8 @@
   items:
     - name: Appearances
       link: /appearances
+    - name: Projects
+      link: /projects
     - name: Uses
       link: /uses
     - name: GitHub

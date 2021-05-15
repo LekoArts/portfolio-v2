@@ -1,0 +1,41 @@
+import { MDXLayout as PageLayout } from "../components/blocks/mdx-layout";
+import { SEO } from "../components/seo";
+
+<SEO title="Projects" />
+
+export default PageLayout;
+
+# Projects
+
+## Fast Refresh Integration (Gatsby)
+
+### Code
+
+All of the frontend code lives inside the [cache-dir/fast-refresh-overlay](https://github.com/gatsbyjs/gatsby/tree/d430823842800745107a441d2f6a6029d6b6c1d7/packages/gatsby/cache-dir/fast-refresh-overlay) folder, other bits like the webpack config are in other files inside the `gatsby` package.
+
+### Description
+
+[Fast Refresh](https://www.npmjs.com/package/react-refresh) is an implementation of Hot Reloading with full support from React. It replaces unofficial solutions like [`react-hot-loader`](https://github.com/gaearon/react-hot-loader). It was the goal to publish the Fast Refresh integration with the release of Gatsby v3 (see [release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0/#fast-refresh)).
+
+https://www.gatsbyjs.com/docs/reference/release-notes/v3.0/#fast-refresh
+https://www.gatsbyjs.com/docs/reference/local-development/fast-refresh/
+
+## File System Route API (Gatsby)
+
+### Code
+
+test123
+
+### Description
+
+https://www.gatsbyjs.com/blog/fs-route-api/
+
+## Internalization Theme (Gatsby)
+
+### Code
+
+[gatsby-theme-i18n](https://github.com/gatsbyjs/themes/tree/692499ec782aae8b47bcd5aafbbe3cc565b9e429/packages/gatsby-theme-i18n) + [gatsby-theme-i18n-react-intl](https://github.com/gatsbyjs/themes/tree/692499ec782aae8b47bcd5aafbbe3cc565b9e429/packages/gatsby-theme-i18n-react-intl) / [gatsby-theme-i18n-react-i18next](https://github.com/gatsbyjs/themes/tree/692499ec782aae8b47bcd5aafbbe3cc565b9e429/packages/gatsby-theme-i18n-react-i18next) / [gatsby-theme-i18n-lingui](https://github.com/gatsbyjs/themes/tree/692499ec782aae8b47bcd5aafbbe3cc565b9e429/packages/gatsby-theme-i18n-lingui)
+
+### Description
+
+As lead engineer on the Gatsby internalization (i18n) initiative, I knew right from the start that internationalization and localization are multi-faceted problems requiring an iterative solution process with involvement from the community. To best understand what this process should look like, I needed to identify the current pain points as well what future considerations need to be kept in mind in designing a solution. With these in mind, I started researching the current i18n ecosystem in Gatsby. I published the article [Research on i18n with Gatsby](https://www.gatsbyjs.com/blog/2020-07-13-i18n-pain-points/) to invite people to give feedback and work together on the identified pain points. The announcement article [Gatsby Goes Global: Announcing Gatsby’s Official i18n Theme](https://www.gatsbyjs.com/blog/2020-07-28-introducing-gatsby-i18n-theme/) lays out the problems I hit and the solutions I found for integrating third-party libraries together with Gatsby. The users are now able to combine the main theme with a theme of their choice to have instant support for most common i18n use cases.

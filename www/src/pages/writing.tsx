@@ -1,13 +1,13 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { Container, Stack, Text, Grid } from "@chakra-ui/react"
-import { Layout } from "../../components/blocks/layout"
-import { SkipNavContent } from "../../components/a11y/skip-nav"
-import { WritingSubNavigation } from "../../components/writing/subnavigation"
-import { Heading } from "../../components/typography/heading"
-import { Link } from "../../components/link"
-import { space } from "../../constants/space"
-import { Card } from "../../components/writing/card"
+import { Layout } from "../components/blocks/layout"
+import { SkipNavContent } from "../components/a11y/skip-nav"
+import { WritingSubNavigation } from "../components/writing/subnavigation"
+import { Heading } from "../components/typography/heading"
+import { Link } from "../components/link"
+import { space } from "../constants/space"
+import { Card } from "../components/writing/card"
 
 type WritingProps = {
   posts: {
@@ -22,7 +22,7 @@ type WritingProps = {
   }
 }
 
-const Index: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
+const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
     <SkipNavContent>
       <Container py={space.paddingMedium}>
@@ -56,7 +56,7 @@ const Index: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
   </Layout>
 )
 
-export default Index
+export default Writing
 
 export const query = graphql`
   {
