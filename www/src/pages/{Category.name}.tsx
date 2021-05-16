@@ -2,6 +2,7 @@ import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { CategoryHero } from "../components/writing/category-hero"
 import { CategoryView } from "../components/writing/category-view"
+import { SEO } from "../components/seo"
 
 type ReactProps = {
   posts: {
@@ -23,6 +24,7 @@ type ReactProps = {
 
 const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
+    <SEO title={category.name} description={category.description} />
     <CategoryHero bgGradient={category.gradient} title={category.name} description={category.description} />
   </CategoryView>
 )
@@ -30,7 +32,7 @@ const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, categor
 export default ReactCategory
 
 export const query = graphql`
-  query($name: String!) {
+  query ($name: String!) {
     category(name: { eq: $name }) {
       name
       description

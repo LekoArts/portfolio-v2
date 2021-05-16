@@ -8,6 +8,7 @@ import { Heading } from "../components/typography/heading"
 import { Link } from "../components/link"
 import { space } from "../constants/space"
 import { Card } from "../components/writing/card"
+import { SEO } from "../components/seo"
 
 type WritingProps = {
   posts: {
@@ -24,6 +25,7 @@ type WritingProps = {
 
 const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
+    <SEO title="Writing" />
     <SkipNavContent>
       <Container py={space.paddingMedium}>
         <Stack spacing="20" align="center">

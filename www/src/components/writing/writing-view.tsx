@@ -23,6 +23,7 @@ export type WritingViewDataProps = {
     seoLastUpdated: string
     subtitle: string
     timeToRead: string
+    image?: string
     category: {
       name: string
       slug: string
@@ -39,7 +40,7 @@ export type WritingViewDataProps = {
 
 const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children, type }) => (
   <Layout>
-    <SEO title={post.title} description={post.description ? post.description : post.excerpt}>
+    <SEO title={post.title} description={post.description ? post.description : post.excerpt} image={post.image}>
       <meta name="twitter:label1" value="Time To Read" />
       <meta name="twitter:data1" value={`${post.timeToRead} Minutes`} />
       <meta name="twitter:label2" value="Category" />
@@ -98,6 +99,7 @@ export const query = graphql`
     date(formatString: "MMM DD, YYYY")
     subtitle
     timeToRead
+    image
     category {
       name
       slug

@@ -15,20 +15,17 @@ All of the frontend code lives inside the [cache-dir/fast-refresh-overlay](https
 
 ### Description
 
-[Fast Refresh](https://www.npmjs.com/package/react-refresh) is an implementation of Hot Reloading with full support from React. It replaces unofficial solutions like [`react-hot-loader`](https://github.com/gaearon/react-hot-loader). It was the goal to publish the Fast Refresh integration with the release of Gatsby v3 (see [release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0/#fast-refresh)).
-
-https://www.gatsbyjs.com/docs/reference/release-notes/v3.0/#fast-refresh
-https://www.gatsbyjs.com/docs/reference/local-development/fast-refresh/
+[Fast Refresh](https://www.npmjs.com/package/react-refresh) is an implementation of Hot Reloading with full support from React. It was the goal to publish the Fast Refresh integration with the release of Gatsby v3 (see [release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0/#fast-refresh)). So on a tight deadline an accessible, responsive and most importantly helpful modal/error overlay had to be created. Since Fast Refresh relies on stricter "code style" rules (e.g. no anonymous exports, only one export per file) compared to previous Hot Reloading solutions two things had to be done: 1) Ensure that Gatsby's frontend itself handles all possible files gracefully (e.g. MDX) and 2) that ESLint warnings were added to warn against those now bad code styles. The end result is an accessible modal (with focus trap, correct aria labels, respects `prefers-*` media queries) showing multiple types of errors. In addition, a public facing [Fast Refresh documentation page](https://www.gatsbyjs.com/docs/reference/local-development/fast-refresh/) was written to inform users of how it works, limitations, and tips.
 
 ## File System Route API (Gatsby)
 
 ### Code
 
-test123
+The relevant code was added to the existing [gatsby-plugin-page-creator](https://github.com/gatsbyjs/gatsby/tree/d430823842800745107a441d2f6a6029d6b6c1d7/packages/gatsby-plugin-page-creator) package. [Pull Request on GitHub](https://github.com/gatsbyjs/gatsby/pull/27424).
 
 ### Description
 
-https://www.gatsbyjs.com/blog/fs-route-api/
+While the [File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) when I took the project over has already been in a beta stage for some weeks and the final API was mostly done there was still much to do. Incorporating the bug reports and feature requests from the community, adding unit & end-to-end tests, writing documentation. A lot of work went into the polishing of this feature and ensuring that most common use cases were covered -- since the goal of this new feature was to abstract some lower-level Gatsby APIs away into the filename itself. It greatly improved the DX of Gatsby and lowered the level of entry for each user. Challenges were different encodings/formats of file names, some feature requests from users, and the question of what the final API surface should look like. All the added tests and user interviews cleared a path for finding solutions before the GA release. An [example](https://github.com/gatsbyjs/gatsby/tree/d430823842800745107a441d2f6a6029d6b6c1d7/examples/route-api) also shows the API in action.
 
 ## Internalization Theme (Gatsby)
 

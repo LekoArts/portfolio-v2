@@ -21,6 +21,7 @@ import { SkipNavContent } from "../components/a11y/skip-nav"
 import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
 import { Spacer } from "../components/blocks/spacer"
+import { SEO } from "../components/seo"
 
 type DataProps = {
   garden: {
@@ -67,6 +68,11 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
 
   return (
     <Layout>
+      <SEO
+        title="Digital Garden"
+        description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
+        image="/social/digital-garden.png"
+      />
       <SkipNavContent>
         <Container py={space.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>

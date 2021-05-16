@@ -12,7 +12,7 @@ type SEOProps = {
 }
 
 export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, noIndex = false, children }) => {
-  const location = useLocation()
+  const { origin, href } = useLocation()
 
   const {
     site: { siteMetadata },
@@ -22,7 +22,6 @@ export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, n
         siteMetadata {
           siteTitle
           siteTitleDefault
-          siteUrl
           siteDescription
           siteImage
           twitter
@@ -31,13 +30,13 @@ export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, n
     }
   `)
 
-  const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = siteMetadata
+  const { siteTitle, siteTitleDefault, siteDescription, siteImage, twitter } = siteMetadata
 
   const seo = {
     title: title || siteTitleDefault,
     description: description || siteDescription,
-    url: pathname ? `${siteUrl}${pathname}` : location.href,
-    image: `${siteUrl}${image || siteImage}`,
+    url: pathname ? `${origin}${pathname}` : href,
+    image: `${origin}${image || siteImage}`,
   }
 
   return (

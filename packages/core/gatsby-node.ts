@@ -52,7 +52,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       body: String!
       html: String
       timeToRead: Int
-      image: File @fileByRelativePath
+      image: String
       category: Category! @link(by: "name")
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
@@ -69,7 +69,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       body: String! @mdxpassthrough(fieldName: "body")
       html: String! @mdxpassthrough(fieldName: "html")
       timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
-      image: File @fileByRelativePath
+      image: String
       category: Category! @link(by: "name")
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
@@ -144,7 +144,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
 type WritingNode = {
   frontmatter: {
     slug?: string
-    image: string
+    image?: string
     category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
     date: string
     lastUpdated?: string
@@ -192,7 +192,7 @@ export const onCreateNode = (
       date: f.date,
       lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,
       category: f.category,
-      image: f.image,
+      image: f.image ? f.image : undefined,
       description: f.description,
       published: f.published ?? true,
       type: f.type,

@@ -91,7 +91,7 @@ lastUpdated: ${res.date}
 description: "${res.description}"
 type: "${res.type}"
 category: "${res.category}"
-image: ./file-name.jpg
+image: file-name-inside-og-images-folder.png
 published: ${res.published ? `true` : `false`}
 ---`.trim()
 
