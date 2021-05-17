@@ -7046,6 +7046,13 @@ gatsby-plugin-perf-budgets@^0.0.18:
     opener "^1.5.1"
     ws "^6.0.0"
 
+gatsby-plugin-react-helmet@^4.6.0-next.0:
+  version "4.6.0-next.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet/-/gatsby-plugin-react-helmet-4.6.0-next.0.tgz#6f195497418afe605d364a5f074b02521b64d6c9"
+  integrity sha512-5PbDr1wrafviNlnYZFhSbtMn2jCqQK4OINWwCM+bUhUg7HxMFHIwYfkVTPwEvbsrI+krHCrN6idzC91HrguFXQ==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 gatsby-plugin-sharp@^3.6.0-next.0:
   version "3.6.0-next.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-3.6.0-next.0.tgz#8ff1715eccb4814ab9f072a1590b944eabe69999"

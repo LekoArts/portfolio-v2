@@ -25,6 +25,7 @@
     "gatsby-plugin-image": "^1.6.0-next.0",
     "gatsby-plugin-manifest": "^3.6.0-next.0",
     "gatsby-plugin-perf-budgets": "^0.0.18",
+    "gatsby-plugin-react-helmet": "^4.6.0-next.0",
     "gatsby-plugin-sitemap": "^4.2.0-next.1",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.22",
     "gatsby-theme-core": "^0.0.1",
