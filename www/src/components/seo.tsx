@@ -61,7 +61,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, n
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f172a" />
       <meta name="msapplication-TileColor" content="#0f172a" />
-      {noIndex && <meta name="robots" content="noindex" />}
+      {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {children}
     </Helmet>
   )
