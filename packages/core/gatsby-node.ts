@@ -123,6 +123,22 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
   `)
 }
 
+const replacePath = (_path: string) => (_path === `/` ? _path : _path.replace(/\/$/, ``))
+
+export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+
+  return new Promise((resolve) => {
+    const oldPage = { ...page }
+    page.path = replacePath(page.path)
+    if (page.path !== oldPage.path) {
+      deletePage(oldPage)
+      createPage(page)
+    }
+    resolve()
+  })
+}
+
 export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentDigest }, themeOptions): any => {
   const { createNode } = actions
   const defaultOptions = withDefaults(themeOptions)

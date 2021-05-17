@@ -4,6 +4,7 @@ import { slugifyOptions } from "utils"
 require(`dotenv`).config()
 
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
+const siteUrl = `https://lekoarts-portfolio-v2.gatsbyjs.io`
 
 const gatsbyConfig: GatsbyConfig = {
   flags: {
@@ -12,7 +13,7 @@ const gatsbyConfig: GatsbyConfig = {
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,
     siteTitleDefault: `Lennart Jörgens - Software Engineer`,
-    siteUrl: `https://lekoarts-portfolio-v2.gatsbyjs.io`,
+    siteUrl,
     siteDescription: `Lennart is a software engineer and passionate about working on open source products & building communities around them. He currently works at Gatsby on the open source project.`,
     siteImage: `/social/default-og-image.png?v=1`,
     twitter: `@lekoarts_de`,
@@ -71,6 +72,47 @@ const gatsbyConfig: GatsbyConfig = {
             type: `image/png`,
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: `/`,
+        excludes: [
+          `/dev-404-page`,
+          `/404`,
+          `/404.html`,
+          `/offline-plugin-app-shell-fallback`,
+          `/privacy-policy`,
+          `/legal-notice`,
+        ],
+        query: `
+        {
+          posts: allPost {
+            nodes {
+              path: slug
+              lastmod: lastUpdated
+            }
+          }
+          garden: allGarden {
+            nodes {
+              lastmod: lastUpdated
+              path: slug
+            }
+          }
+          other: allSitePage(filter: {pluginCreator: {name: {ne: "default-site-plugin"}}}) {
+            nodes {
+              path
+            }
+          }
+        }
+        `,
+        resolveSiteUrl: () => siteUrl,
+        resolvePages: ({ posts, garden, other }) => [].concat(posts.nodes, garden.nodes, other.nodes),
+        serialize: ({ path, lastmod }) => ({
+          url: path,
+          lastmod,
+        }),
       },
     },
     {
