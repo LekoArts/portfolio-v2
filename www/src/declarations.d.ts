@@ -6,3 +6,9 @@ declare module "react" {
     value?: string
   }
 }
+
+declare global {
+  interface Window {
+    plausible: any
+  }
+}
