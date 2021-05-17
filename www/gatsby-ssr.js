@@ -1,3 +1,5 @@
+import * as React from "react"
+
 const PLAUSIBLE_DOMAIN = `plausible.io`
 const SCRIPT_URI = `/js/plausible.js`
 
