@@ -88,7 +88,7 @@ const gatsbyConfig: GatsbyConfig = {
         ],
         query: `
         {
-          posts: allPost {
+          posts: allPost(filter: {published: {eq: true}}) {
             nodes {
               path: slug
               lastmod: lastUpdated
@@ -113,6 +113,55 @@ const gatsbyConfig: GatsbyConfig = {
           url: path,
           lastmod,
         }),
+      },
+    },
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              title: siteTitleDefault
+              description: siteDescription
+              siteUrl
+              site_url: siteUrl
+            }
+          }
+        }
+        `,
+        feeds: [
+          {
+            query: `
+            {
+              allPost(filter: {published: {eq: true}}) {
+                nodes {
+                  title
+                  date
+                  description
+                  slug
+                }
+              }
+            }
+            `,
+            serialize: ({ query: { site, allPost } }) =>
+              allPost.nodes.map((node) => {
+                const url = `${site.siteMetadata.siteUrl}${node.slug}`
+                const content = `<p>${node.description}</p><div style="margin-top: 50px; font-style: italic;"><strong><a href="${url}">Keep reading</a>.</strong></div><br /> <br />`
+
+                return {
+                  title: node.title,
+                  url,
+                  guid: url,
+                  date: node.date,
+                  description: node.description,
+                  custom_elements: [{ "content:encoded": content }],
+                }
+              }),
+            output: `/rss.xml`,
+            title: `Lennart Jörgens - Software Engineer`,
+          },
+        ],
       },
     },
     {
