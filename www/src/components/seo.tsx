@@ -11,6 +11,11 @@ type SEOProps = {
   noIndex?: boolean
 }
 
+const faviconSrc =
+  process.env.NODE_ENV === `production`
+    ? `/favicon.svg`
+    : `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>`
+
 export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, noIndex = false, children }) => {
   const { href } = useLocation()
 
@@ -57,10 +62,8 @@ export const SEO: React.FC<SEOProps> = ({ title, description, pathname, image, n
       <meta name="twitter:image" content={seo.image} />
       <meta name="twitter:creator" content={twitter} />
       <meta name="creator" content="LekoArts" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f172a" />
+      <link rel="icon" type="image/svg+xml" href={faviconSrc} />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <meta name="msapplication-TileColor" content="#0f172a" />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {children}

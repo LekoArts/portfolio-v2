@@ -1,6 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
-import { Container, Stack, Text, Grid } from "@chakra-ui/react"
+import { Container, Stack, Text, Grid, Link as ChakraLink } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { WritingSubNavigation } from "../components/writing/subnavigation"
@@ -34,7 +34,7 @@ const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
             <Text variant="prominent" maxWidth="45ch" textAlign="center">
               So far I’ve written {posts.totalCount} longform tutorials & articles. For more compact content visit my
               {` `}
-              <Link to="/garden">Digital Garden</Link>.
+              <Link to="/garden">Digital Garden</Link>. <ChakraLink href="/rss.xml">RSS</ChakraLink>.
             </Text>
           </Stack>
           <Grid

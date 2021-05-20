@@ -88,7 +88,7 @@ const gatsbyConfig: GatsbyConfig = {
         ],
         query: `
         {
-          posts: allPost(filter: {published: {eq: true}}) {
+          posts: allPost(filter: { published: { eq: true } } ) {
             nodes {
               path: slug
               lastmod: lastUpdated
@@ -100,7 +100,7 @@ const gatsbyConfig: GatsbyConfig = {
               path: slug
             }
           }
-          other: allSitePage(filter: {pluginCreator: {name: {ne: "default-site-plugin"}}}) {
+          other: allSitePage(filter: { pluginCreator: { name: { ne: "default-site-plugin" } } } ) {
             nodes {
               path
             }
@@ -134,7 +134,7 @@ const gatsbyConfig: GatsbyConfig = {
           {
             query: `
             {
-              allPost(filter: {published: {eq: true}}) {
+              allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
                 nodes {
                   title
                   date

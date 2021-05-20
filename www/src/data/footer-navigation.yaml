@@ -44,3 +44,4 @@
       isExternal: true
     - name: RSS
       link: /rss.xml
+      isExternal: true

@@ -82,7 +82,7 @@ const openSourceRepos = [
     url: `https://github.com/LekoArts/lekoarts-stats`,
   },
   {
-    name: `portfolio`,
+    name: `portfolio-v2`,
     url: `https://github.com/LekoArts/portfolio-v2`,
   },
 ]
@@ -170,7 +170,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 >
                   <MotionBox
                     sx={{
-                      ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
+                      ".gatsby-image-wrapper": { borderRadius: `lg`, verticalAlign: `top` },
                       boxShadow: `lg`,
                       height: `100%`,
                       width: `100%`,
@@ -197,7 +197,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 >
                   <MotionBox
                     sx={{
-                      ".gatsby-image-wrapper": { borderRadius: `lg`, height: `100%`, width: `100%` },
+                      ".gatsby-image-wrapper": { borderRadius: `lg`, verticalAlign: `top` },
                       boxShadow: `lg`,
                       height: `100%`,
                       width: `100%`,
