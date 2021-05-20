@@ -14,8 +14,8 @@
     name: Art
     link: /art
   items:
-    - name: UI Design
-      link: /art/ui
+    - name: Design
+      link: /art/design
     - name: 3D Art
       link: /art/3d
     - name: Photography
