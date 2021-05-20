@@ -8,7 +8,8 @@ const siteUrl = `https://lekoarts-portfolio-v2.gatsbyjs.io`
 
 const gatsbyConfig: GatsbyConfig = {
   flags: {
-    DEV_SSR: false,
+    DEV_SSR: true,
+    FAST_DEV: true,
   },
   siteMetadata: {
     siteTitle: `Lennart Jörgens`,
