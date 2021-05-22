@@ -171,6 +171,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   <MotionBox
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, verticalAlign: `top` },
+                      img: { borderRadius: `lg` },
                       boxShadow: `lg`,
                       height: `100%`,
                       width: `100%`,
@@ -198,6 +199,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   <MotionBox
                     sx={{
                       ".gatsby-image-wrapper": { borderRadius: `lg`, verticalAlign: `top` },
+                      img: { borderRadius: `lg` },
                       boxShadow: `lg`,
                       height: `100%`,
                       width: `100%`,
