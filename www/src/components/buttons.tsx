@@ -1,8 +1,9 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
-import { Button, usePrefersReducedMotion } from "@chakra-ui/react"
 import { FaTwitter } from "react-icons/fa"
+import { FiShare } from "react-icons/fi"
+import { Button, usePrefersReducedMotion } from "@chakra-ui/react"
 
 /**
  * Primary buttons for important CTA
@@ -98,4 +99,25 @@ const TwitterButton = ({ link, message }) => (
   </Button>
 )
 
-export { PrimaryButton, SubtleButton, TwitterButton }
+const ShareAnywhereButton = ({ link, message }) => {
+  const handleSocialShare = (event) => {
+    event.preventDefault()
+
+    navigator
+      .share({
+        title: message,
+        text: `${message} by Lennart Jörgens (@lekoarts_de)`,
+        url: link,
+      })
+      .then(() => console.log(`Successful share of ${link}`))
+      .catch((error) => console.log(`Error sharing ${link}`, error))
+  }
+
+  return (
+    <Button onClick={handleSocialShare} size="md" variant="primary" rightIcon={<FiShare />}>
+      Share Anywhere
+    </Button>
+  )
+}
+
+export { PrimaryButton, SubtleButton, TwitterButton, ShareAnywhereButton }
