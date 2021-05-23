@@ -12,6 +12,7 @@ import { SEO } from "../components/seo"
 import { Heading } from "../components/typography/heading"
 import { Spacer } from "../components/blocks/spacer"
 import { components } from "../components/mdx"
+import { article } from "../constants/json-ld"
 
 type DataProps = {
   garden: {
@@ -22,6 +23,7 @@ type DataProps = {
     seoLastUpdated: string
     lastUpdated: string
     seoDate: string
+    yearDate: string
     date: string
     tags: string[]
     timeToRead: number
@@ -43,6 +45,26 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
       <meta name="twitter:data2" value={garden.icon} />
       <meta name="article:published_time" content={garden.seoDate} />
       <meta name="article:modified_time" content={garden.seoLastUpdated} />
+      <script type="application/ld+json">
+        {JSON.stringify(
+          article({
+            isGarden: true,
+            post: {
+              title: garden.title,
+              description: garden.excerpt,
+              slug: garden.slug,
+              image: `/social/digital-garden.png`,
+              date: garden.seoDate,
+              lastUpdated: garden.seoLastUpdated,
+              year: garden.yearDate,
+            },
+            category: {
+              name: `Digital Garden`,
+              slug: `/garden`,
+            },
+          })
+        )}
+      </script>
     </SEO>
     <Container variant="proseRoot">
       <SkipNavContent>
@@ -137,6 +159,7 @@ export const query = graphql`
       lastUpdated(formatString: "MMM DD, YYYY")
       seoDate: date
       date(formatString: "MMM DD, YYYY")
+      yearDate: date(formatString: "YYYY")
       tags
       timeToRead
       excerpt

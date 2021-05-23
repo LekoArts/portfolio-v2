@@ -25,7 +25,7 @@ type WritingProps = {
 
 const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
-    <SEO title="Writing" />
+    <SEO title="Writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing` }]} />
     <SkipNavContent>
       <Container py={space.paddingMedium}>
         <Stack spacing="20" align="center">

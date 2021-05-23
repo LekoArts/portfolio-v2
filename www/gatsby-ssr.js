@@ -5,6 +5,7 @@ import createCache from "@emotion/cache"
 import createEmotionServer from "@emotion/server/create-instance"
 import parse from "html-react-parser"
 import { cacheKey } from "./src/constants/emotion"
+import { site } from "./src/constants/meta"
 
 export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
   const cache = createCache({ key: cacheKey })
@@ -28,7 +29,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
     const scriptProps = {
       async: true,
       defer: true,
-      "data-domain": `lekoarts-portfolio-v2.gatsbyjs.io`,
+      "data-domain": site.dataDomain,
       src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
     }
 

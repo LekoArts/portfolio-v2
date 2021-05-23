@@ -1,7 +1,11 @@
 import { MDXLayout as PageLayout } from "../components/blocks/mdx-layout";
 import { SEO } from "../components/seo";
 
-<SEO title="Projects" />
+<SEO
+  title="Projects"
+  description="Work Projects and Open Source Contributions explained with technical details and links to source code."
+  breadcrumbListItems={[{ name: `Projects`, url: `/projects` }]}
+/>
 
 export default PageLayout;
 

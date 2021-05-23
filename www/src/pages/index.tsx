@@ -17,7 +17,6 @@ import {
   TagLabel,
   usePrefersReducedMotion,
 } from "@chakra-ui/react"
-import { shuffle } from "utils"
 import { Link } from "../components/link"
 import { Layout } from "../components/blocks/layout"
 import { MotionBox } from "../components/blocks/motion-box"
@@ -27,6 +26,8 @@ import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Heading } from "../components/typography/heading"
 import { PrimaryButton, SubtleButton } from "../components/buttons"
 import { space } from "../constants/space"
+import { SEO } from "../components/seo"
+import { homepage } from "../constants/json-ld"
 
 type RepositoryInfo = {
   stargazerCount: number
@@ -49,21 +50,10 @@ type DataProps = {
   secondaryRepo: {
     repository: RepositoryInfo
   }
-  site: {
-    buildTime: string
-  }
 }
 
 const cardGradients = [
   `linear(to-tr, violet.800, violet.300)`,
-  `linear(to-tr, indigo.800, indigo.300)`,
-  `linear(to-tr, blue.800, blue.300)`,
-  `linear(to-tr, teal.800, teal.300)`,
-  `linear(to-tr, lime.800, lime.300)`,
-  `linear(to-tr, amber.800, amber.300)`,
-  `linear(to-tr, coolGray.700, coolGray.300)`,
-  `linear(to-tr, purple.800, violet.300)`,
-  `linear(to-tr, indigo.800, lightBlue.300)`,
   `linear(to-tr, teal.800, green.300)`,
   `linear(to-tr, amber.800, red.300)`,
 ]
@@ -93,14 +83,15 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
   const shouldReduceMotion = usePrefersReducedMotion()
   const [firstPost, ...rest] = data.posts.nodes
   const otherPosts = [...rest]
-  const buildUnix = parseInt(data.site.buildTime, 10)
-  const gradients = shuffle(cardGradients, buildUnix, 3)
 
   const primRepo = data.primaryRepo.repository
   const secRepo = data.secondaryRepo.repository
 
   return (
     <Layout>
+      <SEO>
+        <script type="application/ld+json">{JSON.stringify(homepage)}</script>
+      </SEO>
       <SkipNavContent>
         <FullWidthContainer variant="hero">
           <Stack align="center" spacing="5" py={space.paddingLarge}>
@@ -139,7 +130,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     _hover={{ textDecoration: `none`, boxShadow: shouldReduceMotion ? `outline` : null }}
                   >
                     <MotionBox
-                      bgGradient={gradients[index]}
+                      bgGradient={cardGradients[index]}
                       p={4}
                       borderRadius="lg"
                       height={[`150px`, null, null, `200px`, `250px`]}
@@ -309,9 +300,6 @@ export const query = graphql`
         name
         url
       }
-    }
-    site {
-      buildTime(formatString: "X")
     }
   }
 `

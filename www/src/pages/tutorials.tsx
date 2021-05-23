@@ -22,7 +22,11 @@ const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => 
 
   return (
     <CategoryView posts={posts}>
-      <SEO title={tutorialsTitle} description={tutorialsDescription} />
+      <SEO
+        title={tutorialsTitle}
+        description={tutorialsDescription}
+        breadcrumbListItems={[{ name: `Tutorials`, url: `/tutorials` }]}
+      />
       <CategoryHero
         bgGradient="linear(to-t, blueGray.600, blueGray.900)"
         title={tutorialsTitle}

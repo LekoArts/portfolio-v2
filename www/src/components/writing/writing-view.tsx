@@ -9,6 +9,7 @@ import { SkipNavContent } from "../a11y/skip-nav"
 import { Spacer } from "../blocks/spacer"
 import { Prose } from "../typography/prose"
 import { components } from "../mdx"
+import { article } from "../../constants/json-ld"
 
 export type WritingViewDataProps = {
   post: {
@@ -20,6 +21,7 @@ export type WritingViewDataProps = {
     excerpt: string
     lastUpdated: string
     seoDate: string
+    yearDate: string
     seoLastUpdated: string
     subtitle: string
     timeToRead: string
@@ -47,6 +49,26 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
       <meta name="twitter:data2" value={post.category.name} />
       <meta name="article:published_time" content={post.seoDate} />
       <meta name="article:modified_time" content={post.seoLastUpdated} />
+      <script type="application/ld+json">
+        {JSON.stringify(
+          article({
+            isGarden: false,
+            post: {
+              title: post.title,
+              description: post.description ? post.description : post.excerpt,
+              date: post.seoDate,
+              lastUpdated: post.seoLastUpdated,
+              year: post.yearDate,
+              image: post.image,
+              slug: post.slug,
+            },
+            category: {
+              name: post.category.name,
+              slug: post.category.slug,
+            },
+          })
+        )}
+      </script>
     </SEO>
     <Container variant="proseRoot">
       <SkipNavContent>
@@ -96,6 +118,7 @@ export const query = graphql`
     seoLastUpdated: lastUpdated
     lastUpdated(formatString: "MMM DD, YYYY")
     seoDate: date
+    yearDate: date(formatString: "YYYY")
     date(formatString: "MMM DD, YYYY")
     subtitle
     timeToRead

@@ -1,10 +1,10 @@
 import { GatsbyConfig } from "gatsby"
 import { slugifyOptions } from "utils"
+import { site } from "./src/constants/meta"
 
 require(`dotenv`).config()
 
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
-const siteUrl = `https://lekoarts-portfolio-v2.gatsbyjs.io`
 
 const gatsbyConfig: GatsbyConfig = {
   flags: {
@@ -12,12 +12,12 @@ const gatsbyConfig: GatsbyConfig = {
     FAST_DEV: true,
   },
   siteMetadata: {
-    siteTitle: `Lennart Jörgens`,
-    siteTitleDefault: `Lennart Jörgens - Software Engineer`,
-    siteUrl,
-    siteDescription: `Lennart is a software engineer and passionate about working on open source products & building communities around them. He currently works at Gatsby on the open source project.`,
-    siteImage: `/social/default-og-image.png?v=1`,
-    twitter: `@lekoarts_de`,
+    siteTitle: site.title,
+    siteTitleDefault: site.titleDefault,
+    siteUrl: site.url,
+    siteDescription: site.description,
+    siteImage: site.image,
+    twitter: site.twitter,
   },
   plugins: [
     `gatsby-theme-core`,
@@ -54,9 +54,9 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Lennart Jörgens - Software Engineer`,
-        short_name: `Lennart Jörgens`,
-        description: `Lennart is a software engineer and passionate about working on open source products & building communities around them. He currently works at Gatsby on the open source project.`,
+        name: site.titleDefault,
+        short_name: site.title,
+        description: site.description,
         start_url: `/`,
         background_color: `#0f172a`,
         theme_color: `#ea580c`,
@@ -108,7 +108,7 @@ const gatsbyConfig: GatsbyConfig = {
           }
         }
         `,
-        resolveSiteUrl: () => siteUrl,
+        resolveSiteUrl: () => site.url,
         resolvePages: ({ posts, garden, other }) => [].concat(posts.nodes, garden.nodes, other.nodes),
         serialize: ({ path, lastmod }) => ({
           url: path,
@@ -145,9 +145,9 @@ const gatsbyConfig: GatsbyConfig = {
               }
             }
             `,
-            serialize: ({ query: { site, allPost } }) =>
+            serialize: ({ query: { site: s, allPost } }) =>
               allPost.nodes.map((node) => {
-                const url = `${site.siteMetadata.siteUrl}${node.slug}`
+                const url = `${s.siteMetadata.siteUrl}${node.slug}`
                 const content = `<p>${node.description}</p><div style="margin-top: 50px; font-style: italic;"><strong><a href="${url}">Keep reading</a>.</strong></div><br /> <br />`
 
                 return {
@@ -160,7 +160,7 @@ const gatsbyConfig: GatsbyConfig = {
                 }
               }),
             output: `/rss.xml`,
-            title: `Lennart Jörgens - Software Engineer`,
+            title: site.titleDefault,
           },
         ],
       },

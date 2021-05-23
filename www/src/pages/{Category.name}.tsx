@@ -19,12 +19,17 @@ type ReactProps = {
     name: string
     description: string
     gradient: string
+    slug: string
   }
 }
 
 const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
-    <SEO title={category.name} description={category.description} />
+    <SEO
+      title={category.name}
+      description={category.description}
+      breadcrumbListItems={[{ name: category.name, url: category.slug }]}
+    />
     <CategoryHero bgGradient={category.gradient} title={category.name} description={category.description} />
   </CategoryView>
 )
@@ -37,6 +42,7 @@ export const query = graphql`
       name
       description
       gradient
+      slug
     }
     posts: allPost(
       filter: { published: { eq: true }, category: { name: { eq: $name } } }
