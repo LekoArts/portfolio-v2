@@ -2,6 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
 import { Button, usePrefersReducedMotion } from "@chakra-ui/react"
+import { FaTwitter } from "react-icons/fa"
 
 /**
  * Primary buttons for important CTA
@@ -78,4 +79,23 @@ const SubtleButton: React.FC<{ to: string; isExternal?: boolean }> = ({ children
   )
 }
 
-export { PrimaryButton, SubtleButton }
+const getTwitterShareLink = (link, message) =>
+  `https://twitter.com/intent/tweet/?text=${encodeURIComponent(message)}&via=lekoarts_de&url=${encodeURIComponent(
+    link
+  )}`
+
+const TwitterButton = ({ link, message }) => (
+  <Button
+    as="a"
+    href={getTwitterShareLink(link, message)}
+    target="_blank"
+    rel="noreferrer noopener"
+    size="md"
+    variant="primary"
+    rightIcon={<FaTwitter />}
+  >
+    Share on Twitter
+  </Button>
+)
+
+export { PrimaryButton, SubtleButton, TwitterButton }

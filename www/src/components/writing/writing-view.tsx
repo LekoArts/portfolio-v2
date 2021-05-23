@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Container, Divider, Link as ExternalLink, Text } from "@chakra-ui/react"
+import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Layout } from "../blocks/layout"
@@ -10,6 +10,8 @@ import { Spacer } from "../blocks/spacer"
 import { Prose } from "../typography/prose"
 import { components } from "../mdx"
 import { article } from "../../constants/json-ld"
+import { TwitterButton } from "../buttons"
+import { site } from "../../constants/meta"
 
 export type WritingViewDataProps = {
   post: {
@@ -81,21 +83,32 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
         <Spacer size={12} axis="vertical" />
         <Divider />
         <Spacer size={6} axis="vertical" />
-        <ExternalLink
-          fontSize={[`md`, null, null, `1.125rem`]}
-          fontWeight="medium"
-          href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/writing/${post.parent.parent.relativePath}`}
+        <Stack
+          direction={[`column`, `row`]}
+          display="flex"
+          spacing="5"
+          justifyContent={[`flex-start`, `space-between`]}
+          alignItems={[`flex-start`, `center`]}
         >
-          Edit on GitHub
-        </ExternalLink>
-        {` `}-{` `}
-        <ExternalLink
-          fontSize={[`md`, null, null, `1.125rem`]}
-          fontWeight="medium"
-          href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
-        >
-          Discuss on Twitter
-        </ExternalLink>
+          <Box>
+            <ExternalLink
+              fontSize={[`md`, null, null, `1.125rem`]}
+              fontWeight="medium"
+              href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/writing/${post.parent.parent.relativePath}`}
+            >
+              Edit on GitHub
+            </ExternalLink>
+            {` `}-{` `}
+            <ExternalLink
+              fontSize={[`md`, null, null, `1.125rem`]}
+              fontWeight="medium"
+              href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
+            >
+              Discuss on Twitter
+            </ExternalLink>
+          </Box>
+          <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
+        </Stack>
         {type === `prose` && (
           <Text mt={6} fontSize={[`md`, null, null, `1.125rem`]}>
             Last updated: {post.lastUpdated}
