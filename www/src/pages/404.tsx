@@ -8,9 +8,9 @@ import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
 import { Link } from "../components/link"
 
-const NotFound: React.FC<PageProps> = ({ location }) => {
+const NotFound: React.FC<PageProps> = () => {
   React.useEffect(() => {
-    window.plausible(`404`, { props: { path: location.pathname } })
+    window.plausible(`404`, { props: { path: document.location.pathname } })
   }, [])
 
   return (

@@ -109,7 +109,9 @@ const ShareAnywhereButton = ({ link, message }) => {
         text: `${message} by Lennart Jörgens (@lekoarts_de)`,
         url: link,
       })
+      // eslint-disable-next-line no-console
       .then(() => console.log(`Successful share of ${link}`))
+      // eslint-disable-next-line no-console
       .catch((error) => console.log(`Error sharing ${link}`, error))
   }
 

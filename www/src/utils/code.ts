@@ -33,9 +33,6 @@ export const calculateLinesToHighlight = (meta: string) => {
     .map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
   return (index: number) => {
     const lineNumber = index + 1
-    const inRange = lineNumbers.some(([start, end]) =>
-      end ? lineNumber >= start && lineNumber <= end : lineNumber === start
-    )
-    return inRange
+    return lineNumbers.some(([start, end]) => (end ? lineNumber >= start && lineNumber <= end : lineNumber === start))
   }
 }
