@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Helmet } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
 import { useLocation } from "@reach/router"
 import { breadcrumbList, BreadcrumbListItem } from "../constants/json-ld"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
 type SEOProps = {
   title?: string
@@ -28,25 +28,7 @@ export const SEO: React.FC<SEOProps> = ({
   children,
 }) => {
   const { href } = useLocation()
-
-  const {
-    site: { siteMetadata },
-  } = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          siteTitle
-          siteTitleDefault
-          siteUrl
-          siteDescription
-          siteImage
-          twitter
-        }
-      }
-    }
-  `)
-
-  const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = siteMetadata
+  const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = useSiteMetadata()
 
   const seo = {
     title: title || siteTitleDefault,
