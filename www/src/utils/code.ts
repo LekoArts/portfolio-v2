@@ -1,8 +1,9 @@
 /**
  * Get the language and optional parameters back
- * @param className
+ * @param {string} className
+ * @returns {string} The language
  * @example
- * getParams('language-js:title=src/components/code.js')
+ * getLanguage('language-js')
  */
 export const getLanguage = (className = ``): string => className.split(`language-`).pop()
 
@@ -24,6 +25,15 @@ export const preToCodeBlock = (preProps) => {
 
 const RE = /{([\d,-]+)}/
 
+/**
+ * Get the lines to highlight in a code block
+ * @param meta
+ * @returns A function that returns a boolean depending on if the index should be highlighted or not
+ * @example
+ * calculateLinesToHighlight('title=gatsby-config.js {3-6}')
+ * calculateLinesToHighlight('title=gatsby-config.js {3}')
+ * calculateLinesToHighlight('title=gatsby-config.js {3-6,8}')
+ */
 export const calculateLinesToHighlight = (meta: string) => {
   if (!RE.test(meta)) {
     return () => false

@@ -27,6 +27,17 @@ const Button = {
       },
       _active: { bg: mode(`brand.primaryHover`, `brand.dark.primaryHover`)(props) },
     }),
+    outline: (props) => ({
+      color: mode(`text`, `white`)(props),
+      bg: `transparent`,
+      borderStyle: `solid`,
+      borderColor: mode(`brand.primary`, `brand.dark.primary`)(props),
+      borderWidth: `1px`,
+      _hover: {
+        color: `white`,
+        bg: mode(`brand.primary`, `brand.dark.primary`)(props),
+      },
+    }),
   },
 }
 

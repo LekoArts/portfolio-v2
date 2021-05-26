@@ -115,7 +115,10 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
               </ExternalLink>
             </Box>
             {hasShareApi ? (
-              <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
+              <Stack direction={[`column`, `row`]}>
+                <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
+                <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
+              </Stack>
             ) : (
               <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
             )}

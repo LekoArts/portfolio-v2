@@ -30,7 +30,7 @@ const singleSlashRegex = /\/\/+/g
  * @returns Slugified string
  */
 export const slugify = (source: { slug?: string; title?: string }, prefix = ``): string => {
-  if (!source.title) {
+  if (!source.slug && !source.title) {
     return `/${sindresorhusSlugify(prefix, slugifyOptions)}`
   }
 

@@ -85,21 +85,21 @@ const getTwitterShareLink = (link, message) =>
     link
   )}`
 
-const TwitterButton = ({ link, message }) => (
+const TwitterButton = ({ link, message, variant = `primary` }) => (
   <Button
     as="a"
     href={getTwitterShareLink(link, message)}
     target="_blank"
     rel="noreferrer noopener"
     size="md"
-    variant="primary"
+    variant={variant}
     rightIcon={<FaTwitter />}
   >
     Share on Twitter
   </Button>
 )
 
-const ShareAnywhereButton = ({ link, message }) => {
+const ShareAnywhereButton = ({ link, message, variant = `primary` }) => {
   const handleSocialShare = (event) => {
     event.preventDefault()
 
@@ -116,7 +116,7 @@ const ShareAnywhereButton = ({ link, message }) => {
   }
 
   return (
-    <Button onClick={handleSocialShare} size="md" variant="primary" rightIcon={<FiShare />}>
+    <Button onClick={handleSocialShare} size="md" variant={variant} rightIcon={<FiShare />}>
       Share Anywhere
     </Button>
   )

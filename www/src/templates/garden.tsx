@@ -143,7 +143,10 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </ExternalLink>
             </Box>
             {hasShareApi ? (
-              <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />
+              <Stack direction={[`column`, `row`]}>
+                <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />
+                <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} variant="outline" />
+              </Stack>
             ) : (
               <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} />
             )}
