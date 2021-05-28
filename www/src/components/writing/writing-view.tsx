@@ -101,7 +101,7 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
               <ExternalLink
                 fontSize={[`md`, null, null, `1.125rem`]}
                 fontWeight="medium"
-                href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/writing/${post.parent.parent.relativePath}`}
+                href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/writing/${post.parent.parent.relativePath}`}
               >
                 Edit on GitHub
               </ExternalLink>

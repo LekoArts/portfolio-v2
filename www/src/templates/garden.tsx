@@ -129,7 +129,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               <ExternalLink
                 fontSize={[`md`, null, null, `1.125rem`]}
                 fontWeight="medium"
-                href={`https://github.com/LekoArts/portfolio-v2/edit/master/www/content/garden/${garden.parent.parent.relativePath}`}
+                href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/garden/${garden.parent.parent.relativePath}`}
               >
                 Edit on GitHub
               </ExternalLink>
