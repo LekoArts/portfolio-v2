@@ -11,12 +11,13 @@ module.exports = {
     },
   },
   transform: {
-    "^.+\\.[jt]sx?$": `<rootDir>/jest-preprocess.js`,
+    "^.+\\.[jt]sx?$": `<rootDir>/jest/jest-preprocess.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
-  setupFiles: [`<rootDir>/jest-setup.js`],
+  setupFiles: [`<rootDir>/jest/jest-setup.js`],
   moduleNameMapper: {
     "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/jest/__mocks__/file-mock.js`,
   },
 }
