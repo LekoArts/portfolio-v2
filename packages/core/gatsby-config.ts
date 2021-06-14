@@ -1,7 +1,6 @@
 import { GatsbyConfig, PluginOptions } from "gatsby"
 import remarkSlug from "remark-slug"
 import remarkSmartyPants from "remark-smartypants"
-import a11yEmoji from "@fec/remark-a11y-emoji"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
@@ -67,7 +66,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
               },
             },
           ],
-          remarkPlugins: [remarkSlug, a11yEmoji, remarkSmartyPants],
+          remarkPlugins: [remarkSlug, remarkSmartyPants],
         },
       },
       `gatsby-transformer-sharp`,
