@@ -44,6 +44,12 @@ type DataProps = {
       slug: string
     }[]
   }
+  garden: {
+    nodes: {
+      title: string
+      slug: string
+    }[]
+  }
   primaryRepo: {
     repository: RepositoryInfo
   }
@@ -53,9 +59,12 @@ type DataProps = {
 }
 
 const cardGradients = [
-  `linear(to-tr, violet.800, violet.300)`,
-  `linear(to-tr, teal.800, green.300)`,
-  `linear(to-tr, amber.800, red.300)`,
+  `linear(to-tr, #A774F2, #F25D76, #FF964F)`,
+  `linear(to-tr, #9B7BFE, #54B5F0, #88F2A9)`,
+  `linear(to-tr, #933890, #E08896, #CC98DD, #D1CEE2)`,
+  `linear(to-tr, #6666DE, #5778C9, #94D1C9, #A1D8FF)`,
+  `linear(to-tr, #3e206d, #af3942, #d66a38, #eacc15)`,
+  `linear(to-tr, #511a2a, #cb598d, #b24ecb, #ebb8eb)`,
 ]
 
 const openSourceRepos = [
@@ -139,7 +148,38 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       alignItems="flex-end"
                       color="white"
                       fontSize={[`lg`, null, `md`, `1.125rem`, `1.3125rem`]}
-                      sx={{ textShadow: `0 1px 2px rgba(0, 0, 0, 0.25)` }}
+                      sx={{ textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)` }}
+                    >
+                      {item.title}
+                    </MotionBox>
+                  </Link>
+                ))}
+              </Grid>
+            </Stack>
+            <Stack direction="column" width="100%" spacing={6}>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Badge variant="light">Digital Garden</Badge>
+                <SubtleButton to="/garden">Read all</SubtleButton>
+              </Flex>
+              <Grid templateColumns={[`repeat(1, 1fr)`, null, `repeat(3, 1fr)`]} gap={[4, null, 8]}>
+                {data.garden.nodes.map((item, index) => (
+                  <Link
+                    to={item.slug}
+                    key={item.slug}
+                    borderRadius="lg"
+                    _hover={{ textDecoration: `none`, boxShadow: shouldReduceMotion ? `outline` : null }}
+                  >
+                    <MotionBox
+                      bgGradient={cardGradients[index + 3]}
+                      p={4}
+                      borderRadius="lg"
+                      height={[`125px`, null, null, `175px`]}
+                      boxShadow="lg"
+                      display="flex"
+                      alignItems="flex-end"
+                      color="white"
+                      fontSize={[`lg`, null, `md`, `1.125rem`, `1.3125rem`]}
+                      sx={{ textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)` }}
                     >
                       {item.title}
                     </MotionBox>
@@ -282,6 +322,16 @@ export const query = graphql`
       nodes {
         title
         description
+        slug
+      }
+    }
+    garden: allGarden(
+      limit: 3
+      sort: { fields: lastUpdated, order: DESC }
+      filter: { slug: { ne: "/garden/what-is-a-digital-garden" } }
+    ) {
+      nodes {
+        title
         slug
       }
     }
