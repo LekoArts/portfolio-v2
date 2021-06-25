@@ -2,6 +2,10 @@
 # Added also a /garden for smaller entries, switched /projects to /art, switched names of individual pages like /privacy to /privacy-policy
 # Removed tags all together and reduced amount of categories
 
+# Fun
+- fromPath: /admin
+  toPath: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
 # German
 # Top Level
 - fromPath: /projects/*
@@ -46,7 +50,7 @@
   toPath: /garden
 # Blog content German
 - fromPath: /blog/proprius-wallpaper-01
-  toPath: /garden/proprious-wallpaper-01
+  toPath: /garden/proprius-wallpaper
 - fromPath: /blog/elitepvpers-wallpaper-2017
   toPath: /garden/elitepvpers-wallpaper-2017
 - fromPath: /blog/gatsby-starter-portfolio-emma
@@ -73,7 +77,7 @@
   toPath: /javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code
 # Old legacy German
 - fromPath: /kontakt
-  toPath: /contact
+  toPath: /about
 - fromPath: /impressum
   toPath: /legal-notice
 - fromPath: /datenschutz
@@ -81,7 +85,7 @@
 - fromPath: /projekte
   toPath: /art
 - fromPath: /projekte/*
-  toPath: /art/*
+  toPath: /art
 
 # English
 # Top Level
@@ -96,7 +100,7 @@
 - fromPath: /en/blog
   toPath: /writing
 - fromPath: /en/contact
-  toPath: /contact
+  toPath: /about
 - fromPath: /en/tags/*
   toPath: /writing
 - fromPath: /en/categories/*
@@ -129,7 +133,7 @@
   toPath: /garden
 # Blog content English
 - fromPath: /en/blog/proprius-wallpaper-01-en
-  toPath: /garden/proprious-wallpaper-01
+  toPath: /garden/proprius-wallpaper
 - fromPath: /en/blog/elitepvpers-wallpaper-freebie-2017
   toPath: /garden/elitepvpers-wallpaper-2017
 - fromPath: /en/blog/gatsby-starter-portfolio-emma
