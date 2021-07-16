@@ -179,6 +179,16 @@ const smVariant = {
       mx: `-${em(12, 12)}`,
     },
   },
+  ".code-block-split-view": {
+    gridTemplateColumns: `1fr`,
+    gridGap: 0,
+    ".code-block-wrapper:first-of-type": {
+      ml: 0,
+    },
+    ".code-block-wrapper:last-of-type": {
+      mr: 0,
+    },
+  },
 }
 const mdVariant = {}
 const lgVariant = {
@@ -361,6 +371,14 @@ const lgVariant = {
       mx: `-${em(24, 16)}`,
     },
   },
+  ".code-block-split-view": {
+    ".code-block-wrapper:first-of-type": {
+      ml: `-${em(18, 14)}`,
+    },
+    ".code-block-wrapper:last-of-type": {
+      mr: `-${em(18, 14)}`,
+    },
+  },
 }
 const xlVariant = {
   fontSize: rem(20),
@@ -540,6 +558,14 @@ const xlVariant = {
     ".token-line": {
       px: em(24, 18),
       mx: `-${em(24, 18)}`,
+    },
+  },
+  ".code-block-split-view": {
+    ".code-block-wrapper:first-of-type": {
+      ml: `-${em(24, 15)}`,
+    },
+    ".code-block-wrapper:last-of-type": {
+      mr: `-${em(24, 15)}`,
     },
   },
 }
@@ -992,6 +1018,16 @@ const Prose = {
       display: `grid`,
       gridTemplateColumns: [`1fr`, `1fr 2fr`, `1fr 1.75fr`],
       gridGap: [4, 6, 12],
+    },
+    ".code-block-split-view": {
+      display: `grid`,
+      gridTemplateColumns: `repeat(2, 1fr)`,
+      gridGap: 6,
+      ".code-block-wrapper": {},
+      ".gatsby-highlight-header, .prism-code": {
+        marginInlineStart: `0 !important`,
+        marginInlineEnd: `0 !important`,
+      },
     },
   }),
   variants: {

@@ -34,7 +34,7 @@ export const Code = ({
       theme={colorMode === `light` ? lightTheme : darkTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <React.Fragment>
+        <div className="code-block-wrapper">
           {(title || language) && (
             <Stack direction="row" spacing={2} justifyContent="flex-end" className="gatsby-highlight-header">
               {title && (
@@ -78,7 +78,7 @@ export const Code = ({
               </code>
             </pre>
           </div>
-        </React.Fragment>
+        </div>
       )}
     </Highlight>
   )

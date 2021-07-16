@@ -1,0 +1,124 @@
+---
+title: "Python: Data Types"
+date: 2021-07-16
+lastUpdated: 2021-07-16
+icon: "python"
+tags:
+  - Python
+---
+
+Coming from JavaScript it's refreshing to learn Python as it has a big standard library and easy to pick up (especially if you have prior programming knowledge). Starting off with the data types I want to highlight some awesome features that Python has and interesting differences I saw. So don't expect this to be a complete guide or comparison of both.
+
+<Alert status="info" title="Note">
+  If you want to try the instructions below you can fire up the Python REPL. If
+  you have Python installed run `python` in your terminal. Any Python code that
+  starts with `>>>` symbols indicated that it was typed into a REPL.
+</Alert>
+
+## Helper Functions
+
+Python itself has helpful functions to help you define and discover the types. They are `type()`, `dir()`, and `help()`.
+
+```py
+>>> name = "Lennart"
+>>> type(name)
+<class 'str'>
+>>> dir(str)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'removeprefix', 'removesuffix', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+>>> help(str.title)
+Help on method_descriptor:
+
+title(self, /)
+    Return a version of the string where each word is titlecased.
+
+    More specifically, words start with uppercased characters and all remaining
+    cased characters have lower case.
+```
+
+## Numbers
+
+Python has more explicit types for working with numbers. In JavaScript they are mashed together into `Number`.
+
+```py
+>>> x = 4
+>>> y = 5.0
+>>> z = 42j
+>>> type(x)
+<class 'int'>
+>>> type(y)
+<class 'float'>
+>>> type(z)
+<class 'complex'>
+```
+
+## Tuple
+
+Tuples are immutable collections that you can use to track related but different items. Thus they are great as immutable keys in `set` and `dict`. _Unpacking_ is a way of quickly getting information from a tuple:
+
+```py
+>>> favourite_food = ("Italian", "Pizza")
+>>> cuisine, name = favourite_food
+>>> cuisine
+'Italian'
+>>> name
+'Pizza'
+```
+
+## Set
+
+A set is mutable and stores immutable types in an unsorted way. You can't store other mutable types (like `list`, `set` or `dict`) in it. A set can only contain unique items.
+
+This is great to quickly deduplicate a list:
+
+```py
+>>> names = ["Luke", "Leia", "Malak", "Luke"]
+>>> set(names)
+{'Leia', 'Luke', 'Malak'}
+```
+
+You can execute a couple of mutations on a set (`.add` or `.discard` etc.) but I definitely found `.update` interesting since you can add multiple values at once:
+
+```py
+>>> chars = {"James", "Naomi", "Amos"}
+>>> addition = {"Alex", "Julie"}
+>>> chars.update(addition)
+>>> chars
+{'Julie', 'James', 'Naomi', 'Alex', 'Amos'}
+```
+
+Another cool thing are the `set` operations -- union and intersection:
+
+```py
+>>> chars = {"James", "Naomi", "Amos"}
+>>> favourite_chars = {"James"}
+>>> chars | addition
+{'Julie', 'James', 'Naomi', 'Alex', 'Amos'}
+>>> chars & favourite_chars
+{'James'}
+```
+
+## Dictionary
+
+A dictionary is mutable and stores key:value pairs (keys can only be immutable types). Thus it's extremely fast to search in. Besides the standard stuff there are three helpful methods: `keys()`, `values()`, `items()`:
+
+```py
+>>> chars = { "expanse": "Holden", "star_wars": "Luke" }
+>>> chars.keys()
+dict_keys(['expanse', 'star_wars'])
+>>> chars.values()
+dict_values(['Holden', 'Luke'])
+>>> chars.items()
+dict_items([('expanse', 'Holden'), ('star_wars', 'Luke')])
+```
+
+While these functions alone are not doing much, they can come in really handy in for-loops:
+
+```py
+>>> for franchise, char in chars.items():
+...     print(f"The char {char} exists in the franchise {franchise}")
+...
+The char Holden exists in the franchise expanse
+The char Luke exists in the franchise star_wars
+```
+
+Since `items()` returns a list of tuples one can use tuple unpacking to get both values.
