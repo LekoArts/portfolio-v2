@@ -1,0 +1,82 @@
+---
+title: "Python: Comprehensions"
+date: 2021-07-17
+lastUpdated: 2021-07-17
+icon: "python"
+tags:
+  - Python
+---
+
+Comprehensions (and list comprehensions in particular) are probably the feature I love the most coming from JavaScript to Python. It enables you to write concise code for something you do very often: Iterating over a list, modifying the data a bit ("data massaging") and returning a list with the new entries.
+
+**One thing to note:** List comprehension load the entire output into memory so this should only be used for small to medium-sized lists. In cases of big lists, use generators instead.
+
+**Basic Syntax (for lists):**
+
+```
+[expression for item in iterable if conditional]
+```
+
+<Alert status="info" title="Note">
+  If you want to try the instructions below you can fire up the Python REPL. If
+  you have Python installed run `python` in your terminal. Any Python code that
+  starts with `>>>` symbols indicated that it was typed into a REPL.
+
+To try out the JavaScript snippets you could use [Quokka.js](https://quokkajs.com/) in your editor.
+
+</Alert>
+
+## Examples
+
+Simple:
+
+```js
+const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"];
+const len_names = names.map((name) => name.length);
+console.log(len_names);
+// [ 5, 5, 4, 4, 6, 8 ]
+```
+
+```py
+>>> names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"]
+>>> len_names = [len(name) for name in names]
+>>> print(len_names)
+[5, 5, 4, 4, 6, 8]
+```
+
+Skipping the first item & last item (by index) and creating a list of dictionaries:
+
+```js
+const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"];
+const names_list = names
+  .filter((_, id) => id !== 0 && id !== names.length - 1)
+  .map((name) => ({ name, length: name.length }));
+console.log(names_list);
+// [ { name: 'Naomi', length: 5 }, { name: 'Amos', length: 4 }, { name: 'Alex', length: 4 }, { name: 'Bobbie', length: 6 } ]
+```
+
+```py
+>>> names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"]
+>>> names_list = [{ "name": name, "length": len(name) } for idx, name in enumerate(names) if idx != 0 and idx != len(names)-1]
+>>> print(names_list)
+[{'name': 'Naomi', 'length': 5}, {'name': 'Amos', 'length': 4}, {'name': 'Alex', 'length': 4}, {'name': 'Bobbie', 'length': 6}]
+```
+
+Tuple unpacking:
+
+```js
+const students = [
+  ["James", 16],
+  ["Naomi", 20],
+];
+const nameWithAge = students.map((s) => [s.length + s[1], ...s]);
+console.log(nameWithAge);
+// [ [ 18, 'James', 16 ], [ 22, 'Naomi', 20 ] ]
+```
+
+```py
+>>> students = [("James", 16), ("Naomi", 20)]
+>>> nameWithAge = [[len(s)+s[1], *s] for s in students]
+>>> print(nameWithAge)
+[[18, 'James', 16], [22, 'Naomi', 20]]
+```
