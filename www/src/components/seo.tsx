@@ -13,6 +13,7 @@ type SEOProps = {
   breadcrumbListItems?: BreadcrumbListItem[]
 }
 
+/* istanbul ignore next */
 const faviconSrc =
   process.env.NODE_ENV === `production`
     ? `/favicon.svg`

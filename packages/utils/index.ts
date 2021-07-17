@@ -9,6 +9,7 @@ export const slugifyOptions: Options = {
  * @param fieldName
  * @returns The originally requested fieldName via MDX
  */
+/* istanbul ignore next */
 export const mdxResolverPassthrough = (fieldName: string) => async (source, args, context, info) => {
   const type = info.schema.getType(`Mdx`)
   const mdxNode = context.nodeModel.getNodeById({

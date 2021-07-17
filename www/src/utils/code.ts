@@ -28,7 +28,7 @@ const RE = /{([\d,-]+)}/
 /**
  * Get the lines to highlight in a code block
  * @param meta
- * @returns A function that returns a boolean depending on if the index should be highlighted or not
+ * @returns A function that returns a boolean depending on if the index should be highlighted or not (zero-indexed)
  * @example
  * calculateLinesToHighlight('title=gatsby-config.js {3-6}')
  * calculateLinesToHighlight('title=gatsby-config.js {3}')

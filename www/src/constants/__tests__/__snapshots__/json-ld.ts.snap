@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-ld article basic output 1`] = `
+Object {
+  "@type": "Article",
+  "articleSection": "Digital Garden",
+  "author": Object {
+    "@id": "https://www.lekoarts.de/#identity",
+  },
+  "copyrightHolder": Object {
+    "@id": "https://www.lekoarts.de/#identity",
+  },
+  "copyrightYear": "2021",
+  "creator": Object {
+    "@id": "https://www.lekoarts.de/#creator",
+  },
+  "dateModified": "2021-07-17",
+  "datePublished": "2021-07-17",
+  "description": "Sci-Fi",
+  "genre": "Series",
+  "headline": "The Expanse",
+  "image": Object {
+    "@type": "ImageObject",
+    "url": "https://www.lekoarts.de/path-to-image.png",
+  },
+  "inLanguage": "en-US",
+  "mainEntityOfPage": "https://www.lekoarts.de/the-expanse",
+  "name": "The Expanse",
+  "publisher": Object {
+    "@id": "https://www.lekoarts.de/#creator",
+  },
+  "url": "https://www.lekoarts.de/the-expanse",
+}
+`;
+
+exports[`json-ld breadcrumbList 1`] = `
+Object {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "description": "Breadcrumbs list",
+  "itemListElement": Array [
+    Object {
+      "@type": "ListItem",
+      "item": Object {
+        "@id": "https://www.lekoarts.de",
+        "name": "Homepage",
+      },
+      "position": 1,
+    },
+    Object {
+      "@type": "ListItem",
+      "item": Object {
+        "@id": "https://www.lekoarts.de/james",
+        "name": "James",
+      },
+      "position": 2,
+    },
+    Object {
+      "@type": "ListItem",
+      "item": Object {
+        "@id": "https://www.lekoarts.de/naomi",
+        "name": "Naomi",
+      },
+      "position": 3,
+    },
+  ],
+  "name": "Breadcrumbs",
+}
+`;

@@ -25,6 +25,7 @@
     "test": "jest",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --runInBand"
   },
   "devDependencies": {
