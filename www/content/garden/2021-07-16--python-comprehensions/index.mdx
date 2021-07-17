@@ -28,7 +28,7 @@ To try out the JavaScript snippets you could use [Quokka.js](https://quokkajs.co
 
 ## Examples
 
-Simple:
+Iterating over the array and giving out the length of the word itself into a new list:
 
 ```js
 const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"];
@@ -69,14 +69,54 @@ const students = [
   ["James", 16],
   ["Naomi", 20],
 ];
-const nameWithAge = students.map((s) => [s.length + s[1], ...s]);
+const nameWithAge = students.map((s) => [s[0].length + s[1], ...s]);
 console.log(nameWithAge);
-// [ [ 18, 'James', 16 ], [ 22, 'Naomi', 20 ] ]
+// [ [ 21, 'James', 16 ], [ 25, 'Naomi', 20 ] ]
 ```
 
 ```py
 >>> students = [("James", 16), ("Naomi", 20)]
->>> nameWithAge = [[len(s)+s[1], *s] for s in students]
+>>> nameWithAge = [[len(s[0])+s[1], *s] for s in students]
 >>> print(nameWithAge)
-[[18, 'James', 16], [22, 'Naomi', 20]]
+[[21, 'James', 16], [25, 'Naomi', 20]]
+```
+
+Creating a list of characters from a string:
+
+```js
+const myName = "LekoArts";
+const arr = [...myName];
+console.log(arr);
+// [ 'L', 'e', 'k', 'o', 'A', 'r', 't', 's' ]
+```
+
+```py
+>>> my_name = 'LekoArts'
+>>> arr = [l for l in my_name]
+>>> print(arr)
+['L', 'e', 'k', 'o', 'A', 'r', 't', 's']
+```
+
+Reversing strings in a tuple and returning them as a list:
+
+```js
+const words = ["kayak", "LekoArts", "radar", "python"];
+const reversed = words.map((word) => word.split("").reverse().join(""));
+console.log(reversed);
+// [ 'kayak', 'strAokeL', 'radar', 'nohtyp' ]
+```
+
+```py
+>>> words = ("kayak", "LekoArts", "radar", "python")
+>>> reversed = [word[::-1] for word in words]
+>>> print(reversed)
+['kayak', 'strAokeL', 'radar', 'nohtyp']
+```
+
+You can also nest comprehensions. Here's a 3 by 3 identity matrix:
+
+```py
+>>> matrix = [[1 if item_idx == row_idx else 0 for item_idx in range(0, 3)] for row_idx in range(0, 3)]
+>>> print(matrix)
+[[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 ```
