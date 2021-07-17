@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as React from "react"
 import * as Gatsby from "gatsby"
 import * as ReachRouter from "@reach/router"
