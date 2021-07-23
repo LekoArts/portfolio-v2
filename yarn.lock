@@ -8133,7 +8133,7 @@ gatsby-plugin-gatsby-cloud@next:
     lodash "^4.17.21"
     webpack-assets-manifest "^5.0.6"
 
-gatsby-plugin-image@^1.11.0-next.2:
+gatsby-plugin-image@next:
   version "1.11.0-next.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-image/-/gatsby-plugin-image-1.11.0-next.2.tgz#beb2dab5b81391a941fd2aeba43eadbf373df969"
   integrity sha512-Fhvq7piimGFbmvzNE7y5WhdrljyPqrdOfmdTpGxFC3m5k/efE8LHtoLUtYS815GmVqUodvp15f54GSN6BaC6nA==
@@ -8246,7 +8246,7 @@ gatsby-plugin-react-helmet@next:
   dependencies:
     "@babel/runtime" "^7.14.6"
 
-gatsby-plugin-sharp@^3.11.0-next.2:
+gatsby-plugin-sharp@next:
   version "3.11.0-next.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-3.11.0-next.2.tgz#a727085f462d4e445c05872867616b16228d693f"
   integrity sha512-SGS6lNezsEC/BQWW+AOJiC6T84Bj2PHsnnoLvGBM/F7yJlo/xkWWFNHBiqnzraL48qaYcpa2Oj3pEvDL0uB4CA==
@@ -8485,7 +8485,7 @@ gatsby-worker@^0.2.0-next.0:
   dependencies:
     "@babel/core" "^7.14.6"
 
-gatsby@^3.11.0-next.2:
+gatsby@next:
   version "3.11.0-next.2"
   resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-3.11.0-next.2.tgz#b564875d6260bce0435d02ac3ec6a1f5b6c2accc"
   integrity sha512-XvLitcuZUQXXzge/+T3Z+7G64PaFm5HBFGr8HUOpyWGhsQ+nOjG4v6nmzBNqRP+kvpOV2fP/iGJ38PjTXxQr4Q==
