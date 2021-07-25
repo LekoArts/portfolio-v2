@@ -1,0 +1,192 @@
+---
+title: "Generating QR Codes from any String in Gatsby"
+date: 2021-07-25
+lastUpdated: 2021-07-25
+icon: "gatsby"
+tags:
+  - Gatsby
+---
+
+One of the many side-effects of the coronavirus pandemic is that the QR code got some attenion (again). When it first came out you saw it everywhere but the last couple of years it slowly vanished again -- until now where your vaccination certificate or check-in apps all use QR codes again.
+
+Generating QR codes from any string you wish in Gatsby could be done in multiple ways. Normally for such operations you'd set up a _transformer_ plugin but realistically you wouldn't want _every_ string to be converted to a QR code. Thus you can use the [createSchemaCustomization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/) to individually add a new field to your desired node and transform a specific sibling field. This saves work & build time! You can take this YAML schema as an example:
+
+```yaml title=src/data/information.yml
+- name: Author's Homepage
+  description: Visit the author's homepage for more information and other cool stuff
+  link: https://www.lekoarts.de
+```
+
+Gatsby will generate a `InformationYaml` type out of it and you want to have an additional field called `qrCodeDataURL` that contains the data URI of a QR code generated from the `link` field. Then you can query it like this:
+
+```graphql
+query {
+  informationYaml {
+    name
+    link
+    description
+    qrCodeDataURL
+  }
+}
+```
+
+Continue reading to learn how to do this! You can find the finished code on [Codesandbox](https://codesandbox.io/s/gatsby-qr-code-with-schema-customization-ldsc5) and you can also check out [Filter Future Posts on a Gatsby Blog](/garden/filter-future-posts-on-a-gatsby-blog) to see the API in a similar example.
+
+## Setup
+
+I'm assuming that you already have a Gatsby project set up with some specific fields you want to convert. If not, you can run `npm init gatsby` and choose the markdown option. Then you can use the _frontmatter_ to add an additional field. Stop your development server if it's still running.
+
+My example is using a YAML file that is represented as `InformationYaml` in the GraphQL schema of Gatsby. You've seen the shape of it in the intro of this post.
+
+Install two dependencies you'll need:
+
+```sh
+npm install lodash.get qrcode
+```
+
+## Generating QR codes
+
+Open your `gatsby-node.js` file and add the installed package, and the boilerplate to use [Gatsby's schema customization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/):
+
+```js title=gatsby-node.js
+const get = require("lodash.get");
+const QRCode = require("qrcode");
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions;
+};
+```
+
+With the function `createTypes` you'll explicitly define the GraphQL types (in this case in GraphQL [SDL](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) syntax), with `createFieldExtension` you'll create a so called directive/extension that you then can reuse throughout your types.
+
+### Adding the new field to the type
+
+Since the QR code should be available at the field `qrCodeDataURL` it needs to be added to the desired GraphQL type.
+
+```js title=gatsby-node.js {7-11}
+const get = require("lodash.get");
+const QRCode = require("qrcode");
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions;
+
+  createTypes(`
+    type InformationYaml implements Node {
+      qrCodeDataURL: String
+    }
+  `);
+};
+```
+
+But if you'd query this field now you'd only get `null` as a result. The data needs to be generated first before querying it.
+
+### Creating the field extension
+
+Use the `createFieldExtension` action to create a custom directive that you can use on the newly created `qrCodeDataURL` field:
+
+```js title=gatsby-node.js {7-17,21}
+const get = require("lodash.get");
+const QRCode = require("qrcode");
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions;
+
+  createFieldExtension({
+    name: "createQRCode",
+    args: {
+      fieldName: "String!",
+    },
+    extend({ fieldName }) {
+      return {
+        resolve: createQRCode(fieldName),
+      };
+    },
+  });
+
+  createTypes(`
+    type InformationYaml implements Node {
+      qrCodeDataURL: String @createQRCode(fieldName: "link")
+    }
+  `);
+};
+```
+
+But the last piece to this puzzle is missing: The `createQRCode` function. The field extension will use result of it as the value of the `qrCodeDataURL` field. `createQRCode` gets passed all the `fieldName` you use (in this example `"link"`).
+
+```js title=gatsby-node.js {7-18}
+const get = require("lodash.get");
+const QRCode = require("qrcode");
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes, createFieldExtension } = actions;
+
+  const createQRCode = (fieldName) => async (source) => {
+    const string = get(source, fieldName);
+    let qrCode = ``;
+
+    try {
+      qrCode = await QRCode.toDataURL(string, { scale: 6 });
+    } catch (err) {
+      console.error(err);
+    }
+
+    return qrCode;
+  };
+
+  createFieldExtension({
+    name: "createQRCode",
+    args: {
+      fieldName: "String!",
+    },
+    extend({ fieldName }) {
+      return {
+        resolve: createQRCode(fieldName),
+      };
+    },
+  });
+
+  createTypes(`
+    type InformationYaml implements Node {
+      qrCodeDataURL: String @createQRCode(fieldName: "link")
+    }
+  `);
+};
+```
+
+You can find more information about `qrcode`'s options on its [GitHub page](https://github.com/soldair/node-qrcode).
+
+## Using the result
+
+Now you're able to query the new data! Start the development server and visit GraphiQL at `localhost:8000/___graphql`. If you explore the schema you should see `qrCodeDataURL` now. You can use this data URI as an image now, for example:
+
+```jsx title=src/pages/index.js
+import * as React from "react";
+import { graphql } from "gatsby";
+
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>{data.info.name}</h1>
+      <p>
+        {data.info.description}: <br />{" "}
+        <a href={data.info.link}>Visit the website</a> or scan this QR code:
+      </p>
+      <img
+        alt="QR Code to the authors homepage"
+        src={data.info.qrCodeDataURL}
+      />
+    </main>
+  );
+}
+
+export const query = graphql`
+  {
+    info: informationYaml {
+      name
+      link
+      description
+      qrCodeDataURL
+    }
+  }
+`;
+```
