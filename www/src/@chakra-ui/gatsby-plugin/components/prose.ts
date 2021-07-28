@@ -923,6 +923,9 @@ const Prose = {
           opacity: 0.5,
         },
       },
+      ".token-line .function": {
+        fontStyle: `normal !important`, // The light-theme syntax made those italic
+      },
       ".token": {
         display: `inline-block`,
       },
@@ -1027,6 +1030,23 @@ const Prose = {
       ".gatsby-highlight-header, .prism-code": {
         marginInlineStart: `0 !important`,
         marginInlineEnd: `0 !important`,
+      },
+    },
+    ".chakra-alert": {
+      ".code-block-wrapper": {
+        width: `100%`,
+        ".gatsby-highlight-header": {
+          mx: 0,
+        },
+        pre: {
+          mx: 0,
+        },
+      },
+      "p:first-of-type": {
+        mt: 0,
+      },
+      "p:last-of-type": {
+        mb: 0,
       },
     },
   }),

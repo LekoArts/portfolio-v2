@@ -233,8 +233,10 @@ Once again you need to add some scripts to your root `package.json`:
 Run `yarn cy:open` to initialize Cypress. It will automatically add files to your repository, like a `cypress.json` or the `cypress` folder. Quit the app before continuing this tutorial.
 
 <Alert status="info" title="Note">
-  At the time of writing this guide WSL (Linux subsystem for Windows) can't open the Cypress electron app when running
-  `cypress open`. You'll need to download the executable and run it yourself.
+
+At the time of writing this guide WSL (Linux subsystem for Windows) can't open the Cypress electron app when running
+`cypress open`. You'll need to download the executable and run it yourself.
+
 </Alert>
 
 Delete the contents of `cypress/integration` (it contains example data) and rename it to `e2e`. Edit the `cypress.json` file:
