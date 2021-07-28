@@ -134,7 +134,9 @@ const components = {
 
 const Layout = ({ children }) => (
   <MDXProvider components={components}>
-    <div style={{ margin: "0 auto", maxWidth: 960, padding: "2rem" }}>{children}</div>
+    <div style={{ margin: "0 auto", maxWidth: 960, padding: "2rem" }}>
+      {children}
+    </div>
   </MDXProvider>
 )
 
@@ -172,7 +174,13 @@ const Code = ({ codeString, language, metastring, ...props }) => {
   const shouldHighlightLine = calculateLinesToHighlight(metastring)
 
   return (
-    <Highlight {...defaultProps} code={codeString} language={language} theme={theme} {...props}>
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      language={language}
+      theme={theme}
+      {...props}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <div className="gatsby-highlight" data-language={language}>
           <pre className={className} style={style}>

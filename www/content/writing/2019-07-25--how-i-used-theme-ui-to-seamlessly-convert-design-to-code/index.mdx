@@ -48,7 +48,8 @@ The bottom view of VS Code shows a snippet of the button variants — variants a
 const theme = {
   gradients: {
     blue: {
-      backgroundImage: (t) => `linear-gradient(45deg, ${t.colors.indigo[3]}, ${t.colors.indigo[5]})`,
+      backgroundImage: (t) =>
+        `linear-gradient(45deg, ${t.colors.indigo[3]}, ${t.colors.indigo[5]})`,
     },
   },
 }
@@ -59,7 +60,8 @@ You can access theme values with a function which I did in this case to be able 
 I didn't just pass in the value in the component itself like:
 
 ```js
-backgroundImage: (t) => `linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})`
+backgroundImage: (t) =>
+  `linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})`
 ```
 
 Because then every shape would have had the same angle and the same spacing (value 8 and 6 here). Some colors need other values to look right so variants was the only logical choice here. The usage looks something like this:
@@ -106,7 +108,14 @@ shapes:
       yOffset: ["-70px"],
       opacity: 0.5,
     },
-    { type: "donut", color: "teal", size: ["25px", "100px"], xOffset: ["50px"], yOffset: ["-60px"], opacity: 1 },
+    {
+      type: "donut",
+      color: "teal",
+      size: ["25px", "100px"],
+      xOffset: ["50px"],
+      yOffset: ["-60px"],
+      opacity: 1,
+    },
   ]
 ```
 

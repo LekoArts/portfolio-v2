@@ -168,9 +168,13 @@ export default function Home({ data }) {
     <main>
       <h1>{data.info.name}</h1>
       <p>
-        {data.info.description}: <br /> <a href={data.info.link}>Visit the website</a> or scan this QR code:
+        {data.info.description}: <br />{" "}
+        <a href={data.info.link}>Visit the website</a> or scan this QR code:
       </p>
-      <img alt="QR Code to the authors homepage" src={data.info.qrCodeDataURL} />
+      <img
+        alt="QR Code to the authors homepage"
+        src={data.info.qrCodeDataURL}
+      />
     </main>
   )
 }
