@@ -1,0 +1,217 @@
+---
+title: "Smooth Shadows for Images using their Dominant Color"
+date: 2021-07-28
+lastUpdated: 2021-07-28
+icon: "gatsby"
+tags:
+  - Gatsby
+  - React
+---
+
+If you've seen posts about [Neumorphism](https://uxdesign.cc/neumorphism-in-user-interfaces-b47cef3bf3a6) or CSS generators like [neumorphism.io](https://neumorphism.io/) you're probably familiar with these super smooth shadows the elements have. While designing a whole page in this style would be a bit too much for me personally I do like the shadows! In fact, at some point the design blog [Abduzeedo](https://abduzeedo.com/) had smooth shadows on their images (using the dominant color) -- so exactly what I'll show today.
+
+You can see a preview of the effect on my [Emilia Theme](https://emilia.lekoarts.de/) site. The end result will also be the same as this [Codesandbox](https://codesandbox.io/s/gatsby-plugin-image-layered-smooth-shadows-w2z9k) you can look at and fork.
+
+![Preview of the finished result. Heading saying "Images with Dominant Color Smooth Shadows" and below are four images (colorful wall, a bee in orange flowers, green lego bricks, and a house with lot of blue sky behind it) that each have a colorful smooth shadow. The dominant color is used for the color of the shadow.](./finished_result_preview.jpg)
+
+## Prerequisites
+
+While not necessary for this technique to work I'm using [Gatsby](https://www.gatsbyjs.com) and [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/) to handle and display the images. I'm doing this because `gatsby-plugin-image` and its `gatsbyImageData` supports the placeholder value `DOMINANT_COLOR` and gives back this value as `backgroundColor` -- so you can directly query the dominant color of an image.  
+Set up a new site and install the necessary plugins for `gatsby-plugin-image` following its instructions, e.g. with `npm init gatsby` and the `Add responsive images` option at the end.
+
+<Alert status="info" title="Not using Gatsby or even React?">
+
+You can use [Color Thief](https://lokeshdhakar.com/projects/color-thief/) to
+process your images and get back information like the dominant color in any JS framework. For React there's also [color-thief-react](https://github.com/jonyw4/color-thief-react) (although I haven't tried that personally). The library [polished](https://polished.js.org/) will also work in any JS framework.
+
+</Alert>
+
+Query your images and make sure that you have the `DOMINANT_COLOR` option for the `placeholder` for `gatsbyImageData`. An example page could be:
+
+```jsx title=src/pages/index.js {22}
+import React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>Images with Dominant Color Smooth Shadows</h1>
+      <div>
+        {data.images.nodes.map((image) => (
+          <GatsbyImage alt="" image={getImage(image)} />
+        ))}
+      </div>
+    </main>
+  )
+}
+
+export const query = graphql`
+  {
+    images: allImageSharp {
+      nodes {
+        gatsbyImageData(quality: 90, width: 800, placeholder: DOMINANT_COLOR)
+      }
+    }
+  }
+`
+```
+
+`image.gatsbyImageData.backgroundColor` inside the `.map()` will give back the dominant color.
+
+## Creating the function to generate shadows
+
+Create a new function called `generateShadow` with the single argument `color` in your page. As the function will use a method from another library you'll first need install `polished`.
+
+```sh
+npm install polished
+```
+
+[polished](https://polished.js.org/) is "a lightweight toolset for writing styles in JavaScript" and features handy helper functions, including [`rgba`](https://polished.js.org/docs/#rgba) which you'll use to create a RGBA color string inside the `generateShadow` function.
+
+The `generateShadow` function will take a `color` and iterate over the arrays `shadowX`, `shadowY`, and `transparency` internally to create an array of valid `box-shadow` strings. It returns a string that you can use with `box-shadow` in CSS since you can chain them with a comma.
+
+```jsx title=src/pages/index.js
+// Rest of imports
+import { rgba } from "polished"
+
+function generateShadow(color) {
+  const shadowX = []
+  const shadowY = []
+  const transparency = []
+
+  let shadowMap = []
+
+  for (let i = 0; i < 6; i++) {
+    const c = rgba(color, transparency[i])
+
+    shadowMap.push(`0 ${shadowX[i]} ${shadowY[i]} ${c}`)
+  }
+
+  return shadowMap.join(", ")
+}
+
+// Rest of page
+```
+
+But how does one get the correct values for the three arrays? [@brumm](https://twitter.com/funkensturm) created the awesome website [Smooth Shadow](https://shadows.brumm.af/) which you can use to get these values. For my purposes I used 6 layers and only changed the final transparency to `0.15`.
+
+So you'll get the CSS:
+
+```css
+box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.042), 0 6.7px 5.3px rgba(0, 0, 0, 0.061), 0 12.5px 10px rgba(0, 0, 0, 0.075), 0
+    22.3px 17.9px rgba(0, 0, 0, 0.089), 0 41.8px 33.4px rgba(0, 0, 0, 0.108), 0 100px 80px rgba(0, 0, 0, 0.15);
+```
+
+But that's a black shadow 😬 Time to make a colorful one. You can translate the generated values into their respective arrays.
+
+<Alert status="info" title="How to read box-shadow?">
+
+As always, MDN as a good explanation on [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow). The generated CSS from "Smooth Shadow" is in this syntax:
+
+```css
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+```
+
+So `offset-x` goes into `shadowX`, `offset-y` into `shadowY`, and the last value of rgba into `transparency`.
+
+</Alert>
+
+Depending on your values your `generateShadow` function now should look something like this:
+
+```jsx title=src/pages/index.js {5-7}
+// Rest of imports
+import { rgba } from "polished"
+
+function generateShadow(color) {
+  const shadowX = ["2.8px", "6.7px", "12.5px", "22.3px", "41.8px", "100px"]
+  const shadowY = ["2.2px", "5.3px", "10px", "17.9px", "33.4px", "80px"]
+  const transparency = [0.042, 0.061, 0.075, 0.089, 0.108, 0.15]
+
+  let shadowMap = []
+
+  for (let i = 0; i < 6; i++) {
+    const c = rgba(color, transparency[i])
+
+    shadowMap.push(`0 ${shadowX[i]} ${shadowY[i]} ${c}`)
+  }
+
+  return shadowMap.join(", ")
+}
+
+// Rest of page
+```
+
+## Apply shadows to images
+
+Now it's time to use `generateShadow`. Your complete page now should look something like this:
+
+```jsx title=src/pages/index.js
+import React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { rgba } from "polished"
+
+function generateShadow(color) {
+  const shadowX = ["2.8px", "6.7px", "12.5px", "22.3px", "41.8px", "100px"]
+  const shadowY = ["2.2px", "5.3px", "10px", "17.9px", "33.4px", "80px"]
+  const transparency = [0.042, 0.061, 0.075, 0.089, 0.108, 0.15]
+
+  let shadowMap = []
+
+  for (let i = 0; i < 6; i++) {
+    const c = rgba(color, transparency[i])
+
+    shadowMap.push(`0 ${shadowX[i]} ${shadowY[i]} ${c}`)
+  }
+
+  return shadowMap.join(", ")
+}
+
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>Images with Dominant Color Smooth Shadows</h1>
+      <div>
+        {data.images.nodes.map((image) => (
+          <GatsbyImage alt="" image={getImage(image)} />
+        ))}
+      </div>
+    </main>
+  )
+}
+
+export const query = graphql`
+  {
+    images: allImageSharp {
+      nodes {
+        gatsbyImageData(quality: 90, width: 800, placeholder: DOMINANT_COLOR)
+      }
+    }
+  }
+`
+```
+
+The last step is to use the [`style` prop](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#shared-props) from `gatsby-plugin-image` to apply the `box-shadow` to the outer wrapper of `<GatsbyImage />`.
+
+```jsx {7}
+{
+  data.images.nodes.map((image) => (
+    <GatsbyImage
+      alt=""
+      image={getImage(image)}
+      style={{
+        boxShadow: generateShadow(image.gatsbyImageData.backgroundColor),
+      }}
+    />
+  ))
+}
+```
+
+## Bonus 🍬
+
+If you want to practise some skills you have and/or go beyond this little guide, here are some ideas:
+
+- Change `generateShadow` to take in the generated shadow from [Smooth Shadow](https://shadows.brumm.af/) and replace the _rgb_ with the `color` param
+- Use the developer tools inside your browser, go to the "Sources" tab and browse the source code of [Smooth Shadow](https://shadows.brumm.af/) to reverse engineer the functions so that `generateShadow` can take the same params as the webpage
