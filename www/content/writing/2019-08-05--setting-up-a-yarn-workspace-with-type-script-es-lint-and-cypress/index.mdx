@@ -190,7 +190,7 @@ module.exports = {
       },
     ],
   },
-};
+}
 ```
 
 Depending on how you set up your code editor you'll already have ESLint working in your project. If you want to run it in the terminal (or in CI) you can add two npm scripts:
@@ -233,9 +233,8 @@ Once again you need to add some scripts to your root `package.json`:
 Run `yarn cy:open` to initialize Cypress. It will automatically add files to your repository, like a `cypress.json` or the `cypress` folder. Quit the app before continuing this tutorial.
 
 <Alert status="info" title="Note">
-  At the time of writing this guide WSL (Linux subsystem for Windows) can't open
-  the Cypress electron app when running `cypress open`. You'll need to download
-  the executable and run it yourself.
+  At the time of writing this guide WSL (Linux subsystem for Windows) can't open the Cypress electron app when running
+  `cypress open`. You'll need to download the executable and run it yourself.
 </Alert>
 
 Delete the contents of `cypress/integration` (it contains example data) and rename it to `e2e`. Edit the `cypress.json` file:
@@ -254,16 +253,16 @@ As TypeScript will compile the tests and output it to `cypress/e2e/build` you ha
 Now configure the `cypress/support` folder. First, add the the custom commands from testing-library, secondly add an import for a new file you'll create later. Lastly, create a `.d.ts` file to add types for your custom command.
 
 ```js title=cypress/support/index.js
-import "@testing-library/cypress/add-commands";
-import "./commands";
+import "@testing-library/cypress/add-commands"
+import "./commands"
 ```
 
 The `assertRoute` command let's you check the current URL.
 
 ```js title=cypress/support/commands.js
 Cypress.Commands.add(`assertRoute`, (route) => {
-  cy.url().should(`equal`, `${window.location.origin}${route}`);
-});
+  cy.url().should(`equal`, `${window.location.origin}${route}`)
+})
 ```
 
 ```ts title=cypress/support/index.d.ts
@@ -276,7 +275,7 @@ declare namespace Cypress {
      * @param route
      * @example cy.assertRoute('/page-2')
      */
-    assertRoute(route: string): Chainable<any>;
+    assertRoute(route: string): Chainable<any>
   }
 }
 ```
@@ -316,9 +315,9 @@ To see if everything works you can add a smoke test (a file to test if bare mini
 
 describe(`app`, () => {
   it(`should work`, () => {
-    cy.visit(`/`).assertRoute(`/`);
-  });
-});
+    cy.visit(`/`).assertRoute(`/`)
+  })
+})
 ```
 
 The `///` means that this file should reference the TypeScript typings from these places/packages. Also: Try to hover over the `assertRoute` function. Your IDE should display the typings & description. That's what you added in the previous step. Isn't that cool?
@@ -399,9 +398,9 @@ Finally you're able to write tests! Let's do that. Create a `home.ts` inside the
 
 describe(`example`, () => {
   it(`contains keyword on homepage`, () => {
-    cy.visit(`/`).getByText(/Homepage in a user's site/i);
-  });
-});
+    cy.visit(`/`).getByText(/Homepage in a user's site/i)
+  })
+})
 ```
 
 Run `yarn e2e:dev`, click on `home.js` in the Cypress electron app and hopefully see the test working 🎉

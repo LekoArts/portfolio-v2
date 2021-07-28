@@ -11,7 +11,7 @@ tags:
 Integrating syntax highlighting in Gatsby is solvable with solutions like [`gatsby-remark-prismjs`](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) or [`prism-react-renderer`](https://github.com/FormidableLabs/prism-react-renderer). When creating the code block in Markdown you specify the desired language (e.g. js or css) after the opening three backticks. It's a nice touch to display the specified language also in the code block itself, like I do it on my blog here:
 
 ```js
-const harry = spell("lumos");
+const harry = spell("lumos")
 ```
 
 The following two quick tips explain how to integrate this feature with `gatsby-remark-prismjs` or `prism-react-renderer` (Markdown or MDX respectively).
@@ -24,7 +24,7 @@ Set up a Gatsby project which allows you to source data from Markdown. You can e
 
 ````md
 ```js
-const harry = spell("lumos");
+const harry = spell("lumos")
 ```
 ````
 
@@ -32,9 +32,7 @@ After starting your Gatsby dev server you should have a syntax highlighted code 
 
 ```html
 <div class="gatsby-highlight" data-language="js">
-  <pre
-    class="language-js"
-  ><code class="language-js">YOUR_CONTENT_HERE</code></pre>
+  <pre class="language-js"><code class="language-js">YOUR_CONTENT_HERE</code></pre>
 </div>
 ```
 
@@ -84,8 +82,8 @@ To get the CSS from `custom-prism-styles.css` to work, you'll need to think of a
 The main part is to create a `<Code />` component and mapping it to the `pre` tag in MDX. The [language-tabs-mdx](https://codesandbox.io/s/language-tabs-mdx-g03g6) codesandbox shows the complete setup, here's the code component as a snippet:
 
 ```js title=src/components/code.js
-import React from "react";
-import Highlight, { defaultProps } from "prism-react-renderer";
+import React from "react"
+import Highlight, { defaultProps } from "prism-react-renderer"
 
 const Code = () => (
   <Highlight {...defaultProps} code={codeString} language={language}>
@@ -103,9 +101,9 @@ const Code = () => (
       </div>
     )}
   </Highlight>
-);
+)
 
-export default Code;
+export default Code
 ```
 
 If you now start the development server and inspect the HTML the extra container will be in the DOM. Should work with the above CSS now, right? Not quite yet, one small adjustment needs to be made. As you can see in the DOM, the pre element now has two classes:

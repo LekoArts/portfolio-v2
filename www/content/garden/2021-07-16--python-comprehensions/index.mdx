@@ -31,9 +31,9 @@ To try out the JavaScript snippets you could use [Quokka.js](https://quokkajs.co
 Iterating over the array and giving out the length of the word itself into a new list:
 
 ```js
-const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"];
-const len_names = names.map((name) => name.length);
-console.log(len_names);
+const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"]
+const len_names = names.map((name) => name.length)
+console.log(len_names)
 // [ 5, 5, 4, 4, 6, 8 ]
 ```
 
@@ -47,11 +47,11 @@ console.log(len_names);
 Skipping the first item & last item (by index) and creating a list of dictionaries:
 
 ```js
-const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"];
+const names = ["James", "Naomi", "Amos", "Alex", "Bobbie", "Clarissa"]
 const names_list = names
   .filter((_, id) => id !== 0 && id !== names.length - 1)
-  .map((name) => ({ name, length: name.length }));
-console.log(names_list);
+  .map((name) => ({ name, length: name.length }))
+console.log(names_list)
 // [ { name: 'Naomi', length: 5 }, { name: 'Amos', length: 4 }, { name: 'Alex', length: 4 }, { name: 'Bobbie', length: 6 } ]
 ```
 
@@ -68,9 +68,9 @@ Tuple unpacking:
 const students = [
   ["James", 16],
   ["Naomi", 20],
-];
-const nameWithAge = students.map((s) => [s[0].length + s[1], ...s]);
-console.log(nameWithAge);
+]
+const nameWithAge = students.map((s) => [s[0].length + s[1], ...s])
+console.log(nameWithAge)
 // [ [ 21, 'James', 16 ], [ 25, 'Naomi', 20 ] ]
 ```
 
@@ -84,9 +84,9 @@ console.log(nameWithAge);
 Creating a list of characters from a string:
 
 ```js
-const myName = "LekoArts";
-const arr = [...myName];
-console.log(arr);
+const myName = "LekoArts"
+const arr = [...myName]
+console.log(arr)
 // [ 'L', 'e', 'k', 'o', 'A', 'r', 't', 's' ]
 ```
 
@@ -100,9 +100,9 @@ console.log(arr);
 Reversing strings in a tuple and returning them as a list:
 
 ```js
-const words = ["kayak", "LekoArts", "radar", "python"];
-const reversed = words.map((word) => word.split("").reverse().join(""));
-console.log(reversed);
+const words = ["kayak", "LekoArts", "radar", "python"]
+const reversed = words.map((word) => word.split("").reverse().join(""))
+console.log(reversed)
 // [ 'kayak', 'strAokeL', 'radar', 'nohtyp' ]
 ```
 

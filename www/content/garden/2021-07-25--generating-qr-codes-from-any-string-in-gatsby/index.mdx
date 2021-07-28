@@ -49,12 +49,12 @@ npm install lodash.get qrcode
 Open your `gatsby-node.js` file and add the installed package, and the boilerplate to use [Gatsby's schema customization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/):
 
 ```js title=gatsby-node.js
-const get = require("lodash.get");
-const QRCode = require("qrcode");
+const get = require("lodash.get")
+const QRCode = require("qrcode")
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions;
-};
+  const { createTypes, createFieldExtension } = actions
+}
 ```
 
 With the function `createTypes` you'll explicitly define the GraphQL types (in this case in GraphQL [SDL](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) syntax), with `createFieldExtension` you'll create a so called directive/extension that you then can reuse throughout your types.
@@ -64,18 +64,18 @@ With the function `createTypes` you'll explicitly define the GraphQL types (in t
 Since the QR code should be available at the field `qrCodeDataURL` it needs to be added to the desired GraphQL type.
 
 ```js title=gatsby-node.js {7-11}
-const get = require("lodash.get");
-const QRCode = require("qrcode");
+const get = require("lodash.get")
+const QRCode = require("qrcode")
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions;
+  const { createTypes, createFieldExtension } = actions
 
   createTypes(`
     type InformationYaml implements Node {
       qrCodeDataURL: String
     }
-  `);
-};
+  `)
+}
 ```
 
 But if you'd query this field now you'd only get `null` as a result. The data needs to be generated first before querying it.
@@ -85,11 +85,11 @@ But if you'd query this field now you'd only get `null` as a result. The data ne
 Use the `createFieldExtension` action to create a custom directive that you can use on the newly created `qrCodeDataURL` field:
 
 ```js title=gatsby-node.js {7-17,21}
-const get = require("lodash.get");
-const QRCode = require("qrcode");
+const get = require("lodash.get")
+const QRCode = require("qrcode")
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions;
+  const { createTypes, createFieldExtension } = actions
 
   createFieldExtension({
     name: "createQRCode",
@@ -99,39 +99,39 @@ exports.createSchemaCustomization = ({ actions }) => {
     extend({ fieldName }) {
       return {
         resolve: createQRCode(fieldName),
-      };
+      }
     },
-  });
+  })
 
   createTypes(`
     type InformationYaml implements Node {
       qrCodeDataURL: String @createQRCode(fieldName: "link")
     }
-  `);
-};
+  `)
+}
 ```
 
 But the last piece to this puzzle is missing: The `createQRCode` function. The field extension will use result of it as the value of the `qrCodeDataURL` field. `createQRCode` gets passed all the `fieldName` you use (in this example `"link"`).
 
 ```js title=gatsby-node.js {7-18}
-const get = require("lodash.get");
-const QRCode = require("qrcode");
+const get = require("lodash.get")
+const QRCode = require("qrcode")
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes, createFieldExtension } = actions;
+  const { createTypes, createFieldExtension } = actions
 
   const createQRCode = (fieldName) => async (source) => {
-    const string = get(source, fieldName);
-    let qrCode = ``;
+    const string = get(source, fieldName)
+    let qrCode = ``
 
     try {
-      qrCode = await QRCode.toDataURL(string, { scale: 6 });
+      qrCode = await QRCode.toDataURL(string, { scale: 6 })
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
 
-    return qrCode;
-  };
+    return qrCode
+  }
 
   createFieldExtension({
     name: "createQRCode",
@@ -141,16 +141,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     extend({ fieldName }) {
       return {
         resolve: createQRCode(fieldName),
-      };
+      }
     },
-  });
+  })
 
   createTypes(`
     type InformationYaml implements Node {
       qrCodeDataURL: String @createQRCode(fieldName: "link")
     }
-  `);
-};
+  `)
+}
 ```
 
 You can find more information about `qrcode`'s options on its [GitHub page](https://github.com/soldair/node-qrcode).
@@ -160,23 +160,19 @@ You can find more information about `qrcode`'s options on its [GitHub page](http
 Now you're able to query the new data! Start the development server and visit GraphiQL at `localhost:8000/___graphql`. If you explore the schema you should see `qrCodeDataURL` now. You can use this data URI as an image now, for example:
 
 ```jsx title=src/pages/index.js
-import * as React from "react";
-import { graphql } from "gatsby";
+import * as React from "react"
+import { graphql } from "gatsby"
 
 export default function Home({ data }) {
   return (
     <main>
       <h1>{data.info.name}</h1>
       <p>
-        {data.info.description}: <br />{" "}
-        <a href={data.info.link}>Visit the website</a> or scan this QR code:
+        {data.info.description}: <br /> <a href={data.info.link}>Visit the website</a> or scan this QR code:
       </p>
-      <img
-        alt="QR Code to the authors homepage"
-        src={data.info.qrCodeDataURL}
-      />
+      <img alt="QR Code to the authors homepage" src={data.info.qrCodeDataURL} />
     </main>
-  );
+  )
 }
 
 export const query = graphql`
@@ -188,5 +184,5 @@ export const query = graphql`
       qrCodeDataURL
     }
   }
-`;
+`
 ```

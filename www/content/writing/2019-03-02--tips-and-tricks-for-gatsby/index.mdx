@@ -15,11 +15,9 @@ For some time now I've been trying to publish quick tips about Gatsby on Twitter
 Some tips are also accompanied by [CodeSandbox](https://codesandbox.io) examples.
 
 <Alert status="info" title="Tweet's contents">
-  Most tips on Twitter are code examples embedded in an image. For a blog post
-  it wouldn't make much sense to display images instead of copy-able code --
-  therefore the tweets are not embedded here, but the authors are quoted
-  differently. If you are the author of one of these tweets and disagree, please
-  contact me. Thanks a lot!
+  Most tips on Twitter are code examples embedded in an image. For a blog post it wouldn't make much sense to display
+  images instead of copy-able code -- therefore the tweets are not embedded here, but the authors are quoted
+  differently. If you are the author of one of these tweets and disagree, please contact me. Thanks a lot!
 </Alert>
 
 ## Date of last Build
@@ -29,8 +27,8 @@ Gives you the date for when you last used gatsby build. In the case of e.g. Gats
 [CodeSandbox](https://codesandbox.io/s/ypmxy84nlx)
 
 ```jsx
-import * as React from "react";
-import { graphql } from "gatsby";
+import * as React from "react"
+import { graphql } from "gatsby"
 
 const IndexPage = ({ data }) => {
   return (
@@ -38,10 +36,10 @@ const IndexPage = ({ data }) => {
       <p>This site was last built on:</p>
       <p>{data.site.buildTime}</p>
     </main>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
 
 export const query = graphql`
   query {
@@ -49,7 +47,7 @@ export const query = graphql`
       buildTime(formatString: "DD/MM/YYYY")
     }
   }
-`;
+`
 ```
 
 ## Date of last modification
@@ -98,15 +96,15 @@ module.exports = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
   ],
-};
+}
 ```
 
 Now place one image file in the `src/logos` folder and two or more image files in the `src/assets` folder. This should show the difference between the `file` and `allFile` query (of course you can put any number of files into one folder). You can address both folders individually, as shown in the following example:
 
 ```js
-import * as React from "react";
-import { graphql } from "gatsby";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import * as React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 const IndexPage = ({ data }) => {
   return (
@@ -120,10 +118,10 @@ const IndexPage = ({ data }) => {
         ))}
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
 
 export const query = graphql`
   query {
@@ -140,7 +138,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Gatsby's reporter API
@@ -148,10 +146,10 @@ export const query = graphql`
 You can not only use async/await in `gatsby-node.js` but also use Gatsby's reporter API. Use this to throw errors. You should use `panicOnBuild` to only stop the process on `gatsby build` (so that you can debug it with GraphiQL).
 
 ```js title=gatsby-node.js
-const yourTemplate = require.resolve("./src/templates/yourTemplate.js");
+const yourTemplate = require.resolve("./src/templates/yourTemplate.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
   const result = await graphql(`
     {
@@ -159,17 +157,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       GraphQL
       query
     }
-  `);
+  `)
 
   if (result.errors) {
-    reporter.panicOnBuild("Error while running GraphQL query.");
-    return;
+    reporter.panicOnBuild("Error while running GraphQL query.")
+    return
   }
 
   result.data.yourNode.nodes.forEach((node) => {
     // createPage function
-  });
-};
+  })
+}
 ```
 
 ## Previous/Next - Links
@@ -179,10 +177,10 @@ Most of the time you want to show a previous/next post under your blog post to k
 [CodeSandbox](https://codesandbox.io/s/5k7r3ok7k)
 
 ```js title=gatsby-node.js
-const bookTemplate = require.resolve("./src/templates/book.js");
+const bookTemplate = require.resolve("./src/templates/book.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
   const result = await graphql(
     graphql(`
@@ -195,21 +193,21 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         }
       }
     `)
-  );
+  )
 
   if (result.errors) {
-    reporter.panicOnBuild("Error while running GraphQL query.");
-    return;
+    reporter.panicOnBuild("Error while running GraphQL query.")
+    return
   }
 
-  const books = result.data.allBooksYaml.nodes;
+  const books = result.data.allBooksYaml.nodes
 
   books.forEach((node, index) => {
     // Set the prev/next variable for every node so
     // that you can directly access slug & title
 
-    const prev = index === 0 ? null : books[index - 1];
-    const next = index === books.length - 1 ? null : books[index + 1];
+    const prev = index === 0 ? null : books[index - 1]
+    const next = index === books.length - 1 ? null : books[index + 1]
 
     createPage({
       path: node.slug,
@@ -219,16 +217,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         prev,
         next,
       },
-    });
-  });
-};
+    })
+  })
+}
 ```
 
 ```js title=src/templates/book.js
-import * as React from "react";
-import { graphql, Link } from "gatsby";
+import * as React from "react"
+import { graphql, Link } from "gatsby"
 
-import Layout from "../components/layout";
+import Layout from "../components/layout"
 
 const BookTemplate = ({ data: { booksYaml }, pageContext: { prev, next } }) => {
   return (
@@ -249,10 +247,10 @@ const BookTemplate = ({ data: { booksYaml }, pageContext: { prev, next } }) => {
         )}
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default BookTemplate;
+export default BookTemplate
 
 export const pageQuery = graphql`
   query BookBySlug($slug: String!) {
@@ -261,7 +259,7 @@ export const pageQuery = graphql`
       content
     }
   }
-`;
+`
 ```
 
 ## Random Links
@@ -271,23 +269,23 @@ In contrast to the previous tip you can also show two (or more) random posts by 
 [CodeSandbox](https://codesandbox.io/s/520jv2nylk)
 
 ```js title=gatsby-node.js
-const _ = require("lodash");
+const _ = require("lodash")
 
 const prevNext = (list, item) => {
   // Create a random selection of other posts (excluding the current post)
-  const filterUnique = _.filter(list, (input) => input.slug !== item.slug);
-  const sample = _.sampleSize(filterUnique, 2);
+  const filterUnique = _.filter(list, (input) => input.slug !== item.slug)
+  const sample = _.sampleSize(filterUnique, 2)
 
   return {
     prev: sample[0],
     next: sample[1],
-  };
-};
+  }
+}
 
-const bookTemplate = require.resolve("./src/templates/book.js");
+const bookTemplate = require.resolve("./src/templates/book.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
   const result = await graphql(
     graphql(`
@@ -300,17 +298,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         }
       }
     `)
-  );
+  )
 
   if (result.errors) {
-    reporter.panicOnBuild("Error while running GraphQL query.");
-    return;
+    reporter.panicOnBuild("Error while running GraphQL query.")
+    return
   }
 
-  const books = result.data.allBooksYaml.nodes;
+  const books = result.data.allBooksYaml.nodes
 
   books.forEach((node) => {
-    const { prev, next } = prevNext(books, node);
+    const { prev, next } = prevNext(books, node)
 
     createPage({
       path: node.slug,
@@ -320,9 +318,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         prev,
         next,
       },
-    });
-  });
-};
+    })
+  })
+}
 ```
 
 ## Download Images from a CDN
@@ -340,10 +338,10 @@ featuredImgAlt: Mountains with a starry sky
 ```
 
 ```js title=gatsby-node.js
-const { createRemoteFileNode } = require("gatsby-source-filesystem");
+const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions;
+  const { createTypes } = actions
   createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
@@ -354,20 +352,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       featuredImgUrl: String
       featuredImgAlt: String
     }
-  `);
-};
-exports.onCreateNode = async ({
-  node,
-  actions: { createNode },
-  store,
-  cache,
-  createNodeId,
-}) => {
+  `)
+}
+exports.onCreateNode = async ({ node, actions: { createNode }, store, cache, createNodeId }) => {
   // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
-  if (
-    node.internal.type === "MarkdownRemark" &&
-    node.frontmatter.featuredImgUrl !== null
-  ) {
+  if (node.internal.type === "MarkdownRemark" && node.frontmatter.featuredImgUrl !== null) {
     let fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
@@ -375,11 +364,11 @@ exports.onCreateNode = async ({
       createNodeId, // helper function in gatsby-node to generate the node id
       cache, // Gatsby's cache
       store, // Gatsby's Redux store
-    });
+    })
     // if the file was created, attach the new node to the parent node
     if (fileNode) {
-      node.featuredImg___NODE = fileNode.id;
+      node.featuredImg___NODE = fileNode.id
     }
   }
-};
+}
 ```
