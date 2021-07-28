@@ -52,7 +52,7 @@ const theme = {
         `linear-gradient(45deg, ${t.colors.indigo[3]}, ${t.colors.indigo[5]})`,
     },
   },
-};
+}
 ```
 
 You can access theme values with a function which I did in this case to be able to use my already defined colors in the gradients. So why did I set up the gradients variants? I wanted to use a _single_ property in my "Shapes" component to define the color.
@@ -61,7 +61,7 @@ I didn't just pass in the value in the component itself like:
 
 ```js
 backgroundImage: (t) =>
-  `linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})`;
+  `linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})`
 ```
 
 Because then every shape would have had the same angle and the same spacing (value 8 and 6 here). Some colors need other values to look right so variants was the only logical choice here. The usage looks something like this:
@@ -74,7 +74,7 @@ const Circle = ({ color, className }) => (
     }}
     className={className}
   />
-);
+)
 ```
 
 Little tip here: When you pass `className` down, you can style the component individually when using it.
@@ -126,7 +126,7 @@ To give you an idea how I then added this functionality to the listing here's an
 ```tsx title=src/components/listing.tsx
 <Container sx={{ py: 4 }}>
   {themes.map((theme, index) => {
-    const isEven = index % 2 === 0;
+    const isEven = index % 2 === 0
 
     return (
       <Box>
@@ -144,7 +144,7 @@ To give you an idea how I then added this functionality to the listing here's an
                     top={shape.yOffset}
                     sx={{ zIndex: 0, opacity: shape.opacity }}
                   />
-                );
+                )
               case `donut`:
                 return (
                   <Donut
@@ -157,14 +157,14 @@ To give you an idea how I then added this functionality to the listing here's an
                     top={shape.yOffset}
                     sx={{ zIndex: 0, opacity: shape.opacity }}
                   />
-                );
+                )
               default:
-                return null;
+                return null
             }
           })}
         </div>
       </Box>
-    );
+    )
   })}
 </Container>
 ```

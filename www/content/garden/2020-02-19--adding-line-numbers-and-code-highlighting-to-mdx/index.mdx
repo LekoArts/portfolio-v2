@@ -109,28 +109,28 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 You'll need to add the `MDXProvider` and the rest of the following code (it's essentially the components placed into the wrapping `MDXProvider`) to your Layout file:
 
 ```js title=src/components/layout.js
-import * as React from "react";
-import { MDXProvider } from "@mdx-js/react";
-import { preToCodeBlock } from "mdx-utils";
-import Code from "./code";
-import "./layout.css";
+import * as React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { preToCodeBlock } from "mdx-utils"
+import Code from "./code"
+import "./layout.css"
 
 const components = {
   pre: (preProps) => {
-    const props = preToCodeBlock(preProps);
+    const props = preToCodeBlock(preProps)
     if (props) {
-      return <Code {...props} />;
+      return <Code {...props} />
     } else {
-      return <pre {...preProps} />;
+      return <pre {...preProps} />
     }
   },
-};
+}
 
 const Layout = ({ children }) => (
   <MDXProvider components={components}>
@@ -138,9 +138,9 @@ const Layout = ({ children }) => (
       {children}
     </div>
   </MDXProvider>
-);
+)
 
-export default Layout;
+export default Layout
 ```
 
 The important bit is that you pass `components` into the provider and the previously created Code React component is used.
@@ -148,30 +148,30 @@ The important bit is that you pass `components` into the provider and the previo
 Add the following to said component:
 
 ```js title=src/components/code.js
-import * as React from "react";
-import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/nightOwl";
+import * as React from "react"
+import Highlight, { defaultProps } from "prism-react-renderer"
+import theme from "prism-react-renderer/themes/nightOwl"
 
-const RE = /{([\d,-]+)}/;
+const RE = /{([\d,-]+)}/
 
 const calculateLinesToHighlight = (meta) => {
   if (!RE.test(meta)) {
-    return () => false;
+    return () => false
   }
   const lineNumbers = RE.exec(meta)[1]
     .split(`,`)
-    .map((v) => v.split(`-`).map((x) => parseInt(x, 10)));
+    .map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
   return (index) => {
-    const lineNumber = index + 1;
+    const lineNumber = index + 1
     const inRange = lineNumbers.some(([start, end]) =>
       end ? lineNumber >= start && lineNumber <= end : lineNumber === start
-    );
-    return inRange;
-  };
-};
+    )
+    return inRange
+  }
+}
 
 const Code = ({ codeString, language, metastring, ...props }) => {
-  const shouldHighlightLine = calculateLinesToHighlight(metastring);
+  const shouldHighlightLine = calculateLinesToHighlight(metastring)
 
   return (
     <Highlight
@@ -185,10 +185,10 @@ const Code = ({ codeString, language, metastring, ...props }) => {
         <div className="gatsby-highlight" data-language={language}>
           <pre className={className} style={style}>
             {tokens.map((line, i) => {
-              const lineProps = getLineProps({ line, key: i });
+              const lineProps = getLineProps({ line, key: i })
 
               if (shouldHighlightLine(i)) {
-                lineProps.className = `${lineProps.className} highlight-line`;
+                lineProps.className = `${lineProps.className} highlight-line`
               }
 
               return (
@@ -198,16 +198,16 @@ const Code = ({ codeString, language, metastring, ...props }) => {
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>
-              );
+              )
             })}
           </pre>
         </div>
       )}
     </Highlight>
-  );
-};
+  )
+}
 
-export default Code;
+export default Code
 ```
 
 The `calculateLinesToHighlight` helper function gets the `metastring` as an input which is the notation for the line highlighting. As you can see in the linked [CodeSandbox](https://codesandbox.io/s/mdx-line-numbers-code-highlighting-99wb5) example you can write `{1,9-12}` to highlight the first and 9th to 12th line.
