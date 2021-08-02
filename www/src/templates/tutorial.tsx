@@ -46,6 +46,7 @@ export const query = graphql`
   query TutorialTemplate($slug: String!) {
     post(slug: { eq: $slug }) {
       ...WritingView
+      tableOfContents
     }
   }
 `

@@ -12,6 +12,7 @@ import { components } from "../mdx"
 import { article } from "../../constants/json-ld"
 import { ShareAnywhereButton, TwitterButton } from "../buttons"
 import { site } from "../../constants/meta"
+import { WithSidebarWrapper } from "./toc"
 
 export type WritingViewDataProps = {
   post: {
@@ -27,6 +28,9 @@ export type WritingViewDataProps = {
     seoLastUpdated: string
     subtitle: string
     timeToRead: string
+    tableOfContents?: {
+      items: unknown[]
+    }
     image?: string
     category: {
       name: string
@@ -82,11 +86,21 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
       <Container variant="proseRoot">
         <SkipNavContent>
           {children}
-          <Prose>
-            <MDXProvider components={components}>
-              <MDXRenderer>{post.body}</MDXRenderer>
-            </MDXProvider>
-          </Prose>
+          {type === `tutorial` ? (
+            <WithSidebarWrapper items={post.tableOfContents.items}>
+              <Prose as="article" flex="1 1 100%" minW="100%">
+                <MDXProvider components={components}>
+                  <MDXRenderer>{post.body}</MDXRenderer>
+                </MDXProvider>
+              </Prose>
+            </WithSidebarWrapper>
+          ) : (
+            <Prose as="article">
+              <MDXProvider components={components}>
+                <MDXRenderer>{post.body}</MDXRenderer>
+              </MDXProvider>
+            </Prose>
+          )}
           <Spacer size={12} axis="vertical" />
           <Divider />
           <Spacer size={6} axis="vertical" />
