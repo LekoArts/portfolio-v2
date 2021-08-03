@@ -17,6 +17,7 @@ module.exports = {
   globals: {
     cy: true,
     Cypress: true,
+    JSX: true,
   },
   rules: {
     "@typescript-eslint/no-unused-vars": [

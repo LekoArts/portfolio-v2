@@ -51,6 +51,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       excerpt(pruneLength: Int = 160): String!
       body: String!
       html: String
+      tableOfContents: JSON
       timeToRead: Int
       image: String
       category: Category! @link(by: "name")
@@ -68,6 +69,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       body: String! @mdxpassthrough(fieldName: "body")
       html: String! @mdxpassthrough(fieldName: "html")
+      tableOfContents: JSON @mdxpassthrough(fieldName: "tableOfContents")
       timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
       image: String
       category: Category! @link(by: "name")
