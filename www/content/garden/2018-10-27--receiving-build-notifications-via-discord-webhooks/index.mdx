@@ -15,13 +15,13 @@ Choose a channel on your server in which the messages should come in. Right-clic
 
 ## Step 2: Go to your CI/CD service
 
-Visit your dashboard where you can set Notifications:
+Visit your dashboard where you can set Notifications and add a notification of type "Webhooks":
 
-![Add notification of type webhook](./add-notification.jpg)
+![Section of the Dashboard on gatsbyjs.com. At the 'Outgoing Notifications' section there's a button called 'Add notification'. After pressing it you'll see a context menu with the items Webhooks, Slack, and Pull-Request comment. Click on Webhooks.](./add-notification.jpg)
 
 Paste the webhook URL from your clipboard to the input for the outgoing webhook URL.
 
-![Choose an event to listen to and add the copied webhook URL to the input of "outgoing webhook URL"](./add-webhook-url.jpg)
+![The sidebar menu lets you choose an event to listen to (you can choose between: Build Succeeded, Build Failed, Deploy Succeeded, and Deploy Failed) and add the copied webhook URL to the input of "outgoing webhook URL". Then press "Save".](./add-webhook-url.jpg)
 
 ## Step 3: Add `/slack` to the webhook URL
 
