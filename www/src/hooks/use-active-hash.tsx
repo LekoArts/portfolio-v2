@@ -36,7 +36,7 @@ export const useActiveHash = (
         observer.unobserve(el)
       })
     }
-  }, [])
+  }, [itemIds, options])
 
   return activeHash
 }

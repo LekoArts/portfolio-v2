@@ -42,13 +42,13 @@ const renderItems = ({
           <Link
             color={isActive ? activeColor : `inherit`}
             key={item.url}
-            mt={nested ? `1` : { base: `2`, "2xl": `3` }}
-            ml={nested ? `3` : 0}
+            mt={nested ? 1 : { base: `2`, "2xl": `3` }}
+            ml={nested ? 3 : 0}
             href={item.url}
           >
             {item.title}
           </Link>
-          {item.items && renderItems({ items: item.items, activeId, nested: true })}
+          {item.items && renderItems({ items: item.items, activeId, activeColor, nested: true })}
         </>
       )
     })}

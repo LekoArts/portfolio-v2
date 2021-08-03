@@ -32,6 +32,7 @@ const smVariant = {
     lineHeight: round(28 / 18),
   },
   h4: {
+    fontSize: em(18, 14),
     marginTop: em(26, 14),
     marginBottom: em(8, 14),
     lineHeight: round(20 / 14),
@@ -222,6 +223,7 @@ const lgVariant = {
     lineHeight: round(36 / 24),
   },
   h4: {
+    fontSize: em(22, 18),
     marginTop: em(32, 18),
     marginBottom: em(8, 18),
     lineHeight: round(28 / 18),
@@ -411,6 +413,7 @@ const xlVariant = {
     lineHeight: round(40 / 30),
   },
   h4: {
+    fontSize: em(28, 20),
     marginTop: em(36, 20),
     marginBottom: em(12, 20),
     lineHeight: round(32 / 20),
@@ -689,6 +692,7 @@ const Prose = {
       color: mode(`brand.heading`, `brand.dark.heading`)(props),
       fontWeight: `600`,
       fontFamily: `heading`,
+      fontSize: em(20, 16),
       marginTop: em(24, 16),
       marginBottom: em(8, 16),
       lineHeight: round(24 / 16),
