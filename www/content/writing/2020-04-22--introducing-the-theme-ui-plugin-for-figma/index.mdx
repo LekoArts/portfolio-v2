@@ -2,7 +2,7 @@
 title: "Introducing the Theme UI Plugin for Figma"
 subtitle: ""
 date: 2020-04-22
-lastUpdated: 2021-05-11
+lastUpdated: 2021-08-07
 description: "The Theme UI plugin for Figma allows for a workflow where Theme UI is the starting point both for design & development."
 type: "prose"
 category: "Design"
@@ -19,6 +19,14 @@ Introducing the [Theme UI plugin for Figma](https://www.figma.com/community/plug
 ![Theme UI header graphic saying on the left: "Use your Theme UI config to quickly create color and text styles". On the right a preview of the interface is shown.](./theme-ui_header.jpg)
 
 You can install the plugin directly in Figma via the Community hub. Since the plugin is still in its early stages I'd appreciate feedback or contributions to the plugin itself. The source code is on GitHub: https://github.com/LekoArts/figma-theme-ui
+
+<Collapsible summary={<em>Want to create your own Figma plugin?</em>}>
+
+I've used [Figsvelte](https://github.com/thomas-lowry/figsvelte) as a boilerplate for this project and can also recommend it to you. [Svelte](https://svelte.dev/) compiles down to just pure JS so there's no overhead compared to virtual DOM solutions like React or Vue. Coupled with [Rollup](https://rollupjs.org/guide/en/) you have an ecosystem of plugins at your hand (e.g. TypeScript, cssnano, etc.) that can further improve the compiled JS. Lastly, the boilerplate uses [figma-plugin-ds-svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) which is a UI library that mimics Figma's own design.
+
+So if you know Svelte already, go ahead and clone the boilerplate. If not, I'd encourage you do try Svelte anyways since it's an exiting technology!
+
+</Collapsible>
 
 ## How a typical workflow looks like
 
