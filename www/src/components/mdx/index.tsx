@@ -2,6 +2,7 @@ import * as React from "react"
 import { headings } from "./heading"
 import { Code } from "./code"
 import { Alert } from "./alert"
+import { Collapsible } from "./collapsible"
 import { preToCodeBlock } from "../../utils/code"
 
 export const components = {
@@ -15,6 +16,7 @@ export const components = {
     return <pre {...preProps} />
   },
   Alert,
+  Collapsible,
   wrapper: ({ children }) => <>{children}</>,
   ...headings,
 }
