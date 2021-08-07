@@ -2,13 +2,13 @@ import * as React from "react"
 import { Box, useColorModeValue, Link } from "@chakra-ui/react"
 import { useActiveHash } from "../../hooks/use-active-hash"
 
-type Item = {
+export type TocItem = {
   url: string
   title: string
-  items: Item[]
+  items?: TocItem[]
 }
 
-function getIds(items: Item[]): string[] {
+function getIds(items: TocItem[]): string[] {
   return items.reduce((acc, item) => {
     if (item.url) {
       // url has a # as first character, remove it to get the raw CSS-id
@@ -27,7 +27,7 @@ const renderItems = ({
   nested = false,
   activeColor = `red`,
 }: {
-  items: Item[]
+  items: TocItem[]
   activeId: string
   nested?: boolean
   activeColor?: string
@@ -55,7 +55,7 @@ const renderItems = ({
   </>
 )
 
-export const Toc = ({ items }) => {
+export const Toc = ({ items }: { items: TocItem[] }) => {
   const tocHeadingColor = useColorModeValue(`brand.heading`, `brand.dark.heading`)
   const activeColor = useColorModeValue(`brand.primary`, `brand.dark.primary`)
   const ids = getIds(items)
@@ -97,7 +97,7 @@ export const Toc = ({ items }) => {
   )
 }
 
-export const WithSidebarWrapper = ({ children, items }) => (
+export const WithSidebarWrapper: React.FC<{ items: TocItem[] }> = ({ children, items }) => (
   <Box
     display={{ base: `block`, "2xl": `flex` }}
     flexDirection="row-reverse"
