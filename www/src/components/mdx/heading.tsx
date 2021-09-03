@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box } from "@chakra-ui/react"
+import { Box, VisuallyHidden } from "@chakra-ui/react"
 
 type HeadingProps = {
   id: string
@@ -9,32 +9,41 @@ type HeadingProps = {
 /* eslint-disable */
 const heading =
   (Tag) =>
-    ({ id, children }: HeadingProps) =>
-    (
-      <Box as={Tag} id={id} position="relative" _hover={{ a: { visibility: `visible` } }}>
-        <Box
-          as="a"
-          href={`#${id}`}
-          aria-label={`${children} permalink`}
-          display="inline-block"
-          position="absolute"
-          left={-10}
-          fontFamily="body"
-          transition="all 0.3s ease-in-out"
-          visibility="hidden"
-          sx={{
-            textDecoration: `none !important`,
-            opacity: 0.3,
-          }}
-          _hover={{
-            opacity: 1,
-          }}
-        >
-          #
+    ({ id, children }: HeadingProps) => {
+      if (Tag === 'h2' && children === `Introduction`) {
+        return (
+          <VisuallyHidden>
+            <Box as={Tag} id={id}>{children}</Box>
+          </VisuallyHidden>
+        )
+      }
+
+      return (
+        <Box as={Tag} id={id} position="relative" _hover={{ a: { visibility: `visible` } }}>
+          <Box
+            as="a"
+            href={`#${id}`}
+            aria-label={`${children} permalink`}
+            display="inline-block"
+            position="absolute"
+            left={-10}
+            fontFamily="body"
+            transition="all 0.3s ease-in-out"
+            visibility="hidden"
+            sx={{
+              textDecoration: `none !important`,
+              opacity: 0.3,
+            }}
+            _hover={{
+              opacity: 1,
+            }}
+          >
+            #
+          </Box>
+          {children}
         </Box>
-        {children}
-      </Box>
-    )
+      )
+    }
 /* eslint-enable */
 
 export const headings = {

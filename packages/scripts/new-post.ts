@@ -93,7 +93,13 @@ type: "${res.type}"
 category: "${res.category}"
 image: file-name-inside-og-images-folder.png
 published: ${res.published ? `true` : `false`}
----`.trim()
+---
+
+Context: What are you talking about?
+Relevance: Why should I care about that?
+Application: How do it do it?
+
+Learning goals => Assessment => Lesson Plan`.trim()
 
   console.log(`The file ${filename} will be created with:
 

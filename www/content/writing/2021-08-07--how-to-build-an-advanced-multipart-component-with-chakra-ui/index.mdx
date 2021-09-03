@@ -1,8 +1,8 @@
 ---
 title: "How To Build an Advanced Multipart Component with Chakra UI"
 subtitle: "Learn all about Chakra UI theming system"
-date: 2021-08-07
-lastUpdated: 2021-08-07
+date: 2021-08-22
+lastUpdated: 2021-08-22
 description: "Chakra UI has a powerful theming system that includes component styles. Learn how to create a custom made container component that supports light/dark mode, variants, sizes, and color schemes."
 type: "tutorial"
 category: "React"
@@ -12,10 +12,19 @@ published: true
 
 ## Introduction
 
-- What is Chakra UI?
-- What are Component Styles?
-- By the end of tutorial, you'll be able to... (+ link to live demo)
-- Intended audience (Alert)
+[Chakra UI](https://chakra-ui.com/) is a modular and accessible component library that has won the hearts of many developers. I personally really like its progressive disclosure of complexity for the APIs (theming, components, helper functions). Often times you'll find yourself modifying some theme properties like colors and sticking with the components it ships with. However, you can use [component styles](https://chakra-ui.com/docs/theming/component-style) to change individual components to your liking. This allows you to change base & default styles but also add new styles to a component and modify properties like size, variant, color scheme, and color mode behavior.
+
+But what if you want to create your own component that fits into the existing project and uses the underlying theming system? No problem, you can also use component styles for that. Even if the component has multiple components to it (multipart). While the component styles API certainly has a learning curve to it the time learning it will be worth your time. Your components will behave the same as any other component which greatly improves productivity for you (and possibly your team) and ensures consistency in your project.
+
+By the end of this tutorial, you'll be able to create a multipart component in Chakra UI that is controllable by variant, size, color schemes and respects the color mode. You'll create a _Container_ component that you can use to display your main content (e.g. an article like this) or full-bleed content. [See the preview live](https://chakra-ui-advanced-components.netlify.app/).
+
+<Alert status="info" title="Intended audience">
+
+This tutorial assumes that you have used Chakra UI in the past or are familiar with its usage, especially how you use themes and different modifiers like size, variant, etc. I'd suggest following their [getting started guide](https://chakra-ui.com/docs/getting-started) or browsing their [resources](https://chakra-ui.com/resources) to learn the basics.
+
+You'll use [Vite](https://vitejs.dev/) to build the demo site but no prior knowledge is necessary.
+
+</Alert>
 
 ## Theming System
 
