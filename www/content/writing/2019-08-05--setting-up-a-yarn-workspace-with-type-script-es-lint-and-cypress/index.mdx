@@ -2,7 +2,7 @@
 title: "Setting up a yarn Workspace with TypeScript, ESLint & Cypress"
 subtitle: "A robust solution for multi-package repositories"
 date: 2019-08-05
-lastUpdated: 2021-05-08
+lastUpdated: 2021-09-03
 description: "A guide on how to set up a multi-package repository with TypeScript support, linting with ESLint and end-to-end testing with Cypress. Great stack to build front-end packages or Gatsby themes."
 type: "tutorial"
 category: "JavaScript"
@@ -418,3 +418,5 @@ Yeah, you finished this guide 👍🏻Thanks for following through – I want to
 - Add husky + lint-staged to run the linter before commiting your files
 
 You can see an implementation of this pattern in my themes repository: https://github.com/LekoArts/gatsby-themes
+
+I have used CircleCI as a CI provider for a long time in my repository (you can [see the CircleCI config](https://github.com/LekoArts/gatsby-themes/blob/f359e9a347e00b9fa36484a8f0521fc2e258a672/.circleci/config.yml) in the git history) but recently have switched to [GitHub Actions](https://github.com/LekoArts/gatsby-themes/blob/21ecb07e827de50f8ae02ae041cd569ab948b857/.github/workflows/e2e_testing.yml).
