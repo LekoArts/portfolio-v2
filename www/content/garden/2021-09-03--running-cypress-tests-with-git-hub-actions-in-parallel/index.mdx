@@ -1,0 +1,134 @@
+---
+title: "Running Cypress Tests with GitHub Actions in Parallel"
+date: 2021-09-03
+lastUpdated: 2021-09-03
+icon: "general"
+tags:
+  - Tooling
+---
+
+Here's a quick explanation and example of how you can run multiple Cypress tests in parallel using GitHub Action's `matrix` feature and **without** the need to use Cypress Dashboard.
+
+If you want to see a real-world application using this pattern, you can checkout my [gatsby-themes repository](https://github.com/LekoArts/gatsby-themes/blob/21ecb07e827de50f8ae02ae041cd569ab948b857/.github/workflows/e2e_testing.yml).
+
+## Prerequisites
+
+Let's say you use _Create React App_ (CRA) and have a small list of E2E tests that you want to run inside `cypress/integration`:
+
+```
+cypress/
+├─ integration/
+│  ├─ homepage.js
+│  ├─ contact-form.js
+│  ├─ seo.js
+```
+
+In order to run the tests you'll need to build the CRA app, [serve the app](https://create-react-app.dev/docs/deployment), and only then start Cypress.
+
+## GitHub Action Workflow
+
+Set up the the workflow file and add the two jobs you need:
+
+```yaml title=.github/workflows/e2e_testing.yml
+name: E2E Testing
+on: pull_request
+jobs:
+  install:
+    runs-on: ubuntu-latest
+  e2e_tests:
+    runs-on: ubuntu-latest
+    needs: install
+    container: cypress/browsers:node14.17.0-chrome91-ff89
+```
+
+You can adjust the `on` trigger to your needs and change the `container` (at the time of writing this it was the latest LTS image).
+
+Add the necessary checkout, Cypress action and build steps to the workflow:
+
+```yaml title=.github/workflows/e2e_testing.yml {6-20,25-32}
+name: E2E Testing
+on: pull_request
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+      - name: Run CRA Build
+        run: yarn build
+      - name: Save Cypress artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+  e2e_tests:
+    runs-on: ubuntu-latest
+    needs: install
+    container: cypress/browsers:node14.17.0-chrome91-ff89
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Cypress artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+```
+
+The `cypress-io/github-action@v2` action sets up Cypress, installs dependencies and caches them between runs. In the `install` step it uses `runTests: false` since you only want to set up the container, not run tests just yet. With `actions/upload-artifact@v2` the output of CRA build is saved for the `e2e_tests` runs.
+
+In this last step you use the [`matrix` feature](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix) to tell `cypress-io/github-action@v2` to run each of your tests in parallel. This does not use the `parallel` option of the action itself but defines the `spec` through the `matrix` itself. The entries in the `matrix.containers` are the names of your files inside `cypress/integration`.
+
+Here's the complete workflow file:
+
+```yaml title=.github/workflows/e2e_testing.yml {25-28,37-44}
+name: E2E Testing
+on: pull_request
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+      - name: Run CRA Build
+        run: yarn build
+      - name: Save Cypress artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+  e2e_tests:
+    runs-on: ubuntu-latest
+    needs: install
+    container: cypress/browsers:node14.17.0-chrome91-ff89
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [homepage, contact-form, seo]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Cypress artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Cypress Test
+        uses: cypress-io/github-action@v2
+        with:
+          spec: cypress/integration/${{ matrix.containers }}.js
+          browser: chrome
+          start: yarn start
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```

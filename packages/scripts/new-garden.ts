@@ -8,16 +8,16 @@ import fs from "fs-extra"
 
 const currentDate = new Date().toISOString().split(`T`)[0]
 const iconChoices = [
-  `general`,
   `cli`,
-  `gatsby`,
-  `javascript`,
-  `react`,
-  `typescript`,
-  `mdx`,
   `discord`,
   `elitepvpers`,
+  `gatsby`,
+  `general`,
+  `javascript`,
+  `mdx`,
   `python`,
+  `react`,
+  `typescript`,
 ] as const
 type Icons = typeof iconChoices[number]
 
@@ -60,15 +60,17 @@ async function run() {
       message: `Choose your tags`,
       choices: [
         { name: `CLI`, value: `CLI` },
-        { name: `Gatsby`, value: `Gatsby` },
-        { name: `JavaScript`, value: `JavaScript` },
-        { name: `TypeScript`, value: `TypeScript` },
-        { name: `React`, value: `React` },
-        { name: `MDX`, value: `MDX` },
         { name: `Discord`, value: `Discord` },
         { name: `elitepvpers`, value: `elitepvpers` },
         { name: `Freebie`, value: `Freebie` },
+        { name: `Gatsby`, value: `Gatsby` },
+        { name: `General`, value: `General` },
+        { name: `JavaScript`, value: `JavaScript` },
+        { name: `MDX`, value: `MDX` },
         { name: `Python`, value: `Python` },
+        { name: `React`, value: `React` },
+        { name: `Tooling`, value: `Tooling` },
+        { name: `TypeScript`, value: `TypeScript` },
       ],
       // @ts-ignore
       result(names: string[]): Record<string, string> {
