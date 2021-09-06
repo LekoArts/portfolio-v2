@@ -24,6 +24,8 @@
   toPath: /privacy-policy
 - fromPath: /imprint
   toPath: /legal-notice
+- fromPath: /contact
+  toPath: /about
 # Tags
 - fromPath: /tags/*
   toPath: /garden
