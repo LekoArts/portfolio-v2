@@ -42,6 +42,9 @@
     - name: GitHub
       link: https://www.github.com/LekoArts
       isExternal: true
+    - name: LinkedIn
+      link: https://www.linkedin.com/in/lennart-joergens/
+      isExternal: true
     - name: RSS
       link: /rss.xml
       isExternal: true

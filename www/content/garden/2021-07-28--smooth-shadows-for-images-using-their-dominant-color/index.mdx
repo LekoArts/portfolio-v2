@@ -1,7 +1,7 @@
 ---
 title: "Smooth Shadows for Images using their Dominant Color"
 date: 2021-07-28
-lastUpdated: 2021-07-28
+lastUpdated: 2021-09-11
 icon: "gatsby"
 tags:
   - Gatsby
@@ -108,7 +108,7 @@ But that's a black shadow 😬 Time to make a colorful one. You can translate th
 
 <Alert status="info" title="How to read box-shadow?">
 
-As always, MDN as a good explanation on [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow). The generated CSS from "Smooth Shadow" is in this syntax:
+As always, MDN has a good explanation on [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow). The generated CSS from "Smooth Shadow" is in this syntax:
 
 ```css
 /* offset-x | offset-y | blur-radius | spread-radius | color */
@@ -215,4 +215,5 @@ The last step is to use the [`style` prop](https://www.gatsbyjs.com/docs/referen
 If you want to practise some skills you have and/or go beyond this little guide, here are some ideas:
 
 - Change `generateShadow` to take in the generated shadow from [Smooth Shadow](https://shadows.brumm.af/) and replace the _rgb_ with the `color` param
+- [@brumm](https://twitter.com/funkensturm) has pointed out to me on [Twitter](https://twitter.com/funkensturm/status/1435993413271367681) that you can also use [eaze](https://www.npmjs.com/package/eaze) to programatically create the shadow easing values
 - Use the developer tools inside your browser, go to the "Sources" tab and browse the source code of [Smooth Shadow](https://shadows.brumm.af/) to reverse engineer the functions so that `generateShadow` can take the same params as the webpage

@@ -92,7 +92,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
           <Spacer size={6} axis="vertical" />
           <Divider />
           <Spacer size={4} axis="vertical" />
-          <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]}>
+          <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]} fontSize={[`sm`, `md`, null, null, `lg`]}>
             <Text>
               Created {garden.date} – Last Updated {garden.lastUpdated}
             </Text>
