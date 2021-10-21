@@ -59,7 +59,6 @@ const gatsbyConfig: GatsbyConfig = {
         description: site.description,
         start_url: `/`,
         background_color: `#0f172a`,
-        theme_color: `#ea580c`,
         display: `standalone`,
         icons: [
           {

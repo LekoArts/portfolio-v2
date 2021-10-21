@@ -5,19 +5,19 @@
   "version": "0.0.1",
   "license": "GPLv3",
   "peerDependencies": {
-    "gatsby": "^3.0.0"
+    "gatsby": "^4.0.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "gatsby-plugin-catch-links": "^3.10.0",
-    "gatsby-plugin-mdx": "^2.10.0",
-    "gatsby-plugin-sharp": "^3.10.2",
-    "gatsby-remark-images": "^5.7.0",
-    "gatsby-source-filesystem": "^3.10.0",
-    "gatsby-source-graphql": "^3.10.0",
-    "gatsby-transformer-sharp": "^3.10.0",
-    "gatsby-transformer-yaml": "^3.10.0",
+    "gatsby-plugin-catch-links": "^4.0.0",
+    "gatsby-plugin-mdx": "^3.0.0",
+    "gatsby-plugin-sharp": "^4.0.0",
+    "gatsby-remark-images": "^6.0.0",
+    "gatsby-source-filesystem": "^4.0.0",
+    "gatsby-source-graphql": "^4.0.0",
+    "gatsby-transformer-sharp": "^4.0.0",
+    "gatsby-transformer-yaml": "^4.0.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.get": "^4.4.2",
     "prando": "^6.0.1",
