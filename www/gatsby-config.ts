@@ -7,10 +7,6 @@ require(`dotenv`).config()
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 const gatsbyConfig: GatsbyConfig = {
-  flags: {
-    DEV_SSR: true,
-    FAST_DEV: true,
-  },
   siteMetadata: {
     siteTitle: site.title,
     siteTitleDefault: site.titleDefault,
