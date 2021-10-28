@@ -347,7 +347,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
-      featuredImg: File @link(from: "featuredImg___NODE")
+      featuredImg: File @link(from: "fields.localFile")
     }
     type Frontmatter {
       title: String!
@@ -356,9 +356,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `)
 }
+
 exports.onCreateNode = async ({
   node,
-  actions: { createNode },
+  actions: { createNode, createNodeField },
   store,
   cache,
   createNodeId,
@@ -368,7 +369,7 @@ exports.onCreateNode = async ({
     node.internal.type === "MarkdownRemark" &&
     node.frontmatter.featuredImgUrl !== null
   ) {
-    let fileNode = await createRemoteFileNode({
+    const fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
       createNode, // helper function in gatsby-node to generate the node
@@ -376,9 +377,9 @@ exports.onCreateNode = async ({
       cache, // Gatsby's cache
       store, // Gatsby's Redux store
     })
-    // if the file was created, attach the new node to the parent node
+    // if the file was created, extend the node with "localFile"
     if (fileNode) {
-      node.featuredImg___NODE = fileNode.id
+      createNodeField({ node, name: "localFile", value: fileNode.id })
     }
   }
 }
