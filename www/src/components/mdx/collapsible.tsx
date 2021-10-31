@@ -6,7 +6,13 @@ export const Collapsible: React.FC<{ summary: React.ReactNode }> = ({ summary, c
 
   return (
     <Box as="details" bgColor={bgColor} px={[4, null, 6]} py={4} borderRadius="lg">
-      <Box as="summary" display="list-item" textStyle="prominent" sx={{ ">:first-child": { display: `inline` } }}>
+      <Box
+        as="summary"
+        display="list-item"
+        textStyle="prominent"
+        cursor="pointer"
+        sx={{ ">:first-of-type": { display: `inline` } }}
+      >
         {summary}
       </Box>
       {children}

@@ -12,7 +12,7 @@ import { components } from "../mdx"
 import { article } from "../../constants/json-ld"
 import { ShareAnywhereButton, TwitterButton } from "../buttons"
 import { site } from "../../constants/meta"
-import { WithSidebarWrapper } from "./toc"
+import { TocItem, WithSidebarWrapper } from "./toc"
 
 export type WritingViewDataProps = {
   post: {
@@ -29,7 +29,7 @@ export type WritingViewDataProps = {
     subtitle: string
     timeToRead: string
     tableOfContents?: {
-      items: unknown[]
+      items?: TocItem[]
     }
     image?: string
     category: {
@@ -86,7 +86,7 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
       <Container variant="proseRoot">
         <SkipNavContent>
           {children}
-          {type === `tutorial` ? (
+          {type === `tutorial` && post.tableOfContents?.items ? (
             <WithSidebarWrapper items={post.tableOfContents.items}>
               <Prose as="article" flex="1 1 100%" minW="100%">
                 <MDXProvider components={components}>
