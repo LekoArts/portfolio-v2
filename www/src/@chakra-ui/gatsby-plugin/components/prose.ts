@@ -877,6 +877,7 @@ const Prose = {
         overflowWrap: `normal`,
         tabSize: 4,
         minWidth: `100%`,
+        maxHeight: `80vh`,
         hyphens: `none`,
         webkitOverflowScrolling: `touch`,
         scrollbarWidth: `thin`,
@@ -1036,7 +1037,7 @@ const Prose = {
         marginInlineEnd: `0 !important`,
       },
     },
-    ".chakra-alert": {
+    ".chakra-alert, details": {
       ".code-block-wrapper": {
         width: `100%`,
         ".gatsby-highlight-header": {
