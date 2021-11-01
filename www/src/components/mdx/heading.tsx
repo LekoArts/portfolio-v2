@@ -13,7 +13,7 @@ const heading =
       if (Tag === 'h2' && children === `Introduction`) {
         return (
           <VisuallyHidden>
-            <Box as={Tag} id={id}>{children}</Box>
+            <Box as={Tag} id={id} sx={{ my: '0 !important' }}>{children}</Box>
           </VisuallyHidden>
         )
       }
