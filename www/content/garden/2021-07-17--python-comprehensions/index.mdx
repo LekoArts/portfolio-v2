@@ -5,6 +5,7 @@ lastUpdated: 2021-07-17
 icon: "python"
 tags:
   - Python
+# cSpell:disable
 ---
 
 Comprehensions (and list comprehensions in particular) are probably the feature I love the most coming from JavaScript to Python. It enables you to write concise code for something you do very often: Iterating over a list, modifying the data a bit ("data massaging") and returning a list with the new entries.
@@ -99,8 +100,6 @@ console.log(arr)
 
 Reversing strings in a tuple and returning them as a list:
 
-<!-- /* cSpell:disable */ -->
-
 ```js
 const words = ["kayak", "LekoArts", "radar", "python"]
 const reversed = words.map((word) => word.split("").reverse().join(""))
@@ -114,8 +113,6 @@ console.log(reversed)
 >>> print(reversed)
 ['kayak', 'strAokeL', 'radar', 'nohtyp']
 ```
-
-<!-- /* cSpell:enable */ -->
 
 You can also nest comprehensions. Here's a 3 by 3 identity matrix:
 
