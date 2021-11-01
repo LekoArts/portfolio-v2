@@ -136,7 +136,7 @@ function App() {
         <Text sx={{ mt: 3, mb: 3 }}>
           This example page showcases a custom made "Container" component that
           supports light/dark mode, variants and color schemes. It's two parts
-          (Outer and Inner) and thus supports fullbleed layouts, normal
+          (Outer and Inner) and thus supports full bleed layouts, normal
           constrained ones and different styles for both containers.
         </Text>
       </Container>
@@ -156,7 +156,7 @@ npm run dev
 
 Go to `http://localhost:3000` and you should see something like this:
 
-![Screenshot of the index page, with a h1 heading saying "Chakra UI: Advanced Multi-Part Components" and some examplary text underneath. It's contrained by a container and aligned in the center. A color mode toggle button is in the top right corner.](./unstyled-overview-page.png)
+![Screenshot of the index page, with a h1 heading saying "Chakra UI: Advanced Multi-Part Components" and some exemplary text underneath. It's constrained by a container and aligned in the center. A color mode toggle button is in the top right corner.](./unstyled-overview-page.png)
 
 ## Customizing Container
 
@@ -294,7 +294,7 @@ For a multipart component you can define as many parts as you want. In this case
 
 By using `CustomContainer` in the `useMultiStyleConfig` hook you defined the name of the component you'll pass to `extendTheme`. The hook returns the styles for each part you declared in the component style.
 
-Essentially the `MultiContainer` component is a wrapper around the existing `Container` component so that you can create fullbleed containers and different styles between the outer and inner part. The `<Box />` component is a generic component provided by Chakra UI that accepts all valid props. The `outer` styles are passed to the prop `__css`. It has the same API as the `sx` prop, but has a lower style priority. This means you can override the style properties with Chakra style props.
+Essentially the `MultiContainer` component is a wrapper around the existing `Container` component so that you can create full bleed containers and different styles between the outer and inner part. The `<Box />` component is a generic component provided by Chakra UI that accepts all valid props. The `outer` styles are passed to the prop `__css`. It has the same API as the `sx` prop, but has a lower style priority. This means you can override the style properties with Chakra style props.
 
 </Collapsible>
 
@@ -402,7 +402,7 @@ function App() {
         <Text sx={{ mt: 3, mb: 3 }}>
           This example page showcases a custom made "Container" component that
           supports light/dark mode, variants and color schemes. It's two parts
-          (Outer and Inner) and thus supports fullbleed layouts, normal
+          (Outer and Inner) and thus supports full bleed layouts, normal
           constrained ones and different styles for both containers.
         </Text>
       </Container>
@@ -543,7 +543,7 @@ export function percentageWidths(
 
 <Collapsible summary={<em>Detailed look at percentageWidths</em>}>
 
-The function can take three arguments: `divisions`, `part`, and `property`. In the component style it's used with `4` and `"inner"` (so for `property` it fallsback to `maxW`). At the end an object is returned that can be spread into the component style.
+The function can take three arguments: `divisions`, `part`, and `property`. In the component style it's used with `4` and `"inner"` (so for `property` it falls back to `maxW`). At the end an object is returned that can be spread into the component style.
 
 The for-loop is 1-indexed (and not zero-indexed as usual) so that for `4` divisions the `name` starts with `"1/4"`. For the case `"4/4"` the name `full` should be used instead. `w` is calculated by first dividing `i` with `divisions` and then multiplying it by `100` to make it a percentage. Using `Number()` you're casting it to a number so that you can round the value with `.toFixed(4)`. In line 10 the empty `result` object is directly mutated for each iteration in the for-loop. Only when the for-loop is finished the now filled `result` object is returned.
 
@@ -572,7 +572,7 @@ If you now go back to `http://localhost:3000` and look at the bottom two entries
 
 Now we're getting to the most exciting part of this tutorial! It'll be more complicated than the previous sections but don't worry, you got this 👍🏻
 
-The `variants` option of a component is really the most powerful one as you can do so much with the information you get: Theme, color schemes, and color modes.
+The `variants` option of a component is really the most powerful one as you can do so much with the information you get: theme, color schemes, and color modes.
 
 Let's start with the `solid` variant. Goal of it is to make both `outer` and `inner` a solid color by using the colors in Chakra UI's default theme.
 
@@ -624,7 +624,7 @@ export function variantSolid(props: StyleFunctionProps) {
   }
 }
 
-// Rest of existing funtions
+// Rest of existing functions
 // ...
 ```
 
@@ -647,7 +647,7 @@ This line is also interesting:
 const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
 ```
 
-If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white for `color`. This ensures good contrast for text on otherwise to light background.
+If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white` for `color`. This ensures good contrast for text on otherwise to light background.
 
 </Collapsible>
 
@@ -667,15 +667,15 @@ solid: (props) => ({
 
 Check `http://localhost:3000` to see the second and third section working 🎉
 
-Next up is the `ghost` variant. With this the `outer` part has a solid color, the `inner` part has a slightly transparent, lighter color. So you'll be able to see the clear borders of the `inner` part.
+Next up is the `ghost` variant. With this the `outer` part has a solid color, the `inner` part has a slightly transparent, lighter color. So you'll be able to clearly see the borders of the `inner` part.
 
 Edit the `utils` file:
 
 ```ts title=src/chakra/utils.ts
-// Existing mports
+// Existing imports
 // ...
 
-// Rest of existing funtions
+// Rest of existing functions
 // ...
 
 export function variantGhost(props: StyleFunctionProps) {
@@ -744,10 +744,10 @@ And last, but not least: The `gradient` variant. This one is a bit trickier sinc
 Edit the `utils` file:
 
 ```ts title=src/chakra/utils.ts
-// Existing mports
+// Existing imports
 // ...
 
-// Rest of existing funtions
+// Rest of existing functions
 // ...
 
 export function variantGradient(props: StyleFunctionProps) {
