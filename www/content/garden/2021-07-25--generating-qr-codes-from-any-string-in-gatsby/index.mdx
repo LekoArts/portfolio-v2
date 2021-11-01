@@ -7,7 +7,7 @@ tags:
   - Gatsby
 ---
 
-One of the many side-effects of the coronavirus pandemic is that the QR code got some attenion (again). When it first came out you saw it everywhere but the last couple of years it slowly vanished again -- until now where your vaccination certificate or check-in apps all use QR codes again.
+One of the many side-effects of the coronavirus pandemic is that the QR code got some attention (again). When it first came out you saw it everywhere but the last couple of years it slowly vanished again -- until now where your vaccination certificate or check-in apps all use QR codes again.
 
 Generating QR codes from any string you wish in Gatsby could be done in multiple ways. Normally for such operations you'd set up a _transformer_ plugin but realistically you wouldn't want _every_ string to be converted to a QR code. Thus you can use the [createSchemaCustomization API](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/) to individually add a new field to your desired node and transform a specific sibling field. This saves work & build time! You can take this YAML schema as an example:
 

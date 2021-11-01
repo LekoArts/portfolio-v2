@@ -12,7 +12,7 @@ If you've seen posts about [Neumorphism](https://uxdesign.cc/neumorphism-in-user
 
 You can see a preview of the effect on my [Emilia Theme](https://emilia.lekoarts.de/) site. The end result will also be the same as this [Codesandbox](https://codesandbox.io/s/gatsby-plugin-image-layered-smooth-shadows-w2z9k) you can look at and fork.
 
-![Preview of the finished result. Heading saying "Images with Dominant Color Smooth Shadows" and below are four images (colorful wall, a bee in orange flowers, green lego bricks, and a house with lot of blue sky behind it) that each have a colorful smooth shadow. The dominant color is used for the color of the shadow.](./finished_result_preview.jpg)
+![Preview of the finished result. Heading saying "Images with Dominant Color Smooth Shadows" and below are four images (colourful wall, a bee in orange flowers, green lego bricks, and a house with lot of blue sky behind it) that each have a colourful smooth shadow. The dominant color is used for the color of the shadow.](./finished_result_preview.jpg)
 
 ## Prerequisites
 
@@ -104,7 +104,7 @@ box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.042), 0 6.7px 5.3px rgba(0, 0, 0, 0.06
   0 41.8px 33.4px rgba(0, 0, 0, 0.108), 0 100px 80px rgba(0, 0, 0, 0.15);
 ```
 
-But that's a black shadow 😬 Time to make a colorful one. You can translate the generated values into their respective arrays.
+But that's a black shadow 😬 Time to make a colourful one. You can translate the generated values into their respective arrays.
 
 <Alert status="info" title="How to read box-shadow?">
 
@@ -215,5 +215,5 @@ The last step is to use the [`style` prop](https://www.gatsbyjs.com/docs/referen
 If you want to practise some skills you have and/or go beyond this little guide, here are some ideas:
 
 - Change `generateShadow` to take in the generated shadow from [Smooth Shadow](https://shadows.brumm.af/) and replace the _rgb_ with the `color` param
-- [@brumm](https://twitter.com/funkensturm) has pointed out to me on [Twitter](https://twitter.com/funkensturm/status/1435993413271367681) that you can also use [eaze](https://www.npmjs.com/package/eaze) to programatically create the shadow easing values
+- [@brumm](https://twitter.com/funkensturm) has pointed out to me on [Twitter](https://twitter.com/funkensturm/status/1435993413271367681) that you can also use [eaze](https://www.npmjs.com/package/eaze) to programmatically create the shadow easing values
 - Use the developer tools inside your browser, go to the "Sources" tab and browse the source code of [Smooth Shadow](https://shadows.brumm.af/) to reverse engineer the functions so that `generateShadow` can take the same params as the webpage
