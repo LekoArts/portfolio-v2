@@ -166,6 +166,12 @@ const gatsbyConfig: GatsbyConfig = {
         allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
       },
     },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: site.url,
+      },
+    },
     shouldAnalyseBundle && {
       resolve: `gatsby-plugin-perf-budgets`,
       options: {},
