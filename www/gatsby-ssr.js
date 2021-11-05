@@ -33,7 +33,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
     return setHeadComponents([
       <link key="gatsby-plugin-plausible-preconnect" rel="preconnect" href={`https://${PLAUSIBLE_DOMAIN}`} />,
-      <script key="gatsby-plugin-plausible-script" async defer {...scriptProps} />,
+      <script key="gatsby-plugin-plausible-script" defer {...scriptProps} />,
       // See: https://plausible.io/docs/custom-event-goals#1-trigger-custom-events-with-javascript-on-your-site
       <script
         key="gatsby-plugin-plausible-custom-events"
