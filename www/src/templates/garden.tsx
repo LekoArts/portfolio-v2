@@ -188,8 +188,8 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
 export default GardenTemplate
 
 export const query = graphql`
-  query GardenTemplate($slug: String!) {
-    garden(slug: { eq: $slug }) {
+  query GardenTemplate($id: String!) {
+    garden(id: { eq: $id }) {
       title
       body
       slug
