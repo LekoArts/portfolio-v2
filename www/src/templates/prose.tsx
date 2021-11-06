@@ -25,8 +25,8 @@ const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({ data: { post
 export default ProseTemplate
 
 export const query = graphql`
-  query ProseTemplate($slug: String!) {
-    post(slug: { eq: $slug }) {
+  query ProseTemplate($id: String!) {
+    post(id: { eq: $id }) {
       ...WritingView
     }
   }

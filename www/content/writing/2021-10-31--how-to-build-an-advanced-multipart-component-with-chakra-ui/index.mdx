@@ -574,6 +574,8 @@ Now we're getting to the most exciting part of this tutorial! It'll be more comp
 
 The `variants` option of a component is really the most powerful one as you can do so much with the information you get: theme, color schemes, and color modes.
 
+### Solid
+
 Let's start with the `solid` variant. Goal of it is to make both `outer` and `inner` a solid color by using the colors in Chakra UI's default theme.
 
 Edit the `utils` file:
@@ -667,6 +669,8 @@ solid: (props) => ({
 
 Check `http://localhost:3000` to see the second and third section working 🎉
 
+### Ghost
+
 Next up is the `ghost` variant. With this the `outer` part has a solid color, the `inner` part has a slightly transparent, lighter color. So you'll be able to clearly see the borders of the `inner` part.
 
 Edit the `utils` file:
@@ -738,6 +742,8 @@ ghost: (props) => ({
   inner: variantGhost(props),
 }),
 ```
+
+### Gradient
 
 And last, but not least: The `gradient` variant. This one is a bit trickier since the `mode()` helper function unfortunately can't really help here and you'll need to write a bit more verbose code:
 
@@ -821,3 +827,5 @@ Congrats on finishing the tutorial, you can find the code for the finished proje
 In this tutorial you created a multipart component consisting of two parts that interact rather simple with each other. I wanted to focus on the techniques and code to integrate all possible options into the `variants`. Think of a component like a menu that consists of more than two parts and create a multipart component out of it. It'll help if you read the [source code](https://github.com/chakra-ui/chakra-ui/blob/5f9038b3f7479f1c0afd527ca6c9e5f64190af93/packages/theme/src/components/menu.ts) on such components.
 
 You could also try to publish your component as its own npm package (see [official documentation](https://chakra-ui.com/docs/theming/advanced#distributing-a-theme-package)) or add [theme typings](https://chakra-ui.com/docs/theming/advanced#theme-typings).
+
+**Did you build something cool with this guide?** Please share it with me on Twitter at [@lekoarts_de](https://twitter.com/lekoarts_de) as I'm eager to see more multipart components in the wild!

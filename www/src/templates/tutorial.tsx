@@ -43,8 +43,8 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({ data: { p
 export default TutorialTemplate
 
 export const query = graphql`
-  query TutorialTemplate($slug: String!) {
-    post(slug: { eq: $slug }) {
+  query TutorialTemplate($id: String!) {
+    post(id: { eq: $id }) {
       ...WritingView
       tableOfContents
     }
