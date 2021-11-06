@@ -10,37 +10,81 @@ image: file-name-inside-og-images-folder.png
 published: true
 ---
 
-Context: What are you talking about?
-Relevance: Why should I care about that?
-Application: How do it do it?
-
-Learning goals => Assessment => Lesson Plan
-
 ## Introduction
 
 Gatsby 4 introduced a lot of new features, most notably the introduction of additional rendering options besides Static Site Generation (SSG): Deferred Static Generation (DSG) and Server-Side Rendering (SSR). If you missed this exciting release you can catch up in the blog post [What's New in Gatsby 4](https://www.gatsbyjs.com/blog/whats-new-in-gatsby-4/) after following this tutorial.
 
 So why should you care about Deferred Static Generation? In a nutshell it delays (or defers) the generation of pages until a user actually requests the page. After that the build artifacts (HTML & JSON) are cached at the CDN level and for all visitors afterwards it behaves like a normal SSG page. In a scenario where you build thousands of pages but only a subset of them gets regular visits from users, DSG can dramatically improve your build speeds. And you still get the SSG benfits like great SEO, speed, and reliability.
 
-In choosing what pages to defer you can improve your page on a granular and individual level -- but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site.
+In choosing what pages to defer you can improve your page on a granular and individual level -- but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site. You can find a complete example on GitHub: [gatsby-dsg-plausible-analytics](https://github.com/LekoArts/gatsby-dsg-plausible-analytics).
 
 <Alert status="info" title="Prerequisites">
 
-If you want to follow this tutorial step-by-step you'll need to have a couple of accounts for the online platforms in this guide. You need to have a [GitHub account](https://github.com/join) and you'll deploy your site to [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/) so you also need an [account](https://www.gatsbyjs.com/dashboard/signup/) there. Both accounts are free.
-
-Since I'm personally a big fan of [Plausible Analytics](https://plausible.io) this tutorial will use this specific analytics tool. You can't create a free account there (but start a 30 day trial), so if you need something free you can use Google Analytics.
+If you want to follow this tutorial step-by-step you'll need to have a couple of accounts for the online platforms in this guide. You need to have a [Gatsby Cloud account](https://www.gatsbyjs.com/dashboard/signup/) and an account on GitHub or GitLab. Since I'm personally a big fan of [Plausible Analytics](https://plausible.io) it'll be used in this tutorial. You can't create a free account there (but start a 30 day trial), so if you need something free you can use Google Analytics.
 
 If you haven't set up your development environment yet, you can follow [Part 0 of the official Gatsby tutorial](https://www.gatsbyjs.com/docs/tutorial/part-0/) to do so.
 
+Lastly, you should already have a Gatsby site locally or on GitHub/GitLab that you can work with and connect to Gatsby Cloud.
+
 </Alert>
 
-## Adding Plausible Analytics to Your Site
+## Conceptual Guide
 
-- Collapsible: Use other analytics tools
+Before I begin to explain the actual steps you need to take, let me take a step back and explain the concept on a high-level. The problem statement is: You can mark pages as deferred, but what should be the differentiator? And one (of probably many) solution is to take the data of your analytics tool via their API and use that to mark the pages.
+
+So in short:
+
+1. Pull data from analytics tool
+1. Use a common identificator (e.g. the URL of the page) to connect the analytics data to each page node
+1. Mark a page as deferred if it's not one of your top pages
+
+## Adding Analytics to Your Site
+
+**Already have your analytics tool set up in your site? Then you can skip this step.**
+
+Use [gatsby-plugin-plausible](https://www.gatsbyjs.com/plugins/gatsby-plugin-plausible/) to add the necessary tracking scripts to your site.
+
+```shell
+npm install gatsby-plugin-plausible
+```
+
+Add the plugin to your `gatsby-config.js` and provide the necessary `domain` option.
+
+```js title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-plausible`,
+      options: {
+        // The "domain" is what you chose as an identifier and what comes up in the URL:
+        // https://plausible.io/<domain>
+        domain: `gatsby-dsg-example`,
+      },
+    },
+  ],
+}
+```
 
 <Collapsible summary={<em>Not using Plausible Analytics?</em>}>
 
-foobar
+If you're not using Plausible or don't want to, you can use different plugins to add your analytics tool to your site. For example:
+
+- [gatsby-plugin-google-gtag](https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/)
+- [Fathom](https://usefathom.com/docs/integrations/gatsby)
+
+Or use the [plugin library](https://www.gatsbyjs.com/plugins) to find the fitting plugin.
+
+</Collapsible>
+
+## Deploying to Gatsby Cloud
+
+**Already use Gatsby Cloud to build & host your site? Then you can skip this step.**
+
+TODO
+
+<Collapsible summary={<em>Want a more detailed walkthrough?</em>}>
+
+No problem! Part 1 of the official Gatsby tutorial has you covered. The guide [Create and Deploy Your First Gatsby Site](https://www.gatsbyjs.com/docs/tutorial/part-1/) walks you through the creation of a Gatsby site itself and then the deployment to Gatsby Cloud. It uses GitHub to host the code of your site.
 
 </Collapsible>
 
@@ -52,7 +96,7 @@ foobar
 
 ![TODO](./index-page-overview.jpg)
 
-## Deploying to Gatsby Cloud
+SSR LOGS:
 
 ![TODO](./gatsby-cloud-ssr-logs.jpg)
 
