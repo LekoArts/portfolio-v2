@@ -190,6 +190,12 @@ const smVariant = {
       mr: 0,
     },
   },
+  ".chakra-alert": {
+    p: {
+      mb: em(16, 14),
+      mt: 0,
+    },
+  },
 }
 const mdVariant = {}
 const lgVariant = {
@@ -381,6 +387,12 @@ const lgVariant = {
       mr: `-${em(18, 14)}`,
     },
   },
+  ".chakra-alert": {
+    p: {
+      mb: em(24, 18),
+      mt: 0,
+    },
+  },
 }
 const xlVariant = {
   fontSize: rem(20),
@@ -569,6 +581,12 @@ const xlVariant = {
     },
     ".code-block-wrapper:last-of-type": {
       mr: `-${em(24, 15)}`,
+    },
+  },
+  ".chakra-alert": {
+    p: {
+      mb: em(24, 20),
+      mt: 0,
     },
   },
 }
@@ -1037,7 +1055,61 @@ const Prose = {
         marginInlineEnd: `0 !important`,
       },
     },
-    ".chakra-alert, details": {
+    ".chakra-alert": {
+      ".code-block-wrapper": {
+        width: `100%`,
+        ".gatsby-highlight-header": {
+          mx: 0,
+        },
+        pre: {
+          mx: 0,
+        },
+      },
+      p: {
+        mb: em(20, 16),
+        mt: 0,
+      },
+      "p:first-of-type": {
+        mt: 0,
+      },
+      "p:last-of-type": {
+        mb: 0,
+        mt: 0,
+      },
+      "&[data-status='info']": {
+        a: {
+          textDecorationColor: mode(
+            `var(--chakra-colors-brand-blueLinkDecoration)`,
+            `var(--chakra-colors-brand-dark-blueLinkDecoration)`
+          )(props),
+        },
+      },
+      "&[data-status='warning']": {
+        a: {
+          textDecorationColor: mode(
+            `var(--chakra-colors-brand-orangeLinkDecoration)`,
+            `var(--chakra-colors-brand-dark-orangeLinkDecoration)`
+          )(props),
+        },
+      },
+      "&[data-status='success']": {
+        a: {
+          textDecorationColor: mode(
+            `var(--chakra-colors-brand-greenLinkDecoration)`,
+            `var(--chakra-colors-brand-dark-greenLinkDecoration)`
+          )(props),
+        },
+      },
+      "&[data-status='error']": {
+        a: {
+          textDecorationColor: mode(
+            `var(--chakra-colors-brand-redLinkDecoration)`,
+            `var(--chakra-colors-brand-dark-redLinkDecoration)`
+          )(props),
+        },
+      },
+    },
+    details: {
       ".code-block-wrapper": {
         width: `100%`,
         ".gatsby-highlight-header": {
@@ -1048,10 +1120,16 @@ const Prose = {
         },
       },
       "p:first-of-type": {
-        mt: 0,
+        mt: 4,
       },
       "p:last-of-type": {
         mb: 0,
+      },
+      a: {
+        textDecorationColor: mode(
+          `var(--chakra-colors-brand-blueLinkDecoration)`,
+          `var(--chakra-colors-brand-dark-blueLinkDecoration)`
+        )(props),
       },
     },
   }),

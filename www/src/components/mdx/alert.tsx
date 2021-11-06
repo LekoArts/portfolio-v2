@@ -10,6 +10,7 @@ export const Alert: React.FC<{ title: string; status: AlertStatus }> = ({ title,
     my={[6, null, null, 12]}
     mx={[0, null, null, -4]}
     width="auto"
+    data-status={status}
   >
     <Box display="flex" flexDirection="row" alignItems="center" mb={4}>
       <AlertIcon boxSize={[`20px`, null, `30px`]} />
