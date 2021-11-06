@@ -39,7 +39,7 @@ export const SEO: React.FC<SEOProps> = ({
   }
 
   return (
-    <Helmet title={title} defaultTitle={siteTitleDefault} titleTemplate={`%s | ${siteTitle}`}>
+    <Helmet title={title} defaultTitle={siteTitleDefault} titleTemplate={`%s | ${siteTitle}`} key={seo.url}>
       <html lang="en-US" />
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
