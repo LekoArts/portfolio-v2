@@ -115,9 +115,9 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                     boxShadow: `outline`,
                     outline: `none`,
                   }}
-                  key={`${tag.title}${isActive}`}
+                  key={`${tag.title}-${isActive}`}
                 >
-                  <Tag key={`${tag.title}${isActive}`} colorScheme={isActive ? `blue` : `gray`} size="lg">
+                  <Tag colorScheme={isActive ? `blue` : `gray`} size="lg">
                     <TagLabel>{tag.title}</TagLabel>
                     {isActive && <TagCloseButton as="span" aria-hidden aria-label="" />}
                   </Tag>
