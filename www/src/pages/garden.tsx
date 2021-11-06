@@ -22,6 +22,8 @@ import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
 import { Spacer } from "../components/blocks/spacer"
 import { SEO } from "../components/seo"
+import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
+import { queryStringIso } from "../utils/query-string-iso"
 
 type DataProps = {
   garden: {
@@ -59,8 +61,14 @@ const reducer = (state: State, action: Action) => {
   }
 }
 
-const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) => {
+  const [state, dispatch] = useQueryStringReducer<State, Action>({
+    initialState,
+    location,
+    reducer,
+    // @ts-ignore - Somehow doesn't work
+    iso: queryStringIso,
+  })
   const prefersReducedMotion = usePrefersReducedMotion()
   const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
