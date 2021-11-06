@@ -9,6 +9,8 @@ tags:
 
 Many CI/CD services support both incoming and outgoing webhooks for the communication with external services. Also [Discord](https://discord.com/) allows the usage of webhooks to display messages -- so receiving build notifications in your Discord server is totally doable! For this example I'm using [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/) but the same steps (albeit with a different UI) also apply to services like [Netlify](https://www.netlify.com/) or [CircleCI](https://circleci.com/).
 
+You can also adapt this guide to send notifications of [GitHub Actions](/garden/running-cypress-tests-with-github-actions-in-parallel) to a discord channel of yours.
+
 ## Step 1: Create the Discord webhook
 
 Choose a channel on your server in which the messages should come in. Right-click on the channel => _Edit Channel_ => _Integrations_ => _Webhooks_. Click on _New Webhook_. Press the _Copy Webhook URL_ button to have the webhook URL in your clipboard.
