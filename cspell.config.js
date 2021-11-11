@@ -51,6 +51,10 @@ module.exports = {
     `chainable`,
     `vars`,
     `incl`,
+    `identificator`,
+    `gtag`,
+    `walkthrough`,
+    `pageviews`,
   ],
   flagWords: [`hte`, `Gastby`],
 }
