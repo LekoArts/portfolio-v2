@@ -5,6 +5,12 @@
 # Fun
 - fromPath: /admin
   toPath: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+- fromPath: /www
+  toPath: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+# Plausible 404 Requests
+- fromPath: /personal
+  toPath: /about
 
 # German
 # Top Level

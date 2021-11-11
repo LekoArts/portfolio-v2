@@ -22,6 +22,8 @@ import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
 import { Spacer } from "../components/blocks/spacer"
 import { SEO } from "../components/seo"
+import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
+import { queryStringIso } from "../utils/query-string-iso"
 
 type DataProps = {
   garden: {
@@ -59,8 +61,14 @@ const reducer = (state: State, action: Action) => {
   }
 }
 
-const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) => {
+  const [state, dispatch] = useQueryStringReducer<State, Action>({
+    initialState,
+    location,
+    reducer,
+    // @ts-ignore - Somehow doesn't work
+    iso: queryStringIso,
+  })
   const prefersReducedMotion = usePrefersReducedMotion()
   const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
@@ -107,7 +115,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
                     boxShadow: `outline`,
                     outline: `none`,
                   }}
-                  key={tag.title}
+                  key={`${tag.title}-${isActive}`}
                 >
                   <Tag colorScheme={isActive ? `blue` : `gray`} size="lg">
                     <TagLabel>{tag.title}</TagLabel>
@@ -129,13 +137,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden } }) => {
                   return true
                 }
                 return state.tags.some((tag) => tags.includes(tag))
-              })
-              .sort((aPost, bPost) => {
-                const a = new Date(aPost.lastUpdated)
-                const b = new Date(bPost.lastUpdated)
-
-                // eslint-disable-next-line no-nested-ternary
-                return a > b ? -1 : a < b ? 1 : 0
               })
               .map((post) => (
                 <Link

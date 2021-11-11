@@ -9,11 +9,13 @@ type CreatePagesResult = {
   }
   garden: {
     nodes: {
+      id: string
       slug: string
     }[]
   }
   writing: {
     nodes: {
+      id: string
       slug: string
       type: "prose" | "tutorial"
     }[]
@@ -37,11 +39,13 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       }
       garden: allGarden {
         nodes {
+          id
           slug
         }
       }
       writing: allPost(filter: { published: { eq: true } }) {
         nodes {
+          id
           slug
           type
         }
@@ -63,7 +67,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       path: garden.slug,
       component: gardenTemplate,
       context: {
-        slug: garden.slug,
+        id: garden.id,
       },
     })
   })
@@ -75,7 +79,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       path: article.slug,
       component,
       context: {
-        slug: article.slug,
+        id: article.id,
       },
     })
   })
