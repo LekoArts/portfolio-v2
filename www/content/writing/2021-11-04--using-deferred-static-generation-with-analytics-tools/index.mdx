@@ -116,7 +116,7 @@ Instead of placing the logic for Plausible inside your `gatsby-node.js` file at 
 
 Start by creating the folder structure `/plugins/gatsby-source-plausible` and create both a `package.json` and `gatsby-node.js` inside it.
 
-```shell
+```
 /your-gatsby-site
 └── gatsby-config.js
 └── /src
@@ -152,7 +152,6 @@ Lastly, create some boilerplate code inside `gatsby-node.js` for the next step:
 
 ```js title=plugins/gatsby-source-plausible/gatsby-node.js
 const fetch = require("node-fetch")
-
 const POST_NODE_TYPE = `PlausibleTopPage`
 
 exports.sourceNodes = async (
@@ -174,9 +173,8 @@ curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&pro
 
 Here, for a period of 6 months the top 5 pages are returned for the given site id. By default, the `limit` is 100. Translating that `curl` command into the shape of `node-fetch` looks something like this:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {11-16}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js {10-15}
 const fetch = require("node-fetch")
-
 const POST_NODE_TYPE = `PlausibleTopPage`
 
 exports.sourceNodes = async (
@@ -200,9 +198,8 @@ To authenticate your request to Plausible you set a `Authorization` header in th
 
 All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.js` file:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {18-31}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js {17-30}
 const fetch = require("node-fetch")
-
 const POST_NODE_TYPE = `PlausibleTopPage`
 
 exports.sourceNodes = async (
@@ -275,6 +272,8 @@ query MyQuery {
 If everything went well you should see something like this:
 
 ![TODO](./graphiql-result.png)
+
+Now it's time for you to interpret the data you see. In this instance the index page and three more pages have the most views by some distance. You might see something similar: The index page & a cohort of pages with the most views, then a noticeable gap, and the rest of the pages. Depending on this metric you should now decide how many pages from that top pages you want to mark as SSG. (For the sake of this tutorial three will be chosen).
 
 ## Deferring Low-Traffic Pages
 
