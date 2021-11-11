@@ -138,13 +138,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                 }
                 return state.tags.some((tag) => tags.includes(tag))
               })
-              .sort((aPost, bPost) => {
-                const a = new Date(aPost.lastUpdated)
-                const b = new Date(bPost.lastUpdated)
-
-                // eslint-disable-next-line no-nested-ternary
-                return a > b ? -1 : a < b ? 1 : 0
-              })
               .map((post) => (
                 <Link
                   to={post.slug}
