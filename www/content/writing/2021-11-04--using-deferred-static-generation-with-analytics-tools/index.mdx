@@ -34,9 +34,9 @@ Before I begin to explain the actual steps you need to take, let me take a step 
 
 So in short:
 
-1. Pull data from analytics tool
-1. Use a common but unique identificator (e.g. the URL of the page) to connect the analytics data to each page node
-1. Mark a page as deferred if it's not one of your top pages
+1. Pull data from analytics tool via their API.
+1. Use a common but unique identificator (e.g. the URL of the page) to connect the analytics data to each page node to allow a direct comparison.
+1. Mark a page as deferred if it's not one of your top pages using the `defer` key in `createPage` action.
 
 ## Adding Analytics to Your Site
 
@@ -82,10 +82,10 @@ Or use the [plugin library](https://www.gatsbyjs.com/plugins) to find the fittin
 
 **Already use Gatsby Cloud to build & host your site? Then you can skip this step.**
 
-1. Go to your [Gatsby Cloud Dashboard](https://www.gatsbyjs.com/dashboard/) and click the _Add a site_ button
-1. Import your project from GitHub and select the project you worked on until now
-1. For now you can leave the sections about integrations and environment variables empty
-1. Finish the wizard by pressing _Create site_
+1. Go to your [Gatsby Cloud Dashboard](https://www.gatsbyjs.com/dashboard/) and click the _Add a site_ button.
+1. Import your project from GitHub and select the project you worked on until now.
+1. For now you can leave the sections about integrations and environment variables empty. Later you'll need to fill out the environment variables for the local plugin.
+1. Finish the wizard by pressing _Create site_.
 
 <Collapsible summary={<em>Want a more detailed walkthrough?</em>}>
 
@@ -260,6 +260,12 @@ module.exports = {
   ],
 }
 ```
+
+<Alert status="warning" title="Add environment variable in Gatsby Cloud">
+
+Don't forget to also set `PLAUSIBLE_API_KEY` inside Gatsby Cloud as an environment variable. Otherwise the plugin won't be able to pull the information from Plausible's API. Go to your **Site Settings** and in the **Environment Variables** card you can add the key.
+
+</Alert>
 
 Now, in the root of your project start the development server with `gatsby develop` and go to `http://localhost:8000/___graphql` and run the following query:
 
