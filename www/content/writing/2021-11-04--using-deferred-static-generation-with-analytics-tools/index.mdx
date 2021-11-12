@@ -6,7 +6,7 @@ lastUpdated: 2021-11-04
 description: "Only want to build out the most popular pages as static pages? No problem, you can use your analytics tool to control the usage of Deferred Static Generation in Gatsby."
 type: "tutorial"
 category: "Gatsby"
-image: file-name-inside-og-images-folder.png
+image: /og-images/dsg-analytics.png?v=1
 published: true
 ---
 
@@ -276,7 +276,7 @@ query MyQuery {
 
 If everything went well you should see something like this:
 
-![TODO](./graphiql-result.png)
+![A screenshot of the GraphiQL interface in a web browser. It has three main sections: The Explorer, Query Editor, and Result Window. The Query Editor queries for "allPlausibleTopPage" and in the Result Window an array of objects is returned with the slug and visitors for each page.](./graphiql-result.png)
 
 Now it's time for you to interpret the data you see. In this instance the index page and three more pages have the most views by some margin. You might see something similar: The index page & a cohort of pages with the most views, then a noticeable gap, and the rest of the pages. Depending on this metric you should now decide how many pages from that top pages you want to mark as SSG. (For the sake of this tutorial three will be chosen).
 
@@ -413,7 +413,7 @@ Go to some pages that you now should be marked as deferred. The first request mi
 
 You can also see it working in Gatsby Cloud directly. For this, go to the detailed view of a build and go to the _SSR logs_ tab. There you'll see each invocation of a DSG/SSR page.
 
-![TODO](./gatsby-cloud-ssr-logs.jpg)
+![Screenshot of a view inside Gatsby Cloud. This page shows the details of a specific build. From top to bottom: Commit message and current deploy URL, information about how long the build & deploy took and that it was published to Gatsby Hosting. Then a little diagram which pages are SSR, DSG, or SSG. Lastly, a tab overview with the tabs Logs, Raw Logs, SSR logs, and Functions. The screenshot shows the SSR logs. They show activity when a page is requested and say that pages are rendered with the DSG rendering strategy.](./gatsby-cloud-ssr-logs.jpg)
 
 ## Next Steps
 
