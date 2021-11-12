@@ -30,7 +30,7 @@ Lastly, you should already have a Gatsby site locally or on GitHub/GitLab that y
 
 ## Conceptual Guide
 
-Before I begin to explain the actual steps you need to take, let me take a step back and explain the concept on a high-level. The problem statement is: You can mark pages as deferred, but what should be the differentiator? And one (of probably many) solution is to take the data of your analytics tool via their API and use that to mark the pages.
+Before I begin to explain the actual steps you need to take, let me take a step back and explain the concept on a high-level. The problem statement is: You can mark pages as deferred, but what should be the differentiator? And one (of probably many) solutions is to take the data of your analytics tool via their API and use that to mark the pages.
 
 So in short:
 
@@ -409,7 +409,7 @@ You can check if it worked by looking at the build output at the end of `gatsby 
 
 So as expected, the index page is SSG, and three posts are marked as DSG (and the correct ones). Great! 🎉 Time to see in action on Gatsby Cloud. Commit your changes and push it to trigger a build on Gatsby Cloud (if you work on a feature branch you'll need to open a PR to trigger a build).
 
-Go to some pages that you now should be marked as deferred. The first request might take a bit longer, after that the requests to other DSG pages should be fast.
+Go to some pages that are marked as deferred. The first request might take a bit longer, after that the requests to other DSG pages should be fast.
 
 You can also see it working in Gatsby Cloud directly. For this, go to the detailed view of a build and go to the _SSR logs_ tab. There you'll see each invocation of a DSG/SSR page.
 
