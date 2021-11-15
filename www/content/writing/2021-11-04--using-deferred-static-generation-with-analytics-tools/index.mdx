@@ -40,7 +40,7 @@ So in short:
 
 ## Adding Analytics to Your Site
 
-**Already have your analytics tool set up in your site? Then you can skip this step.**
+**Already have your analytics tool set up on your site? Then you can skip this step.**
 
 Use [gatsby-plugin-plausible](https://www.gatsbyjs.com/plugins/gatsby-plugin-plausible/) to add the necessary tracking script to your site.
 
@@ -97,7 +97,7 @@ No problem! Part 1 of the official Gatsby tutorial has you covered. The guide [C
 
 So you've added analytics to your site, gathered some data, and deployed the site to Gatsby Cloud. The Plausible dashboard might look something like this:
 
-![Overview of the Plausible Dashboard. Below the navigation with the logo, a big line chart shows the number of visitors over the timespan of 30 days. Additional information also shows the count of unique visitors, total pageviews, bounce rate, and visit duration. Below the line chart there are two boxes named "Top Sources" and "Top Pages". The "Top Pages" box lists and sorts the pages by visitors count. It shows that the "/", "/another-popular-post", "/super-popular-post" are the top 3 posts.](./plausible-dashboard.jpg)
+![Overview of the Plausible Dashboard. Below the navigation with the logo, a big line chart shows the number of visitors over the timespan of 30 days. Additional information also shows the count of unique visitors, total pageviews, bounce rate, and visit duration. Below the line chart there are two boxes named "Top Sources" and "Top Pages". The "Top Pages" box lists and sorts the pages by visitor count. It shows that the "/", "/another-popular-post", "/super-popular-post" are the top 3 posts.](./plausible-dashboard.jpg)
 
 The information from the _Top Pages_ box is what you'll need to access. And you can do that through Plausible's API. The [Stats API Reference documentation](https://plausible.io/docs/stats-api) explains how and we'll get back to the details there later. But first, go to [plausible.io/settings](https://plausible.io/settings) and obtain an API key. Save it inside an `.env` file in the root of your project with `PLAUSIBLE_API_KEY=your-key`.
 
