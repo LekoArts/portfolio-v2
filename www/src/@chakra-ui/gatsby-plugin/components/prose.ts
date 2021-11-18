@@ -901,7 +901,7 @@ const Prose = {
         scrollbarWidth: `thin`,
         scrollbarColor: mode(`blueGray.400 blueGray.200`, `blueGray.400 blueGray.700`)(props),
         "::-webkit-scrollbar": {
-          width: `12px`,
+          width: `14px`,
         },
         "::-webkit-scrollbar-track": {
           backgroundColor: mode(`blueGray.200`, `blueGray.700`)(props),
