@@ -2,7 +2,7 @@
 title: "Tips & Tricks for Gatsby"
 subtitle: ""
 date: 2019-03-02
-lastUpdated: 2021-05-01
+lastUpdated: 2021-11-18
 description: "A collection of short, but useful quick tips shared by me and the community about Gatsby. From GraphQL over local development to deployment."
 type: "tutorial"
 category: "Gatsby"
@@ -13,14 +13,6 @@ published: true
 For some time now I've been trying to publish quick tips about Gatsby on Twitter, because the community loves such short, useful tips. Accordingly, I had already created a [Twitter moment](https://twitter.com/i/moments/1024936211444576258) back then -- but why only content from me? On January 6th of this year I also called the community to share their quick tips (with great success). As promised, this blogpost is supposed to be a collection of these (and other) tips. You can also tag me on [Twitter](https://twitter.com/lekoarts_de) if you want to add your tip to the moment!
 
 Some tips are also accompanied by [CodeSandbox](https://codesandbox.io) examples.
-
-<Alert status="info" title="Tweet's contents">
-
-Most tips on Twitter are code examples embedded in an image. For a blog post it wouldn't make much sense to display
-images instead of copy-able code -- therefore the tweets are not embedded here, but the authors are quoted
-differently. If you are the author of one of these tweets and disagree, please contact me. Thanks a lot!
-
-</Alert>
 
 ## Date of last Build
 
@@ -143,7 +135,7 @@ export const query = graphql`
 `
 ```
 
-## Gatsby's reporter API
+## Gatsby's `reporter` API
 
 You can not only use async/await in `gatsby-node.js` but also use Gatsby's reporter API. Use this to throw errors. You should use `panicOnBuild` to only stop the process on `gatsby build` (so that you can debug it with GraphiQL).
 
@@ -384,6 +376,35 @@ exports.onCreateNode = async ({
   }
 }
 ```
+
+## Analyse your Bundle Sizes
+
+Don't know exactly why some of your pages load slowly? No problem, you can use [gatsby-plugin-webpack-bundle-analyser-v2](https://github.com/JimmyBeldone/gatsby-plugin-webpack-bundle-analyser-v2) to find the culprits.
+
+After installation and setup you'll see a visual representation of all your bundles.
+
+```shell
+npm install gatsby-plugin-webpack-bundle-analyser-v2 -D
+```
+
+And in your `gatsby-config.js`:
+
+```js title=gatsby-config.js
+module.exports = {
+  plugins: ["gatsby-plugin-webpack-bundle-analyser-v2"],
+}
+```
+
+Once you run a `gatsby build` at the end of a build (locally) the browser will open with the bundle analyser.
+
+## More tips!
+
+You can read more posts about Gatsby in my [Digital Garden](/garden?tags=Gatsby) or in the [Gatsby writing category](/gatsby). Some highlights:
+
+- [Using Deferred Static Generation with Analytics Tools](/gatsby/using-deferred-static-generation-with-analytics-tools)
+- [Filter Future Posts on a Gatsby Blog](/garden/filter-future-posts-on-a-gatsby-blog)
+- [Adding Support for Multiple Authors in Gatsby](/garden/adding-support-for-multiple-authors-in-gatsby)
+- [Adding a Draft Feature to Gatsby](/garden/adding-a-draft-feature-to-gatsby)
 
 ## Your tips?
 
