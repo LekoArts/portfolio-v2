@@ -1,7 +1,7 @@
 ---
 title: "Smooth Shadows for Images using their Dominant Color"
 date: 2021-07-28
-lastUpdated: 2021-09-11
+lastUpdated: 2021-11-22
 icon: "gatsby"
 tags:
   - Gatsby
@@ -217,3 +217,59 @@ If you want to practise some skills you have and/or go beyond this little guide,
 - Change `generateShadow` to take in the generated shadow from [Smooth Shadow](https://shadows.brumm.af/) and replace the _rgb_ with the `color` param
 - [@brumm](https://twitter.com/funkensturm) has pointed out to me on [Twitter](https://twitter.com/funkensturm/status/1435993413271367681) that you can also use [eaze](https://www.npmjs.com/package/eaze) to programmatically create the shadow easing values
 - Use the developer tools inside your browser, go to the "Sources" tab and browse the source code of [Smooth Shadow](https://shadows.brumm.af/) to reverse engineer the functions so that `generateShadow` can take the same params as the webpage
+
+### Shadow Palette Generator
+
+Josh W. Comeau [introduced his "Shadow Palette Generator"](https://www.joshwcomeau.com/css/introducing-shadow-palette-generator/) (you can play with it [here](https://www.joshwcomeau.com/shadow-palette/)) and you can use it for image shadows, too, of course!
+
+His generator outputs CSS Custom Properties which you can use in your `boxShadow`. Instead of creating a `generateShadow` function you'll only need to convert the dominant color to HSL.
+
+Your page might look something like this then:
+
+```jsx title=src/pages/index.js
+import React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { parseToHsl } from "polished"
+
+const ELEVATIONS = {
+  high: `0px 0.8px 0.8px hsl(var(--shadow-color) / 0.94),
+    0.1px 14.4px 15.1px -1.5px hsl(var(--shadow-color) / 0.84),
+    0.3px 68.7px 72.1px -3px hsl(var(--shadow-color) / 0.73)`,
+}
+
+export default function Home({ data }) {
+  return (
+    <main>
+      <h1>Images with Dominant Color Smooth Shadows</h1>
+      <div>
+        {data.images.nodes.map((image) => {
+          const color = parseToHsl(image.gatsbyImageData.backgroundColor)
+
+          return (
+            <GatsbyImage
+              alt=""
+              image={getImage(image)}
+              style={{
+                "--shadow-color": `${color.hue} ${color.satuation} ${color.lightness}`,
+                "--shadow-elevation-high": ELEVATIONS.high,
+                boxShadow: `var(--shadow-elevation-high)`,
+              }}
+            />
+          )
+        })}
+      </div>
+    </main>
+  )
+}
+
+export const query = graphql`
+  {
+    images: allImageSharp {
+      nodes {
+        gatsbyImageData(quality: 90, width: 800, placeholder: DOMINANT_COLOR)
+      }
+    }
+  }
+`
+```
