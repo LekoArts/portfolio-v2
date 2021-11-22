@@ -1,8 +1,12 @@
 import { ThemeOverride } from "@chakra-ui/react"
 import { mode } from "@chakra-ui/theme-tools"
+import sizes from "./foundations/sizes"
 
 const styles: ThemeOverride["styles"] = {
   global: (props) => ({
+    html: {
+      scrollPaddingTop: `calc(${sizes.navigationHeight} + 1rem)`,
+    },
     body: {
       bg: mode(`brand.bg`, `brand.dark.bg`)(props),
       color: mode(`brand.text`, `brand.dark.text`)(props),
