@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): any => {
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): void => {
   const { createTypes, createFieldExtension } = actions
 
   const getFieldValue = (fieldName, source) => get(source, fieldName)
@@ -39,7 +37,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     },
   })
 
-  createTypes(`
+  createTypes(`#graphql
     enum PostTypeEnum {
       prose
       tutorial
@@ -141,7 +139,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
   })
 }
 
-export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentDigest }, themeOptions): any => {
+export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentDigest }, themeOptions): void => {
   const { createNode } = actions
   const defaultOptions = withDefaults(themeOptions)
 
@@ -264,7 +262,7 @@ export const onCreateNode = (
   }
 }
 
-export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArgs): any => {
+export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArgs): void => {
   const resolvers = {
     Query: {
       randomPosts: {
@@ -279,7 +277,7 @@ export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArg
             description: `Input a seed (e.g. the current id of the node) to deterministically retrieve the same nodes on every run`,
           },
         },
-        async resolve(source, args, context) {
+        async resolve(_source, args, context) {
           const { count = 2, seed } = args || {}
           const rng = new Prando(seed)
           const s = rng.next()
