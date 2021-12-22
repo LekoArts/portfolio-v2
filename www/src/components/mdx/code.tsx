@@ -36,7 +36,13 @@ export const Code = ({
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <div className="code-block-wrapper">
           {(title || language) && (
-            <Stack direction="row" spacing={2} justifyContent="flex-end" className="gatsby-highlight-header">
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              justifyContent="flex-end"
+              className="gatsby-highlight-header"
+            >
               {title && (
                 <Box flexGrow={1} className="code-title">
                   {title}
