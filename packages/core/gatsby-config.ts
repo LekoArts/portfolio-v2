@@ -50,7 +50,6 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
           fetchOptions: {},
         },
       },
-      `gatsby-remark-images`,
       mdx && {
         resolve: `gatsby-plugin-mdx`,
         options: {

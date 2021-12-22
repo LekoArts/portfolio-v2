@@ -1,0 +1,89 @@
+---
+title: "Using Package Exports to Define Multiple Entrypoints"
+date: 2021-12-22
+lastUpdated: 2021-12-22
+icon: "javascript"
+tags:
+  - JavaScript
+  - Tooling
+---
+
+At work I was recently faced with this error and I was a bit clueless at first what it could be:
+
+```shell
+ModuleParseError: Module parse failed: Unexpected character ''
+```
+
+A colleague mentioned that they also have seen it while doing some work on ES Modules (ESM). So what was the cause of this error and how did I solve it? TL;DR: Use `exports` in `package.json`.
+
+## Setup
+
+So in short, the setup was as following:
+
+- Package `frontend` imported a helper function from package `utils`. `frontend` is used in client-side code, e.g. React
+- Package `utils` contains a couple of helper functions, both with and without 3rd-party dependencies. It is written in TypeScript and the output is compiled into a `dist` folder at the root of the package.
+- `webpack` is used for `frontend` to bundle all code
+
+The file inside `frontend` imports it like this:
+
+```js title=frontend/src/link.js
+import { convertPath } from "utils"
+
+export const linkHelper = (input) => {
+  return convertPath(input)
+}
+```
+
+The `utils` package contains multiple files, for example two files:
+
+```ts title=utils/src/convert-path.ts
+export const convertPath = (path: string) => path.toUpperCase()
+```
+
+```ts title=utils/src/watch.ts
+import * as path from "path"
+import * as chokidar from "chokidar"
+
+export const getDirname = (path: string) => path.dirname(path)
+export const watchDir = (path: string, glob: string) => {
+  return new Promise((resolve) => {
+    chokidar.watch(glob, { cwd: path }).on("ready", () => resolve())
+  })
+}
+```
+
+Those get exported in an `index.ts` file:
+
+```ts title=utils/src/index.ts
+export { convertPath } from "./path"
+export { getDirname, watchDir } from "./watch"
+```
+
+And referenced in the `main` field of `package.json with `"main": "dist/index.js"`.
+
+## Solution
+
+The problem with this setup is that `webpack` (or probably any other bundler) has problems tree-shaking the Node.js and `chokidar` bits from `utils` when you only import `convertPath` in the `frontend` package. This is why one sees the error mentioned at the beginning.
+
+But ESM and/or `exports` in `package.json` can come to the rescue here! Node.js itself has extensive documentation about [Package entry points](https://nodejs.org/api/packages.html#package-entry-points) so for the sake of this small post here's just the solution on how to fix the problem for the given example.
+
+First, add the `exports` to utils:
+
+```json title=utils/package.json
+"exports": {
+  ".": "./dist/index.js",
+  "./*": "./dist/*.js"
+}
+```
+
+This enables the change in this second step:
+
+```js title=frontend/src/link.js {1}
+import { convertPath } from "utils/convert-path"
+
+export const linkHelper = (input) => {
+  return convertPath(input)
+}
+```
+
+Notice the different import for `convertPath`? This is a new entrypoint you can use the ignore all the stuff that you don't need. Awesome!
