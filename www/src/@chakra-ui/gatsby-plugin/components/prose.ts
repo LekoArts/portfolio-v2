@@ -720,6 +720,7 @@ const Prose = {
       fontSize: em(14, 16),
       lineHeight: round(20 / 14),
       marginTop: em(12, 14),
+      textAlign: `center`,
     },
     code: {
       color: mode(`gray.900`, `gray.100`)(props),
@@ -813,6 +814,7 @@ const Prose = {
     video: {
       marginTop: em(32, 16),
       marginBottom: em(32, 16),
+      borderRadius: `lg`,
     },
     figure: {
       marginTop: em(32, 16),
