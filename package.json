@@ -19,7 +19,7 @@
     "lint": "eslint . --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx,.js",
     "lint:fix": "yarn lint --fix",
     "format": "prettier \"**/*.{md,mdx,json,yaml}\" --write",
-    "new-post": "ts-node packages/scripts/new-post.ts",
+    "new-post": "./scripts/target/release/post",
     "new-garden": "./scripts/target/release/garden",
     "prepare": "husky install",
     "test": "jest",

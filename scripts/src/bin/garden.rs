@@ -1,95 +1,89 @@
-use chrono::{DateTime, Local};
-use color_eyre::Result;
+use color_eyre::{eyre::eyre, Result};
 use dialoguer::{theme::ColorfulTheme, Confirm, Input, MultiSelect, Select};
-use std::fs;
+use scripts::{get_current_date, get_file_info, ContentType};
+use serde::Serialize;
+use std::{fs, path::PathBuf};
+
+const TAGS_CHOICES: [&str; 12] = [
+    "CLI",
+    "Disord",
+    "elitepvpers",
+    "Freebie",
+    "Gatsby",
+    "General",
+    "JavaScript",
+    "MDX",
+    "Python",
+    "React",
+    "Tooling",
+    "TypeScript",
+];
+
+const ICON_CHOICES: [&str; 10] = [
+    "cli",
+    "discord",
+    "elitepvpers",
+    "gatsby",
+    "general",
+    "javascript",
+    "mdx",
+    "python",
+    "react",
+    "typescript",
+];
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct Frontmatter {
+    title: String,
+    date: String,
+    last_updated: String,
+    icon: String,
+    tags: Vec<String>,
+}
 
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let tags_choices = [
-        "CLI",
-        "Disord",
-        "elitepvpers",
-        "Freebie",
-        "Gatsby",
-        "General",
-        "JavaScript",
-        "MDX",
-        "Python",
-        "React",
-        "Tooling",
-        "TypeScript",
-    ];
-
-    let icon_choices = [
-        "cli",
-        "discord",
-        "elitepvpers",
-        "gatsby",
-        "general",
-        "javascript",
-        "mdx",
-        "python",
-        "react",
-        "typescript",
-    ];
-
     let theme = ColorfulTheme::default();
-
-    let now: DateTime<Local> = Local::now();
-    let current_date = now.format("%Y-%m-%d");
-    let cwd = std::env::current_dir().unwrap();
-    let current_dir = String::from(cwd.to_string_lossy());
+    let current_date = get_current_date();
 
     let title: String = Input::with_theme(&theme)
         .with_prompt("Title")
-        .interact_text()
-        .unwrap();
+        .interact_text()?;
+
     let date: String = Input::with_theme(&theme)
         .with_prompt("Date")
         .default(current_date.to_string())
-        .interact_text()
-        .unwrap();
-    let last_updated = &date;
+        .interact_text()?;
+
     let slug = slug::slugify(&title);
-    // Returns indexes of selected values
+
     let tags = MultiSelect::with_theme(&theme)
         .with_prompt("Choose your tags")
-        .items(&tags_choices)
-        .interact()
-        .unwrap();
-    // Returns index of selected value
+        .items(&TAGS_CHOICES)
+        .interact()?
+        .into_iter()
+        .map(|tag_index| TAGS_CHOICES[tag_index]);
+
     let icon = Select::with_theme(&theme)
         .with_prompt("Pick an icon")
-        .items(&icon_choices)
+        .items(&ICON_CHOICES)
         .interact()
-        .unwrap();
+        .map(|choice| ICON_CHOICES[choice])?;
 
-    let filename = format!("{}--{}", current_date.to_string(), slug);
-    let directory_path = format!("{}/www/content/garden/{}", current_dir, filename);
-    let filepath = format!("{}/index.mdx", directory_path);
+    let (directory_path, filepath, filename): (PathBuf, PathBuf, String) =
+        get_file_info(current_date.to_string(), slug, ContentType::Garden)?;
 
-    let mut tags_frontmatter = String::new();
-    for tag in tags {
-        let line = format!("\n  - {}", tags_choices[tag]);
-        tags_frontmatter.push_str(&line);
-    }
-
-    let frontmatter = format!(
-        r#"---
-title: "{}"
-date: {}
-lastUpdated: {}
-icon: "{}"
-tags: {}
----
-    "#,
+    let fm = Frontmatter {
         title,
-        current_date.to_string(),
-        last_updated,
-        icon_choices[icon],
-        &tags_frontmatter
-    );
+        date,
+        last_updated: current_date.to_string(),
+        icon: icon.to_string(),
+        tags: tags.map(|s| s.to_string()).collect::<Vec<String>>(),
+    };
+
+    let frontmatter = format!("{}---", serde_yaml::to_string(&fm)?);
 
     println!(
         r#"
@@ -104,14 +98,13 @@ The file "{}" will be created with:
         .with_prompt("Do you want to continue?")
         .interact()?
     {
-        println!("Aborting...");
-        return Ok(());
+        return Err(eyre!("Aborting..."));
     }
 
-    fs::create_dir_all(directory_path).unwrap();
-    fs::write(&filepath, frontmatter).unwrap();
+    fs::create_dir_all(directory_path)?;
+    fs::write(&filepath, frontmatter)?;
 
-    println!("Successfully created {}", &filepath);
+    println!("Successfully created {}", filepath.display());
 
     Ok(())
 }
