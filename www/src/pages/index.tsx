@@ -87,7 +87,6 @@ const openSourceRepos = [
 ]
 
 const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
-  const primaryRepoBg = useColorModeValue(`brand.primaryBg`, `brand.dark.primaryBg`)
   const secondaryRepoBg = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const shouldReduceMotion = usePrefersReducedMotion()
   const [firstPost, ...rest] = data.posts.nodes
@@ -269,7 +268,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`1fr`, null, null, `2fr 1fr`]} gap={6}>
-                <Box bg={primaryRepoBg} color="#e7f1ff" p={6} borderRadius="lg">
+                <Box bg="primaryBg" color="#e7f1ff" p={6} borderRadius="lg">
                   <Flex flexDirection="row" justifyContent="space-between" mb={6}>
                     <ChakraLink
                       fontSize={[`lg`, null, null, null, `1.3125rem`]}

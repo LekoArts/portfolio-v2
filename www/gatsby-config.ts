@@ -144,7 +144,11 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
-        allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
+        allPageHeaders: [`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`],
+        headers: {
+          "/fonts/*": [`Cache-Control: public,max-age=31536000,s-maxage=31536000,immutable`],
+        },
+        transformHeaders: (headers) => headers.filter((header) => !header.includes(`as=script`)),
       },
     },
     shouldAnalyseBundle && {

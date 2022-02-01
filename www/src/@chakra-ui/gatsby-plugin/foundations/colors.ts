@@ -1,6 +1,4 @@
-import { transparentize } from "@chakra-ui/theme-tools"
-
-const colorPalette = {
+export const colorPalette = {
   colors: {
     black: `#000`,
     white: `#fff`,
@@ -276,52 +274,12 @@ const colorPalette = {
   },
 }
 
-const navBgTransparency = 0.85
-
-const colors = {
+export const colors = {
   brand: {
-    primary: colorPalette.colors.blue[`600`],
-    primaryAlpha: transparentize(`blueGray.400`, 0.25)(colorPalette),
-    primaryBg: colorPalette.colors.blue[`600`],
-    primaryHover: colorPalette.colors.blue[`700`],
-    text: colorPalette.colors.blueGray[`800`],
-    textMuted: colorPalette.colors.blueGray[`700`],
-    textEmphasized: colorPalette.colors.blue[`600`],
-    proseText: colorPalette.colors.gray[`700`],
-    proseLink: colorPalette.colors.gray[`900`],
-    proseLinkDecoration: colorPalette.colors.gray[`300`],
-    blueLinkDecoration: colorPalette.colors.blue[`300`],
-    orangeLinkDecoration: colorPalette.colors.orange[`300`],
-    greenLinkDecoration: colorPalette.colors.green[`400`],
-    redLinkDecoration: colorPalette.colors.red[`300`],
-    heading: colorPalette.colors.black,
     bg: colorPalette.colors.white,
-    bgAlpha: transparentize(`white`, navBgTransparency)(colorPalette),
-    cardBg: colorPalette.colors.white,
-    cardSubheading: colorPalette.colors.blueGray[`700`],
     dark: {
-      primary: colorPalette.colors.orange[`600`],
-      primaryAlpha: transparentize(`blueGray.400`, 0.25)(colorPalette),
-      primaryBg: colorPalette.colors.blue[`900`],
-      primaryHover: colorPalette.colors.orange[`700`],
-      text: colorPalette.colors.blueGray[`300`],
-      textMuted: colorPalette.colors.blueGray[`400`],
-      textEmphasized: colorPalette.colors.orange[`500`],
-      proseText: colorPalette.colors.gray[`300`],
-      proseLink: colorPalette.colors.gray[`100`],
-      proseLinkDecoration: colorPalette.colors.gray[`500`],
-      blueLinkDecoration: colorPalette.colors.blue[`500`],
-      orangeLinkDecoration: colorPalette.colors.orange[`400`],
-      greenLinkDecoration: colorPalette.colors.green[`500`],
-      redLinkDecoration: colorPalette.colors.red[`500`],
-      heading: colorPalette.colors.white,
       bg: colorPalette.colors.blueGray[`900`],
-      bgAlpha: transparentize(`blueGray.900`, navBgTransparency)(colorPalette),
-      cardBg: colorPalette.colors.blueGray[`800`],
-      cardSubheading: colorPalette.colors.blueGray[`400`],
     },
   },
   ...colorPalette.colors,
 }
-
-export default colors

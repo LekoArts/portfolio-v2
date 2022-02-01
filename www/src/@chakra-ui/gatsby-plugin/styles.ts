@@ -7,8 +7,8 @@ const styles = {
       scrollPaddingTop: `calc(${sizes.navigationHeight} + 1rem)`,
     },
     body: {
-      bg: mode(`brand.bg`, `brand.dark.bg`)(props),
-      color: mode(`brand.text`, `brand.dark.text`)(props),
+      bg: `bg`,
+      color: `text`,
       scrollbarWidth: `thin`,
       scrollbarColor: mode(`blueGray.400 blueGray.200`, `blueGray.400 blueGray.700`)(props),
       "::-webkit-scrollbar": {
