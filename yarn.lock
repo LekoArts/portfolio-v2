@@ -7423,11 +7423,6 @@ gatsby-link@^4.3.0:
     "@types/reach__router" "^1.3.9"
     prop-types "^15.7.2"
 
-gatsby-omni-font-loader@^1.3.1:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/gatsby-omni-font-loader/-/gatsby-omni-font-loader-1.3.3.tgz#b1c1cfa5d402ba47c06863f3dee71cae3d343ef4"
-  integrity sha512-ZCxn0ezI/SIavYuhRPDWMMmA97juvwluro+WPxRm9fS/srp1Y1sRj6Msc42Ikxagws19n0FWY3zLAtp5f7UDWA==
-
 gatsby-page-utils@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/gatsby-page-utils/-/gatsby-page-utils-2.3.0.tgz#9df5c50a61bbf183fd04b844366af81a31f518c2"
