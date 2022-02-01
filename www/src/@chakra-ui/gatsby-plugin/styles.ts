@@ -1,8 +1,7 @@
-import { ThemeOverride } from "@chakra-ui/react"
 import { mode } from "@chakra-ui/theme-tools"
 import sizes from "./foundations/sizes"
 
-const styles: ThemeOverride["styles"] = {
+const styles = {
   global: (props) => ({
     html: {
       scrollPaddingTop: `calc(${sizes.navigationHeight} + 1rem)`,
