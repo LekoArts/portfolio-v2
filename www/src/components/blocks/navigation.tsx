@@ -12,7 +12,7 @@ const Toggle: React.FC = () => {
     <IconButton
       aria-label={isLight ? `Activate Dark Mode` : `Activate Light Mode`}
       variant="ghost"
-      color={isLight ? `brand.textMuted` : `brand.dark.textMuted`}
+      color="textMuted"
       _hover={{ color: isLight ? `black` : `white` }}
       icon={isLight ? <Moon /> : <Sun fontSize="1.25rem" />}
       onClick={toggleColorMode}

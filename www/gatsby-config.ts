@@ -144,7 +144,9 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
-        allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
+        headers: {
+          "/fonts/*": [`Cache-Control: public,max-age=31536000,s-maxage=31536000,immutable`],
+        },
       },
     },
     shouldAnalyseBundle && {

@@ -72,7 +72,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
   const prefersReducedMotion = usePrefersReducedMotion()
   const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
-  const prominentLink = useColorModeValue(`brand.heading`, `brand.dark.heading`)
 
   return (
     <Layout>
@@ -86,7 +85,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
         <Container py={space.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
           <Text textStyle="prominent">
-            <Link to="/garden/what-is-a-digital-garden" color={prominentLink}>
+            <Link to="/garden/what-is-a-digital-garden" color="heading">
               What is a Digital Garden?
             </Link>
             {` `}
