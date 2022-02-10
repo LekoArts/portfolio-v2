@@ -1,0 +1,37 @@
+---
+title: Cleaning Up Stale Branches
+date: 2022-02-10
+lastUpdated: 2022-02-10
+icon: cli
+tags:
+  - CLI
+---
+
+If you're like me and constantly working with either own branches or branches from colleagues of a remote repository, you'll also probably feel the "pain" of having stale branches locally. The ones that are left over after the branch is merged on the remote repository and deleted. For the longest time I've been manually deleting the branches using the UI inside my IDE.
+
+Some months ago I said to myself: This needs to be automated! And of course, after a short period of searching the internet I've found [git-removed-branches](https://github.com/nemisj/git-removed-branches) which exactly does what it says on the box:
+
+> List or remove local tracked branches, which are deleted from the remote.
+
+Here's how I use it.
+
+First, I list the branches by running:
+
+```shell
+npx git-removed-branches
+```
+
+If you have stale local branches it'll print:
+
+```shell
+Found removed branches:
+  - branch-name
+```
+
+When you're happy with that selection (always double check!) you can run:
+
+```shell
+npx git-removed-branches --prune
+```
+
+And that's really it! This definitely saves me some time while developing on a big repository with many other people.
