@@ -15,6 +15,7 @@ const gatsbyConfig: GatsbyConfig = {
     siteImage: site.image,
     twitter: site.twitter,
   },
+  trailingSlash: `never`,
   plugins: [
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
