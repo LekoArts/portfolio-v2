@@ -64,7 +64,7 @@ const gatsbyConfig: GatsbyConfig = {
           `/privacy-policy`,
           `/legal-notice`,
         ],
-        query: `
+        query: `#graphql
         {
           posts: allPost(filter: { published: { eq: true } } ) {
             nodes {
@@ -96,7 +96,7 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-feed`,
       options: {
-        query: `
+        query: `#graphql
         {
           site {
             siteMetadata {
@@ -110,7 +110,7 @@ const gatsbyConfig: GatsbyConfig = {
         `,
         feeds: [
           {
-            query: `
+            query: `#graphql
             {
               allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
                 nodes {
