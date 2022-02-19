@@ -1,13 +1,12 @@
-import { mode } from "@chakra-ui/theme-tools"
 import { headingBaseStyles } from "../custom/typography"
 
 const Heading = {
   defaultProps: {},
-  baseStyle: (props) => ({
+  baseStyle: {
     fontFamily: `heading`,
     fontWeight: `bold`,
-    color: mode(`brand.heading`, `brand.dark.heading`)(props),
-  }),
+    color: `heading`,
+  },
   sizes: {
     "4xl": {
       fontSize: `4xl`,

@@ -1,11 +1,10 @@
 import * as React from "react"
-import { chakra, useColorModeValue } from "@chakra-ui/react"
+import { chakra } from "@chakra-ui/react"
 
 const defaultId = `skip-to-content`
 
 const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to content`, contentId, ...props }) => {
   const id = contentId || defaultId
-  const background = useColorModeValue(`brand.bg`, `brand.dark.bg`)
 
   return (
     <chakra.a
@@ -22,7 +21,7 @@ const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to con
         position: `fixed`,
         top: `10px`,
         left: `10px`,
-        background,
+        background: `bg`,
         zIndex: `skipLink`,
         width: `auto`,
         height: `auto`,

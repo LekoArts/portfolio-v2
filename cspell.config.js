@@ -55,6 +55,9 @@ module.exports = {
     `gtag`,
     `walkthrough`,
     `pageviews`,
+    `preconnect`,
+    `pageview`,
+    `Entrypoints`,
   ],
   flagWords: [`hte`, `Gastby`],
 }

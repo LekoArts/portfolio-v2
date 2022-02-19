@@ -593,15 +593,12 @@ const xlVariant = {
 
 const Prose = {
   baseStyle: (props) => ({
-    color: mode(`brand.proseText`, `brand.dark.proseText`)(props),
+    color: `proseText`,
     a: {
-      color: mode(`brand.proseLink`, `brand.dark.proseLink`)(props),
+      color: `proseLink`,
       fontWeight: `500`,
       textDecoration: `underline`,
-      textDecorationColor: mode(
-        `var(--chakra-colors-brand-proseLinkDecoration)`,
-        `var(--chakra-colors-brand-dark-proseLinkDecoration)`
-      )(props),
+      textDecorationColor: `proseLinkDecoration`,
       "&:hover": {
         textDecoration: `none`,
       },
@@ -612,7 +609,8 @@ const Prose = {
     },
     em: {
       fontWeight: `500`,
-      color: mode(`brand.textEmphasized`, `brand.dark.textEmphasized`)(props),
+      color: `textEmphasized`,
+      fontStyle: `normal`,
     },
     "figure img, img": {
       borderRadius: `lg`,
@@ -679,7 +677,7 @@ const Prose = {
       content: `close-quote`,
     },
     h1: {
-      color: mode(`brand.heading`, `brand.dark.heading`)(props),
+      color: `heading`,
       fontWeight: `700`,
       fontFamily: `heading`,
       letterSpacing: `wide`,
@@ -689,7 +687,7 @@ const Prose = {
       lineHeight: round(40 / 36),
     },
     h2: {
-      color: mode(`brand.heading`, `brand.dark.heading`)(props),
+      color: `heading`,
       fontWeight: `700`,
       fontFamily: `heading`,
       fontSize: em(28, 16), // Changed from 24
@@ -698,7 +696,7 @@ const Prose = {
       lineHeight: round(32 / 24),
     },
     h3: {
-      color: mode(`brand.heading`, `brand.dark.heading`)(props),
+      color: `heading`,
       fontWeight: `600`,
       fontFamily: `heading`,
       fontSize: em(24, 16), // Changed from 20
@@ -707,7 +705,7 @@ const Prose = {
       lineHeight: round(32 / 20),
     },
     h4: {
-      color: mode(`brand.heading`, `brand.dark.heading`)(props),
+      color: `heading`,
       fontWeight: `600`,
       fontFamily: `heading`,
       fontSize: em(20, 16),
@@ -727,7 +725,7 @@ const Prose = {
       fontWeight: `medium`,
       fontSize: em(14, 16),
       fontFamily: `mono`,
-      bg: mode(`brand.primaryAlpha`, `brand.dark.primaryAlpha`)(props),
+      bg: `primaryAlpha`,
       px: `2`,
       py: `1`,
       borderRadius: `base`,
@@ -1080,34 +1078,22 @@ const Prose = {
       },
       "&[data-status='info']": {
         a: {
-          textDecorationColor: mode(
-            `var(--chakra-colors-brand-blueLinkDecoration)`,
-            `var(--chakra-colors-brand-dark-blueLinkDecoration)`
-          )(props),
+          textDecorationColor: `blueLinkDecoration`,
         },
       },
       "&[data-status='warning']": {
         a: {
-          textDecorationColor: mode(
-            `var(--chakra-colors-brand-orangeLinkDecoration)`,
-            `var(--chakra-colors-brand-dark-orangeLinkDecoration)`
-          )(props),
+          textDecorationColor: `orangeLinkDecoration`,
         },
       },
       "&[data-status='success']": {
         a: {
-          textDecorationColor: mode(
-            `var(--chakra-colors-brand-greenLinkDecoration)`,
-            `var(--chakra-colors-brand-dark-greenLinkDecoration)`
-          )(props),
+          textDecorationColor: `greenLinkDecoration`,
         },
       },
       "&[data-status='error']": {
         a: {
-          textDecorationColor: mode(
-            `var(--chakra-colors-brand-redLinkDecoration)`,
-            `var(--chakra-colors-brand-dark-redLinkDecoration)`
-          )(props),
+          textDecorationColor: `redLinkDecoration`,
         },
       },
     },
@@ -1128,10 +1114,7 @@ const Prose = {
         mb: 0,
       },
       a: {
-        textDecorationColor: mode(
-          `var(--chakra-colors-brand-blueLinkDecoration)`,
-          `var(--chakra-colors-brand-dark-blueLinkDecoration)`
-        )(props),
+        textDecorationColor: `blueLinkDecoration`,
       },
     },
   }),

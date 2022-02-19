@@ -16,26 +16,26 @@ const Button = {
     },
   },
   variants: {
-    primary: (props) => ({
-      bg: mode(`brand.primary`, `brand.dark.primary`)(props),
+    primary: {
+      bg: `primary`,
       color: `white`,
       _hover: {
-        bg: mode(`brand.primaryHover`, `brand.dark.primaryHover`)(props),
+        bg: `primaryHover`,
         _disabled: {
-          bg: `brand.primary`,
+          bg: `primary`,
         },
       },
-      _active: { bg: mode(`brand.primaryHover`, `brand.dark.primaryHover`)(props) },
-    }),
+      _active: { bg: `primaryHover` },
+    },
     outline: (props) => ({
       color: mode(`text`, `white`)(props),
       bg: `transparent`,
       borderStyle: `solid`,
-      borderColor: mode(`brand.primary`, `brand.dark.primary`)(props),
+      borderColor: `primary`,
       borderWidth: `1px`,
       _hover: {
         color: `white`,
-        bg: mode(`brand.primary`, `brand.dark.primary`)(props),
+        bg: `primary`,
       },
     }),
   },

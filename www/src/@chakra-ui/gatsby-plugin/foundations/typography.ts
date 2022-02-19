@@ -1,21 +1,21 @@
 import { ThemeOverride } from "@chakra-ui/react"
 import { headingBaseStyles } from "../custom/typography"
 
-const fontWeights: ThemeOverride["fontWeights"] = {
+export const fontWeights: ThemeOverride["fontWeights"] = {
   normal: 400,
   medium: 500,
   semibold: 600,
   bold: 700,
 }
 
-const fonts: ThemeOverride["fonts"] = {
+export const fonts: ThemeOverride["fonts"] = {
   heading: `'Crimson Pro', ui-serif, Cambria, "Times New Roman", Times, serif`,
   body: `'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
   mono: `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
 }
 
 // 1.250 Major Third Type Scale
-const fontSizes: ThemeOverride["fontSizes"] = {
+export const fontSizes: ThemeOverride["fontSizes"] = {
   xs: `0.7rem`,
   sm: `0.875rem`, // 14px
   md: `1rem`,
@@ -30,7 +30,7 @@ const fontSizes: ThemeOverride["fontSizes"] = {
   "8xl": `7.451rem`,
 }
 
-const lineHeights: ThemeOverride["lineHeights"] = {
+export const lineHeights: ThemeOverride["lineHeights"] = {
   normal: `normal`,
   none: 1,
   xs: `1rem`,
@@ -47,7 +47,7 @@ const lineHeights: ThemeOverride["lineHeights"] = {
   "8xl": 1,
 }
 
-const textStyles = {
+export const textStyles = {
   prominent: {
     fontSize: [`md`, null, null, `1.125rem`, `1.3125rem`],
     strong: {
@@ -62,5 +62,3 @@ const textStyles = {
   },
   ...headingBaseStyles,
 }
-
-export { fontWeights, fonts, fontSizes, lineHeights, textStyles }

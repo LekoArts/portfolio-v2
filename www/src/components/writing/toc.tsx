@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, useColorModeValue, Link } from "@chakra-ui/react"
+import { Box, Link } from "@chakra-ui/react"
 import { useActiveHash } from "../../hooks/use-active-hash"
 
 export type TocItem = {
@@ -56,8 +56,6 @@ const renderItems = ({
 )
 
 export const Toc = ({ items }: { items: TocItem[] }) => {
-  const tocHeadingColor = useColorModeValue(`brand.heading`, `brand.dark.heading`)
-  const activeColor = useColorModeValue(`brand.primary`, `brand.dark.primary`)
   const ids = getIds(items)
   const activeItemHash = useActiveHash(ids)
 
@@ -82,7 +80,7 @@ export const Toc = ({ items }: { items: TocItem[] }) => {
       >
         <Box
           as="h2"
-          color={tocHeadingColor}
+          color="heading"
           textTransform="uppercase"
           fontSize={[`14px`, null, null, `1rem`, null, `14px`]}
           fontWeight="medium"
@@ -91,7 +89,7 @@ export const Toc = ({ items }: { items: TocItem[] }) => {
         >
           Table of Contents
         </Box>
-        {renderItems({ items, activeId: activeItemHash, activeColor })}
+        {renderItems({ items, activeId: activeItemHash, activeColor: `primary` })}
       </Box>
     </Box>
   )

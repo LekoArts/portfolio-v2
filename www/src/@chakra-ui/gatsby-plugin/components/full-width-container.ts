@@ -1,5 +1,5 @@
 import { mode } from "@chakra-ui/theme-tools"
-import colors from "../foundations/colors"
+import { colors } from "../foundations/colors"
 import InnerContainerStyles from "./container"
 
 const FullWidthContainer = {
@@ -14,14 +14,14 @@ const FullWidthContainer = {
     },
   },
   variants: {
-    default: (props) => ({
+    default: {
       outer: {
-        bg: mode(`brand.bg`, `brand.dark.bg`)(props),
+        bg: `bg`,
       },
-    }),
+    },
     hero: ({ colorMode }) => {
       const isDarkMode = colorMode === `dark`
-      const topColor = isDarkMode ? colors.brand.dark.bg : colors.brand.bg
+      const topColor = `var(--chakra-colors-bg)`
       const bottomColor = isDarkMode ? colors.blueGray[`950`] : colors.brand.bg
 
       return {
@@ -57,7 +57,7 @@ const FullWidthContainer = {
     },
     navigation: (props) => ({
       outer: {
-        bg: mode(`brand.bgAlpha`, `brand.dark.bgAlpha`)(props),
+        bg: `bgAlpha`,
         backdropFilter: `blur(8px)`,
         position: `fixed`,
         display: `flex`,
@@ -71,7 +71,7 @@ const FullWidthContainer = {
     }),
     navigationWithSub: (props) => ({
       outer: {
-        bg: mode(`brand.bgAlpha`, `brand.dark.bgAlpha`)(props),
+        bg: `bgAlpha`,
         backdropFilter: `blur(8px)`,
         position: `fixed`,
         display: `flex`,

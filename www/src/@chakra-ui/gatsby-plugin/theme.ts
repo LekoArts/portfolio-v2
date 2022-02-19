@@ -5,9 +5,10 @@ import { createBreakpoints } from "@chakra-ui/theme-tools"
 import styles from "./styles"
 
 // Foundational style overrides
-import colors from "./foundations/colors"
+import { colors } from "./foundations/colors"
 import { fontWeights, fonts, fontSizes, lineHeights, textStyles } from "./foundations/typography"
 import sizes from "./foundations/sizes"
+import semanticTokens from "./foundations/semantic-tokens"
 
 // Components overrides & custom
 import Container from "./components/container"
@@ -37,6 +38,7 @@ const theme = extendTheme({
   fontSizes,
   lineHeights,
   textStyles,
+  semanticTokens,
   components: {
     Container,
     FullWidthContainer,

@@ -15,6 +15,7 @@ const gatsbyConfig: GatsbyConfig = {
     siteImage: site.image,
     twitter: site.twitter,
   },
+  trailingSlash: `never`,
   plugins: [
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
@@ -26,25 +27,6 @@ const gatsbyConfig: GatsbyConfig = {
       options: {
         path: `${__dirname}/src/pages`,
         slugify: slugifyOptions,
-      },
-    },
-    {
-      resolve: `gatsby-omni-font-loader`,
-      options: {
-        enableListener: true,
-        preconnect: [`https://fonts.gstatic.com`],
-        interval: 300,
-        timeout: 30000,
-        web: [
-          {
-            name: `Inter`,
-            file: `https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap`,
-          },
-          {
-            name: `Crimson Pro`,
-            file: `https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600..800&display=swap`,
-          },
-        ],
       },
     },
     {
@@ -82,7 +64,7 @@ const gatsbyConfig: GatsbyConfig = {
           `/privacy-policy`,
           `/legal-notice`,
         ],
-        query: `
+        query: `#graphql
         {
           posts: allPost(filter: { published: { eq: true } } ) {
             nodes {
@@ -114,7 +96,7 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-feed`,
       options: {
-        query: `
+        query: `#graphql
         {
           site {
             siteMetadata {
@@ -128,7 +110,7 @@ const gatsbyConfig: GatsbyConfig = {
         `,
         feeds: [
           {
-            query: `
+            query: `#graphql
             {
               allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
                 nodes {
@@ -163,7 +145,11 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
-        allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
+        allPageHeaders: [`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`],
+        headers: {
+          "/fonts/*": [`Cache-Control: public,max-age=31536000,s-maxage=31536000,immutable`],
+        },
+        transformHeaders: (headers) => headers.filter((header) => !header.includes(`as=script`)),
       },
     },
     shouldAnalyseBundle && {
