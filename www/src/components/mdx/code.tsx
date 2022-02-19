@@ -4,7 +4,7 @@ import lightTheme from "prism-react-renderer/themes/nightOwlLight"
 import darkTheme from "prism-react-renderer/themes/nightOwl"
 import { Stack, Box, useColorMode } from "@chakra-ui/react"
 import { Copy } from "./copy"
-import { calculateLinesToHighlight, getLanguage } from "../../utils/code"
+import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
 
 type CodeProps = {
   codeString: string
@@ -22,7 +22,8 @@ export const Code = ({
   metastring = ``,
 }: CodeProps) => {
   const { colorMode } = useColorMode()
-  const language = getLanguage(blockClassName)
+  const originalLanguage = getLanguage(blockClassName)
+  const language = languageOverride(originalLanguage)
   const shouldHighlightLine = calculateLinesToHighlight(metastring)
   const hasLineNumbers = withLineNumbers && language !== `withLineNumbers`
 
@@ -35,7 +36,7 @@ export const Code = ({
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <div className="code-block-wrapper">
-          {(title || language) && (
+          {(title || originalLanguage) && (
             <Stack
               direction="row"
               spacing={2}
@@ -48,15 +49,15 @@ export const Code = ({
                   {title}
                 </Box>
               )}
-              {language && (
+              {originalLanguage && (
                 <Box
                   textTransform="uppercase"
                   display="inline-flex"
                   alignItems="center"
                   className="language-display"
-                  data-lang={language}
+                  data-lang={originalLanguage}
                 >
-                  {language}
+                  {originalLanguage}
                 </Box>
               )}
               <Copy content={codeString} fileName={title} />

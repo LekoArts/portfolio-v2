@@ -7,6 +7,19 @@
  */
 export const getLanguage = (className = ``): string => className.split(`language-`).pop()
 
+const OVERRIDES = {
+  svelte: `html`,
+} as const
+
+/**
+ * Overrides a language to another one to e.g. have correct syntax highlighting support
+ * @param {string} input
+ * @returns {string} Either incoming input or override
+ * @example
+ * languageOverride('svelte')
+ */
+export const languageOverride = (input: string): string => OVERRIDES?.[input] ?? input
+
 export const preToCodeBlock = (preProps) => {
   if (preProps?.children?.props?.mdxType === `code`) {
     const { children: codeString, className = ``, ...props } = preProps.children.props

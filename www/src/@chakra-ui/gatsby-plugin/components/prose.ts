@@ -1039,6 +1039,10 @@ const Prose = {
         background: `rgba(230, 255, 237, var(--display-opacity))`,
         color: mode(`blueGray.800`, `rgb(230, 255, 237)`)(props),
       },
+      "&[data-lang='svelte']": {
+        background: mode(`rgb(255, 62, 0)`, `rgba(255, 62, 0, var(--display-opacity))`)(props),
+        color: mode(`white`, `rgb(255, 221, 211)`)(props),
+      },
     },
     ".img-left-wrap-text": {
       display: `grid`,
