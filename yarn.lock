@@ -2804,9 +2804,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.8.0":
-  version: 11.8.0
-  resolution: "@emotion/react@npm:11.8.0"
+"@emotion/react@npm:^11.8.1":
+  version: 11.8.1
+  resolution: "@emotion/react@npm:11.8.1"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@emotion/babel-plugin": ^11.7.1
@@ -2824,7 +2824,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 363bbb68e6cec056b465f545e8d1e0a6ea54afa1861e900e17b2f45e4ab6bec4662922b1f2865e37170236f8143315254c9e73aefd6ff9c6df1f3b6bf9854a7e
+  checksum: a767c6d7ca9e45dc3c1e873cfa51952db24e0d279944403ceb06be82d15859354e128becf6f7d0f8ff2b5f3460e3c165cd2b16ab1a2446e8e15e134a69e6ea3a
   languageName: node
   linkType: hard
 
@@ -2865,9 +2865,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.8.0":
-  version: 11.8.0
-  resolution: "@emotion/styled@npm:11.8.0"
+"@emotion/styled@npm:^11.8.1":
+  version: 11.8.1
+  resolution: "@emotion/styled@npm:11.8.1"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@emotion/babel-plugin": ^11.7.1
@@ -2883,7 +2883,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 21e6bad9339fb087c5214cfba861fd5db20d429a6b6981d944aa5df1da571baa9f176455588c063a274b670ecbf12d7b9100d80186e1b8f8911fa0b4502d04bd
+  checksum: 67150fa788785c34e285b90acecc91fe7a63babceaefbeffd053bed0fa31f72a05bfeeb9d15620766e543e007b9ccac2e836812eec2e791f962ec4e52731ae4c
   languageName: node
   linkType: hard
 
@@ -7612,6 +7612,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"create-gatsby@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "create-gatsby@npm:2.7.0"
+  dependencies:
+    "@babel/runtime": ^7.15.4
+  bin:
+    create-gatsby: cli.js
+  checksum: c48966a959d497b48cf99b66397cdfe70140ce1718bcd12f34200717a1807f48fd2d7341bc83b9073c32a4aa081dcec6c3f774bfd5e37e568626c242898c1c6c
+  languageName: node
+  linkType: hard
+
 "create-gatsby@npm:^2.9.0-next.0":
   version: 2.9.0-next.0
   resolution: "create-gatsby@npm:2.9.0-next.0"
@@ -10173,6 +10184,60 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gatsby-cli@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "gatsby-cli@npm:4.7.0"
+  dependencies:
+    "@babel/code-frame": ^7.14.0
+    "@babel/core": ^7.15.5
+    "@babel/generator": ^7.16.8
+    "@babel/helper-plugin-utils": ^7.16.7
+    "@babel/runtime": ^7.15.4
+    "@babel/template": ^7.16.7
+    "@babel/types": ^7.16.8
+    "@types/common-tags": ^1.8.1
+    better-opn: ^2.1.1
+    boxen: ^5.1.2
+    chalk: ^4.1.2
+    clipboardy: ^2.3.0
+    common-tags: ^1.8.2
+    configstore: ^5.0.1
+    convert-hrtime: ^3.0.0
+    create-gatsby: ^2.7.0
+    envinfo: ^7.8.1
+    execa: ^5.1.1
+    fs-exists-cached: ^1.0.0
+    fs-extra: ^10.0.0
+    gatsby-core-utils: ^3.7.0
+    gatsby-telemetry: ^3.7.0
+    hosted-git-info: ^3.0.8
+    is-valid-path: ^0.1.1
+    joi: ^17.4.2
+    lodash: ^4.17.21
+    meant: ^1.0.3
+    node-fetch: ^2.6.6
+    opentracing: ^0.14.5
+    pretty-error: ^2.1.2
+    progress: ^2.0.3
+    prompts: ^2.4.2
+    redux: 4.1.2
+    resolve-cwd: ^3.0.0
+    semver: ^7.3.5
+    signal-exit: ^3.0.6
+    source-map: 0.7.3
+    stack-trace: ^0.0.10
+    strip-ansi: ^6.0.1
+    update-notifier: ^5.1.0
+    uuid: 3.4.0
+    yargs: ^15.4.1
+    yoga-layout-prebuilt: ^1.10.0
+    yurnalist: ^2.1.0
+  bin:
+    gatsby: cli.js
+  checksum: 2eef900888af54891b5b8ac88ece6a985cc90c78419bac9391544ad6eda00b645d33134b40c0e678d004dc57b6c3a6f2d5b5623d5d5fcfe19908567c542df585
+  languageName: node
+  linkType: hard
+
 "gatsby-cli@npm:^4.9.0-next.0":
   version: 4.9.0-next.0
   resolution: "gatsby-cli@npm:4.9.0-next.0"
@@ -10703,6 +10768,27 @@ gatsby-source-graphql@next:
   peerDependencies:
     gatsby: ^4.0.0-next
   checksum: 8078771beb63d0a3ab2c84c1b142d6f213fe53d480d4c3395a77946f3e7acc957ac53f5720d2324fa9ce97d9269c3b61df6223424f5225dc56972c17c29a7f42
+  languageName: node
+  linkType: hard
+
+"gatsby-telemetry@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "gatsby-telemetry@npm:3.7.0"
+  dependencies:
+    "@babel/code-frame": ^7.14.0
+    "@babel/runtime": ^7.15.4
+    "@turist/fetch": ^7.1.7
+    "@turist/time": ^0.0.2
+    async-retry-ng: ^2.0.1
+    boxen: ^4.2.0
+    configstore: ^5.0.1
+    fs-extra: ^10.0.0
+    gatsby-core-utils: ^3.7.0
+    git-up: ^4.0.5
+    is-docker: ^2.2.1
+    lodash: ^4.17.21
+    node-fetch: ^2.6.7
+  checksum: 2cf3b284424a5e682c80e34635a682ce9cf1557642ed06939688ae4c3cb8820e5d2a9c4d03d00c4448cafa6b4ebe5d3e2277ea7b5e727adc09cc6f1dca97020a
   languageName: node
   linkType: hard
 
@@ -16056,6 +16142,7 @@ gatsby@next:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
+    gatsby-cli: ^4.7.0
     husky: ^7.0.4
     jest: ^27.5.1
     lint-staged: ^12.3.4
@@ -20920,9 +21007,9 @@ gatsby@next:
     "@chakra-ui/system": ^1.10.3
     "@chakra-ui/theme-tools": ^1.3.4
     "@emotion/cache": ^11.7.1
-    "@emotion/react": ^11.8.0
+    "@emotion/react": ^11.8.1
     "@emotion/server": ^11.4.0
-    "@emotion/styled": ^11.8.0
+    "@emotion/styled": ^11.8.1
     "@types/react-icons": ^3.0.0
     framer-motion: ^6.2.6
     gatsby: next
