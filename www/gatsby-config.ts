@@ -1,5 +1,6 @@
 import { GatsbyConfig } from "gatsby"
-import { slugifyOptions } from "utils"
+import path from "path"
+import { slugifyOptions } from "../packages/utils"
 import { site } from "./src/constants/meta"
 
 require(`dotenv`).config()
@@ -25,7 +26,7 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/pages`,
+        path: path.resolve(`src/pages`),
         slugify: slugifyOptions,
       },
     },
@@ -87,8 +88,8 @@ const gatsbyConfig: GatsbyConfig = {
         `,
         resolveSiteUrl: () => site.url,
         resolvePages: ({ posts, garden, other }) => [].concat(posts.nodes, garden.nodes, other.nodes),
-        serialize: ({ path, lastmod }) => ({
-          url: path,
+        serialize: ({ path: pagePath, lastmod }) => ({
+          url: pagePath,
           lastmod,
         }),
       },

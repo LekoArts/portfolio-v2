@@ -265,7 +265,7 @@ export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArg
           const { count = 2, seed } = args || {}
           const rng = new Prando(seed)
           const s = rng.next()
-          const allNodes = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             query: {
               sort: {
                 fields: [`date`],
@@ -273,8 +273,8 @@ export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArg
               },
             },
             type: `Post`,
-            firstOnly: false,
           })
+          const allNodes = Array.from(entries)
           rng.reset()
           return shuffle(allNodes, s, count)
         },
