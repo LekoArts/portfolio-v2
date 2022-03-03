@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "license": "GPLv3",
+  "source": "index.ts",
   "dependencies": {
     "@sindresorhus/slugify": "^1.1.2"
   }
