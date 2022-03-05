@@ -16,6 +16,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --immutable
       - name: Run Jest
         run: yarn test:ci

@@ -2,6 +2,7 @@ import * as React from "react"
 import { VisuallyHidden, Box } from "@chakra-ui/react"
 import { copyToClipboard } from "../../utils/copy-to-clipboard"
 
+// eslint-disable-next-line no-promise-executor-return
 const delay = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
 
 type CopyProps = {

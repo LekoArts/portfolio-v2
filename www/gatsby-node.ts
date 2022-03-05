@@ -1,4 +1,5 @@
 import { GatsbyNode } from "gatsby"
+import path from "path"
 
 type CreatePagesResult = {
   redirects: {
@@ -22,9 +23,9 @@ type CreatePagesResult = {
   }
 }
 
-const gardenTemplate = require.resolve(`./src/templates/garden.tsx`)
-const proseTemplate = require.resolve(`./src/templates/prose.tsx`)
-const tutorialTemplate = require.resolve(`./src/templates/tutorial.tsx`)
+const gardenTemplate = path.resolve(`src/templates/garden.tsx`)
+const proseTemplate = path.resolve(`src/templates/prose.tsx`)
+const tutorialTemplate = path.resolve(`src/templates/tutorial.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
