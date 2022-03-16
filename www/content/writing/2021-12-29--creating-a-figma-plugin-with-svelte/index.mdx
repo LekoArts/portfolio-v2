@@ -1,8 +1,8 @@
 ---
 title: "Creating a Figma Plugin with Svelte"
 subtitle: ""
-date: 2022-02-19
-lastUpdated: 2022-02-19
+date: 2022-03-05
+lastUpdated: 2022-03-05
 description: "Learn how to use Svelte, TypeScript, and Rollup to create a lean & fast Figma Plugin. You'll access the Unsplash API to fetch a random image."
 type: "tutorial"
 category: "JavaScript"
@@ -137,6 +137,8 @@ The `code.ts` will be responsible for creating the iframe and listening for mess
 figma.showUI(__html__, { width: 320, height: 220 })
 ```
 
+<!-- TODO: Explain what figma.showUI does -->
+
 In order to load `App.svelte` the `main.ts` file sets up the app onto the `document.body`:
 
 ```ts title=src/main.ts
@@ -158,7 +160,7 @@ And now you can write Svelte code! Start with -- of course 😉 -- a "Hello Worl
 
 The last missing piece to this is `rollup.config.js`. It'll define how these three source files are bundled into something that Figma can work with:
 
-```js title=rollup.config.js
+```js title=rollup.config.js withLineNumbers
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
 import typescript from "@rollup/plugin-typescript"
@@ -248,17 +250,92 @@ const config = [mainConfig, codeConfig]
 export default config
 ```
 
-## Svelte App
+<Collapsible summary={<em>Detailed explanation of <code>rollup.config.js</code></em>}>
 
 TODO
+
+</Collapsible>
+
+Now it's time you try out what you have so far in Figma. In your terminal, run:
+
+```shell
+npm run dev
+```
+
+You should see some output in the terminal that signals that Rollup successfully compiled the files you created:
+
+```shell
+$ rollup -c -w
+rollup v2.67.3
+bundles src/main.ts → dist/bundle.js...
+created dist/bundle.js in 573ms
+bundles src/code.ts → dist/code.js...
+created dist/code.js in 357ms
+```
+
+The `manifest.json` now points to these compiled files. Go back to Figma and open a draft design file that you can use as a playground. Once you have it open, you now can run your plugin by doing a _Right click => Plugins => Development => "Name of your Plugin"_. You should a new window pop-up with the name of your plugin and a "Hello World" as text.
+
+<Alert status="success" title="What you just learned">
+
+Congrats, you successfully set up a boilerplate for creating Figma plugins with Svelte! You now know how to initialize a new plugin from Figma and how to configure the `manifest.json` file. After that you've installed Rollup to compile Svelte and TypeScript files.
+
+</Alert>
+
+## Svelte App
+
+Now that you have a barebones project ready, it's time for you to create the UI and add functionality to it. As a reminder: The goal of the plugin (and thus the UI) is to fetch a random image from Unsplash in a specific size (width & height) and place it onto the current Figma canvas. For this you'll learn how to use [Figma Plugin DS Svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) as a UI kit, how to fetch images, and how to use Figma's API to place images.
 
 ### Creating the UI
 
-TODO
+The Figma Plugin DS Svelte will serve you in two ways:
+
+1. It has an [extensive list](https://github.com/thomas-lowry/figma-plugin-ds-svelte/blob/9372e4952f5f248c44ee760f515d5f2a42f81234/src/global.css) of CSS variables and utility classes (similar to Tailwind CSS) to help build UIs with your own set of components
+1. It features a bunch of components like Buttons, Menus, Switches, etc. to build UIs quicker
+
+In order to use Figma Plugin DS Svelte you'll need to add its `GlobalCSS` import to your `App.svelte` to have the CSS styles available.
+
+```svelte title=App.svelte
+<script lang="ts">
+  import { GlobalCSS } from "figma-plugin-ds-svelte"
+</script>
+```
+
+Then you have the utility classes and CSS variables available. Create a wrapper component for the contents that will follow:
+
+```svelte
+<script lang="ts">
+  import { GlobalCSS } from "figma-plugin-ds-svelte"
+</script>
+
+<div class="p-xsmall wrapper flex column justify-content-between">
+  <div>
+    Contents
+  </div>
+  <div class="mt-small footer pt-xxsmall">
+    Footer
+  </div>
+</div>
+
+<style>
+  .wrapper {
+    text-align: center;
+    height: 100%;
+  }
+  .footer {
+    border-top: 1px solid var(--silver);
+  }
+</style>
+```
+
+<!-- TODO: Explain script, HTML, style more -->
 
 ### Adding Funcionality
 
 TODO
+
+- getImage
+- addImage
+- code.ts `postMessage`
 
 ## Publishing
 
