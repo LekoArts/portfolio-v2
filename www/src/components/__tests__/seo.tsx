@@ -5,9 +5,12 @@
 import * as React from "react"
 import * as Gatsby from "gatsby"
 import * as ReachRouter from "@reach/router"
-import { Helmet } from "react-helmet"
+import { HelmetProvider } from "react-helmet-async"
 import { render } from "@testing-library/react"
 import { SEO } from "../seo"
+import serializer from "../../../../jest/jest-serializer-react-helmet-async"
+
+expect.addSnapshotSerializer(serializer)
 
 const useStaticQuery = jest.spyOn(Gatsby, `useStaticQuery`)
 const useLocation = jest.spyOn(ReachRouter, `useLocation`)
@@ -39,43 +42,440 @@ describe(`SEO component`, () => {
   })
 
   it(`should have sensible defaults`, () => {
-    render(<SEO />)
-    const { htmlAttributes, linkTags, metaTags, title } = Helmet.peek()
-    const meta = mockUseStaticQuery.site.siteMetadata
+    const context: { helmet?: object } = {}
+    render(
+      <HelmetProvider context={context}>
+        <SEO />
+      </HelmetProvider>
+    )
 
-    expect(title).toBe(meta.siteTitleDefault)
-    expect(metaTags.find((tag) => tag.property === `og:description`).content).toBe(meta.siteDescription)
-    expect(htmlAttributes.lang).toBe(`en-US`)
-    expect(linkTags.find((tag) => tag.rel === `canonical`).href).toBe(meta.siteUrl)
-    expect(metaTags.find((tag) => tag.name === `robots`)).toBe(undefined)
-    expect(metaTags.find((tag) => tag.property === `og:image`).content).toBe(`${meta.siteUrl}${meta.siteImage}`)
+    expect(context.helmet).toMatchInlineSnapshot(`
+      <html
+        lang="en-US"
+      >
+        <head>
+          <link
+            data-rh={true}
+            href="https://www.dev.cool"
+            rel="canonical"
+          />
+          <link
+            data-rh={true}
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>"
+            rel="icon"
+            type="image/svg+xml"
+          />
+          <link
+            data-rh={true}
+            href="/apple-touch-icon.png"
+            rel="apple-touch-icon"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            name="description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            name="image"
+          />
+          <meta
+            content="Harry Potter - Wizard"
+            data-rh={true}
+            property="og:title"
+          />
+          <meta
+            content="https://www.dev.cool"
+            data-rh={true}
+            property="og:url"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            property="og:description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            property="og:image"
+          />
+          <meta
+            content="website"
+            data-rh={true}
+            property="og:type"
+          />
+          <meta
+            content="https://github.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://www.behance.net/lekoarts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://dribbble.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://youtube.de/LekoArtsDE"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://twitter.com/lekoarts_de"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="summary_large_image"
+            data-rh={true}
+            name="twitter:card"
+          />
+          <meta
+            content="Harry Potter - Wizard"
+            data-rh={true}
+            name="twitter:title"
+          />
+          <meta
+            content="https://www.dev.cool"
+            data-rh={true}
+            name="twitter:url"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            name="twitter:description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            name="twitter:image"
+          />
+          <meta
+            content="@cool"
+            data-rh={true}
+            name="twitter:creator"
+          />
+          <meta
+            content="LekoArts"
+            data-rh={true}
+            name="creator"
+          />
+          <meta
+            content="#0f172a"
+            data-rh={true}
+            name="msapplication-TileColor"
+          />
+          <title
+            data-rh={true}
+          >
+            Harry Potter - Wizard
+          </title>
+        </head>
+        <body />
+      </html>
+    `)
   })
   it(`should accept all common props`, () => {
+    const context: { helmet?: object } = {}
     render(
-      <SEO
-        title="Custom Title"
-        image="/path/to/image.png"
-        description="Custom Description"
-        pathname="/custom-path"
-        breadcrumbListItems={[{ name: `Hermione`, url: `/granger` }]}
-      />
+      <HelmetProvider context={context}>
+        <SEO
+          title="Custom Title"
+          image="/path/to/image.png"
+          description="Custom Description"
+          pathname="/custom-path"
+          breadcrumbListItems={[{ name: `Hermione`, url: `/granger` }]}
+        />
+      </HelmetProvider>
     )
-    const { scriptTags, metaTags, title } = Helmet.peek()
-    const meta = mockUseStaticQuery.site.siteMetadata
-    const breadcrumbJSON = JSON.parse(scriptTags[0].innerHTML)
 
-    expect(title).toBe(`Custom Title | Harry Potter`)
-    expect(metaTags.find((tag) => tag.property === `og:description`).content).toBe(`Custom Description`)
-    expect(metaTags.find((tag) => tag.property === `og:url`).content).toBe(`${meta.siteUrl}/custom-path`)
-    expect(metaTags.find((tag) => tag.property === `og:image`).content).toBe(`${meta.siteUrl}/path/to/image.png`)
-    expect(breadcrumbJSON.name).toBe(`Breadcrumbs`)
-    expect(breadcrumbJSON.itemListElement.find((el) => el.position === 1).item.name).toBe(`Homepage`)
-    expect(breadcrumbJSON.itemListElement.find((el) => el.position === 2).item.name).toBe(`Hermione`)
+    expect(context.helmet).toMatchInlineSnapshot(`
+      <html
+        lang="en-US"
+      >
+        <head>
+          <link
+            data-rh={true}
+            href="https://www.dev.cool/custom-path"
+            rel="canonical"
+          />
+          <link
+            data-rh={true}
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>"
+            rel="icon"
+            type="image/svg+xml"
+          />
+          <link
+            data-rh={true}
+            href="/apple-touch-icon.png"
+            rel="apple-touch-icon"
+          />
+          <meta
+            content="Custom Description"
+            data-rh={true}
+            name="description"
+          />
+          <meta
+            content="https://www.dev.cool/path/to/image.png"
+            data-rh={true}
+            name="image"
+          />
+          <meta
+            content="Custom Title"
+            data-rh={true}
+            property="og:title"
+          />
+          <meta
+            content="https://www.dev.cool/custom-path"
+            data-rh={true}
+            property="og:url"
+          />
+          <meta
+            content="Custom Description"
+            data-rh={true}
+            property="og:description"
+          />
+          <meta
+            content="https://www.dev.cool/path/to/image.png"
+            data-rh={true}
+            property="og:image"
+          />
+          <meta
+            content="website"
+            data-rh={true}
+            property="og:type"
+          />
+          <meta
+            content="https://github.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://www.behance.net/lekoarts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://dribbble.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://youtube.de/LekoArtsDE"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://twitter.com/lekoarts_de"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="summary_large_image"
+            data-rh={true}
+            name="twitter:card"
+          />
+          <meta
+            content="Custom Title"
+            data-rh={true}
+            name="twitter:title"
+          />
+          <meta
+            content="https://www.dev.cool/custom-path"
+            data-rh={true}
+            name="twitter:url"
+          />
+          <meta
+            content="Custom Description"
+            data-rh={true}
+            name="twitter:description"
+          />
+          <meta
+            content="https://www.dev.cool/path/to/image.png"
+            data-rh={true}
+            name="twitter:image"
+          />
+          <meta
+            content="@cool"
+            data-rh={true}
+            name="twitter:creator"
+          />
+          <meta
+            content="LekoArts"
+            data-rh={true}
+            name="creator"
+          />
+          <meta
+            content="#0f172a"
+            data-rh={true}
+            name="msapplication-TileColor"
+          />
+          <script
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "{\\"@context\\":\\"https://schema.org\\",\\"@type\\":\\"BreadcrumbList\\",\\"description\\":\\"Breadcrumbs list\\",\\"itemListElement\\":[{\\"@type\\":\\"ListItem\\",\\"item\\":{\\"@id\\":\\"https://www.lekoarts.de\\",\\"name\\":\\"Homepage\\"},\\"position\\":1},{\\"@type\\":\\"ListItem\\",\\"item\\":{\\"@id\\":\\"https://www.lekoarts.de/granger\\",\\"name\\":\\"Hermione\\"},\\"position\\":2}],\\"name\\":\\"Breadcrumbs\\"}",
+              }
+            }
+            data-rh={true}
+            type="application/ld+json"
+          />
+          <title
+            data-rh={true}
+          >
+            Custom Title | Harry Potter
+          </title>
+        </head>
+        <body />
+      </html>
+    `)
   })
   it(`should hide with noIndex`, () => {
-    render(<SEO noIndex />)
-    const { metaTags } = Helmet.peek()
+    const context: { helmet?: object } = {}
+    render(
+      <HelmetProvider context={context}>
+        <SEO noIndex />
+      </HelmetProvider>
+    )
 
-    expect(metaTags.find((tag) => tag.name === `robots`).content).toBe(`noindex, nofollow`)
+    expect(context.helmet).toMatchInlineSnapshot(`
+      <html
+        lang="en-US"
+      >
+        <head>
+          <link
+            data-rh={true}
+            href="https://www.dev.cool"
+            rel="canonical"
+          />
+          <link
+            data-rh={true}
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>"
+            rel="icon"
+            type="image/svg+xml"
+          />
+          <link
+            data-rh={true}
+            href="/apple-touch-icon.png"
+            rel="apple-touch-icon"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            name="description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            name="image"
+          />
+          <meta
+            content="Harry Potter - Wizard"
+            data-rh={true}
+            property="og:title"
+          />
+          <meta
+            content="https://www.dev.cool"
+            data-rh={true}
+            property="og:url"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            property="og:description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            property="og:image"
+          />
+          <meta
+            content="website"
+            data-rh={true}
+            property="og:type"
+          />
+          <meta
+            content="https://github.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://www.behance.net/lekoarts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://dribbble.com/LekoArts"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://youtube.de/LekoArtsDE"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="https://twitter.com/lekoarts_de"
+            data-rh={true}
+            property="og:see_also"
+          />
+          <meta
+            content="summary_large_image"
+            data-rh={true}
+            name="twitter:card"
+          />
+          <meta
+            content="Harry Potter - Wizard"
+            data-rh={true}
+            name="twitter:title"
+          />
+          <meta
+            content="https://www.dev.cool"
+            data-rh={true}
+            name="twitter:url"
+          />
+          <meta
+            content="Hogwarts is magical"
+            data-rh={true}
+            name="twitter:description"
+          />
+          <meta
+            content="https://www.dev.cool/social/harry-potter.png"
+            data-rh={true}
+            name="twitter:image"
+          />
+          <meta
+            content="@cool"
+            data-rh={true}
+            name="twitter:creator"
+          />
+          <meta
+            content="LekoArts"
+            data-rh={true}
+            name="creator"
+          />
+          <meta
+            content="#0f172a"
+            data-rh={true}
+            name="msapplication-TileColor"
+          />
+          <meta
+            content="noindex, nofollow"
+            data-rh={true}
+            name="robots"
+          />
+          <title
+            data-rh={true}
+          >
+            Harry Potter - Wizard
+          </title>
+        </head>
+        <body />
+      </html>
+    `)
   })
 })
