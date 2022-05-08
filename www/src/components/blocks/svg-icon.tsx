@@ -18,6 +18,9 @@ type SVGIconProps = {
   [x: string]: any
 }
 
+/**
+ * Using a SVG sprite for performance reasons
+ */
 export const SVGIcon = ({ id, ...props }: SVGIconProps) => (
   <svg {...props}>
     <use href={`/icons.svg#${id}`} />
