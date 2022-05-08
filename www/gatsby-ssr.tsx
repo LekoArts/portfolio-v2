@@ -1,30 +1,6 @@
 import * as React from "react"
 import type { GatsbySSR } from "gatsby"
-import { renderToString } from "react-dom/server"
-import { CacheProvider } from "@emotion/react"
-import createCache from "@emotion/cache"
-import createEmotionServer from "@emotion/server/create-instance"
-import parse from "html-react-parser"
-import { cacheKey } from "./src/constants/emotion"
 import { site } from "./src/constants/meta"
-
-export const replaceRenderer: GatsbySSR["replaceRenderer"] = ({
-  bodyComponent,
-  replaceBodyHTMLString,
-  setHeadComponents,
-}) => {
-  const cache = createCache({ key: cacheKey })
-  const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
-
-  const element = <CacheProvider value={cache}>{bodyComponent}</CacheProvider>
-
-  const { styles, html } = extractCriticalToChunks(renderToString(element))
-  const stylesString = constructStyleTagsFromChunks({ html, styles })
-
-  setHeadComponents([parse(stylesString)])
-
-  replaceBodyHTMLString(html)
-}
 
 const PLAUSIBLE_DOMAIN = `plausible.io`
 const SCRIPT_URI = `/js/plausible.js`
