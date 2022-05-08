@@ -13,6 +13,7 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents }) =
     }
 
     return setHeadComponents([
+      <link rel="preload" href="/icons.svg" as="image/svg+xml" />,
       <link rel="preload" href="/fonts/Inter-roman.var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />,
       <link rel="preload" href="/fonts/Crimson-Pro.var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />,
       <link key="gatsby-plugin-plausible-preconnect" rel="preconnect" href={`https://${PLAUSIBLE_DOMAIN}`} />,
