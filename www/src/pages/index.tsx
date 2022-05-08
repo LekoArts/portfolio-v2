@@ -209,7 +209,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     }}
                   >
                     <StaticImage
-                      src="../images/pages-index-photography-preview.jpg"
+                      src="../assets/images/pages-index-photography-preview.jpg"
                       alt=""
                       layout="constrained"
                       quality={90}
@@ -237,7 +237,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     }}
                   >
                     <StaticImage
-                      src="../images/pages-index-3d-preview.jpg"
+                      src="../assets/images/pages-index-3d-preview.jpg"
                       alt=""
                       layout="constrained"
                       quality={90}
