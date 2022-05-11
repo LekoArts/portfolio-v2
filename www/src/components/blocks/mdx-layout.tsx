@@ -5,7 +5,7 @@ import { Prose } from "../typography/prose"
 import { Layout } from "./layout"
 import { SkipNavContent } from "../a11y/skip-nav"
 
-export const MDXLayout: React.FC<PageProps> = ({ children }) => (
+export const MDXLayout: React.FC<React.PropsWithChildren<PageProps>> = ({ children }) => (
   <Layout>
     <Container variant="proseRoot">
       <SkipNavContent>

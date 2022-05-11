@@ -20,6 +20,5 @@ module.exports = {
   moduleNameMapper: {
     "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/jest/__mocks__/file-mock.js`,
-    "^gatsby-page-utils/(.*)$": `gatsby-page-utils/dist/$1`,
   },
 }

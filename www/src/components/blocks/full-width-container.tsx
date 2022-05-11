@@ -5,7 +5,11 @@ interface IFullWidthContainerProps extends BoxProps {
   variant?: "default" | "hero" | "light" | "dark" | "navigation" | "navigationWithSub" | "fullBleed" | undefined
 }
 
-export const FullWidthContainer: React.FC<IFullWidthContainerProps> = ({ variant = undefined, children, ...rest }) => {
+export const FullWidthContainer: React.FC<React.PropsWithChildren<IFullWidthContainerProps>> = ({
+  variant = undefined,
+  children,
+  ...rest
+}) => {
   const styles = useMultiStyleConfig(`FullWidthContainer`, { variant })
 
   return (

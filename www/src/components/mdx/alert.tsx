@@ -1,7 +1,11 @@
 import * as React from "react"
 import { Alert as ChakraAlert, AlertTitle, AlertIcon, AlertStatus, Box } from "@chakra-ui/react"
 
-export const Alert: React.FC<{ title: string; status: AlertStatus }> = ({ title, status, children }) => (
+export const Alert: React.FC<React.PropsWithChildren<{ title: string; status: AlertStatus }>> = ({
+  title,
+  status,
+  children,
+}) => (
   <ChakraAlert
     status={status}
     flexDirection="column"

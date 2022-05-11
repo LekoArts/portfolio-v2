@@ -18,7 +18,7 @@ type CategoryViewProps = {
   }
 }
 
-export const CategoryView: React.FC<CategoryViewProps> = ({ posts, children }) => (
+export const CategoryView: React.FC<React.PropsWithChildren<CategoryViewProps>> = ({ posts, children }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
     <SkipNavContent>
       {children}
