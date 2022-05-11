@@ -8,7 +8,11 @@ import { Button, usePrefersReducedMotion } from "@chakra-ui/react"
 /**
  * Primary buttons for important CTA
  */
-const PrimaryButton: React.FC<{ to: string; isExternal?: boolean }> = ({ children, to, isExternal = false }) => {
+const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; isExternal?: boolean }>> = ({
+  children,
+  to,
+  isExternal = false,
+}) => {
   const prefersReducedMotion = usePrefersReducedMotion()
 
   return (
@@ -43,7 +47,11 @@ const PrimaryButton: React.FC<{ to: string; isExternal?: boolean }> = ({ childre
 /**
  * Secondary button
  */
-const SubtleButton: React.FC<{ to: string; isExternal?: boolean }> = ({ children, to, isExternal = false }) => {
+const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; isExternal?: boolean }>> = ({
+  children,
+  to,
+  isExternal = false,
+}) => {
   const prefersReducedMotion = usePrefersReducedMotion()
 
   return (

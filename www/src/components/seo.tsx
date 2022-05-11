@@ -19,7 +19,7 @@ const faviconSrc =
     ? `/favicon.svg`
     : `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>`
 
-export const SEO: React.FC<SEOProps> = ({
+export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
   title,
   description,
   pathname,

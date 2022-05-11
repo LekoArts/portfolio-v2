@@ -10,7 +10,7 @@ interface IProseProps extends BoxProps {
  * Use the variant to choose from the different options (default, sm, md, lg, xl)
  * "default" is [`sm`, `md`, `md`, `lg`, `xl`] as included CSS media queries
  */
-export const Prose: React.FC<IProseProps> = ({ variant = `default`, children, ...rest }) => {
+export const Prose: React.FC<React.PropsWithChildren<IProseProps>> = ({ variant = `default`, children, ...rest }) => {
   const styles = useStyleConfig(`Prose`, { variant })
 
   return (

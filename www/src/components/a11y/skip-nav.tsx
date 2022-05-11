@@ -3,7 +3,11 @@ import { chakra } from "@chakra-ui/react"
 
 const defaultId = `skip-to-content`
 
-const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to content`, contentId, ...props }) => {
+const SkipNavLink: React.FC<React.PropsWithChildren<{ contentId?: string }>> = ({
+  children = `Skip to content`,
+  contentId,
+  ...props
+}) => {
   const id = contentId || defaultId
 
   return (
@@ -37,7 +41,7 @@ const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to con
 /**
  * Wrap the main content of a page with this, thus also the <main> tag
  */
-const SkipNavContent: React.FC<{ id?: string }> = ({ children, id: idProp, ...props }) => {
+const SkipNavContent: React.FC<React.PropsWithChildren<{ id?: string }>> = ({ children, id: idProp, ...props }) => {
   const id = idProp || defaultId
 
   return (

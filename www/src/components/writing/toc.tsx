@@ -95,7 +95,7 @@ export const Toc = ({ items }: { items: TocItem[] }) => {
   )
 }
 
-export const WithSidebarWrapper: React.FC<{ items: TocItem[] }> = ({ children, items }) => (
+export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: TocItem[] }>> = ({ children, items }) => (
   <Box
     display={{ base: `block`, "2xl": `flex` }}
     flexDirection="row-reverse"

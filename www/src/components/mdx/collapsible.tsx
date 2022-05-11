@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, useColorModeValue } from "@chakra-ui/react"
 
-export const Collapsible: React.FC<{ summary: React.ReactNode }> = ({ summary, children }) => {
+export const Collapsible: React.FC<React.PropsWithChildren<{ summary: React.ReactNode }>> = ({ summary, children }) => {
   const bgColor = useColorModeValue(`blue.50`, `blueGray.800`)
 
   return (
