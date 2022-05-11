@@ -23,11 +23,11 @@
     "prando": "^6.0.1",
     "remark-slug": "^6.0.0",
     "remark-smartypants": "^0.0.1",
-    "ts-node": "^10.6.0",
+    "ts-node": "^10.7.0",
     "utils": "^0.0.1"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.147",
+    "@swc/core": "^1.2.182",
     "regenerator-runtime": "^0.13.9"
   }
 }
