@@ -50,8 +50,7 @@ const theme = extendTheme({
   },
   breakpoints,
   config: {
-    initialColorMode: `light`,
-    useSystemColorMode: true,
+    initialColorMode: `system`,
   },
 })
 
