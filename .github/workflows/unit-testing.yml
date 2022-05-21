@@ -1,7 +1,7 @@
-name: Testing
+name: Unit Testing
 on: pull_request
 jobs:
-  testing:
+  unit-testing:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
