@@ -65,4 +65,3 @@ cypress/e2e/build
 !.yarn/versions
 .swc
 playwright/test-results
-playwright/report
