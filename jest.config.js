@@ -14,7 +14,7 @@ module.exports = {
   transform: {
     "^.+\\.[jt]sx?$": `<rootDir>/jest/jest-preprocess.js`,
   },
-  testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
+  testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`, `playwright`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   setupFiles: [`<rootDir>/jest/jest-setup.js`],
   moduleNameMapper: {
