@@ -12,7 +12,7 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? `github` : `list`,
   webServer: {
-    command: process.env.IS_BUILD ? `yarn build && yarn serve` : `yarn develop`,
+    command: process.env.IS_BUILD ? `yarn serve` : `yarn develop`,
     port: process.env.IS_BUILD ? 9000 : 8000,
     reuseExistingServer: !process.env.CI,
   },

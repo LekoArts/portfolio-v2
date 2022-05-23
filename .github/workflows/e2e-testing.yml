@@ -32,10 +32,24 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
+      - uses: actions/cache@v2
+        id: gatsby-cache
+        env:
+          files: >-
+            ${{ hashFiles('www/gatsby-config.ts', 'www/gatsby-node.ts') }}
+        with:
+          path: |
+            public
+            .cache
+          key: ${{ runner.os }}-gatsby-${{ env.files }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gatsby-
       - name: Install dependencies
         run: yarn --immutable
       - name: Install Playwright
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
+      - name: Build Gatsby Site
+        run: yarn build
       - name: Run Playwright
         run: yarn e2e:build
