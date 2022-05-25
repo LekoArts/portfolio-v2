@@ -17,6 +17,10 @@ const metaTagAssertions = [
         key: `og:description`,
         value: site.description,
       },
+      {
+        key: `og:image`,
+        value: `https://www.lekoarts.de/social/default-og-image.png`,
+      },
     ],
   },
   {
@@ -32,6 +36,10 @@ const metaTagAssertions = [
         key: `og:description`,
         value: `Only want to build out the most popular pages as static pages? No problem, you can use your analytics tool to control the usage of Deferred Static Generation in Gatsby.`,
       },
+      {
+        key: `og:image`,
+        value: `https://www.lekoarts.de/og-images/dsg-analytics.png`,
+      },
     ],
   },
   {
@@ -46,6 +54,10 @@ const metaTagAssertions = [
       {
         key: `og:description`,
         value: `You're a fan of  Plausible Analytics  and  Gatsby ? Great! In this guide you'll learn how to add Plausible Analytics to your Gatsby site…`,
+      },
+      {
+        key: `og:image`,
+        value: `https://www.lekoarts.de/social/digital-garden.png`,
       },
     ],
   },
@@ -72,21 +84,16 @@ test.describe(`Meta Tags`, () => {
       await page.goto(assertion.url)
       await expect(page).toHaveTitle(assertion.title)
       for (const tag of assertion.metaTags) {
-        await expect(
-          await page.evaluate(
-            ({ key }) => document.head.querySelector(`meta[property="${key}"]`).getAttribute(`content`),
-            { key: tag.key }
-          )
-        ).toStrictEqual(tag.value)
+        const content = await page.locator(`meta[property="${tag.key}"]`).getAttribute(`content`)
+        await expect(content).toContain(tag.value)
       }
     })
   }
   for (const assertion of noIndexPages) {
     test(`${assertion.name} should have noindex meta tag`, async ({ page }) => {
       await page.goto(assertion.url)
-      await expect(
-        await page.evaluate(() => document.head.querySelector(`meta[name="robots"]`).getAttribute(`content`))
-      ).toStrictEqual(`noindex, nofollow`)
+      const content = await page.locator(`meta[name="robots"]`).getAttribute(`content`)
+      await expect(content).toStrictEqual(`noindex, nofollow`)
     })
   }
 })
