@@ -50,11 +50,11 @@ type DataProps = {
       slug: string
     }[]
   }
-  primaryRepo: {
-    repository: RepositoryInfo
+  primaryRepo?: {
+    repository?: RepositoryInfo
   }
-  secondaryRepo: {
-    repository: RepositoryInfo
+  secondaryRepo?: {
+    repository?: RepositoryInfo
   }
 }
 
@@ -92,8 +92,8 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
   const [firstPost, ...rest] = data.posts.nodes
   const otherPosts = [...rest]
 
-  const primRepo = data.primaryRepo.repository
-  const secRepo = data.secondaryRepo.repository
+  const primRepo = data?.primaryRepo?.repository
+  const secRepo = data?.secondaryRepo?.repository
 
   return (
     <Layout>
@@ -209,7 +209,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     }}
                   >
                     <StaticImage
-                      src="../images/pages-index-photography-preview.jpg"
+                      src="../assets/images/pages-index-photography-preview.jpg"
                       alt=""
                       layout="constrained"
                       quality={90}
@@ -237,7 +237,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     }}
                   >
                     <StaticImage
-                      src="../images/pages-index-3d-preview.jpg"
+                      src="../assets/images/pages-index-3d-preview.jpg"
                       alt=""
                       layout="constrained"
                       quality={90}
@@ -268,35 +268,47 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 </SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`1fr`, null, null, `2fr 1fr`]} gap={6}>
-                <Box bg="primaryBg" color="#e7f1ff" p={6} borderRadius="lg">
-                  <Flex flexDirection="row" justifyContent="space-between" mb={6}>
-                    <ChakraLink
-                      fontSize={[`lg`, null, null, null, `1.3125rem`]}
-                      color="white"
-                      fontWeight="bold"
-                      href={primRepo.url}
-                    >
-                      {primRepo.name}
-                    </ChakraLink>
-                    <Tag variant="subtle" colorScheme="blue">
-                      <TagLeftIcon as={FaStar} />
-                      <TagLabel>{primRepo.stargazerCount}</TagLabel>
-                    </Tag>
-                  </Flex>
-                  <Text>{primRepo.description}</Text>
-                </Box>
-                <Box bg={secondaryRepoBg} p={6} borderRadius="lg">
-                  <Flex flexDirection="row" justifyContent="space-between" mb={6}>
-                    <ChakraLink fontSize={[`lg`, null, null, null, `1.3125rem`]} fontWeight="bold" href={secRepo.url}>
-                      {secRepo.name}
-                    </ChakraLink>
-                    <Tag variant="subtle" colorScheme="gray">
-                      <TagLeftIcon as={FaStar} />
-                      <TagLabel>{secRepo.stargazerCount}</TagLabel>
-                    </Tag>
-                  </Flex>
-                  <Text>{secRepo.description}</Text>
-                </Box>
+                {primRepo && secRepo ? (
+                  <>
+                    <Box bg="primaryBg" color="#e7f1ff" p={6} borderRadius="lg">
+                      <Flex flexDirection="row" justifyContent="space-between" mb={6}>
+                        <ChakraLink
+                          fontSize={[`lg`, null, null, null, `1.3125rem`]}
+                          color="white"
+                          fontWeight="bold"
+                          href={primRepo.url}
+                        >
+                          {primRepo.name}
+                        </ChakraLink>
+                        <Tag variant="subtle" colorScheme="blue">
+                          <TagLeftIcon as={FaStar} />
+                          <TagLabel>{primRepo.stargazerCount}</TagLabel>
+                        </Tag>
+                      </Flex>
+                      <Text>{primRepo.description}</Text>
+                    </Box>
+                    <Box bg={secondaryRepoBg} p={6} borderRadius="lg">
+                      <Flex flexDirection="row" justifyContent="space-between" mb={6}>
+                        <ChakraLink
+                          fontSize={[`lg`, null, null, null, `1.3125rem`]}
+                          fontWeight="bold"
+                          href={secRepo.url}
+                        >
+                          {secRepo.name}
+                        </ChakraLink>
+                        <Tag variant="subtle" colorScheme="gray">
+                          <TagLeftIcon as={FaStar} />
+                          <TagLabel>{secRepo.stargazerCount}</TagLabel>
+                        </Tag>
+                      </Flex>
+                      <Text>{secRepo.description}</Text>
+                    </Box>
+                  </>
+                ) : (
+                  <Box p={2} borderRadius="lg">
+                    <strong>GITHUB_TOKEN</strong> for gatsby-source-graphql necessary.
+                  </Box>
+                )}
               </Grid>
               <Flex justifyContent="space-between" flexWrap="wrap">
                 {openSourceRepos.map((repo) => (

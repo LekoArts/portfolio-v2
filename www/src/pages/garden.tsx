@@ -24,6 +24,7 @@ import { Spacer } from "../components/blocks/spacer"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
+import { SVGIconNames, SVGIcon } from "../components/blocks/svg-icon"
 
 type DataProps = {
   garden: {
@@ -33,7 +34,7 @@ type DataProps = {
     nodes: {
       title: string
       slug: string
-      icon: string
+      icon: SVGIconNames
       lastUpdated: string
       tags: string[]
     }[]
@@ -162,14 +163,10 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                         transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
                       },
                     },
-                    svg: {
-                      height: [`1.25em`, null, null, `1.5em`],
-                      width: [`1.25em`, null, null, `1.5em`],
-                    },
                   }}
                 >
                   <Box width={[25, 35, null, 50]} height={[25, 35, null, 50]}>
-                    <img alt="" src={`/icons/${post.icon}.svg`} width="100%" height="100%" />
+                    <SVGIcon id={post.icon} width="100%" height="100%" />
                   </Box>
                   <Box>
                     <ChakraHeading as="h2" variant="gardenItem">

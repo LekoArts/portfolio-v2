@@ -64,3 +64,4 @@ cypress/e2e/build
 !.yarn/sdks
 !.yarn/versions
 .swc
+playwright/test-results

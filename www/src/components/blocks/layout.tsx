@@ -5,7 +5,10 @@ import { Fonts } from "./fonts"
 import { Footer } from "./footer"
 import { Header } from "./header"
 
-export const Layout: React.FC<{ subnavigation?: React.ReactNode }> = ({ children, subnavigation = undefined }) => (
+export const Layout: React.FC<React.PropsWithChildren<{ subnavigation?: React.ReactNode }>> = ({
+  children,
+  subnavigation = undefined,
+}) => (
   <>
     <Fonts />
     <SkipNavLink />

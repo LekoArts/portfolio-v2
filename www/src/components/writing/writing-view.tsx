@@ -46,7 +46,7 @@ export type WritingViewDataProps = {
   type: "prose" | "tutorial"
 }
 
-const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children, type }) => {
+const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({ post, pathname, children, type }) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
   React.useEffect(() => {

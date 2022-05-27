@@ -120,6 +120,17 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       writingSource: String
       gardenSource: String
     }
+
+    type github implements Node {
+      repository(name: String, owner: String): Repository
+    }
+
+    type Repository {
+      stargazerCount: Int
+      description: String
+      name: String
+      url: String
+    }
   `)
 }
 

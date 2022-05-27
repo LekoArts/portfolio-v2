@@ -4,9 +4,10 @@ import remarkSmartyPants from "remark-smartypants"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
+const { GITHUB_TOKEN } = process.env
+
 const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
   const options = withDefaults(themeOptions)
-  const { mdx = true } = themeOptions
 
   return {
     plugins: [
@@ -38,19 +39,19 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
           path: `src/pages`,
         },
       },
-      {
+      GITHUB_TOKEN && {
         resolve: `gatsby-source-graphql`,
         options: {
           typeName: `GitHub`,
           fieldName: `github`,
           url: `https://api.github.com/graphql`,
           headers: {
-            Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+            Authorization: `bearer ${GITHUB_TOKEN}`,
           },
           fetchOptions: {},
         },
       },
-      mdx && {
+      {
         resolve: `gatsby-plugin-mdx`,
         options: {
           lessBabel: true,
@@ -77,7 +78,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       },
       `gatsby-plugin-sharp`,
       `gatsby-plugin-catch-links`,
-    ],
+    ].filter(Boolean),
   }
 }
 
