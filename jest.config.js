@@ -15,7 +15,7 @@ module.exports = {
     "^.+\\.[jt]sx?$": `<rootDir>/jest/jest-preprocess.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`, `playwright`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script)/)`],
   setupFiles: [`<rootDir>/jest/jest-setup.js`],
   moduleNameMapper: {
     "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
