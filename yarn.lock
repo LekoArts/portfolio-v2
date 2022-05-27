@@ -5008,6 +5008,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.22.2":
+  version: 1.22.2
+  resolution: "@playwright/test@npm:1.22.2"
+  dependencies:
+    "@types/node": "*"
+    playwright-core: 1.22.2
+  bin:
+    playwright: cli.js
+  checksum: 55392a97d920b77374926415e16e649320a9d8243f4ddca09c61827580674ad6f50057c09d5d194212d4ce60abc2cdf5f939ddd87f3670e073e9dd6c418480d5
+  languageName: node
+  linkType: hard
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.4.3":
   version: 0.4.3
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.4.3"
@@ -8674,6 +8686,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-env@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: ^7.0.1
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
+  languageName: node
+  linkType: hard
+
 "cross-fetch@npm:3.1.4":
   version: 3.1.4
   resolution: "cross-fetch@npm:3.1.4"
@@ -8705,7 +8729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -17123,6 +17147,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.22.2":
+  version: 1.22.2
+  resolution: "playwright-core@npm:1.22.2"
+  bin:
+    playwright: cli.js
+  checksum: 7381c35359b4338282f73dc902c1c1311e8e7cbf852f445dd6b430ebcb7eafc842b8e512d238fdc0b70d1da2b14046f297b19dac027c6a0a62ff217e70f6a07c
+  languageName: node
+  linkType: hard
+
 "pngjs@npm:^3.0.0, pngjs@npm:^3.3.3":
   version: 3.4.0
   resolution: "pngjs@npm:3.4.0"
@@ -17147,6 +17180,7 @@ __metadata:
   resolution: "portfolio-v2@workspace:."
   dependencies:
     "@babel/preset-typescript": ^7.16.7
+    "@playwright/test": ^1.22.2
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.2.0
     "@types/jest": ^27.5.0
@@ -17158,6 +17192,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.23.0
     babel-jest: ^28.1.0
     babel-preset-gatsby: ^2.14.0
+    cross-env: ^7.0.3
     cspell: ^5.20.0
     eslint: ^8.15.0
     eslint-config-airbnb: ^19.0.4

@@ -59,21 +59,25 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
     return
   }
 
-  result.data.redirects.nodes.forEach((redirect) => {
+  const {
+    data: { redirects, garden, writing },
+  } = result
+
+  redirects.nodes.forEach((redirect) => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
-  result.data.garden.nodes.forEach((garden) => {
+  garden.nodes.forEach((post) => {
     createPage({
-      path: garden.slug,
+      path: post.slug,
       component: gardenTemplate,
       context: {
-        id: garden.id,
+        id: post.id,
       },
     })
   })
 
-  result.data.writing.nodes.forEach((article) => {
+  writing.nodes.forEach((article) => {
     const component = article.type === `tutorial` ? tutorialTemplate : proseTemplate
 
     createPage({
