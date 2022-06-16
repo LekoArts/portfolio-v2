@@ -23,5 +23,5 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn --immutable
-      - name: Run Jest
+      - name: Run Vitest
         run: yarn test:ci
