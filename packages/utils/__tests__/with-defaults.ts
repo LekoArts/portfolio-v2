@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest"
 import { withDefaults, defaults } from "../with-defaults"
 
 describe(`withDefaults`, () => {
