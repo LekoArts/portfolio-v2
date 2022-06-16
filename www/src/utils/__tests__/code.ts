@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest"
 import { getLanguage, calculateLinesToHighlight, preToCodeBlock } from "../code"
 
 const preProps = {

@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest"
 import { slugify, capitalize, shuffle } from "../index"
 
 describe(`utils`, () => {

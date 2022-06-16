@@ -3,7 +3,7 @@ import { HelmetProvider } from "react-helmet-async"
 
 HelmetProvider.canUseDOM = false
 
-const ReactHelmetAsyncContextSerializer: jest.SnapshotSerializerPlugin = {
+const ReactHelmetAsyncContextSerializer = {
   test(value: any) {
     return Boolean(
       // Does the value exist?

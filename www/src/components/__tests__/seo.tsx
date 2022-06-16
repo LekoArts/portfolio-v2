@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import * as React from "react"
@@ -7,13 +7,14 @@ import * as Gatsby from "gatsby"
 import * as ReachRouter from "@reach/router"
 import { HelmetProvider } from "react-helmet-async"
 import { render } from "@testing-library/react"
+import { vi } from "vitest"
 import { SEO } from "../seo"
-import serializer from "../../../../jest/jest-serializer-react-helmet-async"
+import serializer from "../../../../vitest/serializer-react-helmet-async"
 
 expect.addSnapshotSerializer(serializer)
 
-const useStaticQuery = jest.spyOn(Gatsby, `useStaticQuery`)
-const useLocation = jest.spyOn(ReachRouter, `useLocation`)
+const useStaticQuery = vi.spyOn(Gatsby, `useStaticQuery`)
+const useLocation = vi.spyOn(ReachRouter, `useLocation`)
 const mockUseLocationValue = {
   href: `https://www.dev.cool`,
 }
@@ -38,7 +39,7 @@ describe(`SEO component`, () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
   it(`should have sensible defaults`, () => {

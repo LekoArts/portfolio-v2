@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest"
 import { breadcrumbList, article } from "../json-ld"
 
 const category = {
