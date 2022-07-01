@@ -11,6 +11,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vitest/globals"]
   }
 }
