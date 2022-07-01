@@ -4,7 +4,7 @@
 
 import * as React from "react"
 import * as Gatsby from "gatsby"
-import * as ReachRouter from "@reach/router"
+import ReachRouter from "@gatsbyjs/reach-router"
 import { HelmetProvider } from "react-helmet-async"
 import { render } from "@testing-library/react"
 import { vi } from "vitest"
@@ -13,11 +13,19 @@ import serializer from "../../../../vitest/serializer-react-helmet-async"
 
 expect.addSnapshotSerializer(serializer)
 
-const useStaticQuery = vi.spyOn(Gatsby, `useStaticQuery`)
-const useLocation = vi.spyOn(ReachRouter, `useLocation`)
-const mockUseLocationValue = {
-  href: `https://www.dev.cool`,
+const { createHistory, createMemorySource, LocationProvider } = ReachRouter
+
+function renderWithRouter(ui, { route = `/` } = {}) {
+  const memory = createMemorySource(route)
+  memory.location.href = `https://www.dev.cool`
+  const history = createHistory(memory)
+  return {
+    ...render(<LocationProvider history={history}>{ui}</LocationProvider>),
+    history,
+  }
 }
+
+const useStaticQuery = vi.spyOn(Gatsby, `useStaticQuery`)
 const mockUseStaticQuery = {
   site: {
     siteMetadata: {
@@ -34,8 +42,6 @@ const mockUseStaticQuery = {
 describe(`SEO component`, () => {
   beforeEach(() => {
     useStaticQuery.mockImplementation(() => mockUseStaticQuery)
-    // @ts-ignore
-    useLocation.mockImplementation(() => mockUseLocationValue)
   })
 
   afterEach(() => {
@@ -44,7 +50,7 @@ describe(`SEO component`, () => {
 
   it(`should have sensible defaults`, () => {
     const context: { helmet?: object } = {}
-    render(
+    renderWithRouter(
       <HelmetProvider context={context}>
         <SEO />
       </HelmetProvider>
@@ -183,7 +189,7 @@ describe(`SEO component`, () => {
   })
   it(`should accept all common props`, () => {
     const context: { helmet?: object } = {}
-    render(
+    renderWithRouter(
       <HelmetProvider context={context}>
         <SEO
           title="Custom Title"
@@ -318,7 +324,7 @@ describe(`SEO component`, () => {
           />
           <script
             dangerouslySetInnerHTML={
-              Object {
+              {
                 "__html": "{\\"@context\\":\\"https://schema.org\\",\\"@type\\":\\"BreadcrumbList\\",\\"description\\":\\"Breadcrumbs list\\",\\"itemListElement\\":[{\\"@type\\":\\"ListItem\\",\\"item\\":{\\"@id\\":\\"https://www.lekoarts.de\\",\\"name\\":\\"Homepage\\"},\\"position\\":1},{\\"@type\\":\\"ListItem\\",\\"item\\":{\\"@id\\":\\"https://www.lekoarts.de/granger\\",\\"name\\":\\"Hermione\\"},\\"position\\":2}],\\"name\\":\\"Breadcrumbs\\"}",
               }
             }
@@ -337,7 +343,7 @@ describe(`SEO component`, () => {
   })
   it(`should hide with noIndex`, () => {
     const context: { helmet?: object } = {}
-    render(
+    renderWithRouter(
       <HelmetProvider context={context}>
         <SEO noIndex />
       </HelmetProvider>

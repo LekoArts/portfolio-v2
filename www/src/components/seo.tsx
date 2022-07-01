@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Helmet } from "react-helmet-async"
-import { useLocation } from "@reach/router"
+import { useLocation } from "@gatsbyjs/reach-router"
 import { breadcrumbList, BreadcrumbListItem } from "../constants/json-ld"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
