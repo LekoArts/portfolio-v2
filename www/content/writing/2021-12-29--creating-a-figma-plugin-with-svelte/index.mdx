@@ -1,8 +1,8 @@
 ---
 title: "Creating a Figma Plugin with Svelte"
 subtitle: ""
-date: 2022-05-27
-lastUpdated: 2022-05-27
+date: 2022-06-17
+lastUpdated: 2022-06-17
 description: "Learn how to use Svelte, TypeScript, and Rollup to create a lean & fast Figma Plugin. You'll access the Unsplash API to fetch a random image."
 type: "tutorial"
 category: "JavaScript"
@@ -377,7 +377,7 @@ At the time of writing this guide the [`Input` component](https://github.com/tho
 
 Create a new file called `Input.svelte` inside `src`:
 
-```svelte title=src/Input.svelte
+```svelte title=src/Input.svelte {8}
 <script lang="ts">
   export let id = null
   export let value = null
@@ -440,6 +440,61 @@ Create a new file called `Input.svelte` inside `src`:
   }
 </style>
 ```
+
+It's not exactly the same as the `<Input />` component from `figma-plugin-ds-svelte` as I removed some CSS styles that are not needed for this example. The CSS uses the custom properties defined globally.
+
+Now it's time to use the `<Input />` component in your `App.svelte`:
+
+```svelte title=App.svelte {3-9,21,25,29}
+<script lang="ts">
+  import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
+  import Input from "./Input.svelte"
+
+  let disabled = true
+  let width = 800
+  let height = 800
+
+  $: disabled = !(!!width && !!height)
+</script>
+
+<div class="p-xsmall wrapper flex column justify-content-between">
+  <div>
+    <Type>
+      Get a Random Image from
+      <a href="https://unsplash.com/">Unsplash</a>
+    </Type>
+    <div class="flex mt-xsmall">
+      <div class="flex ml-xxsmall mr-xxsmall">
+        <Label>Width:</Label>
+        <Input placeholder="800" bind:value={width} />
+      </div>
+      <div class="flex ml-xxsmall mr-xxsmall">
+        <Label>Height:</Label>
+        <Input placeholder="800" bind:value={height} />
+      </div>
+    </div>
+    <div class="mt-xxsmall flex justify-content-center">
+      <Button {disabled}>Add Image</Button>
+    </div>
+  </div>
+  <div class="mt-small footer pt-xxsmall">
+    <Type>
+      Read the tutorial
+      <a href="https://www.lekoarts.de">on lekoarts.de</a>
+    </Type>
+  </div>
+</div>
+```
+
+You're binding the value that is coming from the inputs to variables called `width` and `height`. They are necessary when adding an image and thus the "Add Image" button is disabled if one of them or both are not defined. You can try this yourself by running the plugin. You should see that the "Add Image" button is faded out and only when you add both values it gets solid.
+
+The `disabled` property to control this behavior is a [reactive declaration](https://svelte.dev/tutorial/reactive-declarations). It tells Svelte to re-run this code whenever one of these values changes (so it coerces the boolean when `width` and `height` changes again and again).
+
+<Alert status="success" title="What you just learned">
+
+You created the UI for TODO
+
+</Alert>
 
 ### Adding Funcionality
 
