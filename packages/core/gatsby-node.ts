@@ -26,6 +26,17 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
   })
 
   createFieldExtension({
+    name: `timeToRead`,
+    extend() {
+      return {
+        resolve() {
+          return 5
+        },
+      }
+    },
+  })
+
+  createFieldExtension({
     name: `mdxpassthrough`,
     args: {
       fieldName: `String!`,
@@ -47,8 +58,6 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       id: ID!
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 160): String!
-      body: String!
-      html: String
       tableOfContents: JSON
       timeToRead: Int
       image: String
@@ -60,15 +69,14 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       subtitle: String
       title: String!
       type: PostTypeEnum!
+      contentFilePath: String!
     }
 
     type MdxPost implements Node & Post {
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
-      body: String! @mdxpassthrough(fieldName: "body")
-      html: String! @mdxpassthrough(fieldName: "html")
       tableOfContents: JSON @mdxpassthrough(fieldName: "tableOfContents")
-      timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
+      timeToRead: Int @timeToRead
       image: String
       category: Category! @link(by: "name")
       date: Date! @dateformat
@@ -78,6 +86,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       subtitle: String
       title: String!
       type: PostTypeEnum!
+      contentFilePath: String!
     }
 
     type Category implements Node {
@@ -93,27 +102,25 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       id: ID!
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 160): String!
-      body: String!
-      html: String
       timeToRead: Int
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
+      contentFilePath: String!
     }
 
     type MdxGarden implements Node & Garden {
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
-      body: String! @mdxpassthrough(fieldName: "body")
-      html: String! @mdxpassthrough(fieldName: "html")
-      timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
+      timeToRead: Int @timeToRead
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
+      contentFilePath: String!
     }
 
     type CoreConfig implements Node {
@@ -153,29 +160,27 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
 }
 
 type WritingNode = {
-  frontmatter: {
-    slug?: string
-    image?: string
-    category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
-    date: string
-    lastUpdated?: string
-    description: string
-    published: boolean
-    subtitle?: string
-    title: string
-    type: "prose" | "tutorial"
-  }
+  slug?: string
+  image?: string
+  category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
+  date: string
+  lastUpdated?: string
+  description: string
+  published: boolean
+  subtitle?: string
+  title: string
+  type: "prose" | "tutorial"
+  contentFilePath: string
 }
 
 type GardenNode = {
-  frontmatter: {
-    slug?: string
-    date: string
-    lastUpdated?: string
-    title: string
-    tags: string[]
-    icon: string
-  }
+  slug?: string
+  date: string
+  lastUpdated?: string
+  title: string
+  tags: string[]
+  icon: string
+  contentFilePath: string
 }
 
 type MdxNode = WritingNode | GardenNode
@@ -195,8 +200,8 @@ export const onCreateNode = (
   const source = fileNode.sourceInstanceName
 
   if (source === writingSource) {
-    const f = node.frontmatter as WritingNode["frontmatter"]
-    const fieldData: WritingNode["frontmatter"] = {
+    const f = node.frontmatter as WritingNode
+    const fieldData: WritingNode = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       subtitle: f.subtitle ? f.subtitle : undefined,
@@ -207,6 +212,7 @@ export const onCreateNode = (
       description: f.description,
       published: f.published ?? true,
       type: f.type,
+      contentFilePath: fileNode.absolutePath as string,
     }
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`)
@@ -228,14 +234,15 @@ export const onCreateNode = (
   }
 
   if (source === gardenSource) {
-    const f = node.frontmatter as GardenNode["frontmatter"]
-    const fieldData: GardenNode["frontmatter"] = {
+    const f = node.frontmatter as GardenNode
+    const fieldData: GardenNode = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       date: f.date,
       lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,
       icon: f.icon,
       tags: f.tags,
+      contentFilePath: fileNode.absolutePath as string,
     }
 
     const mdxGardenId = createNodeId(`${node.id} >>> MdxGarden`)

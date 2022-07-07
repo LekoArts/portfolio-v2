@@ -8,12 +8,11 @@
     "gatsby": "^4.0.0"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.6.22",
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/react": "^2.1.2",
     "gatsby-plugin-catch-links": "next",
-    "gatsby-plugin-mdx": "next",
+    "gatsby-plugin-mdx": "mdxv4-rc",
     "gatsby-plugin-sharp": "next",
-    "gatsby-remark-images": "next",
+    "gatsby-remark-images": "mdxv4-rc",
     "gatsby-source-filesystem": "next",
     "gatsby-source-graphql": "next",
     "gatsby-transformer-sharp": "next",

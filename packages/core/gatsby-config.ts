@@ -35,7 +35,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          name: `src/pages`,
+          name: `pages`,
           path: `src/pages`,
         },
       },
@@ -54,7 +54,6 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-plugin-mdx`,
         options: {
-          lessBabel: true,
           extensions: [`.mdx`, `.md`],
           gatsbyRemarkPlugins: [
             {
@@ -66,7 +65,9 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
               },
             },
           ],
-          remarkPlugins: [remarkSlug, remarkSmartyPants],
+          mdxOptions: {
+            remarkPlugins: [remarkSlug, remarkSmartyPants],
+          },
         },
       },
       `gatsby-transformer-sharp`,
