@@ -22,6 +22,7 @@
     "prando": "^6.0.1",
     "remark-slug": "^6.0.0",
     "remark-smartypants": "^0.0.1",
+    "remark-unwrap-images": "^2.0.0",
     "ts-node": "^10.7.0",
     "utils": "^0.0.1"
   },
