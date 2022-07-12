@@ -1,6 +1,7 @@
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
+import readingTime from "reading-time"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): void => {
@@ -20,17 +21,6 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           const computedPrefix = getFieldValue(fieldName, source)
           const prefix = computedPrefix || fallback
           return slugify(source, prefix)
-        },
-      }
-    },
-  })
-
-  createFieldExtension({
-    name: `timeToRead`,
-    extend() {
-      return {
-        resolve() {
-          return 5
         },
       }
     },
@@ -76,7 +66,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       tableOfContents: JSON @mdxpassthrough(fieldName: "tableOfContents")
-      timeToRead: Int @timeToRead
+      timeToRead: Int
       image: String
       category: Category! @link(by: "name")
       date: Date! @dateformat
@@ -114,7 +104,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     type MdxGarden implements Node & Garden {
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
-      timeToRead: Int @timeToRead
+      timeToRead: Int
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       title: String!
@@ -171,6 +161,7 @@ type WritingNode = {
   title: string
   type: "prose" | "tutorial"
   contentFilePath: string
+  timeToRead: number
 }
 
 type GardenNode = {
@@ -181,6 +172,7 @@ type GardenNode = {
   tags: string[]
   icon: string
   contentFilePath: string
+  timeToRead: number
 }
 
 type MdxNode = WritingNode | GardenNode
@@ -198,6 +190,7 @@ export const onCreateNode = (
 
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
+  const timeToRead = Math.round(readingTime(node.body as string).minutes)
 
   if (source === writingSource) {
     const f = node.frontmatter as WritingNode
@@ -213,6 +206,7 @@ export const onCreateNode = (
       published: f.published ?? true,
       type: f.type,
       contentFilePath: fileNode.absolutePath as string,
+      timeToRead,
     }
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`)
@@ -243,6 +237,7 @@ export const onCreateNode = (
       icon: f.icon,
       tags: f.tags,
       contentFilePath: fileNode.absolutePath as string,
+      timeToRead,
     }
 
     const mdxGardenId = createNodeId(`${node.id} >>> MdxGarden`)
