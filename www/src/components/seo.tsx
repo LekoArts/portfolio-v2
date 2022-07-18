@@ -1,6 +1,4 @@
 import * as React from "react"
-import { Helmet } from "react-helmet-async"
-import { useLocation } from "@gatsbyjs/reach-router"
 import { breadcrumbList, BreadcrumbListItem } from "../constants/json-ld"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
@@ -28,19 +26,18 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
   breadcrumbListItems = [],
   children,
 }) => {
-  const { href } = useLocation()
   const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = useSiteMetadata()
 
   const seo = {
     title: title || siteTitleDefault,
     description: description || siteDescription,
-    url: pathname ? `${siteUrl}${pathname}` : href,
+    url: `${siteUrl}${pathname || ``}`,
     image: `${siteUrl}${image || siteImage}`,
   }
 
   return (
-    <Helmet title={title} defaultTitle={siteTitleDefault} titleTemplate={`%s | ${siteTitle}`} key={seo.url}>
-      <html lang="en-US" />
+    <>
+      <title>{`${seo.title} | ${siteTitle}`}</title>
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
       <link rel="canonical" href={seo.url} />
@@ -69,6 +66,6 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
         <script type="application/ld+json">{JSON.stringify(breadcrumbList(breadcrumbListItems))}</script>
       )}
       {children}
-    </Helmet>
+    </>
   )
 }

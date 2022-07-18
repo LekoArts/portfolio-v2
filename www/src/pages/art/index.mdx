@@ -1,11 +1,13 @@
 import { MDXLayout as PageLayout } from "../../components/blocks/mdx-layout"
 import { SEO } from "../../components/seo"
 
-<SEO
-  title="Art"
-  description="Besides software development I have another huge passion of mine: Designing UI in Figma, creating photo manipulations in Photoshop, tinkering with abstract art in Cinema4D, and exploring nature & capturing it with my Fujifilm camera. Or in other words: I enjoy art!"
-  breadcrumbListItems={[{ name: `Art`, url: `/art` }]}
-/>
+export const Head = () => (
+  <SEO
+    title="Art"
+    description="Besides software development I have another huge passion of mine: Designing UI in Figma, creating photo manipulations in Photoshop, tinkering with abstract art in Cinema4D, and exploring nature & capturing it with my Fujifilm camera. Or in other words: I enjoy art!"
+    breadcrumbListItems={[{ name: `Art`, url: `/art` }]}
+  />
+)
 
 export default PageLayout
 

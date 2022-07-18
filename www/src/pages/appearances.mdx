@@ -1,11 +1,13 @@
 import { MDXLayout as PageLayout } from "../components/blocks/mdx-layout"
 import { SEO } from "../components/seo"
 
-<SEO
-  title="Appearances"
-  description="Over the last couple of years I've given various talks and demos at conferences & meetups. In this overview you can find them all, plus links to slides & videos."
-  breadcrumbListItems={[{ name: `Appearances`, url: `/appearances` }]}
-/>
+export const Head = () => (
+  <SEO
+    title="Appearances"
+    description="Over the last couple of years I've given various talks and demos at conferences & meetups. In this overview you can find them all, plus links to slides & videos."
+    breadcrumbListItems={[{ name: `Appearances`, url: `/appearances` }]}
+  />
+)
 
 export default PageLayout
 

@@ -9,14 +9,16 @@ import crimsonProVariableWoff2 from "./src/assets/fonts/Crimson-Pro.var.woff2"
 const PLAUSIBLE_DOMAIN = `plausible.io`
 const SCRIPT_URI = `/js/plausible.js`
 
-export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents }) => {
+export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, setHtmlAttributes }) => {
+  setHtmlAttributes({ lang: `en-US` })
+
   if (process.env.NODE_ENV === `production`) {
     const scriptProps = {
       "data-domain": site.dataDomain,
       src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
     }
 
-    return setHeadComponents([
+    setHeadComponents([
       <link rel="preload" href="/icons.svg" as="image" type="image/svg+xml" key="svgIcons" />,
       <link
         rel="preload"
@@ -47,5 +49,4 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents }) =
       />,
     ])
   }
-  return null
 }
