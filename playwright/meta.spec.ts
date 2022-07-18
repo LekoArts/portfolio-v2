@@ -40,6 +40,14 @@ const metaTagAssertions = [
         key: `og:image`,
         value: `https://www.lekoarts.de/og-images/dsg-analytics.png`,
       },
+      {
+        key: `twitter:label2`,
+        value: `Category`,
+      },
+      {
+        key: `twitter:data2`,
+        value: `Gatsby`,
+      },
     ],
   },
   {
@@ -58,6 +66,14 @@ const metaTagAssertions = [
       {
         key: `og:image`,
         value: `https://www.lekoarts.de/social/digital-garden.png`,
+      },
+      {
+        key: `twitter:label2`,
+        value: `Category`,
+      },
+      {
+        key: `twitter:data2`,
+        value: `gatsby`,
       },
     ],
   },
@@ -80,7 +96,7 @@ const noIndexPages = [
 
 test.describe(`Meta Tags`, () => {
   for (const assertion of metaTagAssertions) {
-    test(`${assertion.name} should have correct information`, async ({ page }) => {
+    test(`${assertion.name} should have correct individual tags`, async ({ page }) => {
       await page.goto(assertion.url)
       await expect(page).toHaveTitle(assertion.title)
       for (const tag of assertion.metaTags) {
@@ -96,4 +112,24 @@ test.describe(`Meta Tags`, () => {
       await expect(content).toStrictEqual(`noindex, nofollow`)
     })
   }
+  test(`should be correct generally speaking`, async ({ page }) => {
+    await page.goto(`/`)
+    const lang = await page.locator(`html`).getAttribute(`lang`)
+    expect(lang).toBe(`en-US`)
+  })
+  test(`should be correct on category pages`, async ({ page }) => {
+    await page.goto(`/tutorials`)
+    await expect(page).toHaveTitle(`Tutorials | ${site.title}`)
+    const desc1 = await page.locator(`meta[name="og:description"]`).getAttribute(`content`)
+    expect(desc1).toStrictEqual(
+      `Tutorials across different categories in a longform format & with interactive elements`
+    )
+
+    await page.goto(`/community`)
+    await expect(page).toHaveTitle(`Community | ${site.title}`)
+    const desc2 = await page.locator(`meta[name="og:description"]`).getAttribute(`content`)
+    expect(desc2).toStrictEqual(
+      `Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal.`
+    )
+  })
 })
