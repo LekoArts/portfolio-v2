@@ -13,7 +13,7 @@ type SEOProps = {
 
 /* istanbul ignore next */
 const faviconSrc =
-  process.env.NODE_ENV === `production`
+  process.env.NODE_ENV === `production` || process.env.NODE_ENV === `test`
     ? `/favicon.svg`
     : `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>`
 
@@ -29,7 +29,7 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
   const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = useSiteMetadata()
 
   const seo = {
-    title: title || siteTitleDefault,
+    title: title ? `${title} | ${siteTitle}` : siteTitleDefault,
     description: description || siteDescription,
     url: `${siteUrl}${pathname || ``}`,
     image: `${siteUrl}${image || siteImage}`,
@@ -37,7 +37,7 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
 
   return (
     <>
-      <title>{`${seo.title} | ${siteTitle}`}</title>
+      <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
       <link rel="canonical" href={seo.url} />
