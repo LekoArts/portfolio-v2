@@ -43,10 +43,12 @@ const metaTagAssertions = [
       {
         key: `twitter:label2`,
         value: `Category`,
+        type: `name`,
       },
       {
         key: `twitter:data2`,
         value: `Gatsby`,
+        type: `name`,
       },
     ],
   },
@@ -70,10 +72,12 @@ const metaTagAssertions = [
       {
         key: `twitter:label2`,
         value: `Category`,
+        type: `name`,
       },
       {
         key: `twitter:data2`,
         value: `gatsby`,
+        type: `name`,
       },
     ],
   },
@@ -100,7 +104,14 @@ test.describe(`Meta Tags`, () => {
       await page.goto(assertion.url)
       await expect(page).toHaveTitle(assertion.title)
       for (const tag of assertion.metaTags) {
-        const content = await page.locator(`meta[property="${tag.key}"]`).getAttribute(`content`)
+        let content: string | null
+
+        if (tag.type === `name`) {
+          content = await page.locator(`meta[name="${tag.key}"]`).getAttribute(`value`)
+        } else {
+          content = await page.locator(`meta[property="${tag.key}"]`).getAttribute(`content`)
+        }
+
         await expect(content).toContain(tag.value)
       }
     })
@@ -120,14 +131,14 @@ test.describe(`Meta Tags`, () => {
   test(`should be correct on category pages`, async ({ page }) => {
     await page.goto(`/tutorials`)
     await expect(page).toHaveTitle(`Tutorials | ${site.title}`)
-    const desc1 = await page.locator(`meta[name="og:description"]`).getAttribute(`content`)
+    const desc1 = await page.locator(`meta[property="og:description"]`).getAttribute(`content`)
     expect(desc1).toStrictEqual(
       `Tutorials across different categories in a longform format & with interactive elements`
     )
 
     await page.goto(`/community`)
     await expect(page).toHaveTitle(`Community | ${site.title}`)
-    const desc2 = await page.locator(`meta[name="og:description"]`).getAttribute(`content`)
+    const desc2 = await page.locator(`meta[property="og:description"]`).getAttribute(`content`)
     expect(desc2).toStrictEqual(
       `Building an engaging & inclusive community is hard and takes work. From the perspective of an open source maintainer I want to help you achieve this goal.`
     )
