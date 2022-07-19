@@ -326,7 +326,7 @@ export default Index
 
 export const Head = () => (
   <SEO>
-    <script type="application/ld+json">{JSON.stringify(homepage)}</script>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepage) }} />
   </SEO>
 )
 

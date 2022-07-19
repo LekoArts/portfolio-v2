@@ -40,26 +40,29 @@ export const Head: HeadFC<WritingViewDataProps> = ({ data: { post } }) => (
     <meta name="twitter:data2" value={post.category.name} />
     <meta name="article:published_time" content={post.seoDate} />
     <meta name="article:modified_time" content={post.seoLastUpdated} />
-    <script type="application/ld+json">
-      {JSON.stringify(
-        article({
-          isGarden: false,
-          post: {
-            title: post.title,
-            description: post.description ? post.description : post.excerpt,
-            date: post.seoDate,
-            lastUpdated: post.seoLastUpdated,
-            year: post.yearDate,
-            image: post.image,
-            slug: post.slug,
-          },
-          category: {
-            name: post.category.name,
-            slug: post.category.slug,
-          },
-        })
-      )}
-    </script>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(
+          article({
+            isGarden: false,
+            post: {
+              title: post.title,
+              description: post.description ? post.description : post.excerpt,
+              date: post.seoDate,
+              lastUpdated: post.seoLastUpdated,
+              year: post.yearDate,
+              image: post.image,
+              slug: post.slug,
+            },
+            category: {
+              name: post.category.name,
+              slug: post.category.slug,
+            },
+          })
+        ),
+      }}
+    />
   </SEO>
 )
 

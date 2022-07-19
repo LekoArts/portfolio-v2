@@ -63,7 +63,10 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
       <meta name="msapplication-TileColor" content="#0f172a" />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {breadcrumbListItems.length >= 1 && (
-        <script type="application/ld+json">{JSON.stringify(breadcrumbList(breadcrumbListItems))}</script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList(breadcrumbListItems)) }}
+        />
       )}
       {children}
     </>

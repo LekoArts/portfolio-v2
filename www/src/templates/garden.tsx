@@ -167,26 +167,29 @@ export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
     <meta name="twitter:data2" value={garden.icon} />
     <meta name="article:published_time" content={garden.seoDate} />
     <meta name="article:modified_time" content={garden.seoLastUpdated} />
-    <script type="application/ld+json">
-      {JSON.stringify(
-        article({
-          isGarden: true,
-          post: {
-            title: garden.title,
-            description: garden.excerpt,
-            slug: garden.slug,
-            image: `/social/digital-garden.png`,
-            date: garden.seoDate,
-            lastUpdated: garden.seoLastUpdated,
-            year: garden.yearDate,
-          },
-          category: {
-            name: `Digital Garden`,
-            slug: `/garden`,
-          },
-        })
-      )}
-    </script>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(
+          article({
+            isGarden: true,
+            post: {
+              title: garden.title,
+              description: garden.excerpt,
+              slug: garden.slug,
+              image: `/social/digital-garden.png`,
+              date: garden.seoDate,
+              lastUpdated: garden.seoLastUpdated,
+              year: garden.yearDate,
+            },
+            category: {
+              name: `Digital Garden`,
+              slug: `/garden`,
+            },
+          })
+        ),
+      }}
+    />
   </SEO>
 )
 
