@@ -24,7 +24,7 @@ const metaTagAssertions = [
     ],
   },
   {
-    name: `Blog Post`,
+    name: `Blog Post (Tutorial)`,
     url: `/gatsby/using-deferred-static-generation-with-analytics-tools`,
     title: `Using Deferred Static Generation with Analytics Tools | ${site.title}`,
     metaTags: [
@@ -48,6 +48,35 @@ const metaTagAssertions = [
       {
         key: `twitter:data2`,
         value: `Gatsby`,
+        type: `name`,
+      },
+    ],
+  },
+  {
+    name: `Blog Post (Prose)`,
+    url: `/design/introducing-the-theme-ui-plugin-for-figma`,
+    title: `Introducing the Theme UI Plugin for Figma | ${site.title}`,
+    metaTags: [
+      {
+        key: `og:title`,
+        value: `Introducing the Theme UI Plugin for Figma`,
+      },
+      {
+        key: `og:description`,
+        value: `The Theme UI plugin for Figma allows for a workflow where Theme UI is the starting point both for design & development.`,
+      },
+      {
+        key: `og:image`,
+        value: `https://www.lekoarts.de/og-images/theme-ui-plugin.png`,
+      },
+      {
+        key: `twitter:label2`,
+        value: `Category`,
+        type: `name`,
+      },
+      {
+        key: `twitter:data2`,
+        value: `Design`,
         type: `name`,
       },
     ],
@@ -102,7 +131,9 @@ test.describe(`Meta Tags`, () => {
   for (const assertion of metaTagAssertions) {
     test(`${assertion.name} should have correct individual tags`, async ({ page }) => {
       await page.goto(assertion.url)
+
       await expect(page).toHaveTitle(assertion.title)
+
       for (const tag of assertion.metaTags) {
         let content: string | null
 
@@ -119,7 +150,9 @@ test.describe(`Meta Tags`, () => {
   for (const assertion of noIndexPages) {
     test(`${assertion.name} should have noindex meta tag`, async ({ page }) => {
       await page.goto(assertion.url)
+
       const content = await page.locator(`meta[name="robots"]`).getAttribute(`content`)
+
       await expect(content).toStrictEqual(`noindex, nofollow`)
     })
   }
