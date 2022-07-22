@@ -44,7 +44,12 @@ export type WritingViewDataProps = {
   type: "prose" | "tutorial"
 }
 
-const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({ post, pathname, children, type }) => {
+export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({
+  post,
+  pathname,
+  children,
+  type,
+}) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
   React.useEffect(() => {
@@ -117,8 +122,6 @@ const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({ 
     </Layout>
   )
 }
-
-export default WritingView
 
 export const query = graphql`
   fragment WritingView on Post {
