@@ -12,6 +12,8 @@ export type SVGIconNames =
   | "python"
   | "react"
   | "typescript"
+  | "pause"
+  | "play"
 
 type SVGIconProps = {
   id: SVGIconNames
