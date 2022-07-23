@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Box } from "@chakra-ui/react"
 import { site } from "../../constants/meta"
+import { SVGIcon } from "../blocks/svg-icon"
 
 type VideoProps = {
   src: string
@@ -9,41 +10,10 @@ type VideoProps = {
   maxWidth?: string
 }
 
-const PauseIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="6" y="4" width="4" height="16" />
-    <rect x="14" y="4" width="4" height="16" />
-  </svg>
-)
-
-const PlayIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ left: `10px` }}
-  >
-    <polygon points="5 3 19 12 5 21 5 3" />
-  </svg>
-)
-
-const FigureWrapper: React.FC<{ description: VideoProps["description"] }> = ({ description, children }) => {
+const FigureWrapper: React.FC<React.PropsWithChildren<{ description: VideoProps["description"] }>> = ({
+  description,
+  children,
+}) => {
   if (description) {
     return (
       <figure>
@@ -52,12 +22,13 @@ const FigureWrapper: React.FC<{ description: VideoProps["description"] }> = ({ d
       </figure>
     )
   }
-  return <React.Fragment>{children}</React.Fragment>
+  return <>{children}</>
 }
 
 export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoProps) => {
   const videoRef = React.useRef(null)
   const [play, setPlay] = React.useState(true)
+  const iconSize = `26px`
 
   const playVideo = () => {
     videoRef.current.play()
@@ -113,7 +84,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           margin="auto"
           width="64px"
           height="64px"
-          background="rgba(0, 0, 0, 0.5)"
+          background="rgba(0, 0, 0, 0.6)"
           borderRadius="50%"
           color="white"
           display="flex"
@@ -126,7 +97,11 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
             opacity: 1,
           }}
         >
-          {play ? <PauseIcon /> : <PlayIcon />}
+          {play ? (
+            <SVGIcon id="pause" width={iconSize} height={iconSize} style={{ strokeWidth: `2px` }} />
+          ) : (
+            <SVGIcon id="play" width={iconSize} height={iconSize} style={{ marginLeft: `5px`, strokeWidth: `2px` }} />
+          )}
         </Box>
       </Box>
     </FigureWrapper>
