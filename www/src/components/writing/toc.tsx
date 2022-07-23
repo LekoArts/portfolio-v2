@@ -38,10 +38,9 @@ const renderItems = ({
       const isActive = activeId === itemId
 
       return (
-        <>
+        <React.Fragment key={item.url}>
           <Link
             color={isActive ? activeColor : `inherit`}
-            key={item.url}
             mt={nested ? 1 : { base: `2`, "2xl": `3` }}
             ml={nested ? 3 : 0}
             href={item.url}
@@ -49,7 +48,7 @@ const renderItems = ({
             {item.title}
           </Link>
           {item.items && renderItems({ items: item.items, activeId, activeColor, nested: true })}
-        </>
+        </React.Fragment>
       )
     })}
   </>

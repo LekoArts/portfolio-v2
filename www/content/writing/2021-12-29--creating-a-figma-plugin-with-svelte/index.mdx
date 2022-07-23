@@ -139,7 +139,7 @@ figma.showUI(__html__, { width: 320, height: 220 })
 
 From Figma's [API documentation](https://www.figma.com/plugin-docs/api/properties/figma-showui/) about `showUI`:
 
-> Enables you to render UI to interact with the user, or simply to access browser APIs. This function creates a modal dialog with an <iframe> containing the HTML markup in the html argument.
+> Enables you to render UI to interact with the user, or simply to access browser APIs. This function creates a modal dialog with an iframe containing the HTML markup in the html argument.
 
 In order to load `App.svelte` the `main.ts` file sets up the app onto the `document.body`:
 
@@ -252,11 +252,11 @@ const config = [mainConfig, codeConfig]
 export default config
 ```
 
-<Collapsible summary={<em>Detailed explanation of <code>rollup.config.js</code></em>}>
+<Alert status="info" title="Rollup Configuration">
 
-TODO
+I don't want to focus too much on Rollup in this guide as it's just a build tool. If you have specific questions about this setup, feel free to ask me on [Twitter](https://twitter.com/lekoarts_de).
 
-</Collapsible>
+</Alert>
 
 Now it's time you try out what you have so far in Figma. In your terminal, run:
 
@@ -402,7 +402,7 @@ Create a new file called `Input.svelte` inside `src`:
     width: 100%;
     height: 30px;
     margin: 1px 0 1px 0;
-    padding: var(--size-xxsmall) var(--size-xxxsmall) var(--size-xxsmall) var(--size-xxsmall);
+    padding: var(--size-xxsmall) var(--size-xxxsmall);
     color: var(--black8);
     border: 1px solid transparent;
     border-radius: var(--border-radius-small);
@@ -499,11 +499,11 @@ You can use multiple ways of styling and CSS with Svelte, in this example you've
 
 </Alert>
 
-### Adding UI Funcionality
+### UI Funcionality
 
 Now that the UI is in place, the last task is to wire up the business logic to add an image onto the canvas. For this you'll use the Figma plugin API `figma.ui.onmessage` to listen for calls in the UI. The Svelte UI will call this handler after fetching data from Unsplash's API. There are some interesting quirks when creating an image in Figma, you'll learn those when creating the `createImage` function.
 
-#### Fetching an Image from Unsplash's API
+#### Fetch Unsplash's API
 
 To get started, create an async function called `getImage` and define a `API_URL` constant inside your `App.svelte`:
 
@@ -554,7 +554,7 @@ async function getImage() {
 
 You can now successfully fetch a random image from Unsplash 🎉 As a next step you have to add an `addImage` function that is called when you press the "Add Image" button in the UI.
 
-#### UI States & Calling `postMessage`
+#### Calling `postMessage`
 
 Fetching data from remote APIs should always be handled gracefully since a lot of things can go wrong. User input might be wrong, your user is offline, or the remote API itself has problems. To not let the user waiting without any information it's good UX to add loading and error states to your UI.
 
@@ -588,7 +588,7 @@ The `addImage` function will do the following:
 - Set the `loading` state to `true` before doing any actual work
 - In a `try/catch` block (to gracefully handle any errors) use the `getImage()` function to set the `imageBytes` variable
 - If an error occurs, the `error` is populated with an error message
-- Send the `imageBytes` and other metadata to the UI's `<iframe>` window via [`postMessage`](https://www.figma.com/plugin-docs/api/properties/figma-ui-postmessage/)
+- Send the `imageBytes` and other metadata to the UI's `iframe` window via [`postMessage`](https://www.figma.com/plugin-docs/api/properties/figma-ui-postmessage/)
 
 The last item in this list is probably the most important piece of this function. The `postMessage` function is the interface to communicate any arbitrary information from your UI to Figma's `onmessage` API.
 
@@ -767,7 +767,7 @@ You can now try out what you have so far in Figma. If you enter valid entries fo
 
 </Alert>
 
-### Placing Images onto the Canvas
+### Placing Images
 
 Remember the `code.ts` file you created at the beginning? It's now time to come back to this file. With the `onmessage` handler you'll use the message that the UI sends via the `postMessage` function to place images onto the canvas. For this you learn how to create a reusable `createImage` helper function.
 
@@ -832,17 +832,82 @@ Your last task is to author the `createImage` function. Here's what it'll do:
 
 - Call Figma's [`createImage` API](https://www.figma.com/plugin-docs/api/properties/figma-createimage/) to create an `Image` object. This quote from the API docs is quite important:
   > Note that Image objects are not nodes. They are handles to images stored by Figma. Frame backgrounds, or fills of shapes (e.g. a rectangle) may contain images.
+- Create a `fill` object with the result of `createImage`. `fill` is used since images in Figma are not layers but fill types for a shape
+- Create a rectangle with the size of given `width` and `height` input. Mark the position as the center of the canvas
+- Apply the previously created `fill` type to the rectangle
+- Append the rectangle to the canvas and zoom + focus on it
 
-TODO
+The complete `code.ts` should look like this:
 
-- getImage
-- addImage
-- code.ts `postMessage`
+```ts title=src/code.ts
+figma.showUI(__html__, { width: 320, height: 220 })
+
+interface IPayload {
+  imageBytes: Uint8Array
+  width?: number
+  height?: number
+}
+
+interface IMessage {
+  type: "ADD_IMAGE"
+  payload: IPayload
+}
+
+function createImage({
+  imageBytes,
+  width = 800,
+  height = 800,
+}: IPayload): void {
+  const image = figma.createImage(imageBytes)
+  const imageHash = image.hash
+  // An image in Figma is not a layer, but a fill type for a shape
+  const fill: ImagePaint = {
+    type: "IMAGE",
+    imageHash,
+    scaleMode: "FILL",
+  }
+  const rect = figma.createRectangle()
+  rect.resize(width, height)
+  rect.x = figma.viewport.center.x - Math.round(width / 2)
+  rect.y = figma.viewport.center.y - Math.round(height / 2)
+  rect.name = `Random Unsplash Image`
+  rect.fills = [fill]
+
+  figma.currentPage.appendChild(rect)
+  figma.currentPage.selection = [rect]
+  figma.viewport.scrollAndZoomIntoView([rect])
+}
+
+figma.ui.onmessage = (msg: IMessage) => {
+  const { type, payload } = msg
+
+  if (type === `ADD_IMAGE`) {
+    if (payload.imageBytes) {
+      const { imageBytes, width, height } = payload
+      createImage({ imageBytes, width, height })
+    }
+  }
+
+  figma.closePlugin()
+}
+```
+
+Try it out! You should get an image onto your canvas now when pressing the "Add Image" button 🎉
+
+<Alert status="success" title="What you just learned">
+
+You've finished this tutorial, congrats! Using the `createImage` API from Figma you created an `Image` object. Then you've applied this as a fill to a shape (since images in Figma are shapes with a image fill type) and then wired it all up with the UI.
+
+</Alert>
 
 ## Publishing
 
-TODO
+This section is totally optional, you can continue to use your plugin locally without ever publishing it.
+
+When you go to _Menu => Plugins => Development => Manage plugins in development_ you can click on the three dots of your plugin and press _Publish_. Also see Figma's [guide on publishing](https://www.figma.com/plugin-docs/publishing/).
 
 ## Next Steps
 
-TODO
+You can use the result of this guide or my [figma-plugin-svelte-example](https://github.com/LekoArts/figma-plugin-svelte-example) project as a template for any future Svelte Figma plugins.
+
+Built something cool with this tutorial or the template? Let me know on [Twitter](https://twitter.com/lekoarts_de)!
