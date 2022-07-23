@@ -14,7 +14,7 @@ published: true
 
 For me personally [Figma](https://www.figma.com) was certainly **the tool** that changed my webdesign workflow the most, and for the better. Coming from Photoshop it's the much better tool for the job and it also enabled me way quicker to write plugins for it. If you know HTML, CSS, and JS you can write a Figma plugin! The [Figma Developers documentation](https://www.figma.com/plugin-docs/intro/) explains the fundamentals about Figma plugins and also how you can e.g. create one with React. However, in this tutorial you'll (potentially) step out of your comfort zone and learn how to use Svelte, TypeScript, and [Rollup](https://rollupjs.org/guide/en/) to write a plugin for Figma.
 
-The popularity of [Svelte](https://svelte.dev/) is rising and more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolbelt and to have some familarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams – and super extensible with plugins.
+The popularity of [Svelte](https://svelte.dev/) is rising and more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolset and to have some familiarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams – and super extensible with plugins.
 
 Here's what you'll build. You can pull a random image from [Unsplash](https://unsplash.com/) in the given size:
 
@@ -499,7 +499,7 @@ You can use multiple ways of styling and CSS with Svelte, in this example you've
 
 </Alert>
 
-### UI Funcionality
+### UI Familiarity
 
 Now that the UI is in place, the last task is to wire up the business logic to add an image onto the canvas. For this you'll use the Figma plugin API `figma.ui.onmessage` to listen for calls in the UI. The Svelte UI will call this handler after fetching data from Unsplash's API. There are some interesting quirks when creating an image in Figma, you'll learn those when creating the `createImage` function.
 
