@@ -1,8 +1,8 @@
 ---
 title: "Creating a Figma Plugin with Svelte"
 subtitle: ""
-date: 2022-06-17
-lastUpdated: 2022-06-17
+date: 2022-07-23
+lastUpdated: 2022-07-23
 description: "Learn how to use Svelte, TypeScript, and Rollup to create a lean & fast Figma Plugin. You'll access the Unsplash API to fetch a random image."
 type: "tutorial"
 category: "JavaScript"
@@ -14,7 +14,7 @@ published: true
 
 For me personally [Figma](https://www.figma.com) was certainly **the tool** that changed my webdesign workflow the most, and for the better. Coming from Photoshop it's the much better tool for the job and it also enabled me way quicker to write plugins for it. If you know HTML, CSS, and JS you can write a Figma plugin! The [Figma Developers documentation](https://www.figma.com/plugin-docs/intro/) explains the fundamentals about Figma plugins and also how you can e.g. create one with React. However, in this tutorial you'll (potentially) step out of your comfort zone and learn how to use Svelte, TypeScript, and [Rollup](https://rollupjs.org/guide/en/) to write a plugin for Figma.
 
-The popularity of [Svelte](https://svelte.dev/) is rising and more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolbelt and to have some familarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams -- and super extensible with plugins.
+The popularity of [Svelte](https://svelte.dev/) is rising and more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolbelt and to have some familarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams – and super extensible with plugins.
 
 Here's what you'll build. You can pull a random image from [Unsplash](https://unsplash.com/) in the given size:
 
@@ -137,7 +137,9 @@ The `code.ts` will be responsible for creating the iframe and listening for mess
 figma.showUI(__html__, { width: 320, height: 220 })
 ```
 
-<!-- TODO: Explain what figma.showUI does -->
+From Figma's [API documentation](https://www.figma.com/plugin-docs/api/properties/figma-showui/) about `showUI`:
+
+> Enables you to render UI to interact with the user, or simply to access browser APIs. This function creates a modal dialog with an <iframe> containing the HTML markup in the html argument.
 
 In order to load `App.svelte` the `main.ts` file sets up the app onto the `document.body`:
 
@@ -152,7 +154,7 @@ const app = new App({
 export default app
 ```
 
-And now you can write Svelte code! Start with -- of course 😉 -- a "Hello World":
+And now you can write Svelte code! Start with – of course 😉 – a "Hello World":
 
 ```svelte title=src/App.svelte
 <div>Hello World</div>
@@ -294,7 +296,7 @@ The Figma Plugin DS Svelte will serve you in two ways:
 
 In order to use Figma Plugin DS Svelte you'll need to add its `GlobalCSS` import to your `App.svelte` to have the CSS styles available.
 
-```svelte title=App.svelte
+```svelte title=src/App.svelte
 <script lang="ts">
   import { GlobalCSS } from "figma-plugin-ds-svelte"
 </script>
@@ -302,7 +304,7 @@ In order to use Figma Plugin DS Svelte you'll need to add its `GlobalCSS` import
 
 Then you have the utility classes (similar to Tailwind CSS) and CSS variables available. Create a wrapper component for the contents that will follow:
 
-```svelte title=App.svelte
+```svelte title=src/App.svelte
 <script lang="ts">
   import { GlobalCSS } from "figma-plugin-ds-svelte"
 </script>
@@ -337,7 +339,7 @@ In the rest of this tutorial the `<style>` block inside `App.svelte` won't chang
 
 Time to add some inputs. For this, add the `Type`, `Label`, and `Button` component to your `App.svelte`:
 
-```svelte title=App.svelte {2,6-30}
+```svelte title=src/App.svelte {2,6-30}
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
 </script>
@@ -445,12 +447,13 @@ It's not exactly the same as the `<Input />` component from `figma-plugin-ds-sve
 
 Now it's time to use the `<Input />` component in your `App.svelte`:
 
-```svelte title=App.svelte {3-9,21,25,29}
+```svelte title=src/App.svelte {3-9,21,25,29}
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"
 
   let disabled = true
+
   let width = 800
   let height = 800
 
@@ -492,11 +495,343 @@ The `disabled` property to control this behavior is a [reactive declaration](htt
 
 <Alert status="success" title="What you just learned">
 
-You created the UI for TODO
+You can use multiple ways of styling and CSS with Svelte, in this example you've used a combination of global CSS (provided by a third-party package) and defining your own `<style>` blocks. You've also created your own `<Input />` component to correctly handle number inputs. Lastly, using the reactive declaration syntax the "Add Image" button gets disabled if not every necessary input is provided.
 
 </Alert>
 
-### Adding Funcionality
+### Adding UI Funcionality
+
+Now that the UI is in place, the last task is to wire up the business logic to add an image onto the canvas. For this you'll use the Figma plugin API `figma.ui.onmessage` to listen for calls in the UI. The Svelte UI will call this handler after fetching data from Unsplash's API. There are some interesting quirks when creating an image in Figma, you'll learn those when creating the `createImage` function.
+
+#### Fetching an Image from Unsplash's API
+
+To get started, create an async function called `getImage` and define a `API_URL` constant inside your `App.svelte`:
+
+```svelte title=src/App.svelte {5,13}
+<script lang="ts">
+  import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
+  import Input from "./Input.svelte"
+
+  const API_URL = "https://source.unsplash.com/random/"
+  let disabled = true
+
+  let width = 800
+  let height = 800
+
+  $: disabled = !(!!width && !!height)
+
+  async function getImage() {}
+</script>
+```
+
+Here's what the function will do:
+
+- Validate that the necessary input (`width` and `height`) is valid
+- Call the `/random` API endpoint from Unsplash to get redirected to a random image
+- Fetch the image that was chosen by the `/random` endpoint
+- Return the image as `Uint8Array` since the [`createImage` plugin API](https://www.figma.com/plugin-docs/api/properties/figma-createimage) requires this as input
+
+The complete function should look like this:
+
+```ts
+async function getImage() {
+  if (Math.sign(width) === -1 || Math.sign(height) === -1) {
+    throw new Error("Enter positive values for height/width")
+  }
+  // It redirects to the URL of the actual image
+  const initialResponse = await self.fetch(`${API_URL}${width}x${height}`)
+
+  if (initialResponse.ok) {
+    // Fetch the actual image
+    const res = await self.fetch(initialResponse.url)
+    const buffer = await res.arrayBuffer()
+    return new Uint8Array(buffer)
+  } else {
+    throw new Error(initialResponse.statusText)
+  }
+}
+```
+
+You can now successfully fetch a random image from Unsplash 🎉 As a next step you have to add an `addImage` function that is called when you press the "Add Image" button in the UI.
+
+#### UI States & Calling `postMessage`
+
+Fetching data from remote APIs should always be handled gracefully since a lot of things can go wrong. User input might be wrong, your user is offline, or the remote API itself has problems. To not let the user waiting without any information it's good UX to add loading and error states to your UI.
+
+Add new variables called `error`, `loading`, and `imageBytes` to `App.svelte`. Also add an async function called `addImage`:
+
+```svelte title=src/App.svelte {7,8,10,18}
+<script lang="ts">
+  import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
+  import Input from "./Input.svelte"
+
+  const API_URL = "https://source.unsplash.com/random/"
+  let disabled = true
+  let error = ""
+  let loading = false
+
+  let imageBytes = null
+  let width = 800
+  let height = 800
+
+  $: disabled = !(!!width && !!height)
+
+  async function getImage() {/* Function body */}
+
+  async function addImage() {}
+</script>
+```
+
+The `addImage` function will do the following:
+
+- Reset the `error` state to an empty array (so that subsequent errors are not merged when you press the "Add Image" multiple times)
+- Set the `loading` state to `true` before doing any actual work
+- In a `try/catch` block (to gracefully handle any errors) use the `getImage()` function to set the `imageBytes` variable
+- If an error occurs, the `error` is populated with an error message
+- Send the `imageBytes` and other metadata to the UI's `<iframe>` window via [`postMessage`](https://www.figma.com/plugin-docs/api/properties/figma-ui-postmessage/)
+
+The last item in this list is probably the most important piece of this function. The `postMessage` function is the interface to communicate any arbitrary information from your UI to Figma's `onmessage` API.
+
+The first argument of `postMessage` can be almost any data type or plain object, as long as it's a serializable object (more fundamentals available in [Creating User Interfaces](https://www.figma.com/plugin-docs/creating-ui/)). I've chosen to model the message that is sent as a "Redux Action"-like format of an object with a `type` and `payload`. This way you can use multiple different `postMessage` in the future if you have a need for that.
+
+Here's the code for the `addImage` function:
+
+```ts
+async function addImage() {
+  error = ""
+  loading = true
+  try {
+    const result = await getImage()
+    loading = false
+    imageBytes = result
+  } catch (errorMsg) {
+    loading = false
+    error = errorMsg
+    return
+  }
+
+  parent.postMessage(
+    {
+      pluginMessage: {
+        type: "ADD_IMAGE",
+        payload: {
+          imageBytes,
+          width,
+          height,
+        },
+      },
+    },
+    "*"
+  )
+}
+```
+
+Hang tight, only one more things is necessary to finish up the Svelte functionality. Call the `addImage` function when clicking the "Add Image" button and conditionally show loading or error states.
+
+You can do so by adding an `on:click` handler to the button:
+
+```svelte
+<Button {disabled} on:click={addImage}>Add Image</Button>
+```
+
+Below the button you can show the loading and error states:
+
+```svelte
+<div class="mt-xxsmall flex justify-content-center">
+  <Button {disabled} on:click={addImage}>Add Image</Button>
+</div>
+{#if loading}
+  <div class="mt-xxsmall"><Type weight="medium">Loading image...</Type></div>
+{/if}
+{#if error}
+  <div class="mt-xxsmall"><Type color="red" weight="medium">{error}</Type></div>
+{/if}
+```
+
+Your `App.svelte` is now complete and should look like this:
+
+```svelte title=src/App.svelte
+<script lang="ts">
+  import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
+  import Input from "./Input.svelte"
+
+  const API_URL = "https://source.unsplash.com/random/"
+  let disabled = true
+  let error = ""
+  let loading = false
+
+  let imageBytes = null
+  let width = 800
+  let height = 800
+
+  $: disabled = !(!!width && !!height)
+
+  async function getImage() {
+    if (Math.sign(width) === -1 || Math.sign(height) === -1) {
+      throw new Error("Enter positive values for height/width")
+    }
+    // It redirects to the URL of the actual image
+    const initialResponse = await self.fetch(`${API_URL}${width}x${height}`)
+
+    if (initialResponse.ok) {
+      // Fetch the actual image
+      const res = await self.fetch(initialResponse.url)
+      const buffer = await res.arrayBuffer()
+      return new Uint8Array(buffer)
+    } else {
+      throw new Error(initialResponse.statusText)
+    }
+  }
+
+  async function addImage() {
+    error = ""
+    loading = true
+    try {
+      const result = await getImage()
+      loading = false
+      imageBytes = result
+    } catch (errorMsg) {
+      loading = false
+      error = errorMsg
+      return
+    }
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "ADD_IMAGE",
+          payload: {
+            imageBytes,
+            width,
+            height,
+          },
+        },
+      },
+      "*"
+    )
+  }
+</script>
+
+<div class="p-xsmall wrapper flex column justify-content-between">
+  <div>
+    <Type>
+      Get a Random Image from
+      <a href="https://unsplash.com/">Unsplash</a>
+    </Type>
+    <div class="flex mt-xsmall">
+      <div class="flex ml-xxsmall mr-xxsmall">
+        <Label>Width:</Label>
+        <Input placeholder="800" bind:value={width} />
+      </div>
+      <div class="flex ml-xxsmall mr-xxsmall">
+        <Label>Height:</Label>
+        <Input placeholder="800" bind:value={height} />
+      </div>
+    </div>
+    <div class="mt-xxsmall flex justify-content-center">
+      <Button {disabled} on:click={addImage}>Add Image</Button>
+    </div>
+    {#if loading}
+      <div class="mt-xxsmall"><Type weight="medium">Loading image...</Type></div>
+    {/if}
+    {#if error}
+      <div class="mt-xxsmall"><Type color="red" weight="medium">{error}</Type></div>
+    {/if}
+  </div>
+  <div class="mt-small footer pt-xxsmall">
+    <Type>
+      Read the tutorial
+      <a href="https://www.lekoarts.de">on lekoarts.de</a>
+    </Type>
+  </div>
+</div>
+
+<style>
+  .wrapper {
+    text-align: center;
+    height: 100%;
+  }
+  .footer {
+    border-top: 1px solid var(--silver);
+  }
+</style>
+```
+
+<Alert status="success" title="What you just learned">
+
+You successfully finished the Svelte portion of this tutorial! Everything is now wired up to the Figma plugin API and in the last part you can place images onto the canvas.
+
+You've learned how to use Unsplash's `/random` API to fetch an image and returning it in a format that Figma understands. In the next step you added loading and error logic to gracefully handle those API calls. Lastly, you've used Figma's `postMessage` handler to communicate the image information to Figma.
+
+You can now try out what you have so far in Figma. If you enter valid entries for `width` and `height`, you should get a loading state. If you e.g. enter `-1` for `width` you should see an error message.
+
+</Alert>
+
+### Placing Images onto the Canvas
+
+Remember the `code.ts` file you created at the beginning? It's now time to come back to this file. With the `onmessage` handler you'll use the message that the UI sends via the `postMessage` function to place images onto the canvas. For this you learn how to create a reusable `createImage` helper function.
+
+But let's first verify, that the `postMessage` works successfully. In your `code.ts` file, add a handler for `onmessage` and log out the arguments:
+
+```ts title=src/code.ts
+figma.showUI(__html__, { width: 320, height: 220 })
+
+figma.ui.onmessage = (msg) => {
+  console.log(msg)
+
+  figma.closePlugin()
+}
+```
+
+The `figma.closePlugin()` function (as the name suggests) closes the plugin once this handler is called. You can comment this out for now for debugging purposes if you want.
+
+Go to Figma and open the DevTools via _Menu => Plugins => Development => Open console_. Open your plugin and press the "Add Image" button. You should see something like this in the console now:
+
+```js
+{
+  type: 'ADD_IMAGE',
+  payload: {
+    height: 800,
+    width: 800,
+    imageBytes: [/* Array of bytes */]
+  }
+}
+```
+
+If this didn't work, restart rollup with `npm run dev` and try again.
+
+Instead of logging out the response, handle the `ADD_IMAGE` type:
+
+```ts
+interface IPayload {
+  imageBytes: Uint8Array
+  width?: number
+  height?: number
+}
+
+interface IMessage {
+  type: "ADD_IMAGE"
+  payload: IPayload
+}
+
+figma.ui.onmessage = (msg: IMessage) => {
+  const { type, payload } = msg
+
+  if (type === `ADD_IMAGE`) {
+    if (payload.imageBytes) {
+      const { imageBytes, width, height } = payload
+      // createImage({ imageBytes, width, height })
+    }
+  }
+
+  figma.closePlugin()
+}
+```
+
+Your last task is to author the `createImage` function. Here's what it'll do:
+
+- Call Figma's [`createImage` API](https://www.figma.com/plugin-docs/api/properties/figma-createimage/) to create an `Image` object. This quote from the API docs is quite important:
+  > Note that Image objects are not nodes. They are handles to images stored by Figma. Frame backgrounds, or fills of shapes (e.g. a rectangle) may contain images.
 
 TODO
 
