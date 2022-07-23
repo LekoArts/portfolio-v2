@@ -12,9 +12,9 @@ published: true
 
 ## Introduction
 
-For me personally [Figma](https://www.figma.com) was certainly **the tool** that changed my webdesign workflow the most, and for the better. Coming from Photoshop it's the much better tool for the job and it also enabled me way quicker to write plugins for it. If you know HTML, CSS, and JS you can write a Figma plugin! The [Figma Developers documentation](https://www.figma.com/plugin-docs/intro/) explains the fundamentals about Figma plugins and also how you can e.g. create one with React. However, in this tutorial you'll (potentially) step out of your comfort zone and learn how to use Svelte, TypeScript, and [Rollup](https://rollupjs.org/guide/en/) to write a plugin for Figma.
+For me personally [Figma](https://www.figma.com) was certainly **the tool** that changed my webdesign workflow the most, and for the better. Coming from Photoshop it's the much better tool for the job and it also enabled me way quicker to write plugins for it. If you know HTML, CSS, and JS you can write a Figma plugin! The [Figma Developers documentation](https://www.figma.com/plugin-docs/) explains the fundamentals about Figma plugins and also how you can e.g. create one with React. However, in this tutorial you'll (potentially) step out of your comfort zone and learn how to use [Svelte](https://svelte.dev/), [TypeScript](https://www.typescriptlang.org/), and [Rollup](https://rollupjs.org/guide/en/) to write a plugin for Figma.
 
-The popularity of [Svelte](https://svelte.dev/) is rising and more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolset and to have some familiarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams – and super extensible with plugins.
+The popularity of Svelte is rising, more and more people enjoy writing smaller to bigger apps with it. So it's certainly good to have it in your toolset and to have some familiarity with it. Coming from React I most enjoyed the "simplicity" to some aspects of writing code in Svelte, as where React felt really verbose and clunky in comparison. Another thing you'll learn to appreciate is the output and speed of Svelte apps. Lastly, why should you care about Figma? Well, it's a super popular tool amongst individuals and larger teams – and super extensible with plugins.
 
 Here's what you'll build. You can pull a random image from [Unsplash](https://unsplash.com/) in the given size:
 
@@ -37,10 +37,10 @@ If you want to follow this tutorial step-by-step you'll need to have a Figma Acc
 
 Here's what you'll use and build explained on a higher level as a short summary:
 
-1. Inside Figma initialize a new plugin to create the necessary files
-1. Add dependencies like Svelte, Rollup, TypeScript, and [Figma Plugin DS Svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) to build the app
+1. Inside Figma initialize a new plugin to create the necessary files and learn how to run a local plugin
+1. Add dependencies like Svelte, Rollup, TypeScript, and [Figma Plugin DS Svelte](https://github.com/thomas-lowry/figma-plugin-ds-svelte) to build the app with hot-reloading support and modern output
 1. Use the Figma Plugin DS Svelte UI kit to build out the UI
-1. Leverage the browser `fetch` API to pull a random image from Unsplash and place it onto the current Figma frame
+1. Leverage the browser `fetch` API to pull a random image from Unsplash and place it onto the current Figma frame using Figma's plugin APIs
 
 ## Setup Guide
 
@@ -140,6 +140,8 @@ figma.showUI(__html__, { width: 320, height: 220 })
 From Figma's [API documentation](https://www.figma.com/plugin-docs/api/properties/figma-showui/) about `showUI`:
 
 > Enables you to render UI to interact with the user, or simply to access browser APIs. This function creates a modal dialog with an iframe containing the HTML markup in the html argument.
+
+The `__html__` is a global variable that is getting defined through the `ui` key in `manifest.json`.
 
 In order to load `App.svelte` the `main.ts` file sets up the app onto the `document.body`:
 
@@ -275,7 +277,7 @@ bundles src/code.ts → dist/code.js...
 created dist/code.js in 357ms
 ```
 
-The `manifest.json` now points to these compiled files. Go back to Figma and open a draft design file that you can use as a playground. Once you have it open, you now can run your plugin by doing a _Right click => Plugins => Development => SvelteTutorial_. You should a new window pop-up with the name of your plugin and a "Hello World" as text.
+The `manifest.json` now points to these compiled files. Go back to Figma and open the draft design file that you created earlier. You now can run your plugin by doing a _Right click => Plugins => Development => SvelteTutorial_. You should a new window pop-up with the name of your plugin and a "Hello World" as text.
 
 <Alert status="success" title="What you just learned">
 
@@ -447,7 +449,7 @@ It's not exactly the same as the `<Input />` component from `figma-plugin-ds-sve
 
 Now it's time to use the `<Input />` component in your `App.svelte`:
 
-```svelte title=src/App.svelte {3-9,21,25,29}
+```svelte title=src/App.svelte {3-10,22,26,30}
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"
@@ -798,7 +800,7 @@ Go to Figma and open the DevTools via _Menu => Plugins => Development => Open co
 }
 ```
 
-If this didn't work, restart rollup with `npm run dev` and try again.
+If this didn't work, restart rollup with `npm run dev`, close the plugin in Figma, and try again.
 
 Instead of logging out the response, handle the `ADD_IMAGE` type:
 
@@ -906,7 +908,7 @@ This section is totally optional, you can continue to use your plugin locally wi
 
 When you go to _Menu => Plugins => Development => Manage plugins in development_ you can click on the three dots of your plugin and press _Publish_. Also see Figma's [guide on publishing](https://www.figma.com/plugin-docs/publishing/).
 
-## Next Steps
+## Get Building!
 
 You can use the result of this guide or my [figma-plugin-svelte-example](https://github.com/LekoArts/figma-plugin-svelte-example) project as a template for any future Svelte Figma plugins.
 
