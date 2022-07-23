@@ -25,7 +25,6 @@ type WritingProps = {
 
 const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
   <Layout subnavigation={<WritingSubNavigation />}>
-    <SEO title="Writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing` }]} />
     <SkipNavContent>
       <Container py={space.paddingMedium}>
         <Stack spacing="20" align="center">
@@ -59,6 +58,10 @@ const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
 )
 
 export default Writing
+
+export const Head = () => (
+  <SEO title="Writing" pathname="/writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing` }]} />
+)
 
 export const query = graphql`
   {

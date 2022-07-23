@@ -76,12 +76,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
 
   return (
     <Layout>
-      <SEO
-        title="Digital Garden"
-        description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
-        image="/social/digital-garden.png"
-        breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
-      />
       <SkipNavContent>
         <Container py={space.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
@@ -187,6 +181,16 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
 }
 
 export default Garden
+
+export const Head = () => (
+  <SEO
+    title="Digital Garden"
+    pathname="/garden"
+    description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
+    image="/social/digital-garden.png"
+    breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
+  />
+)
 
 export const query = graphql`
   {

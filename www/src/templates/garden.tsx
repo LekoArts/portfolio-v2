@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PageProps, graphql } from "gatsby"
+import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
 import { RiPlantFill as PlantIcon } from "react-icons/ri"
@@ -58,34 +58,6 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
   }, [])
   return (
     <Layout>
-      <SEO title={garden.title} description={garden.excerpt} image="/social/digital-garden.png">
-        <meta name="twitter:label1" value="Time To Read" />
-        <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
-        <meta name="twitter:label2" value="Category" />
-        <meta name="twitter:data2" value={garden.icon} />
-        <meta name="article:published_time" content={garden.seoDate} />
-        <meta name="article:modified_time" content={garden.seoLastUpdated} />
-        <script type="application/ld+json">
-          {JSON.stringify(
-            article({
-              isGarden: true,
-              post: {
-                title: garden.title,
-                description: garden.excerpt,
-                slug: garden.slug,
-                image: `/social/digital-garden.png`,
-                date: garden.seoDate,
-                lastUpdated: garden.seoLastUpdated,
-                year: garden.yearDate,
-              },
-              category: {
-                name: `Digital Garden`,
-                slug: `/garden`,
-              },
-            })
-          )}
-        </script>
-      </SEO>
       <Container variant="proseRoot">
         <SkipNavContent>
           <Heading as="h1">{garden.title}</Heading>
@@ -186,6 +158,40 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
 }
 
 export default GardenTemplate
+
+export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
+  <SEO title={garden.title} pathname={garden.slug} description={garden.excerpt} image="/social/digital-garden.png">
+    <meta name="twitter:label1" value="Time To Read" />
+    <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
+    <meta name="twitter:label2" value="Category" />
+    <meta name="twitter:data2" value={garden.icon} />
+    <meta name="article:published_time" content={garden.seoDate} />
+    <meta name="article:modified_time" content={garden.seoLastUpdated} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(
+          article({
+            isGarden: true,
+            post: {
+              title: garden.title,
+              description: garden.excerpt,
+              slug: garden.slug,
+              image: `/social/digital-garden.png`,
+              date: garden.seoDate,
+              lastUpdated: garden.seoLastUpdated,
+              year: garden.yearDate,
+            },
+            category: {
+              name: `Digital Garden`,
+              slug: `/garden`,
+            },
+          })
+        ),
+      }}
+    />
+  </SEO>
+)
 
 export const query = graphql`
   query GardenTemplate($id: String!) {
