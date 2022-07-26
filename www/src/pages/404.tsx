@@ -15,7 +15,6 @@ const NotFound: React.FC<PageProps> = () => {
 
   return (
     <Layout>
-      <SEO title="404 - Not Found" description="Sorry, there is nothing at this URL." />
       <SkipNavContent>
         <Container py={space.paddingSmall}>
           <Heading as="h1">Not Found</Heading>
@@ -30,3 +29,5 @@ const NotFound: React.FC<PageProps> = () => {
 }
 
 export default NotFound
+
+export const Head = () => <SEO title="404 - Not Found" description="Sorry, there is nothing at this URL." />

@@ -97,9 +97,6 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
 
   return (
     <Layout>
-      <SEO>
-        <script type="application/ld+json">{JSON.stringify(homepage)}</script>
-      </SEO>
       <SkipNavContent>
         <FullWidthContainer variant="hero">
           <Stack align="center" spacing="5" py={space.paddingLarge}>
@@ -326,6 +323,12 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
 }
 
 export default Index
+
+export const Head = () => (
+  <SEO>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepage) }} />
+  </SEO>
+)
 
 export const query = graphql`
   {

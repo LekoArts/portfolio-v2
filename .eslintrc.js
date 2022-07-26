@@ -93,6 +93,7 @@ module.exports = {
         extensions: [`.js`, `.jsx`, `.tsx`],
       },
     ],
+    "react/jsx-no-useless-fragment": [2, { allowExpressions: true }],
     "react-hooks/rules-of-hooks": `error`,
     "react-hooks/exhaustive-deps": `warn`,
     indent: [`error`, 2, { SwitchCase: 1 }],

@@ -718,6 +718,7 @@ const Prose = {
       fontSize: em(14, 16),
       lineHeight: round(20 / 14),
       marginTop: em(12, 14),
+      textAlign: `center`,
     },
     code: {
       color: mode(`gray.900`, `gray.100`)(props),
@@ -811,6 +812,7 @@ const Prose = {
     video: {
       marginTop: em(32, 16),
       marginBottom: em(32, 16),
+      borderRadius: `lg`,
     },
     figure: {
       marginTop: em(32, 16),
@@ -1036,6 +1038,10 @@ const Prose = {
       "&[data-lang='diff']": {
         background: `rgba(230, 255, 237, var(--display-opacity))`,
         color: mode(`blueGray.800`, `rgb(230, 255, 237)`)(props),
+      },
+      "&[data-lang='svelte']": {
+        background: mode(`rgb(255, 62, 0)`, `rgba(255, 62, 0, var(--display-opacity))`)(props),
+        color: mode(`white`, `rgb(255, 221, 211)`)(props),
       },
     },
     ".img-left-wrap-text": {

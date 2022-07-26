@@ -1,0 +1,240 @@
+---
+title: "Testing Gatsby's Head API with Vitest & Playwright"
+date: 2022-07-23
+lastUpdated: 2022-07-23
+icon: gatsby
+tags:
+  - Gatsby
+---
+
+With Gatsby's [4.19 release](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19/) a new API was added: [Gatsby Head API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/). Gatsby includes a built-in Head export that allows you to add elements to the document head of your pages.
+
+In this short post I want to explain how to unit test and end to end (E2E) test components that you use with Gatsby Head API. The examples will use [Vitest](https://vitest.dev/) and [Playwright](https://playwright.dev/).
+
+If you want to follow along, make sure that you have a SEO component first. You can follow the official [Adding an SEO component guide](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-seo-component) to learn how to create one.
+
+You can find the complete project used for these examples on GitHub: [testing-gatsby-head-api](https://github.com/LekoArts/testing-gatsby-head-api)
+
+## Unit Testing with Vitest
+
+Install dependencies:
+
+```shell
+npm install -D @testing-library/jest-dom @testing-library/react c8 jsdom vitest
+```
+
+Create a `vitest.config.ts`:
+
+```ts title=vitest.config.ts
+import { defineConfig } from "vitest/config"
+
+export default defineConfig({
+  test: {
+    globals: true,
+    setupFiles: `./vitest-setup.ts`,
+    include: [`src/**/__tests__/*.{ts,tsx}`],
+    coverage: {
+      reporter: [`text`, `json`, `html`],
+    },
+  },
+})
+```
+
+Create a `vitest-setup.ts` file:
+
+```ts title=vitest-setup.ts
+import { vi } from "vitest"
+import React from "react"
+import "@testing-library/jest-dom"
+
+vi.mock(`gatsby`, async () => {
+  const gatsby = await vi.importActual<typeof import("gatsby")>(`gatsby`)
+
+  return {
+    ...gatsby,
+    graphql: vi.fn(),
+    Link: vi.fn().mockImplementation(({ to, ...rest }) =>
+      React.createElement(`a`, {
+        ...rest,
+        href: to,
+      })
+    ),
+    StaticQuery: vi.fn(),
+    useStaticQuery: vi.fn(),
+  }
+})
+```
+
+Add scripts to `package.json`:
+
+```json title=package.json
+"test:watch": "vitest watch",
+"test:ci": "vitest run",
+"test:coverage": "vitest run --coverage",
+```
+
+If you followed the [Adding an SEO component guide](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-seo-component) you'll have a `<SEO />` component at `src/components/seo` that has a bunch of props and uses a custom React hook to fetch data from `siteMetadata`. You'll need to mock the usage of `useStaticQuery` in your test file to be able to render it with `@testing-library/react`.
+
+Here's an example test file for an SEO component:
+
+```ts title=src/components/__tests__/seo.tsx
+/**
+ * @vitest-environment jsdom
+ */
+
+import * as React from "react"
+import * as Gatsby from "gatsby"
+import { render } from "@testing-library/react"
+import { vi } from "vitest"
+import { SEO } from "../seo"
+
+const useStaticQuery = vi.spyOn(Gatsby, `useStaticQuery`)
+const mockUseStaticQuery = {
+  site: {
+    siteMetadata: {
+      siteTitle: `Testing Gatsby Head API`,
+      siteUrl: `https://www.yourdomain.tld`,
+      siteDescription: `Showing how to test Gatsby Head API with Vitest and Playwright`,
+    },
+  },
+}
+
+describe(`SEO component`, () => {
+  beforeEach(() => {
+    useStaticQuery.mockImplementation(() => mockUseStaticQuery)
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it(`should have sensible defaults`, () => {
+    const result = render(<SEO />, { container: document.head }).baseElement
+      .parentElement?.firstChild
+
+    expect(result).toMatchInlineSnapshot()
+  })
+  it(`should accept all common props`, () => {
+    const result = render(
+      <SEO
+        title="Custom Title"
+        description="Custom Description"
+        pathname="/custom-path"
+      />,
+      { container: document.head }
+    ).baseElement.parentElement?.firstChild
+
+    expect(result).toMatchInlineSnapshot()
+  })
+})
+```
+
+The `.baseElement.parentElement?.firstChild` is quite important here to get the correct element to look at. Without it the result from `render()` is just too verbose.
+
+Run Vitest to fill the inline snapshots. Your tests should pass.
+
+```shell
+npm run test:ci
+```
+
+## E2E Testing with Playwright
+
+Install Playwright using their CLI:
+
+```shell
+npm init playwright@latest
+```
+
+Choose `e2e` as your folder name and don't install any GitHub actions (unless you know you need them).
+
+Once installation is done, add the following scripts to `package.json`:
+
+```json title=package.json
+"playwright": "playwright test",
+"playwright:debug": "playwright test --debug",
+"playwright:init": "playwright install chromium",
+```
+
+While the initial installation added more devices than only `chromium`, I'm only interested in using Chromium. And when you clone the project to a new device, run `playwright:init` to only install that.
+
+Change the automatically created `playwright.config.ts` to the following:
+
+```ts title=playwright.config.ts
+import type { PlaywrightTestConfig } from "@playwright/test"
+import { devices } from "@playwright/test"
+
+const config: PlaywrightTestConfig = {
+  testDir: `./e2e`,
+  timeout: 30 * 1000,
+  expect: {
+    timeout: 5000,
+  },
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: `list`,
+  webServer: {
+    command: `yarn serve`,
+    port: 9000,
+    reuseExistingServer: !process.env.CI,
+  },
+  use: {
+    actionTimeout: 0,
+    trace: `on-first-retry`,
+  },
+  projects: [
+    {
+      name: `chromium`,
+      use: {
+        ...devices[`Desktop Chrome`],
+      },
+    },
+  ],
+}
+
+export default config
+```
+
+Delete `tests-examples` folder and delete the `example.spec.ts` in `e2e` folder. Create a new file called `meta.spec.ts` inside `e2e`:
+
+```ts title=e2e/meta.spec.ts
+import { test, expect } from "@playwright/test"
+
+const siteTitle = `Testing Gatsby Head API`
+
+test.describe(`Index Page`, () => {
+  test(`should have correct meta tags`, async ({ page }) => {
+    await page.goto(`/`)
+
+    await expect(page).toHaveTitle(siteTitle)
+
+    const twitterTitle = await page
+      .locator(`meta[name="twitter:title"]`)
+      .getAttribute(`content`)
+    const ogTitle = await page
+      .locator(`meta[property="og:title"]`)
+      .getAttribute(`content`)
+
+    await expect(twitterTitle).toBe(siteTitle)
+    await expect(ogTitle).toBe(siteTitle)
+  })
+})
+```
+
+Assuming you have a Head export in your `src/pages/index.tsx` like this your meta tags should be all set up:
+
+```tsx
+export const Head = () => <SEO />
+```
+
+Build your Gatsby site:
+
+```shell
+npm run build
+```
+
+You now can run Playwright:
+
+```shell
+npm run playwright
+```

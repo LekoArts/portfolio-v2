@@ -1,10 +1,10 @@
 import * as React from "react"
-import { PageProps, graphql } from "gatsby"
+import { PageProps, graphql, HeadFC } from "gatsby"
 import { CategoryHero } from "../components/writing/category-hero"
 import { CategoryView } from "../components/writing/category-view"
 import { SEO } from "../components/seo"
 
-type ReactProps = {
+type DataProps = {
   posts: {
     nodes: {
       title: string
@@ -23,18 +23,22 @@ type ReactProps = {
   }
 }
 
-const ReactCategory: React.FC<PageProps<ReactProps>> = ({ data: { posts, category } }) => (
+const ReactCategory: React.FC<PageProps<DataProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
-    <SEO
-      title={category.name}
-      description={category.description}
-      breadcrumbListItems={[{ name: category.name, url: category.slug }]}
-    />
     <CategoryHero bgGradient={category.gradient} title={category.name} description={category.description} />
   </CategoryView>
 )
 
 export default ReactCategory
+
+export const Head: HeadFC<DataProps> = ({ data: { category } }) => (
+  <SEO
+    title={category.name}
+    pathname={category.slug}
+    description={category.description}
+    breadcrumbListItems={[{ name: category.name, url: category.slug }]}
+  />
+)
 
 export const query = graphql`
   query ($name: String!) {

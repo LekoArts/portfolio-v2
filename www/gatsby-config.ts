@@ -21,7 +21,6 @@ const gatsbyConfig: GatsbyConfig = {
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-image`,
-    `gatsby-plugin-react-helmet-async`,
     // Overwrite the default "slugify" option
     {
       resolve: `gatsby-plugin-page-creator`,

@@ -1,46 +1,54 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, Page } from "@playwright/test"
+
+async function click(page: Page, selector: string) {
+  return Promise.all([page.waitForNavigation(), page.locator(selector).click()])
+}
+
+async function firstClick(page: Page, selector: string) {
+  return Promise.all([page.waitForNavigation(), page.locator(selector).first().click()])
+}
 
 test.describe(`Kitchen Sink`, () => {
   test(`visiting primary navigation`, async ({ page }) => {
     await page.goto(`/`)
 
-    await page.locator(`[aria-label="Primary navigation"] >> text=Writing`).click()
+    await click(page, `[aria-label="Primary navigation"] >> text=Writing`)
     await expect(page).toHaveURL(`/writing`)
 
-    await page.locator(`[aria-label="Primary navigation"] >> text=Art`).click()
+    await click(page, `[aria-label="Primary navigation"] >> text=Art`)
     await expect(page).toHaveURL(`/art`)
 
-    await page.locator(`[aria-label="Primary navigation"] >> text=About`).click()
+    await click(page, `[aria-label="Primary navigation"] >> text=About`)
     await expect(page).toHaveURL(`/about`)
 
-    await page.locator(`[aria-label="lekoarts\\.de\\, Back to homepage"] svg`).click()
+    await click(page, `[aria-label="lekoarts\\.de\\, Back to homepage"] svg`)
     await expect(page).toHaveURL(`/`)
   })
   test(`visiting writing subnavigation`, async ({ page }) => {
     await page.goto(`/writing`)
 
-    await page.locator(`text=Tutorials`).first().click()
+    await firstClick(page, `text=Tutorials`)
     await expect(page).toHaveURL(`/tutorials`)
 
-    await page.locator(`text=Community`).first().click()
+    await firstClick(page, `text=Community`)
     await expect(page).toHaveURL(`/community`)
 
-    await page.locator(`text=Design`).first().click()
+    await firstClick(page, `text=Design`)
     await expect(page).toHaveURL(`/design`)
 
-    await page.locator(`text=Gatsby`).first().click()
+    await firstClick(page, `text=Gatsby`)
     await expect(page).toHaveURL(`/gatsby`)
 
-    await page.locator(`text=JavaScript`).first().click()
+    await firstClick(page, `text=JavaScript`)
     await expect(page).toHaveURL(`/javascript`)
 
-    await page.locator(`text=React`).first().click()
+    await firstClick(page, `text=React`)
     await expect(page).toHaveURL(`/react`)
   })
   test(`footer navigation`, async ({ page }) => {
     await page.goto(`/`)
 
-    await page.locator(`footer[role="contentinfo"] >> text=Digital Garden`).click()
+    await click(page, `footer[role="contentinfo"] >> text=Digital Garden`)
     await expect(page).toHaveURL(`/garden`)
   })
   test(`content pages`, async ({ page }) => {
