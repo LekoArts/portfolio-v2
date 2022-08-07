@@ -2,7 +2,7 @@
 title: "How To Build an Advanced Multipart Component with Chakra UI"
 subtitle: "Learn all about Chakra UI's theming system"
 date: 2021-10-31
-lastUpdated: 2021-10-31
+lastUpdated: 2022-08-07
 description: "Chakra UI has a powerful theming system that includes component styles. Learn how to create a custom made container component that supports light/dark mode, variants, sizes, and color schemes."
 type: "tutorial"
 category: "React"
@@ -74,9 +74,8 @@ The `theme` doesn't exist yet so create a new file at `src/theme.ts`. By default
 
 ```ts title=src/theme.ts
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
-import { createBreakpoints } from "@chakra-ui/theme-tools"
 
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: "640px",
   md: "768px",
   lg: "1024px",
@@ -198,18 +197,17 @@ export default Container
 
 This means that every instance of `<Container />` has the `baseStyle` and the `colorScheme` of `gray` by default. But only creating the file doesn't do anything yet, you'll need to tell Chakra UI to use this file for `Container` now. You do this by passing overwrites for built-in components and also files for new components into the `components` key of the `extendTheme` function:
 
-```ts title=src/theme.ts {3,19-21}
+```ts title=src/theme.ts {2,18-20}
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
-import { createBreakpoints } from "@chakra-ui/theme-tools"
 import Container from "./chakra/container"
 
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
   "2xl": "1536px",
-})
+}
 
 const config: ThemeConfig = {
   initialColorMode: "light",
