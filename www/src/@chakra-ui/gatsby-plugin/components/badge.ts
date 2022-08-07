@@ -6,7 +6,7 @@ const baseStyles = {
   letterSpacing: `widest`,
 }
 
-const Badge = {
+export const Badge = {
   defaultProps: {
     variant: `default`,
   },
@@ -33,5 +33,3 @@ const Badge = {
     }),
   },
 }
-
-export default Badge

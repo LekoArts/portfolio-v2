@@ -24,12 +24,12 @@ function getIds(items: TocItem[]): string[] {
 const renderItems = ({
   items,
   activeId,
-  nested = false,
+  level = 0,
   activeColor = `red`,
 }: {
   items: TocItem[]
   activeId: string
-  nested?: boolean
+  level?: number
   activeColor?: string
 }): JSX.Element => (
   <>
@@ -40,14 +40,17 @@ const renderItems = ({
       return (
         <React.Fragment key={item.url}>
           <Link
+            fontWeight={isActive ? 500 : 400}
+            transition="fontWeight .3s ease-in-out"
             color={isActive ? activeColor : `inherit`}
-            mt={nested ? 1 : { base: `2`, "2xl": `3` }}
-            ml={nested ? 3 : 0}
+            mt={level ? 1 : { base: `2`, "2xl": `3` }}
+            ml={level ? level * 2 : 0}
+            pr={1}
             href={item.url}
           >
             {item.title}
           </Link>
-          {item.items && renderItems({ items: item.items, activeId, activeColor, nested: true })}
+          {item.items && renderItems({ items: item.items, activeId, activeColor, level: level + 1 })}
         </React.Fragment>
       )
     })}
@@ -72,8 +75,8 @@ export const Toc = ({ items }: { items: TocItem[] }) => {
         display="flex"
         flexDir="column"
         mt={{ base: `0rem`, "2xl": `1.8em` }}
-        minWidth="175px"
-        maxWidth={{ base: `100%`, "2xl": `210px` }}
+        minWidth="185px"
+        maxWidth={{ base: `100%`, "2xl": `220px` }}
         overflow="auto"
         alignItems="flex-start"
       >
