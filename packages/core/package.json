@@ -10,9 +10,9 @@
   "dependencies": {
     "@mdx-js/react": "^2.1.2",
     "gatsby-plugin-catch-links": "next",
-    "gatsby-plugin-mdx": "mdxv4-rc",
+    "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-remark-images": "mdxv4-rc",
+    "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-source-graphql": "next",
     "gatsby-transformer-sharp": "next",
