@@ -591,7 +591,7 @@ const xlVariant = {
   },
 }
 
-const Prose = {
+export const Prose = {
   baseStyle: (props) => ({
     color: `proseText`,
     a: {
@@ -1141,5 +1141,3 @@ const Prose = {
     xl: xlVariant,
   },
 }
-
-export default Prose

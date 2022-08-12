@@ -69,6 +69,7 @@ module.exports = {
     "func-names": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
+    "import/no-default-export": 2,
     "import/no-cycle": 0,
     "space-before-function-paren": 0,
     "import/extensions": 0,
@@ -114,4 +115,19 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: [
+        `www/src/pages/**/*.tsx`,
+        `playwright.config.ts`,
+        `vitest.config.ts`,
+        `www/src/templates/*.tsx`,
+        `**/gatsby-config.ts`,
+        `www/src/@chakra-ui/gatsby-plugin/theme.ts`,
+      ],
+      rules: {
+        "import/no-default-export": 0,
+      },
+    },
+  ],
 }
