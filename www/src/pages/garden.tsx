@@ -41,17 +41,17 @@ type DataProps = {
   }
 }
 
-interface State {
+interface IState {
   tags: string[]
 }
 
 type Action = { type: `ADD_TAG`; payload: string } | { type: `REMOVE_TAG`; payload: string }
 
-const initialState: State = {
+const initialState: IState = {
   tags: [],
 }
 
-const reducer = (state: State, action: Action) => {
+const reducer = (state: IState, action: Action) => {
   switch (action.type) {
     case `ADD_TAG`:
       return { ...state, tags: state.tags.concat(action.payload) }
@@ -63,7 +63,7 @@ const reducer = (state: State, action: Action) => {
 }
 
 const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) => {
-  const [state, dispatch] = useQueryStringReducer<State, Action>({
+  const [state, dispatch] = useQueryStringReducer<IState, Action>({
     initialState,
     location,
     reducer,
