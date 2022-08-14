@@ -615,8 +615,9 @@ export const Prose = {
     "figure img, img": {
       borderRadius: `lg`,
     },
-    "[data-drop-shadow='true']": {
+    "[data-flickr-mdx-image='true']": {
       boxShadow: `lg`,
+      width: `100%`,
     },
     ".gatsby-resp-image-wrapper": {
       boxShadow: `lg`,
