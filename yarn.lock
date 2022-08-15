@@ -5746,9 +5746,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=10.0.0":
-  version: 18.7.3
-  resolution: "@types/node@npm:18.7.3"
-  checksum: f51ed436a112235ac068d739b4823090a37b869cc186b64dd5c250dd285139c286990fcbeff2fb3ecba5d605fa885de4275247d332e5b96eafdfbb1da62e3ced
+  version: 18.7.4
+  resolution: "@types/node@npm:18.7.4"
+  checksum: 051d2147e4d8129fceb63ee9384259b2f224dbc4e4b0c46d96a6b61cbaad4e3fe4060950e7f4fc3d5692b1e6ea47e68ad03b61155754bfa169593747cfe3f8f4
   languageName: node
   linkType: hard
 
@@ -8374,14 +8374,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"create-gatsby@npm:^2.22.0-next.1":
-  version: 2.22.0-next.1
-  resolution: "create-gatsby@npm:2.22.0-next.1"
+"create-gatsby@npm:^2.22.0-next.2":
+  version: 2.22.0-next.2
+  resolution: "create-gatsby@npm:2.22.0-next.2"
   dependencies:
     "@babel/runtime": ^7.15.4
   bin:
     create-gatsby: cli.js
-  checksum: 1f5a9982f97f26167b8f2bf5f31f57f330847e8570f36175c3825f093df86d10b171f92867459f02bccc7088e44ab496c6b1c5e635049107f8c3120ab8bba0f3
+  checksum: 77b2715f4fcf9e7251d35b040ccf2f1899b3f2b387be50def21a55e91fc2d36db6e0bde78e7cedc0539b2fb1964826a2bdd63b1b75c1368df4559b25cbe24419
   languageName: node
   linkType: hard
 
@@ -11196,9 +11196,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-cli@npm:^4.22.0-next.1":
-  version: 4.22.0-next.1
-  resolution: "gatsby-cli@npm:4.22.0-next.1"
+"gatsby-cli@npm:^4.22.0-next.2":
+  version: 4.22.0-next.2
+  resolution: "gatsby-cli@npm:4.22.0-next.2"
   dependencies:
     "@babel/code-frame": ^7.14.0
     "@babel/core": ^7.15.5
@@ -11216,7 +11216,7 @@ __metadata:
     clipboardy: ^2.3.0
     common-tags: ^1.8.2
     convert-hrtime: ^3.0.0
-    create-gatsby: ^2.22.0-next.1
+    create-gatsby: ^2.22.0-next.2
     envinfo: ^7.8.1
     execa: ^5.1.1
     fs-exists-cached: ^1.0.0
@@ -11244,7 +11244,7 @@ __metadata:
     yurnalist: ^2.1.0
   bin:
     gatsby: cli.js
-  checksum: 6076275e3707d33e316985bcdcd94c0213923774610cc306a1e5279ec7d104cf73ce91dd17bf74b70cb8e9ee107fbb20c0124ec27142125c448dcc28bc723ff6
+  checksum: 458272ab269cf387d2a1eb958a6be4a0c2f7f0cd2eddd2229c5e51c0b0adc24d40e48ce92f58cd4702d0b8218eef46aa298a507c0df456ff4ecb4cb083f7352f
   languageName: node
   linkType: hard
 
@@ -11361,21 +11361,21 @@ __metadata:
   linkType: hard
 
 "gatsby-plugin-feed@npm:next":
-  version: 4.22.0-next.0
-  resolution: "gatsby-plugin-feed@npm:4.22.0-next.0"
+  version: 4.22.0-next.1
+  resolution: "gatsby-plugin-feed@npm:4.22.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@hapi/joi": ^15.1.1
     common-tags: ^1.8.2
     fs-extra: ^10.1.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     lodash.merge: ^4.6.2
     rss: ^1.2.2
   peerDependencies:
     gatsby: ^4.0.0-next
     react: ^16.9.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
-  checksum: 8d597d04a12a5fc46d796df676b181166f9cdc1ea15b161663094432cd5cfc75d0a4d6adc733e7f4ffa12ab5401963c35e2f15f538bdc0227b19cb176a04a788
+  checksum: 7485f581fcc28efd3eb5305e43b60db0ceb871f820aeb53d50743c2fed1cdfe9b644b3afeec4d903615d9803271b2f1e48b4f2ffc05fd7bdc2ee6f7ad2c4b115
   languageName: node
   linkType: hard
 
@@ -11398,8 +11398,8 @@ __metadata:
   linkType: hard
 
 "gatsby-plugin-image@npm:next":
-  version: 2.22.0-next.1
-  resolution: "gatsby-plugin-image@npm:2.22.0-next.1"
+  version: 2.22.0-next.2
+  resolution: "gatsby-plugin-image@npm:2.22.0-next.2"
   dependencies:
     "@babel/code-frame": ^7.14.0
     "@babel/parser": ^7.15.5
@@ -11412,7 +11412,7 @@ __metadata:
     common-tags: ^1.8.2
     fs-extra: ^10.1.0
     gatsby-core-utils: ^3.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     objectFitPolyfill: ^2.3.5
     prop-types: ^15.8.1
   peerDependencies:
@@ -11422,28 +11422,28 @@ __metadata:
     gatsby-source-filesystem: ^4.0.0-next
     react: ^16.9.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
-  checksum: 94bbe5f54ca976f1fc333db525c110ae26254dd5f91884bf9d3293b4241d85a90953dd4a832f377d585beb006276d85553c3d9277bcc2c1c107bba198baa033a
+  checksum: 74cf1d42dc817bf5cdbae8aa6b2425caaf1baefe3e2a78390ad4ec478d8ebdcdc6dacb04539245e909aa9061f0139387542fd7f4a9cd32fcf2d3e30ca4541ba5
   languageName: node
   linkType: hard
 
 "gatsby-plugin-manifest@npm:next":
-  version: 4.22.0-next.0
-  resolution: "gatsby-plugin-manifest@npm:4.22.0-next.0"
+  version: 4.22.0-next.1
+  resolution: "gatsby-plugin-manifest@npm:4.22.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     gatsby-core-utils: ^3.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     semver: ^7.3.7
     sharp: ^0.30.7
   peerDependencies:
     gatsby: ^4.0.0-next
-  checksum: 8e9f0d75ae7f39d19336984e75997cafe398e68983d1caf170090c5d4d0095053469251693e750a127a67d25a70b34fc4411f8ff2a7e02e41c21b7ebb4477ae7
+  checksum: cbd52c77030e6c95e799eaebcf1b06f49424b4740c152e3078f746fa4bf0518f77d0557ea2bdb63d5b1bf865362657ec61a4d59f5cf35e7e41de421ca683199b
   languageName: node
   linkType: hard
 
 "gatsby-plugin-mdx@npm:next":
-  version: 4.1.0-next.0
-  resolution: "gatsby-plugin-mdx@npm:4.1.0-next.0"
+  version: 4.1.0-next.1
+  resolution: "gatsby-plugin-mdx@npm:4.1.0-next.1"
   dependencies:
     "@mdx-js/mdx": ^2.1.1
     acorn: ^7.4.1
@@ -11453,7 +11453,7 @@ __metadata:
     estree-util-build-jsx: ^2.1.0
     fs-extra: ^10.1.0
     gatsby-core-utils: ^3.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     gray-matter: ^4.0.3
     mdast-util-mdx: ^2.0.0
     mdast-util-to-hast: ^10.2.0
@@ -11469,13 +11469,13 @@ __metadata:
     gatsby-source-filesystem: ^4.0.0-next
     react: ^16.9.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
-  checksum: 04a98216bac43b6b8d5eccb8fd8a6c32d07a38afe020ac661560f41e43b9cd1e0869cb4439a205eccea5e4329d576bfc2a13ebf1a6a63b6ad822a70b2f814f56
+  checksum: d2f2d333bf2ac95940c88c558ea90acdc2815fa3cab6c4ab1a9664d82d15155ece0b593595146532002ec32717d664aad1dc38975b289e270f4a6092313ecf29
   languageName: node
   linkType: hard
 
-"gatsby-plugin-page-creator@npm:^4.22.0-next.1":
-  version: 4.22.0-next.1
-  resolution: "gatsby-plugin-page-creator@npm:4.22.0-next.1"
+"gatsby-plugin-page-creator@npm:^4.22.0-next.2":
+  version: 4.22.0-next.2
+  resolution: "gatsby-plugin-page-creator@npm:4.22.0-next.2"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@babel/traverse": ^7.15.4
@@ -11485,13 +11485,13 @@ __metadata:
     fs-extra: ^10.1.0
     gatsby-core-utils: ^3.22.0-next.0
     gatsby-page-utils: ^2.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     gatsby-telemetry: ^3.22.0-next.1
     globby: ^11.1.0
     lodash: ^4.17.21
   peerDependencies:
     gatsby: ^4.0.0-next
-  checksum: 079b43cde93fb35263bca27771772a620244568df4c05dc080531b9f2887c5af61a22cab29e8fb7f4674573265c5f03ecb9e3e71b7b36e8ca986c2f763cab55a
+  checksum: d172757cbe7325c433a859e4783d708f0cac606d132288ef2ef3ac7ee5cbd23e9de2b835e2c47606d608606dba0096202f2ac14a751cad6fcb8929f5ec558014
   languageName: node
   linkType: hard
 
@@ -11518,8 +11518,8 @@ __metadata:
   linkType: hard
 
 "gatsby-plugin-sharp@npm:next":
-  version: 4.22.0-next.1
-  resolution: "gatsby-plugin-sharp@npm:4.22.0-next.1"
+  version: 4.22.0-next.2
+  resolution: "gatsby-plugin-sharp@npm:4.22.0-next.2"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@gatsbyjs/potrace": ^2.2.0
@@ -11529,7 +11529,7 @@ __metadata:
     filenamify: ^4.3.0
     fs-extra: ^10.1.0
     gatsby-core-utils: ^3.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     lodash: ^4.17.21
     mini-svg-data-uri: ^1.4.4
     probe-image-size: ^7.2.3
@@ -11538,13 +11538,13 @@ __metadata:
     svgo: 1.3.2
   peerDependencies:
     gatsby: ^4.0.0-next
-  checksum: 9b3b693dc1486260446dc4febf4876a80726a503b465543d04e65c87e200c00d13e7877813540766fb67aee7fb1d79896bb056aa8168c64be0f35dc93017d938
+  checksum: 5f6fbbd60229cc5ddd6d412baefd25ccc0c6768430e96ab6c797b0e4f94ae0db0f7c6be6b541374dd0bcea19dab5a2a5a87cb7b97bc1d6fcc06684210ef7df45
   languageName: node
   linkType: hard
 
 "gatsby-plugin-sitemap@npm:next":
-  version: 5.22.0-next.0
-  resolution: "gatsby-plugin-sitemap@npm:5.22.0-next.0"
+  version: 5.22.0-next.1
+  resolution: "gatsby-plugin-sitemap@npm:5.22.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     common-tags: ^1.8.2
@@ -11554,7 +11554,7 @@ __metadata:
     gatsby: ^4.0.0-next
     react: ^16.9.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
-  checksum: affc13420885f51c9c783ec57accc22aef79be5c9ef5c87eefd9461f90417cecff5c0dbc55897c029a0df628506f82f5d192236c6a0be0f3774cc075e020c21d
+  checksum: 0cba1d845b719d2a0c35eeaadf5147cf18642975e8154f45c66d2bb2d80e3e862c7f62e3382c87b85c13b6a0e712b9155d4752b616d984c347d0d0ccd3c5b15b
   languageName: node
   linkType: hard
 
@@ -11575,9 +11575,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-plugin-utils@npm:^3.16.0-next.0":
-  version: 3.16.0-next.0
-  resolution: "gatsby-plugin-utils@npm:3.16.0-next.0"
+"gatsby-plugin-utils@npm:^3.16.0-next.1":
+  version: 3.16.0-next.1
+  resolution: "gatsby-plugin-utils@npm:3.16.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@gatsbyjs/potrace": ^2.2.0
@@ -11594,7 +11594,7 @@ __metadata:
   peerDependencies:
     gatsby: ^4.0.0-next
     graphql: ^15.0.0
-  checksum: e9a1e4b948cbb6dedf0b7df7c97583a1e96043f3243e987f680a02f9015cbcabe5eeba00343e78eca2b913838347f379e9f25228f49c61ab9172063164e8bd12
+  checksum: 7789579c3bc1fe46dc0c9789d6be7ff731aeb459df02a0e84dee029128b54cd3612957d237d216dee9e685ffa0753dde1b2583ed62b4bb63c6b08663ed762963
   languageName: node
   linkType: hard
 
@@ -11625,8 +11625,8 @@ __metadata:
   linkType: hard
 
 "gatsby-remark-images@npm:next":
-  version: 6.22.0-next.0
-  resolution: "gatsby-remark-images@npm:6.22.0-next.0"
+  version: 6.22.0-next.1
+  resolution: "gatsby-remark-images@npm:6.22.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@gatsbyjs/potrace": ^2.2.0
@@ -11642,7 +11642,7 @@ __metadata:
   peerDependencies:
     gatsby: ^4.0.0-next
     gatsby-plugin-sharp: ^4.0.0-next
-  checksum: 8c51bbbecde170795b9e91bfa9d9fe4b73f5240f4b0c96b6492a33bc23b738e57145db5f716c15657a192aec6ff124dbbc8f69740421b74722daf7d734c1a29d
+  checksum: a0bf12c8688760515bfd656ecc9ac6d055ff97e4e1f8832ee2d33003367cc269e74e308013be485a357eed41384bae564b760d472e9db9a4656de1b7e9ab28a2
   languageName: node
   linkType: hard
 
@@ -11755,22 +11755,22 @@ __metadata:
   linkType: soft
 
 "gatsby-transformer-sharp@npm:next":
-  version: 4.22.0-next.0
-  resolution: "gatsby-transformer-sharp@npm:4.22.0-next.0"
+  version: 4.22.0-next.1
+  resolution: "gatsby-transformer-sharp@npm:4.22.0-next.1"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@gatsbyjs/potrace": ^2.2.0
     bluebird: ^3.7.2
     common-tags: ^1.8.2
     fs-extra: ^10.1.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     probe-image-size: ^7.2.3
     semver: ^7.3.7
     sharp: ^0.30.7
   peerDependencies:
     gatsby: ^4.0.0-next
     gatsby-plugin-sharp: ^4.0.0-next
-  checksum: 3aa947dfd4969f3e97b24a1b6dd0ecba096b4dfde6adcaf429fc9bbc63877503f9780f2ff7651f57628ee791ac5efe092f1071496daf7a6889f2c95663e23dee
+  checksum: d4cfbe6f6467b5b8d9ddc7df3011d62f5a4d697aac6a0e3c7762447161cfd681a08e81ef452cd9693c0fc183003432846b8c67705f4c4559ecdd6b8d988de516
   languageName: node
   linkType: hard
 
@@ -11799,8 +11799,8 @@ __metadata:
   linkType: hard
 
 "gatsby@npm:next":
-  version: 4.22.0-next.3
-  resolution: "gatsby@npm:4.22.0-next.3"
+  version: 4.22.0-next.4
+  resolution: "gatsby@npm:4.22.0-next.4"
   dependencies:
     "@babel/code-frame": ^7.14.0
     "@babel/core": ^7.15.5
@@ -11880,16 +11880,16 @@ __metadata:
     find-cache-dir: ^3.3.2
     fs-exists-cached: 1.0.0
     fs-extra: ^10.1.0
-    gatsby-cli: ^4.22.0-next.1
+    gatsby-cli: ^4.22.0-next.2
     gatsby-core-utils: ^3.22.0-next.0
     gatsby-graphiql-explorer: ^2.22.0-next.0
     gatsby-legacy-polyfills: ^2.22.0-next.0
     gatsby-link: ^4.22.0-next.0
     gatsby-page-utils: ^2.22.0-next.0
     gatsby-parcel-config: 0.13.0-next.0
-    gatsby-plugin-page-creator: ^4.22.0-next.1
+    gatsby-plugin-page-creator: ^4.22.0-next.2
     gatsby-plugin-typescript: ^4.22.0-next.0
-    gatsby-plugin-utils: ^3.16.0-next.0
+    gatsby-plugin-utils: ^3.16.0-next.1
     gatsby-react-router-scroll: ^5.22.0-next.0
     gatsby-script: ^1.7.0-next.1
     gatsby-sharp: ^0.16.0-next.0
@@ -11972,7 +11972,7 @@ __metadata:
       optional: true
   bin:
     gatsby: ./cli.js
-  checksum: 19c43c83752f44139c6facaa726b6a3ef26d6c1a5d1a01272d0dbe8b3565e02659811061d0b340c8116417eb0b715f19af5bfb3233e0824f97dcf4864bbb7ae5
+  checksum: d75dd8d6244327565f040d38ed507514983ccd72dcb7ffe009b665217f5d2f7997f8c6af04022811a1b097a9578cb749a8b0fdbbb7ef1a0d893eb76bae6a44c6
   languageName: node
   linkType: hard
 
@@ -21254,9 +21254,9 @@ __metadata:
   linkType: hard
 
 "xstate@npm:^4.26.0, xstate@npm:^4.26.1":
-  version: 4.33.1
-  resolution: "xstate@npm:4.33.1"
-  checksum: 7408af3781defa9348980628193cdb797cf50345ab9782ce963cc7ac8b89d8f8475e93de7a6bf522afe6899e46c5a796279945046ab5e4f9bd801a5b4e6fa589
+  version: 4.33.2
+  resolution: "xstate@npm:4.33.2"
+  checksum: 6e10bcfe66594b3903d34635f7db34388878ab5314c94aa1ece4def97f605f61f8f70fd4ca00de0fd124b465bf8dd7796661d9fdd29a602e144dd31906ee2e26
   languageName: node
   linkType: hard
 
