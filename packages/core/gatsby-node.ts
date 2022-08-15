@@ -131,6 +131,32 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       name: String
       url: String
     }
+
+    type FlickrPhotosetsList implements Node {
+      _id: String
+      title: String
+      content: [FlickrPhotosetsPhotos] @link(by: "photoset_id", from: "_id")
+      date_update: Date @dateformat
+    }
+
+    type FlickrPhotosetsPhotos implements Node {
+      title: String
+      _id: String
+      photoset_id: String
+      description: String
+      imageUrls: FlickrImageUrls
+      datetaken: Date @dateformat
+    }
+
+    type FlickrImageUrls {
+      _1024px: FlickrImageUrlsContent
+    }
+
+    type FlickrImageUrlsContent {
+      url: String
+      width: Int
+      height: Int
+    }
   `)
 }
 
