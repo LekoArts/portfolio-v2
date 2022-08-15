@@ -1,6 +1,5 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
 import { RiPlantFill as PlantIcon } from "react-icons/ri"
 import {
@@ -32,7 +31,6 @@ type DataProps = {
   garden: {
     title: string
     slug: string
-    body: string
     icon: string
     seoLastUpdated: string
     lastUpdated: string
@@ -50,7 +48,7 @@ type DataProps = {
   }
 }
 
-const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { pathname } }) => {
+const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { pathname }, children }) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
   React.useEffect(() => {
@@ -83,9 +81,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
           </Grid>
           <Spacer size={12} axis="vertical" />
           <Prose>
-            <MDXProvider components={components}>
-              <MDXRenderer>{garden.body}</MDXRenderer>
-            </MDXProvider>
+            <MDXProvider components={components}>{children}</MDXProvider>
           </Prose>
           <Spacer size={12} axis="vertical" />
           <Divider />
@@ -194,10 +190,9 @@ export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
 )
 
 export const query = graphql`
-  query GardenTemplate($id: String!) {
+  query ($id: String!) {
     garden(id: { eq: $id }) {
       title
-      body
       slug
       icon
       seoLastUpdated: lastUpdated

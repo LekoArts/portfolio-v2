@@ -12,6 +12,7 @@ type CreatePagesResult = {
     nodes: {
       id: string
       slug: string
+      contentFilePath: string
     }[]
   }
   writing: {
@@ -19,6 +20,7 @@ type CreatePagesResult = {
       id: string
       slug: string
       type: "prose" | "tutorial"
+      contentFilePath: string
     }[]
   }
 }
@@ -42,6 +44,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
         nodes {
           id
           slug
+          contentFilePath
         }
       }
       writing: allPost(filter: { published: { eq: true } }) {
@@ -49,6 +52,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
           id
           slug
           type
+          contentFilePath
         }
       }
     }
@@ -70,7 +74,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
   garden.nodes.forEach((post) => {
     createPage({
       path: post.slug,
-      component: gardenTemplate,
+      component: `${gardenTemplate}?__contentFilePath=${post.contentFilePath}`,
       context: {
         id: post.id,
       },
@@ -78,11 +82,11 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
   })
 
   writing.nodes.forEach((article) => {
-    const component = article.type === `tutorial` ? tutorialTemplate : proseTemplate
+    const writingTemplate = article.type === `tutorial` ? tutorialTemplate : proseTemplate
 
     createPage({
       path: article.slug,
-      component,
+      component: `${writingTemplate}?__contentFilePath=${article.contentFilePath}`,
       context: {
         id: article.id,
       },

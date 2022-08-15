@@ -2,7 +2,6 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Spacer } from "../blocks/spacer"
@@ -18,7 +17,6 @@ export type WritingViewDataProps = {
     title: string
     date: string
     description: string
-    body: string
     excerpt: string
     lastUpdated: string
     seoDate: string
@@ -42,6 +40,7 @@ export type WritingViewDataProps = {
   }
   pathname: string
   type: "prose" | "tutorial"
+  mdxContent: string
 }
 
 export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({
@@ -49,6 +48,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
   pathname,
   children,
   type,
+  mdxContent,
 }) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
@@ -64,16 +64,12 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
           {type === `tutorial` && post.tableOfContents?.items ? (
             <WithSidebarWrapper items={post.tableOfContents.items}>
               <Prose as="article" flex="1 1 100%" minW="100%">
-                <MDXProvider components={components}>
-                  <MDXRenderer>{post.body}</MDXRenderer>
-                </MDXProvider>
+                <MDXProvider components={components}>{mdxContent}</MDXProvider>
               </Prose>
             </WithSidebarWrapper>
           ) : (
             <Prose as="article">
-              <MDXProvider components={components}>
-                <MDXRenderer>{post.body}</MDXRenderer>
-              </MDXProvider>
+              <MDXProvider components={components}>{mdxContent}</MDXProvider>
             </Prose>
           )}
           <Spacer size={12} axis="vertical" />
@@ -129,7 +125,6 @@ export const query = graphql`
     title
     description
     excerpt
-    body
     seoLastUpdated: lastUpdated
     lastUpdated(formatString: "MMM DD, YYYY")
     seoDate: date

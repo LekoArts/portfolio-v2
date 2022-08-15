@@ -19,6 +19,5 @@ export const components = {
   Alert,
   Collapsible,
   Video,
-  wrapper: ({ children }) => children,
   ...headings,
 }

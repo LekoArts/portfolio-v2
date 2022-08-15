@@ -8,8 +8,7 @@
     "gatsby": "^4.0.0"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.6.22",
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/react": "^2.1.2",
     "gatsby-plugin-catch-links": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
@@ -23,6 +22,7 @@
     "prando": "^6.0.1",
     "remark-slug": "^6.0.0",
     "remark-smartypants": "^0.0.1",
+    "remark-unwrap-images": "^2.0.0",
     "ts-node": "^10.7.0",
     "utils": "^0.0.1"
   },

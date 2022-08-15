@@ -24,8 +24,12 @@ const tagColorSwitch = (name) => {
   }
 }
 
-const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({ data: { post }, location: { pathname } }) => (
-  <WritingView post={post} pathname={pathname} type="tutorial">
+const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
+  data: { post },
+  location: { pathname },
+  children: mdxContent,
+}) => (
+  <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="tutorial">
     <Heading as="h1">{post.title}</Heading>
     <Spacer size={6} axis="vertical" />
     <Divider />
@@ -84,7 +88,7 @@ export const Head: HeadFC<WritingViewDataProps> = ({ data: { post } }) => (
 )
 
 export const query = graphql`
-  query TutorialTemplate($id: String!) {
+  query ($id: String!) {
     post(id: { eq: $id }) {
       ...WritingView
       tableOfContents

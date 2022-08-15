@@ -1,6 +1,7 @@
 import { GatsbyConfig, PluginOptions } from "gatsby"
 import remarkSlug from "remark-slug"
 import remarkSmartyPants from "remark-smartypants"
+import remarkUnwrapImages from "remark-unwrap-images"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
@@ -35,7 +36,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          name: `src/pages`,
+          name: `pages`,
           path: `src/pages`,
         },
       },
@@ -73,7 +74,6 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-plugin-mdx`,
         options: {
-          lessBabel: true,
           extensions: [`.mdx`, `.md`],
           gatsbyRemarkPlugins: [
             {
@@ -85,7 +85,9 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
               },
             },
           ],
-          remarkPlugins: [remarkSlug, remarkSmartyPants],
+          mdxOptions: {
+            remarkPlugins: [remarkSlug, remarkSmartyPants, remarkUnwrapImages],
+          },
         },
       },
       `gatsby-transformer-sharp`,

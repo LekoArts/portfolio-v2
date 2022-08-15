@@ -1,10 +1,14 @@
 import { getLanguage, calculateLinesToHighlight, preToCodeBlock } from "../code"
 
 const preProps = {
-  mdxType: `code`,
-  children: `This is the code string`,
-  className: `language-javascript`,
-  otherProps: `Hello World`,
+  children: {
+    props: {
+      children: `This is the code string`,
+      className: `language-javascript`,
+      otherProps: `Hello World`,
+    },
+    type: `code`,
+  },
 }
 
 describe(`code utils`, () => {
@@ -35,18 +39,18 @@ describe(`code utils`, () => {
   })
   it(`preToCodeBlock`, () => {
     expect(preToCodeBlock({ foo: `bar` })).toBe(undefined)
-    expect(preToCodeBlock({ children: { props: preProps } })).toStrictEqual({
-      codeString: preProps.children,
-      className: preProps.className,
+    expect(preToCodeBlock(preProps)).toStrictEqual({
+      codeString: preProps.children.props.children,
+      className: preProps.children.props.className,
       language: `javascript`,
-      otherProps: preProps.otherProps,
-      mdxType: preProps.mdxType,
+      otherProps: preProps.children.props.otherProps,
     })
-    expect(preToCodeBlock({ children: { props: { mdxType: `code`, children: preProps.children } } })).toStrictEqual({
+    expect(
+      preToCodeBlock({ children: { props: { children: `This is the code string` }, type: `code` } })
+    ).toStrictEqual({
       className: ``,
-      codeString: preProps.children,
+      codeString: preProps.children.props.children,
       language: ``,
-      mdxType: preProps.mdxType,
     })
   })
 })

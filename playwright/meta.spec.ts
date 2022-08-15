@@ -92,7 +92,7 @@ const metaTagAssertions = [
       },
       {
         key: `og:description`,
-        value: `You're a fan of  Plausible Analytics  and  Gatsby ? Great! In this guide you'll learn how to add Plausible Analytics to your Gatsby site…`,
+        value: `You’re a fan of Plausible Analytics and Gatsby? Great! In this guide you’ll learn how to add Plausible Analytics to your Gatsby site…`,
       },
       {
         key: `og:image`,

@@ -7,8 +7,12 @@ import { Spacer } from "../components/blocks/spacer"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
 
-const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({ data: { post }, location: { pathname } }) => (
-  <WritingView post={post} pathname={pathname} type="prose">
+const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
+  data: { post },
+  location: { pathname },
+  children: mdxContent,
+}) => (
+  <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="prose">
     <Text
       color="textEmphasized"
       fontWeight={500}
@@ -67,7 +71,7 @@ export const Head: HeadFC<WritingViewDataProps> = ({ data: { post } }) => (
 )
 
 export const query = graphql`
-  query ProseTemplate($id: String!) {
+  query ($id: String!) {
     post(id: { eq: $id }) {
       ...WritingView
     }

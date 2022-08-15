@@ -21,7 +21,7 @@ const OVERRIDES = {
 export const languageOverride = (input: string): string => OVERRIDES?.[input] ?? input
 
 export const preToCodeBlock = (preProps) => {
-  if (preProps?.children?.props?.mdxType === `code`) {
+  if (preProps?.children?.type === `code`) {
     const { children: codeString, className = ``, ...props } = preProps.children.props
 
     const match = className.match(/language-([\0-\uFFFF]*)/)
