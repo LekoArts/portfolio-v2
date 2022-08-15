@@ -51,5 +51,8 @@ jobs:
         run: npx playwright install chromium --with-deps
       - name: Build Gatsby Site
         run: yarn build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
       - name: Run Playwright
         run: yarn e2e:build
