@@ -4224,6 +4224,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lekoarts/gatsby-source-flickr@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@lekoarts/gatsby-source-flickr@npm:0.0.1"
+  dependencies:
+    got: ^11.8.5
+  peerDependencies:
+    gatsby: ^4.0.0
+  checksum: b630d6bdbb8a4a8650c09807c5d48e84f78ac454ca169157a0f11c30b418a398f6ccf35cd9f71381601e4ec53cac1b9fcaa65b6ff5f9c6eefe2a6efe2e21efdd
+  languageName: node
+  linkType: hard
+
 "@lezer/common@npm:^0.15.0, @lezer/common@npm:^0.15.7":
   version: 0.15.12
   resolution: "@lezer/common@npm:0.15.12"
@@ -21139,6 +21150,7 @@ __metadata:
     "@chakra-ui/theme-tools": 2.0.5
     "@emotion/react": ^11.9.0
     "@emotion/styled": ^11.8.1
+    "@lekoarts/gatsby-source-flickr": ^0.0.1
     framer-motion: ^6.3.3
     gatsby: next
     gatsby-plugin-feed: next

@@ -19,7 +19,7 @@ export function get(obj: Record<string, any>, path: string | number, fallback?: 
   return obj === undefined ? fallback : obj
 }
 
-type Get = (obj: Readonly<object>, path: string | number, fallback?: any, index?: number) => any
+type Get = (obj: Readonly<Record<string, unknown>>, path: string | number, fallback?: any, index?: number) => any
 
 export const memoize = (fn: Get) => {
   const cache = new WeakMap()

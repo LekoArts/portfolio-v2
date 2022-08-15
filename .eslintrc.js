@@ -56,6 +56,78 @@ module.exports = {
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/ban-types": [
+      `error`,
+      {
+        extendDefaults: true,
+        types: {
+          "{}": {
+            fixWith: `Record<string, unknown>`,
+          },
+          object: {
+            fixWith: `Record<string, unknown>`,
+          },
+        },
+      },
+    ],
+    "@typescript-eslint/naming-convention": [
+      `error`,
+      {
+        selector: `default`,
+        format: [`camelCase`],
+      },
+      {
+        selector: `variable`,
+        format: [`camelCase`, `UPPER_CASE`, `PascalCase`],
+        leadingUnderscore: `allowSingleOrDouble`,
+        trailingUnderscore: `allowSingleOrDouble`,
+      },
+      {
+        selector: `function`,
+        format: [`camelCase`, `PascalCase`],
+        leadingUnderscore: `allow`,
+      },
+      {
+        selector: `parameter`,
+        format: [`camelCase`, `PascalCase`, `snake_case`],
+        leadingUnderscore: `allowSingleOrDouble`,
+      },
+      {
+        selector: `enumMember`,
+        format: [`camelCase`, `UPPER_CASE`, `PascalCase`],
+      },
+      {
+        selector: `typeLike`,
+        format: [`PascalCase`],
+      },
+      {
+        selector: `typeAlias`,
+        format: [`camelCase`, `PascalCase`],
+      },
+      {
+        selector: `property`,
+        format: [`PascalCase`, `UPPER_CASE`, `camelCase`, `snake_case`],
+        leadingUnderscore: `allowSingleOrDouble`,
+      },
+      {
+        selector: `objectLiteralProperty`,
+        format: null,
+      },
+      {
+        selector: `enum`,
+        format: [`PascalCase`, `UPPER_CASE`],
+      },
+      {
+        selector: `method`,
+        format: [`PascalCase`, `camelCase`],
+        leadingUnderscore: `allowSingleOrDouble`,
+      },
+      {
+        selector: `interface`,
+        format: [`PascalCase`],
+        prefix: [`I`],
+      },
+    ],
     "no-console": [`warn`, { allow: [`warn`] }],
     "spaced-comment": [2, `always`, { exceptions: [`-`, `+`], markers: [`/`] }],
     "no-use-before-define": 0,
