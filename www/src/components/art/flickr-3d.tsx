@@ -42,6 +42,14 @@ export const Flickr3D = () => {
     }
   `)
 
+  if (data?.ThreeD?.nodes.length === 0) {
+    return (
+      <p>
+        Define a <code>FLICKR_API_KEY</code>.
+      </p>
+    )
+  }
+
   return (
     <>
       {data.ThreeD.nodes.map((img) => (

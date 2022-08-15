@@ -18,25 +18,6 @@ const gatsbyConfig: GatsbyConfig = {
   },
   trailingSlash: `never`,
   plugins: [
-    {
-      resolve: `@lekoarts/gatsby-source-flickr`,
-      options: {
-        api_key: process.env.FLICKR_API_KEY,
-        username: `ars_aurea`,
-        endpoints: [
-          {
-            method: `flickr.photosets.getList`,
-            extension: {
-              method: `flickr.photosets.getPhotos`,
-              mapping: `id:photoset_id`,
-              args: {
-                extras: `description,last_update,date_taken,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o,media,views,original_format`,
-              },
-            },
-          },
-        ],
-      },
-    },
     `gatsby-theme-core`,
     `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-image`,

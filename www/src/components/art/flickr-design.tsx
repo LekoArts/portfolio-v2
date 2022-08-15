@@ -42,6 +42,14 @@ export const FlickrDesign = () => {
     }
   `)
 
+  if (data?.Design?.nodes.length === 0) {
+    return (
+      <p>
+        Define a <code>FLICKR_API_KEY</code>.
+      </p>
+    )
+  }
+
   return (
     <>
       {data.Design.nodes.map((img) => (

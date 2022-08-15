@@ -5,7 +5,7 @@ import remarkUnwrapImages from "remark-unwrap-images"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
-const { GITHUB_TOKEN } = process.env
+const { GITHUB_TOKEN, FLICKR_API_KEY } = process.env
 
 const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
   const options = withDefaults(themeOptions)
@@ -50,6 +50,25 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
             Authorization: `bearer ${GITHUB_TOKEN}`,
           },
           fetchOptions: {},
+        },
+      },
+      FLICKR_API_KEY && {
+        resolve: `@lekoarts/gatsby-source-flickr`,
+        options: {
+          api_key: FLICKR_API_KEY,
+          username: `ars_aurea`,
+          endpoints: [
+            {
+              method: `flickr.photosets.getList`,
+              extension: {
+                method: `flickr.photosets.getPhotos`,
+                mapping: `id:photoset_id`,
+                args: {
+                  extras: `description,last_update,date_taken,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o,media,views,original_format`,
+                },
+              },
+            },
+          ],
         },
       },
       {
