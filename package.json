@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "private": true,
   "author": "LekoArts <hello@lekoarts.de>",
-  "license": "GPLv3",
   "workspaces": [
     "packages/*",
     "www"
