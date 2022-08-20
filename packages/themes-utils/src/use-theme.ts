@@ -1,3 +1,8 @@
-// import * as React from "react"
+import * as React from "react"
+import type { IUseTheme } from "./types"
 
-// const ThemeContext = React.createContext()
+export const ThemeContext = React.createContext<IUseTheme | undefined>(undefined)
+ThemeContext.displayName = `ThemeContext`
+const defaultContext: IUseTheme = { setTheme: (_) => {}, themes: [] }
+
+export const useTheme = () => React.useContext(ThemeContext) ?? defaultContext

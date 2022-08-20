@@ -1,6 +1,8 @@
 import * as React from "react"
 import type { GatsbySSR } from "gatsby"
+import { ThemeProvider, ThemeScript } from "themes-utils"
 import { site } from "./src/constants/meta"
+import { DEFAULT_THEME, STORAGE_KEY, THEMES } from "./src/constants/themes"
 // @ts-ignore
 import interVariableWoff2 from "./src/assets/fonts/Inter-roman.var.woff2"
 // @ts-ignore
@@ -47,6 +49,19 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, set
           `,
         }}
       />,
+      <ThemeScript defaultTheme={DEFAULT_THEME} storageKey={STORAGE_KEY} themes={THEMES} key="theme-utils-script" />,
     ])
   }
 }
+
+export const wrapRootElement: GatsbySSR["wrapRootElement"] = ({ element }) => (
+  <ThemeProvider
+    defaultTheme={DEFAULT_THEME}
+    storageKey={STORAGE_KEY}
+    themes={THEMES}
+    disableTransitionOnChange
+    key="theme-utils-provider"
+  >
+    {element}
+  </ThemeProvider>
+)
