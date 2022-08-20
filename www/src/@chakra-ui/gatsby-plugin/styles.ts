@@ -25,11 +25,5 @@ export const styles = {
         borderColor: mode(`blueGray.200`, `blueGray.700`)(props),
       },
     },
-    "[data-skip-to-content]": {
-      clip: `rect(0 0 0 0)`,
-      "&:focus": {
-        clip: `auto`,
-      },
-    },
   }),
 }

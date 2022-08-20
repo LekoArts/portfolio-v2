@@ -6,7 +6,7 @@ import { SEO } from "../components/seo"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
-import { Link } from "../components/link"
+import { Link } from "../components/primitives/link"
 
 const NotFound: React.FC<PageProps> = () => {
   React.useEffect(() => {

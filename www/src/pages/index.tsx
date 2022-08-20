@@ -17,14 +17,14 @@ import {
   TagLabel,
   usePrefersReducedMotion,
 } from "@chakra-ui/react"
-import { Link } from "../components/link"
+import { Link } from "../components/primitives/link"
 import { Layout } from "../components/blocks/layout"
-import { MotionBox } from "../components/blocks/motion-box"
+import { MotionBox } from "../components/primitives/motion-box"
 import { FullWidthContainer } from "../components/blocks/full-width-container"
-import { Spacer } from "../components/blocks/spacer"
+import { Spacer } from "../components/primitives/spacer"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Heading } from "../components/typography/heading"
-import { PrimaryButton, SubtleButton } from "../components/buttons"
+import { PrimaryButton, SubtleButton } from "../components/primitives/buttons"
 import { space } from "../constants/space"
 import { SEO } from "../components/seo"
 import { homepage } from "../constants/json-ld"

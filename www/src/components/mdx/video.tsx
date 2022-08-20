@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box } from "@chakra-ui/react"
 import { site } from "../../constants/meta"
-import { SVGIcon } from "../blocks/svg-icon"
+import { SVGIcon } from "../primitives/svg-icon"
 
 type VideoProps = {
   src: string

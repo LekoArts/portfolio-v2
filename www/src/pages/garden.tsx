@@ -16,15 +16,15 @@ import {
   usePrefersReducedMotion,
 } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/link"
+import { Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/blocks/spacer"
+import { Spacer } from "../components/primitives/spacer"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
-import { SVGIconNames, SVGIcon } from "../components/blocks/svg-icon"
+import { SVGIconNames, SVGIcon } from "../components/primitives/svg-icon"
 
 type DataProps = {
   garden: {

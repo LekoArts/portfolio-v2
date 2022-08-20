@@ -2,11 +2,11 @@ import * as React from "react"
 import { Flex } from "@chakra-ui/react"
 import { useLocation } from "@reach/router"
 import { useDistinctCategories } from "../../hooks/use-distinct-categories"
-import { Link } from "../link"
+import { Link } from "../primitives/link"
 import { Navigation } from "./navigation"
 import { FullWidthContainer } from "./full-width-container"
-import { Spacer } from "./spacer"
-import { SVGIcon } from "./svg-icon"
+import { Spacer } from "../primitives/spacer"
+import { SVGIcon } from "../primitives/svg-icon"
 
 const Logo: React.FC = () => (
   <Link to="/" transform="scale(1)" _hover={{ transform: `scale(1.1)` }} aria-label="lekoarts.de, Back to homepage">

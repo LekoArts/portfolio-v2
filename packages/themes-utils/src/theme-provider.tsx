@@ -1,6 +1,8 @@
 // Adapted from https://github.com/pacocoursey/next-themes
 // MIT LICENSE - pacocoursey
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import * as React from "react"
 import type { IThemeProviderProps } from "./types"
 import { disableAnimation, getSystemTheme, getThemeFromLocalstorage } from "./utils"

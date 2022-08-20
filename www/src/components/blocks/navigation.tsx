@@ -3,7 +3,7 @@ import { IconButton, useColorMode, HStack } from "@chakra-ui/react"
 import { FaMoon as Moon } from "react-icons/fa"
 import { MdWbSunny as Sun } from "react-icons/md"
 import { usePrimaryNavigation } from "../../hooks/use-primary-navigation"
-import { Link } from "../link"
+import { Link } from "../primitives/link"
 
 const Toggle: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()

@@ -137,6 +137,7 @@ module.exports = {
     "linebreak-style": 0,
     "consistent-return": 0,
     import: 0,
+    "no-unused-vars": 0,
     camelcase: 1,
     "import/no-unresolved": 0,
     "func-names": 0,
@@ -161,6 +162,7 @@ module.exports = {
     "react/jsx-curly-brace-presence": 0,
     "react/jsx-pascal-case": 0,
     "react/function-component-definition": 0,
+    "react/button-has-type": 0,
     "react/jsx-filename-extension": [
       1,
       {

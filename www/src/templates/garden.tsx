@@ -16,15 +16,15 @@ import {
   Stack,
 } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/link"
+import { Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
 import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/blocks/spacer"
+import { Spacer } from "../components/primitives/spacer"
 import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
-import { ShareAnywhereButton, TwitterButton } from "../components/buttons"
+import { ShareAnywhereButton, TwitterButton } from "../components/primitives/buttons"
 import { site } from "../constants/meta"
 
 type DataProps = {

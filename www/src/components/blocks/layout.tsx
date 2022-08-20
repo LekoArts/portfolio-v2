@@ -1,6 +1,6 @@
 import * as React from "react"
 import { SkipNavLink } from "../a11y/skip-nav"
-import { Fonts } from "./fonts"
+import { Fonts } from "../primitives/fonts"
 import { Footer } from "./footer"
 import { Header } from "./header"
 

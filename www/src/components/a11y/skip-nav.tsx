@@ -1,5 +1,5 @@
 import * as React from "react"
-import { chakra } from "@chakra-ui/react"
+import { skipNavLinkStyle } from "./skip-nav.css"
 
 const defaultId = `skip-to-content`
 
@@ -11,30 +11,9 @@ const SkipNavLink: React.FC<React.PropsWithChildren<{ contentId?: string }>> = (
   const id = contentId || defaultId
 
   return (
-    <chakra.a
-      {...props}
-      border={0}
-      height="1px"
-      width="1px"
-      margin="-1px"
-      padding={0}
-      overflow="hidden"
-      position="absolute"
-      _focus={{
-        padding: `1rem`,
-        position: `fixed`,
-        top: `10px`,
-        left: `10px`,
-        background: `bg`,
-        zIndex: `skipLink`,
-        width: `auto`,
-        height: `auto`,
-      }}
-      href={`#${id}`}
-      data-skip-to-content
-    >
+    <a {...props} className={skipNavLinkStyle} href={`#${id}`} data-skip-to-content>
       {children}
-    </chakra.a>
+    </a>
   )
 }
 

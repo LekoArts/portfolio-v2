@@ -4,10 +4,10 @@ import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@cha
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
-import { Spacer } from "../blocks/spacer"
+import { Spacer } from "../primitives/spacer"
 import { Prose } from "../typography/prose"
 import { components } from "../mdx"
-import { ShareAnywhereButton, TwitterButton } from "../buttons"
+import { ShareAnywhereButton, TwitterButton } from "../primitives/buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
 

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { graphql } from "gatsby"
 import { Text } from "@chakra-ui/react"
-import { MotionBox } from "../blocks/motion-box"
-import { Link } from "../link"
+import { MotionBox } from "../primitives/motion-box"
+import { Link } from "../primitives/link"
 
 type CardProps = {
   slug: string

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, Stack, Flex, Link as ExternalLink } from "@chakra-ui/react"
 import { useFooterNavigation } from "../../hooks/use-footer-navigation"
-import { Link } from "../link"
+import { Link } from "../primitives/link"
 import { FullWidthContainer } from "./full-width-container"
 
 export const Footer: React.FC = () => {
