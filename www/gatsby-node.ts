@@ -28,6 +28,7 @@ type CreatePagesResult = {
 const gardenTemplate = path.resolve(`src/templates/garden.tsx`)
 const proseTemplate = path.resolve(`src/templates/prose.tsx`)
 const tutorialTemplate = path.resolve(`src/templates/tutorial.tsx`)
+const playgroundTemplate = path.resolve(`src/templates/playground.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
@@ -70,6 +71,14 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
   redirects.nodes.forEach((redirect) => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
+
+  if (process.env.gatsby_executing_command === `develop`) {
+    createPage({
+      path: `/playground`,
+      component: playgroundTemplate,
+      context: {},
+    })
+  }
 
   garden.nodes.forEach((post) => {
     createPage({
