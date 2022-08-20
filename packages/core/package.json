@@ -3,7 +3,6 @@
   "description": "Powers the GraphQL interface creation and sourcing of data",
   "private": true,
   "version": "0.0.1",
-  "license": "GPLv3",
   "peerDependencies": {
     "gatsby": "^4.0.0"
   },

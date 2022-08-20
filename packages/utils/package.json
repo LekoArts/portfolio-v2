@@ -3,7 +3,6 @@
   "description": "Utility functions",
   "version": "0.0.1",
   "private": true,
-  "license": "GPLv3",
   "source": "index.ts",
   "dependencies": {
     "@ctrl/tinycolor": "^3.4.1",

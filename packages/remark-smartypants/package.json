@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "private": true,
   "main": "index.js",
-  "license": "GPLv3",
   "dependencies": {
     "retext": "^7.0.1",
     "retext-smartypants": "^4.0.0",

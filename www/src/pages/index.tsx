@@ -38,17 +38,17 @@ type RepositoryInfo = {
 
 type DataProps = {
   posts: {
-    nodes: {
+    nodes: Array<{
       title: string
       description: string
       slug: string
-    }[]
+    }>
   }
   garden: {
-    nodes: {
+    nodes: Array<{
       title: string
       slug: string
-    }[]
+    }>
   }
   primaryRepo?: {
     repository?: RepositoryInfo
