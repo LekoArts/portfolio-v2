@@ -1,0 +1,7 @@
+{
+  "name": "themes-utils",
+  "description": "React components & hooks to control theme switching",
+  "private": true,
+  "version": "0.0.1",
+  "source": "index.ts"
+}
