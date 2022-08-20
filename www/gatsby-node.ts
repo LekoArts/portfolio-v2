@@ -3,25 +3,25 @@ import path from "path"
 
 type CreatePagesResult = {
   redirects: {
-    nodes: {
+    nodes: Array<{
       fromPath: string
       toPath: string
-    }[]
+    }>
   }
   garden: {
-    nodes: {
+    nodes: Array<{
       id: string
       slug: string
       contentFilePath: string
-    }[]
+    }>
   }
   writing: {
-    nodes: {
+    nodes: Array<{
       id: string
       slug: string
       type: "prose" | "tutorial"
       contentFilePath: string
-    }[]
+    }>
   }
 }
 

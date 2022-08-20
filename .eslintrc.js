@@ -128,6 +128,7 @@ module.exports = {
         prefix: [`I`],
       },
     ],
+    "@typescript-eslint/array-type": [`error`, { default: `generic` }],
     "no-console": [`warn`, { allow: [`warn`] }],
     "spaced-comment": [2, `always`, { exceptions: [`-`, `+`], markers: [`/`] }],
     "no-use-before-define": 0,

@@ -5,10 +5,10 @@ import { useActiveHash } from "../../hooks/use-active-hash"
 export type TocItem = {
   url: string
   title: string
-  items?: TocItem[]
+  items?: Array<TocItem>
 }
 
-function getIds(items: TocItem[]): string[] {
+function getIds(items: Array<TocItem>): Array<string> {
   return items.reduce((acc, item) => {
     if (item.url) {
       // url has a # as first character, remove it to get the raw CSS-id
@@ -27,7 +27,7 @@ const renderItems = ({
   level = 0,
   activeColor = `red`,
 }: {
-  items: TocItem[]
+  items: Array<TocItem>
   activeId: string
   level?: number
   activeColor?: string
@@ -57,7 +57,7 @@ const renderItems = ({
   </>
 )
 
-export const Toc = ({ items }: { items: TocItem[] }) => {
+export const Toc = ({ items }: { items: Array<TocItem> }) => {
   const ids = getIds(items)
   const activeItemHash = useActiveHash(ids)
 
@@ -97,7 +97,10 @@ export const Toc = ({ items }: { items: TocItem[] }) => {
   )
 }
 
-export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: TocItem[] }>> = ({ children, items }) => (
+export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: Array<TocItem> }>> = ({
+  children,
+  items,
+}) => (
   <Box
     display={{ base: `block`, "2xl": `flex` }}
     flexDirection="row-reverse"

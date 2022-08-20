@@ -60,7 +60,7 @@ export type BreadcrumbListItem = {
   name: string
 }
 
-export const breadcrumbList = (items: BreadcrumbListItem[]) => {
+export const breadcrumbList = (items: Array<BreadcrumbListItem>) => {
   const homeLevel = {
     "@type": `ListItem`,
     item: {

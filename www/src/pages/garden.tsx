@@ -28,21 +28,21 @@ import { SVGIconNames, SVGIcon } from "../components/blocks/svg-icon"
 
 type DataProps = {
   garden: {
-    group: {
+    group: Array<{
       title: string
-    }[]
-    nodes: {
+    }>
+    nodes: Array<{
       title: string
       slug: string
       icon: SVGIconNames
       lastUpdated: string
-      tags: string[]
-    }[]
+      tags: Array<string>
+    }>
   }
 }
 
 interface IState {
-  tags: string[]
+  tags: Array<string>
 }
 
 type Action = { type: `ADD_TAG`; payload: string } | { type: `REMOVE_TAG`; payload: string }

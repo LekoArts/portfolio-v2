@@ -6,13 +6,13 @@ import { SEO } from "../components/seo"
 
 type DataProps = {
   posts: {
-    nodes: {
+    nodes: Array<{
       title: string
       date: string
       slug: string
       subtitle: string
       description: string
-    }[]
+    }>
     totalCount: number
   }
   category: {

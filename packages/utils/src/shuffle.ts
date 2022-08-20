@@ -11,7 +11,7 @@ const random = (seed: number): number => {
  * @param count - Number of items to take out of the array
  * @returns A seeded shuffled array
  */
-export const shuffle = <T>(array: T[], seed: number, count = 2): T[] => {
+export const shuffle = <T>(array: Array<T>, seed: number, count = 2): Array<T> => {
   let s = seed
   const m = array.length
   const maxToShuffle = Math.min(m - 1, count)

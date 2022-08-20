@@ -37,7 +37,7 @@ type DataProps = {
     seoDate: string
     yearDate: string
     date: string
-    tags: string[]
+    tags: Array<string>
     timeToRead: number
     excerpt: string
     parent: {

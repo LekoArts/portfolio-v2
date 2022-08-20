@@ -4,7 +4,7 @@ import { ArtImage } from "./art-image"
 
 interface IQueryResult {
   ThreeD: {
-    nodes: {
+    nodes: Array<{
       title: string
       description: string
       photoId: string
@@ -15,7 +15,7 @@ interface IQueryResult {
           height: number
         }
       }
-    }[]
+    }>
   }
 }
 

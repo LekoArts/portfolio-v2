@@ -25,7 +25,7 @@ export type WritingViewDataProps = {
     subtitle: string
     timeToRead: string
     tableOfContents?: {
-      items?: TocItem[]
+      items?: Array<TocItem>
     }
     image?: string
     category: {

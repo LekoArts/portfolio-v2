@@ -4,9 +4,9 @@ import { ArtImage } from "./art-image"
 
 interface IQueryResult {
   Photography: {
-    nodes: {
+    nodes: Array<{
       title
-      content: {
+      content: Array<{
         title: string
         description: string
         photoId: string
@@ -17,8 +17,8 @@ interface IQueryResult {
             height: number
           }
         }
-      }[]
-    }[]
+      }>
+    }>
   }
 }
 

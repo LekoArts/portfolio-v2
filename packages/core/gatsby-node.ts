@@ -195,7 +195,7 @@ type GardenNode = {
   date: string
   lastUpdated?: string
   title: string
-  tags: string[]
+  tags: Array<string>
   icon: string
   contentFilePath: string
   timeToRead: number

@@ -12,13 +12,13 @@ import { SEO } from "../components/seo"
 
 type WritingProps = {
   posts: {
-    nodes: {
+    nodes: Array<{
       title: string
       date: string
       slug: string
       subtitle: string
       description: string
-    }[]
+    }>
     totalCount: number
   }
 }

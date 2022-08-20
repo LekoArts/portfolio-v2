@@ -8,13 +8,13 @@ import { WritingSubNavigation } from "./subnavigation"
 
 type CategoryViewProps = {
   posts: {
-    nodes: {
+    nodes: Array<{
       title: string
       date: string
       slug: string
       subtitle: string
       description: string
-    }[]
+    }>
   }
 }
 

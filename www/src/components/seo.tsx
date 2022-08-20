@@ -8,7 +8,7 @@ type SEOProps = {
   pathname?: string
   image?: string
   noIndex?: boolean
-  breadcrumbListItems?: BreadcrumbListItem[]
+  breadcrumbListItems?: Array<BreadcrumbListItem>
 }
 
 /* istanbul ignore next */
