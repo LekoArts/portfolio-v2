@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Box, Stack, Flex, Link as ExternalLink } from "@chakra-ui/react"
+import { Stack, Flex, Link as ExternalLink } from "@chakra-ui/react"
 import { useFooterNavigation } from "../../hooks/use-footer-navigation"
 import { Link } from "../primitives/link"
+import { Box } from "../primitives/box"
 import { FullWidthContainer } from "./full-width-container"
 
 export const Footer: React.FC = () => {
@@ -9,7 +10,7 @@ export const Footer: React.FC = () => {
 
   return (
     <FullWidthContainer variant="dark">
-      <Box as="footer" py={16} role="contentinfo">
+      <Box as="footer" py="16" role="contentinfo">
         <Stack direction="column" spacing={16}>
           <Flex flexDirection={[`column`, `row`]} flexWrap="wrap" justifyContent="space-between">
             {footerNavigation.map((section) => {
@@ -18,11 +19,17 @@ export const Footer: React.FC = () => {
               return (
                 <Flex key={heading.name} flexDirection="column" alignItems="flex-start" mb={[8, 0]}>
                   {heading.link ? (
-                    <Link to={heading.link} p={1} color="white" fontSize={[`1.125rem`, null, `1.3125rem`]} mb={[2, 3]}>
+                    <Link
+                      to={heading.link}
+                      p={1}
+                      color="textEmphasizedOnBg"
+                      fontSize={[`lg`, null, `lgx`]}
+                      mb={[`2`, `3`]}
+                    >
                       {heading.name}
                     </Link>
                   ) : (
-                    <Box color="white" p={1} fontSize={[`1.125rem`, null, `1.3125rem`]} mb={[2, 3]}>
+                    <Box color="textEmphasizedOnBg" p="1" fontSize={[`lg`, null, `lgx`]} mb={[`2`, `3`]}>
                       {heading.name}
                     </Box>
                   )}

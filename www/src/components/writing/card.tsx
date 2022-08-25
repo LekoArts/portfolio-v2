@@ -18,11 +18,11 @@ export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }
       _focus={{ boxShadow: `none`, h2: { color: `primary` } }}
       _hover={{ textDecoration: `none`, h2: { color: `primary` } }}
     >
-      <Text as="h2" fontSize="1.3125rem" fontWeight="bold" color="cardHeadingColor" transition="color 0.3s ease-in-out">
+      <Text as="h2" fontSize="1.3125rem" fontWeight="bold" color="heading" transition="color 0.3s ease-in-out">
         {title}
       </Text>
       {subtitle && (
-        <Text as="h3" fontSize="1.125rem" fontWeight="medium" color="cardSubheading">
+        <Text as="h3" fontSize="1.125rem" fontWeight="medium" color="textMuted">
           {subtitle}
         </Text>
       )}

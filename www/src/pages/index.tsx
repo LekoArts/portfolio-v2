@@ -267,7 +267,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               <Grid gridTemplateColumns={[`1fr`, null, null, `2fr 1fr`]} gap={6}>
                 {primRepo && secRepo ? (
                   <>
-                    <Box bg="primaryBg" color="#e7f1ff" p={6} borderRadius="lg">
+                    <Box bg="primaryAsBg" color="#e7f1ff" p={6} borderRadius="lg">
                       <Flex flexDirection="row" justifyContent="space-between" mb={6}>
                         <ChakraLink
                           fontSize={[`lg`, null, null, null, `1.3125rem`]}
