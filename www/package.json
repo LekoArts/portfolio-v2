@@ -21,6 +21,7 @@
     "@react-aria/button": "^3.6.0",
     "@vanilla-extract/babel-plugin": "^1.1.7",
     "@vanilla-extract/css": "^1.7.2",
+    "@vanilla-extract/sprinkles": "^1.4.1",
     "@vanilla-extract/webpack-plugin": "^2.1.11",
     "framer-motion": "^6.3.3",
     "gatsby": "next",

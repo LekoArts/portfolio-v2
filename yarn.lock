@@ -5933,6 +5933,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vanilla-extract/sprinkles@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@vanilla-extract/sprinkles@npm:1.4.1"
+  peerDependencies:
+    "@vanilla-extract/css": ^1.0.0
+  checksum: e72407ca6afad27c9e609ec3b23f8216c17374f40728ed8f8fc4decc0ea65216d9fb0f74daf31b846dffc7a90c0fe8f40a16d0b468c8f81a0600eea570a437bf
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/webpack-plugin@npm:^2.1.11":
   version: 2.1.11
   resolution: "@vanilla-extract/webpack-plugin@npm:2.1.11"
@@ -20920,6 +20929,7 @@ __metadata:
     "@react-aria/button": ^3.6.0
     "@vanilla-extract/babel-plugin": ^1.1.7
     "@vanilla-extract/css": ^1.7.2
+    "@vanilla-extract/sprinkles": ^1.4.1
     "@vanilla-extract/webpack-plugin": ^2.1.11
     framer-motion: ^6.3.3
     gatsby: next
