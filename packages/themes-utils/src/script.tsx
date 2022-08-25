@@ -6,12 +6,12 @@ import { COLOR_SCHEMES, MEDIA } from "./constants"
 import type { IThemeScriptProps } from "./types"
 
 export const ThemeScript = React.memo(
-  ({ storageKey = `lekoarts-themes`, defaultTheme = `system`, themes = [`light`, `dark`] }: IThemeScriptProps) => {
+  ({ storageKey = `lekoarts-themes`, defaultTheme = `system`, attrs, value }: IThemeScriptProps) => {
     const defaultSystem = defaultTheme === `system`
 
     // Code-golfing the amount of characters in the script
     const optimization = (() => {
-      const removeClasses = `c.remove(${themes.map((t: string) => `'${t}'`).join(`,`)})`
+      const removeClasses = `c.remove(${attrs.map((t: string) => `'${t}'`).join(`,`)})`
       return `var d=document.documentElement,c=d.classList;${removeClasses};`
     })()
 
@@ -25,7 +25,8 @@ export const ThemeScript = React.memo(
     })()
 
     const updateDOM = (name: string, literal: boolean = false, setColorScheme = true) => {
-      const val = literal ? `${name}|| ''` : `'${name}'`
+      const resolvedName = value ? value[name] : name
+      const val = literal ? `${name}|| ''` : `'${resolvedName}'`
       let text = ``
 
       // MUCH faster to set colorScheme alongside HTML attribute/class
@@ -35,7 +36,7 @@ export const ThemeScript = React.memo(
         text += `d.style.colorScheme = '${name}';`
       }
 
-      if (literal || name) {
+      if (literal || resolvedName) {
         text += `c.add(${val})`
       } else {
         text += `null`
@@ -47,7 +48,10 @@ export const ThemeScript = React.memo(
     const scriptSrc = (() =>
       `!function(){try{${optimization}var e=localStorage.getItem('${storageKey}');if('system'===e||(!e&&${defaultSystem})){var t='${MEDIA}',m=window.matchMedia(t);if(m.media!==t||m.matches){${updateDOM(
         `dark`
-      )}}else{${updateDOM(`light`)}}}else if(e){${updateDOM(`e`, true)}}${
+      )}}else{${updateDOM(`light`)}}}else if(e){${value ? `var x=${JSON.stringify(value)};` : ``}${updateDOM(
+        value ? `x[e]` : `e`,
+        true
+      )}}${
         !defaultSystem ? `else{${updateDOM(defaultTheme, false, false)}}` : ``
       }${fallbackColorScheme}}catch(e){}}()`)()
 

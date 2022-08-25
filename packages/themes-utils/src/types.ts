@@ -13,12 +13,13 @@ export interface IThemeProviderProps {
   storageKey?: string
   defaultTheme?: string
   disableTransitionOnChange?: boolean
-  insertScript?: boolean
   children?: React.ReactNode
+  value?: Record<string, string>
 }
 
 export interface IThemeScriptProps {
-  themes?: Array<string>
   storageKey?: string
   defaultTheme?: string
+  value?: Record<string, string>
+  attrs: Array<string>
 }

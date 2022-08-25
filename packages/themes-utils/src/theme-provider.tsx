@@ -21,15 +21,16 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<IThemeProviderProps
 
 const Theme: React.FC<IThemeProviderProps> = ({
   disableTransitionOnChange = false,
-  insertScript = false,
   storageKey = `lekoarts-themes`,
   themes = [`light`, `dark`],
   defaultTheme = `system`,
+  value,
   children,
 }) => {
   const [theme, setThemeState] = React.useState(() => getThemeFromLocalstorage(storageKey, defaultTheme))
   const [resolvedTheme, setResolvedTheme] = React.useState(() => getThemeFromLocalstorage(storageKey))
   const pendingThemeUpdate = React.useRef<string>()
+  const attrs = !value ? themes : Object.values(value)
 
   const applyTheme = React.useCallback((t) => {
     let resolved = t
@@ -40,11 +41,11 @@ const Theme: React.FC<IThemeProviderProps> = ({
       resolved = getSystemTheme()
     }
 
-    const name = resolved
+    const name = value ? value[resolved] : resolved
     const enable = disableTransitionOnChange ? disableAnimation() : null
     const d = document.documentElement
 
-    d.classList.remove(...themes)
+    d.classList.remove(...attrs)
 
     if (name) d.classList.add(name)
 
@@ -127,15 +128,14 @@ const Theme: React.FC<IThemeProviderProps> = ({
         systemTheme: resolvedTheme,
       }}
     >
-      {insertScript && (
-        <ThemeScript
-          {...{
-            storageKey,
-            themes,
-            defaultTheme,
-          }}
-        />
-      )}
+      <ThemeScript
+        {...{
+          storageKey,
+          defaultTheme,
+          value,
+          attrs,
+        }}
+      />
       {children}
     </ThemeContext.Provider>
   )
