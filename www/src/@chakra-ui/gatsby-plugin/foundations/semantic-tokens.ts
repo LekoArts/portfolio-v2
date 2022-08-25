@@ -13,7 +13,7 @@ export const semanticTokens = {
       default: transparentize(`blueGray.400`, 0.25)(colorPalette),
       _dark: transparentize(`blueGray.400`, 0.25)(colorPalette),
     },
-    primaryBg: {
+    primaryAsBg: {
       default: `blue.600`,
       _dark: `blue.900`,
     },
@@ -76,14 +76,6 @@ export const semanticTokens = {
     cardBg: {
       default: `white`,
       _dark: `blueGray.800`,
-    },
-    cardHeadingColor: {
-      default: `black`,
-      _dark: `white`,
-    },
-    cardSubheading: {
-      default: `blueGray.700`,
-      _dark: `blueGray.400`,
     },
   },
 }
