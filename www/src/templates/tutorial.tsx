@@ -31,9 +31,9 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
 }) => (
   <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="tutorial">
     <Heading as="h1">{post.title}</Heading>
-    <Spacer size={6} axis="vertical" />
+    <Spacer size="6" axis="vertical" />
     <Divider />
-    <Spacer size={4} axis="vertical" />
+    <Spacer size="4" axis="vertical" />
     <Flex justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
       <Text mb={2}>
         Created {post.date} – Last Updated {post.lastUpdated}
@@ -42,7 +42,7 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
         <TagLabel>{post.category.name}</TagLabel>
       </Tag>
     </Flex>
-    <Spacer size={10} axis="vertical" />
+    <Spacer size="10" axis="vertical" />
   </WritingView>
 )
 

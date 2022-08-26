@@ -41,7 +41,7 @@ export function extractAtomsFromProps<AtomsFn extends IAtomsFnBase>(props: any, 
 type HTMLProperties = Omit<React.AllHTMLAttributes<HTMLElement>, "as" | "color" | "height" | "width">
 
 type OverrideTokens<T> = {
-  [K in keyof T as K extends string ? `__${K}` : number]: Extract<T[K], string | number> | Record<string, unknown>
+  [K in keyof T as K extends string ? `__${K}` : number]: any | Record<string, unknown>
 }
 
 type CreateBoxParams<AtomsFn> = {

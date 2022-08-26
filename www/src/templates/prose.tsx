@@ -21,11 +21,11 @@ const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
     >
       {post.category.name}
     </Text>
-    <Spacer size={6} axis="vertical" />
+    <Spacer size="6" axis="vertical" />
     <Heading as="h1" textAlign="center">
       {post.title}
     </Heading>
-    <Spacer size={[16, null, null, 20]} axis="vertical" />
+    <Spacer size="16" axis="vertical" />
   </WritingView>
 )
 

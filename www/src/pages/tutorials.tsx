@@ -22,7 +22,7 @@ const tutorialsDescription = `Tutorials across different categories in a longfor
 const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => (
   <CategoryView posts={posts}>
     <CategoryHero
-      bgGradient="linear(to-t, blueGray.600, blueGray.900)"
+      bgGradient="linear-gradient(to top, #475569, #0f172a)"
       title={tutorialsTitle}
       description={tutorialsDescription}
     />

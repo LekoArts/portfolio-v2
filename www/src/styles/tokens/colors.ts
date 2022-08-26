@@ -291,6 +291,8 @@ export const nullColors = {
   heading: ``,
   scrollbarThumb: ``,
   scrollbarTrack: ``,
+  divider: ``,
+  bgHover: ``,
 }
 
 export const lightThemeColors: typeof nullColors = {
@@ -309,6 +311,8 @@ export const lightThemeColors: typeof nullColors = {
   heading: colorPalette.black,
   scrollbarThumb: colorPalette.blueGray[400],
   scrollbarTrack: colorPalette.blueGray[200],
+  divider: colorPalette.blueGray[100],
+  bgHover: colorPalette.blueGray[100],
 }
 
 export const darkThemeColors: typeof nullColors = {
@@ -327,4 +331,6 @@ export const darkThemeColors: typeof nullColors = {
   heading: colorPalette.white,
   scrollbarThumb: colorPalette.blueGray[400],
   scrollbarTrack: colorPalette.blueGray[700],
+  divider: colorPalette.blueGray[800],
+  bgHover: colorPalette.blueGray[800],
 }

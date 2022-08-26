@@ -76,7 +76,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
     iso: queryStringIso,
   })
   const prefersReducedMotion = usePrefersReducedMotion()
-  const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
   const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
 
   return (
@@ -91,7 +90,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
             {` `}
             Select tags to filter posts:
           </Text>
-          <Spacer size={6} axis="vertical" />
+          <Spacer size="6" axis="vertical" />
           <Wrap>
             {garden.group.map((tag) => {
               const isActive = state.tags.includes(tag.title) && isMounted
@@ -124,10 +123,10 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
               )
             })}
           </Wrap>
-          <Spacer size={20} axis="vertical" />
+          <Spacer size="20" axis="vertical" />
           <Stack
             spacing={0}
-            divider={<Spacer axis="horizontal" size="100%" bg={dividerColor} border="none" />}
+            divider={<Spacer axis="horizontal" size="full" bg="divider" border="none" />}
             mx={[`-2`, null, null, `-6`]}
           >
             {garden.nodes

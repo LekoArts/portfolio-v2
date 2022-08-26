@@ -1,13 +1,15 @@
 import * as React from "react"
-import { Box, BoxProps } from "@chakra-ui/react"
+import { Atoms } from "../../styles/atoms.css"
+import { Space } from "../../styles/tokens/space"
+import { Box } from "../primitives/box"
 
-interface ISpacerProps extends BoxProps {
-  size: BoxProps["width"]
+interface ISpacerProps extends Atoms {
+  size: Space
   axis: "vertical" | "horizontal"
 }
 
 export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
-  const width = axis === `vertical` ? `1px` : size
-  const height = axis === `horizontal` ? `1px` : size
+  const width = axis === `vertical` ? `px` : size
+  const height = axis === `horizontal` ? `px` : size
   return <Box as="span" width={width} height={height} minWidth={width} minHeight={height} display="block" {...rest} />
 }

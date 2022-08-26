@@ -1,10 +1,11 @@
 import * as React from "react"
-import { Container, Grid, Text, Link as ExternalLink } from "@chakra-ui/react"
+import { Container, Grid, Text } from "@chakra-ui/react"
 import { space } from "../../constants/space"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Layout } from "../blocks/layout"
 import { Card } from "./card"
 import { WritingSubNavigation } from "./subnavigation"
+import { ExternalLink } from "../primitives/link"
 
 type CategoryViewProps = {
   posts: {

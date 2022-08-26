@@ -256,7 +256,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               Working in the open, interacting with the community & building projects that are accessible to everyone
               fill me with joy.
             </Text>
-            <Spacer axis="vertical" size={20} />
+            <Spacer axis="vertical" size="20" />
             <Stack direction="column" width="100%" spacing={6}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Badge variant="dark">Featured Projects</Badge>

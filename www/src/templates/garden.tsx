@@ -2,21 +2,9 @@ import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { RiPlantFill as PlantIcon } from "react-icons/ri"
-import {
-  Container,
-  Text,
-  Divider,
-  Flex,
-  Tag,
-  TagLabel,
-  Grid,
-  Box,
-  Link as ExternalLink,
-  Icon,
-  Stack,
-} from "@chakra-ui/react"
+import { Container, Text, Divider, Flex, Tag, TagLabel, Grid, Box, Icon, Stack } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/primitives/link"
+import { ExternalLink, Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
@@ -59,9 +47,9 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
       <Container variant="proseRoot">
         <SkipNavContent>
           <Heading as="h1">{garden.title}</Heading>
-          <Spacer size={6} axis="vertical" />
+          <Spacer size="6" axis="vertical" />
           <Divider />
-          <Spacer size={4} axis="vertical" />
+          <Spacer size="4" axis="vertical" />
           <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]} fontSize={[`sm`, `md`, null, null, `lg`]}>
             <Text>
               Created {garden.date} – Last Updated {garden.lastUpdated}
@@ -79,13 +67,13 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </TagLabel>
             </Tag>
           </Grid>
-          <Spacer size={12} axis="vertical" />
+          <Spacer size="12" axis="vertical" />
           <Prose>
             <MDXProvider components={components}>{children}</MDXProvider>
           </Prose>
-          <Spacer size={12} axis="vertical" />
+          <Spacer size="12" axis="vertical" />
           <Divider />
-          <Spacer size={6} axis="vertical" />
+          <Spacer size="6" axis="vertical" />
           <Stack
             direction={[`column`, `row`]}
             display="flex"
@@ -95,7 +83,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
           >
             <Box>
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/garden/${garden.parent.parent.relativePath}`}
               >
@@ -103,7 +91,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </ExternalLink>
               {` `}-{` `}
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
               >
@@ -119,7 +107,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} />
             )}
           </Stack>
-          <Spacer size={12} axis="vertical" />
+          <Spacer size="12" axis="vertical" />
           <Box
             textStyle="prominent"
             bgGradient="linear(to-tr, green.800, lime.600)"

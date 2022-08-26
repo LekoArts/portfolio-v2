@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@chakra-ui/react"
+import { Box, Container, Divider, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
@@ -10,6 +10,7 @@ import { components } from "../mdx"
 import { ShareAnywhereButton, TwitterButton } from "../primitives/buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
+import { ExternalLink } from "../primitives/link"
 
 export type WritingViewDataProps = {
   post: {
@@ -72,9 +73,9 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               <MDXProvider components={components}>{mdxContent}</MDXProvider>
             </Prose>
           )}
-          <Spacer size={12} axis="vertical" />
+          <Spacer size="12" axis="vertical" />
           <Divider />
-          <Spacer size={6} axis="vertical" />
+          <Spacer size="6" axis="vertical" />
           <Stack
             direction={[`column`, `row`]}
             display="flex"
@@ -84,7 +85,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
           >
             <Box>
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/writing/${post.parent.parent.relativePath}`}
               >
@@ -92,7 +93,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               </ExternalLink>
               {` `}-{` `}
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
               >

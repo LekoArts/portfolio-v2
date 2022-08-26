@@ -36,11 +36,19 @@ export const navigation = {
   navigationWithSubHeight: `111px`,
 }
 
+export const negativeNavigation = {
+  "-navigationHeight": `-61px`,
+  "-navigationWithSubHeight": `-111px`,
+}
+
 export const space = {
   ...baseSizes,
   max: `max-content`,
   min: `min-content`,
   full: `100%`,
   ...navigation,
+  ...negativeNavigation,
   ...container,
 }
+
+export type Space = keyof typeof space

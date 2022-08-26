@@ -26,6 +26,9 @@ const colorAtomicProperties = defineProperties({
     color: vars.color,
     background: vars.color,
   },
+  shorthands: {
+    bg: [`background`],
+  },
 })
 
 const responsiveAtomicProperties = defineProperties({
