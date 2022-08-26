@@ -1,20 +1,10 @@
 import * as React from "react"
-import { Box, BoxProps, usePrefersReducedMotion } from "@chakra-ui/react"
-import { transforms } from "../../constants/motion"
+import { IBoxProps, Box } from "./box"
+import { motionBoxStyle } from "./motion-box.css"
+import { composeClassNames } from "../../utils/box"
 
-export const MotionBox: React.FC<React.PropsWithChildren<BoxProps>> = ({ children, ...rest }) => {
-  const shouldReduceMotion = usePrefersReducedMotion()
-
-  return (
-    <Box
-      transition={transforms.beforeHover.transition}
-      transform={transforms.beforeHover.transform}
-      _hover={
-        shouldReduceMotion ? {} : { transform: transforms.onHover.transform, boxShadow: transforms.onHover.boxShadow }
-      }
-      {...rest}
-    >
-      {children}
-    </Box>
-  )
-}
+export const MotionBox: React.FC<React.PropsWithChildren<IBoxProps>> = ({ children, className, ...rest }) => (
+  <Box className={composeClassNames(motionBoxStyle, className)} {...rest}>
+    {children}
+  </Box>
+)

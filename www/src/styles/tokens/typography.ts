@@ -30,34 +30,26 @@ export const lineHeights = {
 
 export type LineHeights = keyof typeof lineHeights
 
-export const fontWeights: typeof nullFontWeights = {
-  normal: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 700,
-  extrabold: 800,
-}
-
-const nullFontWeights = {
-  normal: null,
-  medium: null,
-  semibold: null,
-  bold: null,
-  extrabold: null,
+export const fontWeights = {
+  normal: `400`,
+  medium: `500`,
+  semibold: `600`,
+  bold: `700`,
+  extrabold: `800`,
 }
 
 export type FontWeights = keyof typeof fontWeights
 
 export const fontSizes = {
   xs: `0.7rem`,
-  sm: `0.875rem`,
+  sm: `0.875rem`, // 14px
   md: `1rem`,
   lg: `1.125rem`,
   lgx: `1.3125rem`,
-  xl: `1.563rem`,
-  "2xl": `1.953rem`,
-  "3xl": `2.441rem`,
-  "4xl": `3.052rem`,
+  xl: `1.563rem`, // h4
+  "2xl": `1.953rem`, // h3
+  "3xl": `2.441rem`, // h2
+  "4xl": `3.052rem`, // h1
   "5xl": `3.815rem`,
   "6xl": `4.768rem`,
 }

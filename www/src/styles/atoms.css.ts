@@ -1,15 +1,25 @@
 import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles"
-import { breakpoints, breakpointNames } from "./tokens/breakpoints"
+import { breakpointNames, minMediaQuery } from "./tokens/breakpoints"
 import { responsiveProperties, unresponsiveProperties } from "./atomic-properties"
 import { lightThemeClass } from "./themes/light.css"
 import { darkThemeClass } from "./themes/dark.css"
 import { vars } from "./themes/contract.css"
+import { pseudoSelectors } from "./selectors"
 
 const unresponsiveAtomicProperties = defineProperties({
   properties: unresponsiveProperties,
+  shorthands: {
+    p: [`paddingBottom`, `paddingTop`, `paddingLeft`, `paddingRight`],
+    px: [`paddingLeft`, `paddingRight`],
+    py: [`paddingTop`, `paddingBottom`],
+    pt: [`paddingTop`],
+    pr: [`paddingRight`],
+    pb: [`paddingBottom`],
+    pl: [`paddingLeft`],
+  },
 })
 
-const themesSelectors = {
+export const themesSelectors = {
   light: `html${lightThemeClass} &`,
   dark: `html${darkThemeClass} &`,
 }
@@ -18,8 +28,8 @@ const colorAtomicProperties = defineProperties({
   conditions: {
     light: { selector: themesSelectors.light },
     dark: { selector: themesSelectors.dark },
-    hover: { selector: `&:hover` },
-    focus: { selector: `&:focus` },
+    hover: { selector: pseudoSelectors.hover },
+    focus: { selector: pseudoSelectors.focus },
   },
   defaultCondition: [`light`, `dark`],
   properties: {
@@ -36,38 +46,31 @@ const responsiveAtomicProperties = defineProperties({
   conditions: {
     mobile: {},
     sm: {
-      "@media": `screen and (min-width: ${breakpoints.sm}px)`,
+      "@media": minMediaQuery(`sm`),
     },
     md: {
-      "@media": `screen and (min-width: ${breakpoints.md}px)`,
+      "@media": minMediaQuery(`md`),
     },
     lg: {
-      "@media": `screen and (min-width: ${breakpoints.lg}px)`,
+      "@media": minMediaQuery(`lg`),
     },
     xl: {
-      "@media": `screen and (min-width: ${breakpoints.xl}px)`,
+      "@media": minMediaQuery(`xl`),
     },
     "2xl": {
-      "@media": `screen and (min-width: ${breakpoints[`2xl`]}px)`,
+      "@media": minMediaQuery(`2xl`),
     },
   },
   responsiveArray: breakpointNames,
   properties: responsiveProperties,
   shorthands: {
-    p: [`paddingBottom`, `paddingTop`, `paddingLeft`, `paddingRight`],
-    py: [`paddingTop`, `paddingBottom`],
-    px: [`paddingLeft`, `paddingRight`],
-    pt: [`paddingTop`],
-    pb: [`paddingBottom`],
-    pl: [`paddingLeft`],
-    pr: [`paddingRight`],
     m: [`marginBottom`, `marginTop`, `marginLeft`, `marginRight`],
+    mx: [`marginLeft`, `marginRight`],
+    my: [`marginTop`, `marginBottom`],
     mt: [`marginTop`],
     mr: [`marginRight`],
     mb: [`marginBottom`],
     ml: [`marginLeft`],
-    my: [`marginTop`, `marginBottom`],
-    mx: [`marginLeft`, `marginRight`],
   },
 })
 

@@ -56,7 +56,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
             </Text>
             <Flex flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
               {garden.tags.map((tag) => (
-                <Box as="span" ml={2} _first={{ ml: 0 }} key={tag}>
+                <Box as="span" ml="2" _first={{ ml: 0 }} key={tag}>
                   {tag}
                 </Box>
               ))}
@@ -112,7 +112,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
             textStyle="prominent"
             bgGradient="linear(to-tr, green.800, lime.600)"
             borderRadius="xl"
-            p={6}
+            p="6"
             display="flex"
             flexDirection="row"
             alignItems="center"
@@ -124,13 +124,13 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               as={PlantIcon}
               height={[6, 8, 12]}
               width={[6, 8, 12]}
-              mr={6}
+              mr="6"
               color="lime.300"
               sx={{ filter: `drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.25))` }}
             />
             <Box>
               Want to learn more?{` `}
-              <Link to="/garden" color="white">
+              <Link to="/garden" __color="white">
                 Browse my Digital Garden
               </Link>
             </Box>

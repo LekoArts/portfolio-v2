@@ -1,13 +1,13 @@
 import * as React from "react"
-import { useLocation } from "@reach/router"
-import { useDistinctCategories } from "../../hooks/use-distinct-categories"
+import { useLocation } from "@gatsbyjs/reach-router"
+import { Box } from "../primitives/box"
 import { Link } from "../primitives/link"
-import { Navigation } from "./navigation"
-import { FullWidthContainer } from "./full-width-container"
 import { Spacer } from "../primitives/spacer"
 import { SVGIcon } from "../primitives/svg-icon"
-import { Box } from "../primitives/box"
-import { logoStyle } from "./header.css"
+import { FullWidthContainer } from "./full-width-container"
+import { Navigation } from "./navigation"
+import { innerHeaderStyle, logoStyle } from "./header.css"
+import { useDistinctCategories } from "../../hooks/use-distinct-categories"
 
 const Logo: React.FC = () => (
   <Link to="/" aria-label="lekoarts.de, Back to homepage" className={logoStyle}>
@@ -29,14 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => 
   return (
     <>
       <FullWidthContainer variant={isCategoryPage ? `fullBleed` : variant} height={height}>
-        <Box
-          display="flex"
-          as="header"
-          alignItems="center"
-          justifyContent="space-between"
-          __paddingTop="13px"
-          __paddingBottom="13px"
-        >
+        <Box display="flex" as="header" alignItems="center" justifyContent="space-between" className={innerHeaderStyle}>
           <Logo />
           <Navigation />
         </Box>

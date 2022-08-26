@@ -38,7 +38,7 @@ export function extractAtomsFromProps<AtomsFn extends IAtomsFnBase>(props: any, 
   return { hasAtomProps, atomProps, otherProps, customProps }
 }
 
-type HTMLProperties = Omit<React.AllHTMLAttributes<HTMLElement>, "as" | "color" | "height" | "width">
+type HTMLProperties = Omit<React.AllHTMLAttributes<HTMLElement>, "as" | "color" | "height" | "width" | "size" | "type">
 
 type OverrideTokens<T> = {
   [K in keyof T as K extends string ? `__${K}` : number]: any | Record<string, unknown>

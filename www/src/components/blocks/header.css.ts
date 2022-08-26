@@ -9,3 +9,8 @@ export const logoStyle = style({
     },
   },
 })
+
+export const innerHeaderStyle = style({
+  paddingTop: `13px`,
+  paddingBottom: `13px`,
+})

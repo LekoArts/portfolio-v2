@@ -35,10 +35,10 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
     <Divider />
     <Spacer size="4" axis="vertical" />
     <Flex justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
-      <Text mb={2}>
+      <Text mb="2">
         Created {post.date} – Last Updated {post.lastUpdated}
       </Text>
-      <Tag alignSelf="flex-start" mb={2} colorScheme={tagColorSwitch(post.category.name)}>
+      <Tag alignSelf="flex-start" mb="2" colorScheme={tagColorSwitch(post.category.name)}>
         <TagLabel>{post.category.name}</TagLabel>
       </Tag>
     </Flex>

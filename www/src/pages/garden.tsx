@@ -1,20 +1,7 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
-import {
-  Container,
-  Tag,
-  TagLabel,
-  TagCloseButton,
-  Wrap,
-  WrapItem,
-  Heading as ChakraHeading,
-  Stack,
-  Text,
-  Box,
-  useColorModeValue,
-  usePrefersReducedMotion,
-} from "@chakra-ui/react"
+import { Container, Heading as ChakraHeading, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
@@ -25,6 +12,16 @@ import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
 import { SVGIconNames, SVGIcon } from "../components/primitives/svg-icon"
+import {
+  gardenItemStyle,
+  gardenItemWrapperStyle,
+  iconWrapperStyle,
+  tagCloseIconStyle,
+  tagStyle,
+  wrapListStyle,
+} from "./garden.css"
+import { ToggleButton } from "../components/primitives/buttons"
+import { composeClassNames } from "../utils/box"
 
 type DataProps = {
   garden: {
@@ -75,8 +72,6 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
     // @ts-ignore - Somehow doesn't work
     iso: queryStringIso,
   })
-  const prefersReducedMotion = usePrefersReducedMotion()
-  const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
 
   return (
     <Layout>
@@ -91,44 +86,37 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
             Select tags to filter posts:
           </Text>
           <Spacer size="6" axis="vertical" />
-          <Wrap>
+          <div className={wrapListStyle}>
             {garden.group.map((tag) => {
               const isActive = state.tags.includes(tag.title) && isMounted
 
               return (
-                <WrapItem
-                  as="button"
-                  onClick={() => {
+                <ToggleButton
+                  key={tag.title}
+                  isSelected={isActive}
+                  onChange={() => {
                     if (state.tags.includes(tag.title)) {
                       dispatch({ type: `REMOVE_TAG`, payload: tag.title })
                     } else {
                       dispatch({ type: `ADD_TAG`, payload: tag.title })
                     }
                   }}
-                  borderRadius="md"
-                  _hover={{
-                    cursor: `pointer`,
-                  }}
-                  _focus={{
-                    boxShadow: `outline`,
-                    outline: `none`,
-                  }}
-                  key={`${tag.title}-${isActive}`}
+                  className={composeClassNames(tagStyle, isActive && `active`)}
                 >
-                  <Tag colorScheme={isActive ? `blue` : `gray`} size="lg">
-                    <TagLabel>{tag.title}</TagLabel>
-                    {isActive && <TagCloseButton as="span" aria-hidden aria-label="" />}
-                  </Tag>
-                </WrapItem>
+                  <React.Fragment>
+                    {tag.title}
+                    {isActive && (
+                      <span className={tagCloseIconStyle} aria-hidden>
+                        <SVGIcon id="close" focusable="false" width="100%" height="100%" />
+                      </span>
+                    )}
+                  </React.Fragment>
+                </ToggleButton>
               )
             })}
-          </Wrap>
+          </div>
           <Spacer size="20" axis="vertical" />
-          <Stack
-            spacing={0}
-            divider={<Spacer axis="horizontal" size="full" bg="divider" border="none" />}
-            mx={[`-2`, null, null, `-6`]}
-          >
+          <div className={gardenItemWrapperStyle}>
             {garden.nodes
               .filter(({ tags = [] }) => {
                 if (!isMounted) return true
@@ -137,48 +125,28 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                 }
                 return state.tags.some((tag) => tags.includes(tag))
               })
-              .map((post) => (
-                <Link
-                  to={post.slug}
-                  key={post.slug}
-                  display="grid"
-                  gridTemplateColumns={[`25px 1fr 20px`, `35px 1fr 20px`, null, `50px 1fr 24px`]}
-                  alignItems="center"
-                  gridGap={6}
-                  px={[2, null, null, 6]}
-                  py={[2, null, null, 6]}
-                  borderRadius="lg"
-                  _hover={{
-                    textDecoration: `none`,
-                    backgroundColor: bgHoverColor,
-                  }}
-                  sx={{
-                    span: {
-                      transform: `translate3d(0px, 0px, 0px)`,
-                      transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
-                    },
-                    "&:hover": {
-                      span: {
-                        transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
-                      },
-                    },
-                  }}
-                >
-                  <Box width={[25, 35, null, 50]} height={[25, 35, null, 50]}>
-                    <SVGIcon id={post.icon} width="100%" height="100%" />
-                  </Box>
-                  <Box>
-                    <ChakraHeading as="h2" variant="gardenItem">
-                      {post.title}
-                    </ChakraHeading>
-                    <Text fontSize={[`14px`, null, null, `1rem`]}>{post.lastUpdated}</Text>
-                  </Box>
-                  <span>
-                    <BsArrowRight />
-                  </span>
-                </Link>
+              .map((post, index) => (
+                <React.Fragment>
+                  <Link to={post.slug} key={post.slug} className={gardenItemStyle}>
+                    <div className={iconWrapperStyle}>
+                      <SVGIcon id={post.icon} width="100%" height="100%" />
+                    </div>
+                    <div>
+                      <ChakraHeading as="h2" variant="gardenItem">
+                        {post.title}
+                      </ChakraHeading>
+                      <Text fontSize={[`sm`, null, null, `md`]}>{post.lastUpdated}</Text>
+                    </div>
+                    <span>
+                      <BsArrowRight />
+                    </span>
+                  </Link>
+                  {index !== garden.nodes.length - 1 && (
+                    <Spacer axis="horizontal" size="full" bg="divider" border="none" />
+                  )}
+                </React.Fragment>
               ))}
-          </Stack>
+          </div>
         </Container>
       </SkipNavContent>
     </Layout>

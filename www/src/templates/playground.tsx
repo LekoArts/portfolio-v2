@@ -7,7 +7,6 @@ import { MdWbSunny as Sun } from "react-icons/md"
 import { useTheme, TogglePrimitive } from "themes-utils"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Layout } from "../components/blocks/layout"
-import { Box } from "../components/primitives/box"
 import { SEO } from "../components/seo"
 
 const Button = (props) => {

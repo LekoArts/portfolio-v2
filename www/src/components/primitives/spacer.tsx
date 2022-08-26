@@ -1,10 +1,9 @@
 import * as React from "react"
-import { Atoms } from "../../styles/atoms.css"
-import { Space } from "../../styles/tokens/space"
 import { Box } from "../primitives/box"
+import { Atoms } from "../../styles/atoms.css"
 
 interface ISpacerProps extends Atoms {
-  size: Space
+  size: Atoms["width"]
   axis: "vertical" | "horizontal"
 }
 

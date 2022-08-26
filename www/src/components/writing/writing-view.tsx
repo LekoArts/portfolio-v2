@@ -110,7 +110,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
             )}
           </Stack>
           {type === `prose` && (
-            <Text mt={6} fontSize={[`md`, null, null, `1.125rem`]}>
+            <Text mt="6" fontSize={[`md`, null, null, `1.125rem`]}>
               Last updated: {post.lastUpdated}
             </Text>
           )}

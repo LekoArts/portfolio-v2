@@ -20927,6 +20927,7 @@ __metadata:
     "@emotion/styled": ^11.8.1
     "@lekoarts/gatsby-source-flickr": ^0.0.1
     "@react-aria/button": ^3.6.0
+    "@react-stately/toggle": ^3.4.0
     "@vanilla-extract/babel-plugin": ^1.1.7
     "@vanilla-extract/css": ^1.7.2
     "@vanilla-extract/sprinkles": ^1.4.1

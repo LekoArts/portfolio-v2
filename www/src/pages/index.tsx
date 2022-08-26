@@ -136,7 +136,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   >
                     <MotionBox
                       bgGradient={cardGradients[index]}
-                      p={4}
+                      p="4"
                       borderRadius="lg"
                       height={[`150px`, null, null, `200px`, `250px`]}
                       boxShadow="lg"
@@ -167,7 +167,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                   >
                     <MotionBox
                       bgGradient={cardGradients[index + 3]}
-                      p={4}
+                      p="4"
                       borderRadius="lg"
                       height={[`125px`, null, null, `175px`]}
                       boxShadow="lg"
@@ -260,15 +260,15 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Stack direction="column" width="100%" spacing={6}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Badge variant="dark">Featured Projects</Badge>
-                <SubtleButton isExternal to="https://www.github.com/LekoArts">
+                <SubtleButton kind="external" to="https://www.github.com/LekoArts">
                   GitHub
                 </SubtleButton>
               </Flex>
               <Grid gridTemplateColumns={[`1fr`, null, null, `2fr 1fr`]} gap={6}>
                 {primRepo && secRepo ? (
                   <>
-                    <Box bg="primaryAsBg" color="#e7f1ff" p={6} borderRadius="lg">
-                      <Flex flexDirection="row" justifyContent="space-between" mb={6}>
+                    <Box bg="primaryAsBg" color="#e7f1ff" p="6" borderRadius="lg">
+                      <Flex flexDirection="row" justifyContent="space-between" mb="6">
                         <ChakraLink
                           fontSize={[`lg`, null, null, null, `1.3125rem`]}
                           color="white"
@@ -284,8 +284,8 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       </Flex>
                       <Text>{primRepo.description}</Text>
                     </Box>
-                    <Box bg={secondaryRepoBg} p={6} borderRadius="lg">
-                      <Flex flexDirection="row" justifyContent="space-between" mb={6}>
+                    <Box bg={secondaryRepoBg} p="6" borderRadius="lg">
+                      <Flex flexDirection="row" justifyContent="space-between" mb="6">
                         <ChakraLink
                           fontSize={[`lg`, null, null, null, `1.3125rem`]}
                           fontWeight="bold"
@@ -302,14 +302,14 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     </Box>
                   </>
                 ) : (
-                  <Box p={2} borderRadius="lg">
+                  <Box p="2" borderRadius="lg">
                     <strong>GITHUB_TOKEN</strong> for gatsby-source-graphql necessary.
                   </Box>
                 )}
               </Grid>
               <Flex justifyContent="space-between" flexWrap="wrap">
                 {openSourceRepos.map((repo) => (
-                  <ChakraLink key={repo.url} href={repo.url} p={2}>
+                  <ChakraLink key={repo.url} href={repo.url} p="2">
                     {repo.name}
                   </ChakraLink>
                 ))}

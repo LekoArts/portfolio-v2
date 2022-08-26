@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css"
 import { pseudoSelectors } from "../../styles/selectors"
+import { vars } from "../../styles/themes/contract.css"
 import { zIndices } from "../../styles/tokens/z-indices"
 
 export const skipNavLinkStyle = style({
@@ -17,7 +18,7 @@ export const skipNavLinkStyle = style({
       position: `fixed`,
       top: `10px`,
       left: `10px`,
-      background: `bg`,
+      background: vars.color.bg,
       zIndex: zIndices.skipLink,
       width: `auto`,
       height: `auto`,

@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import { Text } from "@chakra-ui/react"
 import { MotionBox } from "../primitives/motion-box"
 import { Link } from "../primitives/link"
+import { cardStyle, headingStyle, linkStyle } from "./card.css"
 
 type CardProps = {
   slug: string
@@ -12,13 +13,16 @@ type CardProps = {
 }
 
 export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => (
-  <MotionBox p={6} borderRadius="lg" boxShadow="lg" bg="cardBg" key={slug} _focusWithin={{ boxShadow: `outline` }}>
-    <Link
-      to={slug}
-      _focus={{ boxShadow: `none`, h2: { color: `primary` } }}
-      _hover={{ textDecoration: `none`, h2: { color: `primary` } }}
-    >
-      <Text as="h2" fontSize="1.3125rem" fontWeight="bold" color="heading" transition="color 0.3s ease-in-out">
+  <MotionBox p="6" borderRadius="lg" bg="cardBg" className={cardStyle} key={slug}>
+    <Link to={slug} className={linkStyle}>
+      <Text
+        as="h2"
+        fontSize="1.3125rem"
+        fontWeight="bold"
+        color="heading"
+        transition="color 0.3s ease-in-out"
+        className={headingStyle}
+      >
         {title}
       </Text>
       {subtitle && (
@@ -26,7 +30,7 @@ export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }
           {subtitle}
         </Text>
       )}
-      <Text mt={6}>{description}</Text>
+      <Text mt="6">{description}</Text>
     </Link>
   </MotionBox>
 )

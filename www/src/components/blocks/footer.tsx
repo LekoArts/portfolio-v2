@@ -1,9 +1,9 @@
 import * as React from "react"
-import { Stack } from "@chakra-ui/react"
-import { useFooterNavigation } from "../../hooks/use-footer-navigation"
-import { Link, ExternalLink } from "../primitives/link"
 import { Box } from "../primitives/box"
+import { Link, ExternalLink } from "../primitives/link"
 import { FullWidthContainer } from "./full-width-container"
+import { useFooterNavigation } from "../../hooks/use-footer-navigation"
+import { Spacer } from "../primitives/spacer"
 
 export const Footer: React.FC = () => {
   const footerNavigation = useFooterNavigation()
@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   return (
     <FullWidthContainer variant="dark">
       <Box as="footer" py="16" role="contentinfo">
-        <Stack direction="column" spacing={16}>
+        <Box display="flex" flexDirection="column">
           <Box display="flex" flexDirection={[`column`, `row`]} flexWrap="wrap" justifyContent="space-between">
             {footerNavigation.map((section) => {
               const { heading } = section
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
                   {heading.link ? (
                     <Link
                       to={heading.link}
-                      p={1}
+                      p="1"
                       color="textEmphasizedOnBg"
                       fontSize={[`lg`, null, `lgx`]}
                       mb={[`2`, `3`]}
@@ -42,11 +42,11 @@ export const Footer: React.FC = () => {
                     {section.items.map((item) => (
                       <React.Fragment key={item.link}>
                         {item.isExternal ? (
-                          <ExternalLink mr={[2, 0]} p={1} href={item.link}>
+                          <ExternalLink mr={[`2`, `0`]} p="1" href={item.link}>
                             {item.name}
                           </ExternalLink>
                         ) : (
-                          <Link mr={[2, 0]} p={1} to={item.link}>
+                          <Link mr={[`2`, `0`]} p="1" to={item.link}>
                             {item.name}
                           </Link>
                         )}
@@ -57,6 +57,7 @@ export const Footer: React.FC = () => {
               )
             })}
           </Box>
+          <Spacer axis="vertical" size="16" />
           <Box
             display="flex"
             flexDirection={[`column`, `row`]}
@@ -69,7 +70,7 @@ export const Footer: React.FC = () => {
               <Link to="/privacy-policy">Privacy Policy</Link>. <Link to="/legal-notice">Legal Notice</Link>.
             </div>
           </Box>
-        </Stack>
+        </Box>
       </Box>
     </FullWidthContainer>
   )

@@ -69,7 +69,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           preload="none"
           ref={videoRef}
           aria-label={ariaLabel}
-          marginBottom={description ? `0 !important` : undefined}
+          mb={description ? `0 !important` : undefined}
         >
           <source src={src} type="video/mp4" />
           <p>

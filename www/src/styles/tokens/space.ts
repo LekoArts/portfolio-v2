@@ -46,9 +46,16 @@ export const space = {
   max: `max-content`,
   min: `min-content`,
   full: `100%`,
+  unset: `unset`,
   ...navigation,
   ...negativeNavigation,
   ...container,
+}
+
+export const paddingResponsiveArrays = {
+  paddingSmall: [`12`, `16`, null, `24`, `28`],
+  paddingMedium: [`16`, `24`, null, `36`, `40`],
+  paddingLarge: [`20`, `24`, null, `40`, `48`],
 }
 
 export type Space = keyof typeof space

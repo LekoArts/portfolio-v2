@@ -276,6 +276,8 @@ export const colorPalette = {
 }
 
 export const nullColors = {
+  primary: ``,
+  primaryHover: ``,
   bg: ``,
   text: ``,
   textMuted: ``,
@@ -293,9 +295,15 @@ export const nullColors = {
   scrollbarTrack: ``,
   divider: ``,
   bgHover: ``,
+  cardBg: ``,
+  inherit: `inherit`,
 }
 
+export type Colors = keyof typeof nullColors
+
 export const lightThemeColors: typeof nullColors = {
+  primary: colorPalette.blue[600],
+  primaryHover: colorPalette.blue[700],
   bg: colorPalette.white,
   text: colorPalette.blueGray[800],
   textMuted: colorPalette.blueGray[700],
@@ -313,9 +321,13 @@ export const lightThemeColors: typeof nullColors = {
   scrollbarTrack: colorPalette.blueGray[200],
   divider: colorPalette.blueGray[100],
   bgHover: colorPalette.blueGray[100],
+  cardBg: colorPalette.white,
+  inherit: `inherit`,
 }
 
 export const darkThemeColors: typeof nullColors = {
+  primary: colorPalette.orange[600],
+  primaryHover: colorPalette.orange[700],
   bg: colorPalette.blueGray[900],
   text: colorPalette.blueGray[300],
   textMuted: colorPalette.blueGray[400],
@@ -333,4 +345,6 @@ export const darkThemeColors: typeof nullColors = {
   scrollbarTrack: colorPalette.blueGray[700],
   divider: colorPalette.blueGray[800],
   bgHover: colorPalette.blueGray[800],
+  cardBg: colorPalette.blueGray[800],
+  inherit: `inherit`,
 }

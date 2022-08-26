@@ -5,7 +5,7 @@ import { fontSizes, fontWeights, letterSpacings, lineHeights } from "../tokens/t
 
 export const BASE = {
   shadow: shadows,
-  radius: radii,
+  borderRadius: radii,
   letterSpacing: letterSpacings,
   lineHeight: lineHeights,
   fontWeight: fontWeights,

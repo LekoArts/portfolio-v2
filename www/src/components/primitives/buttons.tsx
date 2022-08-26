@@ -1,102 +1,142 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { useButton, useToggleButton } from "@react-aria/button"
+import { useToggleState } from "@react-stately/toggle"
 import { BsArrowRight } from "react-icons/bs"
 import { FaTwitter } from "react-icons/fa"
 import { FiShare } from "react-icons/fi"
-import { Button, usePrefersReducedMotion } from "@chakra-ui/react"
+import {
+  arrowAnimationStyle,
+  iconButtonStyle,
+  buttonVariants,
+  Sizes,
+  sizesVariants,
+  subtleButtonStyle,
+  VariantNames,
+} from "./button.css"
+import { Box, IBoxProps } from "./box"
+import { composeClassNames } from "../../utils/box"
+
+type ButtonKind = "button" | "internal" | "external"
+
+interface IButtonProps extends IBoxProps {
+  kind?: ButtonKind
+  to?: string
+  variant?: VariantNames
+  size?: Sizes
+  rightIcon?: React.ReactNode
+}
+
+export function IconButton(props) {
+  const { children, ...rest } = props
+
+  return (
+    <span aria-hidden focusable="false" className={iconButtonStyle} {...rest}>
+      {children}
+    </span>
+  )
+}
+
+export const ToggleButton = (props) => {
+  const ref = React.useRef()
+  const state = useToggleState(props)
+  const { buttonProps } = useToggleButton(props, state, ref)
+  const { children, className } = props
+
+  return (
+    // @ts-ignore
+    <button {...buttonProps} className={className} ref={ref}>
+      {children}
+    </button>
+  )
+}
+
+export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) => {
+  const ref = React.useRef()
+  const { buttonProps } = useButton(props, ref)
+  const { children, kind = `button`, to, variant = `primary`, size = `brand`, rightIcon = undefined, ...rest } = props
+  let as
+  switch (kind) {
+    case `button`:
+      as = `button`
+      break
+    case `internal`:
+      as = Link
+      break
+    case `external`:
+      as = `a`
+      break
+    default:
+      as = `button`
+      break
+  }
+
+  return (
+    <Box
+      as={as}
+      // @ts-ignore
+      to={kind === `internal` ? to : undefined}
+      href={kind === `external` ? to : undefined}
+      {...buttonProps}
+      className={composeClassNames(buttonVariants[variant], sizesVariants[size])}
+      {...rest}
+    >
+      {children} {rightIcon && <IconButton>{rightIcon}</IconButton>}
+    </Box>
+  )
+}
 
 /**
  * Primary buttons for important CTA
  */
-const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; isExternal?: boolean }>> = ({
+export const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; kind?: ButtonKind }>> = ({
   children,
   to,
-  isExternal = false,
-}) => {
-  const prefersReducedMotion = usePrefersReducedMotion()
-
-  return (
-    <Button
-      as={isExternal ? `a` : Link}
-      // @ts-ignore
-      to={isExternal ? undefined : to}
-      href={isExternal ? to : undefined}
-      variant="primary"
-      rightIcon={<BsArrowRight />}
-      sx={{
-        span: {
-          transform: `translate3d(0px, 0px, 0px)`,
-          transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
-        },
-        "&:hover": {
-          span: {
-            transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
-          },
-        },
-        svg: {
-          height: `1.5em`,
-          width: `1.5em`,
-        },
-      }}
-    >
-      {children}
-    </Button>
-  )
-}
+  kind = `internal`,
+}) => (
+  <Button kind={kind} to={to} variant="primary" rightIcon={<BsArrowRight />} className={arrowAnimationStyle}>
+    {children}
+  </Button>
+)
 
 /**
  * Secondary button
  */
-const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; isExternal?: boolean }>> = ({
+export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?: ButtonKind }>> = ({
   children,
   to,
-  isExternal = false,
-}) => {
-  const prefersReducedMotion = usePrefersReducedMotion()
-
-  return (
-    <Button
-      as={isExternal ? `a` : Link}
-      // @ts-ignore
-      to={isExternal ? undefined : to}
-      href={isExternal ? to : undefined}
-      colorScheme="gray"
-      variant="link"
-      textTransform="uppercase"
-      letterSpacing="wider"
-      fontSize={[`xs`, `sm`]}
-      fontWeight="medium"
-      rightIcon={<BsArrowRight />}
-      sx={{
-        span: {
-          transform: `translate3d(0px, 0px, 0px)`,
-          transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
-        },
-        "&:hover": {
-          span: {
-            transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
-          },
-        },
-        svg: {
-          height: `1.5em`,
-          width: `1.5em`,
-        },
-      }}
-    >
-      {children}
-    </Button>
-  )
-}
+  kind = `internal`,
+}) => (
+  <Button
+    kind={kind}
+    to={to}
+    variant="link"
+    fontSize={[`xs`, `sm`]}
+    fontWeight="medium"
+    rightIcon={<BsArrowRight />}
+    className={composeClassNames(arrowAnimationStyle, subtleButtonStyle)}
+  >
+    {children}
+  </Button>
+)
 
 const getTwitterShareLink = (link, message) =>
   `https://twitter.com/intent/tweet/?text=${encodeURIComponent(message)}&via=lekoarts_de&url=${encodeURIComponent(
     link
   )}`
 
-const TwitterButton = ({ link, message, variant = `primary` }) => (
+export const TwitterButton = ({
+  link,
+  message,
+  variant = `primary`,
+}: {
+  link: string
+  message: string
+  variant?: VariantNames
+}) => (
   <Button
-    as="a"
-    href={getTwitterShareLink(link, message)}
+    kind="external"
+    to={getTwitterShareLink(link, message)}
     target="_blank"
     rel="noreferrer noopener"
     size="md"
@@ -107,7 +147,15 @@ const TwitterButton = ({ link, message, variant = `primary` }) => (
   </Button>
 )
 
-const ShareAnywhereButton = ({ link, message, variant = `primary` }) => {
+export const ShareAnywhereButton = ({
+  link,
+  message,
+  variant = `primary`,
+}: {
+  link: string
+  message: string
+  variant?: VariantNames
+}) => {
   const handleSocialShare = (event) => {
     event.preventDefault()
 
@@ -124,10 +172,8 @@ const ShareAnywhereButton = ({ link, message, variant = `primary` }) => {
   }
 
   return (
-    <Button onClick={handleSocialShare} size="md" variant={variant} rightIcon={<FiShare />}>
+    <Button kind="button" onClick={handleSocialShare} size="md" variant={variant} rightIcon={<FiShare />}>
       Share Anywhere
     </Button>
   )
 }
-
-export { PrimaryButton, SubtleButton, TwitterButton, ShareAnywhereButton }

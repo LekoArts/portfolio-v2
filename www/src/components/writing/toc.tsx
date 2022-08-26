@@ -1,5 +1,7 @@
 import * as React from "react"
-import { Box, Link } from "@chakra-ui/react"
+import { Box } from "../primitives/box"
+import { asideStyle, headingStyle, navStyle } from "./toc.css"
+import type { Colors } from "../../styles/tokens/colors"
 import { useActiveHash } from "../../hooks/use-active-hash"
 
 export type TocItem = {
@@ -25,12 +27,12 @@ const renderItems = ({
   items,
   activeId,
   level = 0,
-  activeColor = `red`,
+  activeColor = `primary`,
 }: {
   items: Array<TocItem>
   activeId: string
   level?: number
-  activeColor?: string
+  activeColor?: Colors
 }): JSX.Element => (
   <>
     {items.map((item) => {
@@ -39,17 +41,17 @@ const renderItems = ({
 
       return (
         <React.Fragment key={item.url}>
-          <Link
-            fontWeight={isActive ? 500 : 400}
-            transition="fontWeight .3s ease-in-out"
+          <Box
+            as="a"
+            fontWeight={isActive ? `medium` : `normal`}
             color={isActive ? activeColor : `inherit`}
-            mt={level ? 1 : { base: `2`, "2xl": `3` }}
-            ml={level ? level * 2 : 0}
-            pr={1}
+            mt={level ? `1` : { mobile: `2`, "2xl": `3` }}
+            ml={level ? `${level * 2}` : `0`}
+            pr="1"
             href={item.url}
           >
             {item.title}
-          </Link>
+          </Box>
           {item.items && renderItems({ items: item.items, activeId, activeColor, level: level + 1 })}
         </React.Fragment>
       )
@@ -62,33 +64,9 @@ export const Toc = ({ items }: { items: Array<TocItem> }) => {
   const activeItemHash = useActiveHash(ids)
 
   return (
-    <Box
-      as="aside"
-      position={{ base: `relative`, "2xl": `sticky` }}
-      maxHeight={{ base: `unset`, "2xl": `300px` }}
-      top={{ base: `unset`, "2xl": `80px` }}
-      mb={{ base: `16`, "2xl": 0 }}
-      fontSize={[`0.875rem`, `1rem`]}
-    >
-      <Box
-        as="nav"
-        display="flex"
-        flexDir="column"
-        mt={{ base: `0rem`, "2xl": `1.8em` }}
-        minWidth="185px"
-        maxWidth={{ base: `100%`, "2xl": `220px` }}
-        overflow="auto"
-        alignItems="flex-start"
-      >
-        <Box
-          as="h2"
-          color="heading"
-          textTransform="uppercase"
-          fontSize={[`14px`, null, null, `1rem`, null, `14px`]}
-          fontWeight="medium"
-          letterSpacing="0.075em"
-          mb={{ base: `2`, "2xl": `4` }}
-        >
+    <Box as="aside" mb={{ mobile: `16`, "2xl": `0` }} fontSize={[`sm`, `md`]} className={asideStyle}>
+      <Box as="nav" display="flex" flexDirection="column" overflow="auto" alignItems="flex-start" className={navStyle}>
+        <Box as="h2" color="heading" fontWeight="medium" mb={{ mobile: `2`, "2xl": `4` }} className={headingStyle}>
           Table of Contents
         </Box>
         {renderItems({ items, activeId: activeItemHash, activeColor: `primary` })}
@@ -102,10 +80,10 @@ export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: Array
   items,
 }) => (
   <Box
-    display={{ base: `block`, "2xl": `flex` }}
+    display={{ mobile: `block`, "2xl": `flex` }}
     flexDirection="row-reverse"
     justifyContent="flex-end"
-    sx={{ gap: `5rem` }}
+    style={{ gap: `5rem` }}
   >
     <Toc items={items} />
     {children}
