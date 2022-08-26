@@ -32,7 +32,7 @@ const buttonBaseStyle = style({
   },
 })
 
-export type VariantNames = "primary" | "link" | "outline"
+export type VariantNames = "primary" | "link" | "outline" | "ghost"
 
 const buttons: Record<VariantNames, StyleRule> = {
   primary: {
@@ -75,6 +75,18 @@ const buttons: Record<VariantNames, StyleRule> = {
       [pseudoSelectors.hover]: {
         color: `white`,
         background: vars.color.primary,
+      },
+    },
+  },
+  ghost: {
+    color: vars.color.inherit,
+    background: `transparent`,
+    selectors: {
+      [pseudoSelectors.hover]: {
+        background: vars.color.ghostBg,
+      },
+      [pseudoSelectors.active]: {
+        background: vars.color.ghostBg,
       },
     },
   },

@@ -1,8 +1,9 @@
 import * as React from "react"
-import { Container, Text, Grid } from "@chakra-ui/react"
+import { Container, Text } from "@chakra-ui/react"
 import { space } from "../../constants/space"
 import { Heading } from "../typography/heading"
 import { Box } from "../primitives/box"
+import { contentWrapperStyle } from "./category-hero.css"
 
 type CategoryHeroProps = {
   bgGradient: string
@@ -14,7 +15,7 @@ type CategoryHeroProps = {
 export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, description, image = undefined }) => (
   <Box mt="-navigationWithSubHeight" pt="navigationWithSubHeight" style={{ backgroundImage: bgGradient }}>
     <Container py={space.paddingSmall}>
-      <Grid templateColumns="auto" gap={12}>
+      <div className={contentWrapperStyle}>
         <Box display="flex" flexDirection="column">
           <Heading as="h1" color="white">
             {title}
@@ -24,7 +25,7 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
           </Text>
         </Box>
         {image}
-      </Grid>
+      </div>
     </Container>
   </Box>
 )

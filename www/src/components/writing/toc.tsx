@@ -3,6 +3,7 @@ import { Box } from "../primitives/box"
 import { asideStyle, headingStyle, navStyle } from "./toc.css"
 import type { Colors } from "../../styles/tokens/colors"
 import { useActiveHash } from "../../hooks/use-active-hash"
+import { ExternalLink } from "../primitives/link"
 
 export type TocItem = {
   url: string
@@ -41,8 +42,7 @@ const renderItems = ({
 
       return (
         <React.Fragment key={item.url}>
-          <Box
-            as="a"
+          <ExternalLink
             fontWeight={isActive ? `medium` : `normal`}
             color={isActive ? activeColor : `inherit`}
             mt={level ? `1` : { mobile: `2`, "2xl": `3` }}
@@ -51,7 +51,7 @@ const renderItems = ({
             href={item.url}
           >
             {item.title}
-          </Box>
+          </ExternalLink>
           {item.items && renderItems({ items: item.items, activeId, activeColor, level: level + 1 })}
         </React.Fragment>
       )
@@ -79,12 +79,7 @@ export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: Array
   children,
   items,
 }) => (
-  <Box
-    display={{ mobile: `block`, "2xl": `flex` }}
-    flexDirection="row-reverse"
-    justifyContent="flex-end"
-    style={{ gap: `5rem` }}
-  >
+  <Box display={{ mobile: `block`, "2xl": `flex` }} flexDirection="row-reverse" justifyContent="flex-end" gap="20">
     <Toc items={items} />
     {children}
   </Box>

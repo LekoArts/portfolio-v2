@@ -6,6 +6,7 @@ import { Layout } from "../blocks/layout"
 import { Card } from "./card"
 import { WritingSubNavigation } from "./subnavigation"
 import { ExternalLink } from "../primitives/link"
+import { contentGridStyle } from "./category-view.css"
 
 type CategoryViewProps = {
   posts: {
@@ -25,7 +26,7 @@ export const CategoryView: React.FC<React.PropsWithChildren<CategoryViewProps>> 
       {children}
       <Container py={space.paddingMedium}>
         {posts.nodes.length > 0 ? (
-          <Grid gridTemplateColumns={[`1fr`, null, `repeat(2, 1fr)`]} gap={8} mx={[`0`, null, null, `-6`]}>
+          <div className={contentGridStyle}>
             {posts.nodes.map((post) => (
               <Card
                 key={post.slug}
@@ -35,7 +36,7 @@ export const CategoryView: React.FC<React.PropsWithChildren<CategoryViewProps>> 
                 description={post.description}
               />
             ))}
-          </Grid>
+          </div>
         ) : (
           <Text textStyle="prominent">
             Sadly there's no content for this category available yet. Be sure to follow me on{` `}

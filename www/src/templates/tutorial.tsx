@@ -1,8 +1,9 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
-import { Divider, Text, Flex, Tag, TagLabel } from "@chakra-ui/react"
+import { Text, Flex, Tag, TagLabel } from "@chakra-ui/react"
 import { WritingViewDataProps, WritingView } from "../components/writing/writing-view"
 import { Heading } from "../components/typography/heading"
+import { Box } from "../components/primitives/box"
 import { Spacer } from "../components/primitives/spacer"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
@@ -32,7 +33,7 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
   <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="tutorial">
     <Heading as="h1">{post.title}</Heading>
     <Spacer size="6" axis="vertical" />
-    <Divider />
+    <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
     <Spacer size="4" axis="vertical" />
     <Flex justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
       <Text mb="2">

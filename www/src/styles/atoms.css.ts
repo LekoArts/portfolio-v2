@@ -28,8 +28,6 @@ const colorAtomicProperties = defineProperties({
   conditions: {
     light: { selector: themesSelectors.light },
     dark: { selector: themesSelectors.dark },
-    hover: { selector: pseudoSelectors.hover },
-    focus: { selector: pseudoSelectors.focus },
   },
   defaultCondition: [`light`, `dark`],
   properties: {

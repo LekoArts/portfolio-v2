@@ -54,7 +54,16 @@ export const ToggleButton = (props) => {
 export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) => {
   const ref = React.useRef()
   const { buttonProps } = useButton(props, ref)
-  const { children, kind = `button`, to, variant = `primary`, size = `brand`, rightIcon = undefined, ...rest } = props
+  const {
+    children,
+    kind = `button`,
+    to,
+    variant = `primary`,
+    size = `brand`,
+    rightIcon = undefined,
+    className,
+    ...rest
+  } = props
   let as
   switch (kind) {
     case `button`:
@@ -78,7 +87,7 @@ export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) =
       to={kind === `internal` ? to : undefined}
       href={kind === `external` ? to : undefined}
       {...buttonProps}
-      className={composeClassNames(buttonVariants[variant], sizesVariants[size])}
+      className={composeClassNames(buttonVariants[variant], sizesVariants[size], className)}
       {...rest}
     >
       {children} {rightIcon && <IconButton>{rightIcon}</IconButton>}

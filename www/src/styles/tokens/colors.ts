@@ -1,7 +1,13 @@
+import { transparentize } from "utils"
+
+const navBgTransparency = 0.85
+
 /**
  * Tailwind CSS Color Palette
  */
 export const colorPalette = {
+  transparent: `transparent`,
+  current: `currentColor`,
   black: `#000`,
   white: `#fff`,
   /*
@@ -297,6 +303,8 @@ export const nullColors = {
   bgHover: ``,
   cardBg: ``,
   inherit: `inherit`,
+  navigationBg: ``,
+  ghostBg: ``,
 }
 
 export type Colors = keyof typeof nullColors
@@ -323,6 +331,8 @@ export const lightThemeColors: typeof nullColors = {
   bgHover: colorPalette.blueGray[100],
   cardBg: colorPalette.white,
   inherit: `inherit`,
+  navigationBg: transparentize(`white`, navBgTransparency)(colorPalette),
+  ghostBg: transparentize(`blueGray.900`, 0.1)(colorPalette),
 }
 
 export const darkThemeColors: typeof nullColors = {
@@ -347,4 +357,6 @@ export const darkThemeColors: typeof nullColors = {
   bgHover: colorPalette.blueGray[800],
   cardBg: colorPalette.blueGray[800],
   inherit: `inherit`,
+  navigationBg: transparentize(`blueGray.900`, navBgTransparency)(colorPalette),
+  ghostBg: transparentize(`white`, 0.1)(colorPalette),
 }

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Box, Container, Divider, Text, Stack } from "@chakra-ui/react"
+import { Container, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
@@ -10,6 +10,7 @@ import { components } from "../mdx"
 import { ShareAnywhereButton, TwitterButton } from "../primitives/buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
+import { Box } from "../primitives/box"
 import { ExternalLink } from "../primitives/link"
 
 export type WritingViewDataProps = {
@@ -74,7 +75,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
             </Prose>
           )}
           <Spacer size="12" axis="vertical" />
-          <Divider />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
           <Spacer size="6" axis="vertical" />
           <Stack
             direction={[`column`, `row`]}
@@ -83,7 +84,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
           >
-            <Box>
+            <div>
               <ExternalLink
                 fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
@@ -99,7 +100,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               >
                 Discuss on Twitter
               </ExternalLink>
-            </Box>
+            </div>
             {hasShareApi ? (
               <Stack direction={[`column`, `row`]}>
                 <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />

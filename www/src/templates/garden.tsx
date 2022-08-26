@@ -2,7 +2,7 @@ import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { RiPlantFill as PlantIcon } from "react-icons/ri"
-import { Container, Text, Divider, Flex, Tag, TagLabel, Grid, Box, Icon, Stack } from "@chakra-ui/react"
+import { Container, Text, Tag, TagLabel, Icon } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { ExternalLink, Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
@@ -14,6 +14,8 @@ import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
 import { ShareAnywhereButton, TwitterButton } from "../components/primitives/buttons"
 import { site } from "../constants/meta"
+import { Box } from "../components/primitives/box"
+import { gardenCtaStyle, metaStyle } from "./garden.css"
 
 type DataProps = {
   garden: {
@@ -48,38 +50,39 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
         <SkipNavContent>
           <Heading as="h1">{garden.title}</Heading>
           <Spacer size="6" axis="vertical" />
-          <Divider />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
           <Spacer size="4" axis="vertical" />
-          <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]} fontSize={[`sm`, `md`, null, null, `lg`]}>
+          <Box className={metaStyle} fontSize={[`sm`, `md`, null, null, `lg`]}>
             <Text>
               Created {garden.date} – Last Updated {garden.lastUpdated}
             </Text>
-            <Flex flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
-              {garden.tags.map((tag) => (
-                <Box as="span" ml="2" _first={{ ml: 0 }} key={tag}>
-                  {tag}
-                </Box>
+            <Box display="flex" flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
+              {garden.tags.map((tag, index) => (
+                <React.Fragment key={tag}>
+                  <Box as="span">{tag}</Box>
+                  {index !== garden.tags.length - 1 && <Spacer axis="horizontal" size="2" />}
+                </React.Fragment>
               ))}
-            </Flex>
+            </Box>
             <Tag colorScheme="green" justifySelf="flex-start">
               <TagLabel>
                 <Link to="/garden">Digital Garden</Link>
               </TagLabel>
             </Tag>
-          </Grid>
+          </Box>
           <Spacer size="12" axis="vertical" />
           <Prose>
             <MDXProvider components={components}>{children}</MDXProvider>
           </Prose>
           <Spacer size="12" axis="vertical" />
-          <Divider />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
           <Spacer size="6" axis="vertical" />
-          <Stack
-            direction={[`column`, `row`]}
+          <Box
+            flexDirection={[`column`, `row`]}
             display="flex"
-            spacing="5"
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
+            gap="5"
           >
             <Box>
               <ExternalLink
@@ -99,26 +102,22 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </ExternalLink>
             </Box>
             {hasShareApi ? (
-              <Stack direction={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]} gap="2">
                 <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />
                 <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} variant="outline" />
-              </Stack>
+              </Box>
             ) : (
               <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} />
             )}
-          </Stack>
+          </Box>
           <Spacer size="12" axis="vertical" />
           <Box
-            textStyle="prominent"
-            bgGradient="linear(to-tr, green.800, lime.600)"
             borderRadius="xl"
             p="6"
             display="flex"
             flexDirection="row"
             alignItems="center"
-            color="green.100"
-            boxShadow="xl"
-            textShadow="0px 2px 0px rgba(0, 0, 0, 0.35)"
+            className={gardenCtaStyle}
           >
             <Icon
               as={PlantIcon}
