@@ -10,7 +10,9 @@ import { Link } from "../components/primitives/link"
 
 const NotFound: React.FC<PageProps> = () => {
   React.useEffect(() => {
-    window.plausible(`404`, { props: { path: document.location.pathname } })
+    if (process.env.NODE_ENV === `production` && typeof window.plausible !== `undefined`) {
+      window.plausible(`404`, { props: { path: document.location.pathname } })
+    }
   }, [])
 
   return (
@@ -18,10 +20,9 @@ const NotFound: React.FC<PageProps> = () => {
       <SkipNavContent>
         <Container py={space.paddingSmall}>
           <Heading as="h1">Not Found</Heading>
-          <Text textStyle="prominent">Sorry, there is nothing at this URL.</Text>
-          <Link textStyle="prominent" textDecoration="underline" to="/">
-            Go back home.
-          </Link>
+          <Text textStyle="prominent">
+            Sorry, there is nothing at this URL. <Link to="/">Go back home.</Link>
+          </Text>
         </Container>
       </SkipNavContent>
     </Layout>

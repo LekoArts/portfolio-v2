@@ -1,7 +1,7 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
-import { Container, Heading as ChakraHeading, Text } from "@chakra-ui/react"
+import { Container, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { Link } from "../components/primitives/link"
 import { SkipNavContent } from "../components/a11y/skip-nav"
@@ -22,6 +22,7 @@ import {
 } from "./garden.css"
 import { ToggleButton } from "../components/primitives/buttons"
 import { composeClassNames } from "../utils/box"
+import { Box } from "../components/primitives/box"
 
 type DataProps = {
   garden: {
@@ -103,14 +104,14 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                   }}
                   className={composeClassNames(tagStyle, isActive && `active`)}
                 >
-                  <React.Fragment>
+                  <>
                     {tag.title}
                     {isActive && (
                       <span className={tagCloseIconStyle} aria-hidden>
                         <SVGIcon id="close" focusable="false" width="100%" height="100%" />
                       </span>
                     )}
-                  </React.Fragment>
+                  </>
                 </ToggleButton>
               )
             })}
@@ -132,9 +133,9 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                       <SVGIcon id={post.icon} width="100%" height="100%" />
                     </div>
                     <div>
-                      <ChakraHeading as="h2" variant="gardenItem">
+                      <Box as="h2" fontSize={[`md`, null, null, `lg`, `lgx`]} fontWeight="medium" color="heading">
                         {post.title}
-                      </ChakraHeading>
+                      </Box>
                       <Text fontSize={[`sm`, null, null, `md`]}>{post.lastUpdated}</Text>
                     </div>
                     <span>

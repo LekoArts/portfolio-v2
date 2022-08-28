@@ -27,7 +27,7 @@ interface IButtonProps extends IBoxProps {
   rightIcon?: React.ReactNode
 }
 
-export function IconButton(props) {
+export const ButtonIcon = (props) => {
   const { children, ...rest } = props
 
   return (
@@ -90,7 +90,7 @@ export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) =
       className={composeClassNames(buttonVariants[variant], sizesVariants[size], className)}
       {...rest}
     >
-      {children} {rightIcon && <IconButton>{rightIcon}</IconButton>}
+      {children} {rightIcon && <ButtonIcon>{rightIcon}</ButtonIcon>}
     </Box>
   )
 }

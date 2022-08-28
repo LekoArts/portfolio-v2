@@ -50,10 +50,5 @@ export const Heading = {
     h4: {
       ...headingBaseStyles.h4,
     },
-    gardenItem: {
-      fontSize: [`md`, null, null, `1.125rem`, `1.3125rem`],
-      fontFamily: `body`,
-      fontWeight: `medium`,
-    },
   },
 }

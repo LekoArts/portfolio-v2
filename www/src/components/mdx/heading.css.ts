@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css"
-import { body } from "../../styles/fonts.css"
+import { bodyFontFamilyClass } from "../../styles/fonts.css"
 import { pseudoSelectors } from "../../styles/selectors"
 import { vars } from "../../styles/themes/contract.css"
 
@@ -15,7 +15,7 @@ globalStyle(`${headingStyle}:hover a`, {
 })
 
 export const anchorStyle = style([
-  body,
+  bodyFontFamilyClass,
   {
     left: `calc(${vars.space[10]} * -1)`,
     transition: `all 0.3s ease-in-out`,
