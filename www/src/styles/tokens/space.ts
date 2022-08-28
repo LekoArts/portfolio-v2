@@ -47,6 +47,7 @@ export const space = {
   min: `min-content`,
   full: `100%`,
   unset: `unset`,
+  auto: `auto`,
   ...navigation,
   ...negativeNavigation,
   ...container,

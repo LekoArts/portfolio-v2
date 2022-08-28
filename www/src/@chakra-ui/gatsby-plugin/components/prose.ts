@@ -1,5 +1,5 @@
 import { mode } from "@chakra-ui/theme-tools"
-import { round, rem, em } from "../custom/utils"
+import { round, rem, em } from "../../../utils/css"
 
 const smVariant = {
   fontSize: rem(14),
@@ -1058,48 +1058,6 @@ export const Prose = {
       ".gatsby-highlight-header, .prism-code": {
         marginInlineStart: `0 !important`,
         marginInlineEnd: `0 !important`,
-      },
-    },
-    ".chakra-alert": {
-      ".code-block-wrapper": {
-        width: `100%`,
-        ".gatsby-highlight-header": {
-          mx: 0,
-        },
-        pre: {
-          mx: 0,
-        },
-      },
-      p: {
-        mb: em(20, 16),
-        mt: 0,
-      },
-      "p:first-of-type": {
-        mt: 0,
-      },
-      "p:last-of-type": {
-        mb: 0,
-        mt: 0,
-      },
-      "&[data-status='info']": {
-        a: {
-          textDecorationColor: `blueLinkDecoration`,
-        },
-      },
-      "&[data-status='warning']": {
-        a: {
-          textDecorationColor: `orangeLinkDecoration`,
-        },
-      },
-      "&[data-status='success']": {
-        a: {
-          textDecorationColor: `greenLinkDecoration`,
-        },
-      },
-      "&[data-status='error']": {
-        a: {
-          textDecorationColor: `redLinkDecoration`,
-        },
       },
     },
     details: {

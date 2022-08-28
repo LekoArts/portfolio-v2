@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Box } from "@chakra-ui/react"
-import { site } from "../../constants/meta"
+import { Box } from "../primitives/box"
 import { SVGIcon } from "../primitives/svg-icon"
+import { site } from "../../constants/meta"
+import { groupStyle, playPauseButtonStyle, videoStyle } from "./video.css"
 
 type VideoProps = {
   src: string
@@ -41,10 +42,10 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
     <FigureWrapper description={description}>
       <Box
         position="relative"
-        boxSizing="content-box"
-        maxWidth={maxWidth}
         mx="auto"
         role="group"
+        style={{ maxWidth }}
+        className={groupStyle}
         onClick={() => {
           if (play) {
             pauseVideo()
@@ -59,8 +60,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           as="video"
           position="relative"
           display="block"
-          maxW="100%"
-          margin="auto"
+          m="auto"
           cursor="pointer"
           autoPlay
           playsInline
@@ -69,7 +69,8 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           preload="none"
           ref={videoRef}
           aria-label={ariaLabel}
-          mb={description ? `0 !important` : undefined}
+          className={videoStyle}
+          style={{ marginBottom: description ? `0 !important` : undefined }}
         >
           <source src={src} type="video/mp4" />
           <p>
@@ -80,22 +81,11 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
         </Box>
         <Box
           position="absolute"
-          inset="0px"
-          margin="auto"
-          width="64px"
-          height="64px"
-          background="rgba(0, 0, 0, 0.6)"
-          borderRadius="50%"
-          color="white"
+          m="auto"
           display="flex"
           justifyContent="center"
           alignItems="center"
-          transition="opacity 500ms ease 0s"
-          pointerEvents="none"
-          opacity="0"
-          _groupHover={{
-            opacity: 1,
-          }}
+          className={playPauseButtonStyle}
         >
           {play ? (
             <SVGIcon id="pause" width={iconSize} height={iconSize} style={{ strokeWidth: `2px` }} />

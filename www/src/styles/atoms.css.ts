@@ -4,7 +4,6 @@ import { responsiveProperties, unresponsiveProperties } from "./atomic-propertie
 import { lightThemeClass } from "./themes/light.css"
 import { darkThemeClass } from "./themes/dark.css"
 import { vars } from "./themes/contract.css"
-import { pseudoSelectors } from "./selectors"
 
 const unresponsiveAtomicProperties = defineProperties({
   properties: unresponsiveProperties,

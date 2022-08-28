@@ -1,4 +1,4 @@
-import { transparentize } from "utils"
+import { transparentizeDict } from "utils"
 import { colorPalette, colors } from "./colors"
 
 const navBgTransparency = 0.85
@@ -10,8 +10,8 @@ export const semanticTokens = {
       _dark: `orange.600`,
     },
     primaryAlpha: {
-      default: transparentize(`blueGray.400`, 0.25)(colorPalette),
-      _dark: transparentize(`blueGray.400`, 0.25)(colorPalette),
+      default: transparentizeDict(`blueGray.400`, 0.25)(colorPalette),
+      _dark: transparentizeDict(`blueGray.400`, 0.25)(colorPalette),
     },
     primaryAsBg: {
       default: `blue.600`,
@@ -70,8 +70,8 @@ export const semanticTokens = {
       _dark: colors.brand.dark.bg,
     },
     bgAlpha: {
-      default: transparentize(`white`, navBgTransparency)(colorPalette),
-      _dark: transparentize(`blueGray.900`, navBgTransparency)(colorPalette),
+      default: transparentizeDict(`white`, navBgTransparency)(colorPalette),
+      _dark: transparentizeDict(`blueGray.900`, navBgTransparency)(colorPalette),
     },
     cardBg: {
       default: `white`,

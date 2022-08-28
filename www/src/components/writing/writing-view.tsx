@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Container, Text, Stack } from "@chakra-ui/react"
+import { Container, Text } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
@@ -77,10 +77,10 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
           <Spacer size="12" axis="vertical" />
           <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
           <Spacer size="6" axis="vertical" />
-          <Stack
-            direction={[`column`, `row`]}
+          <Box
             display="flex"
-            spacing="5"
+            flexDirection={[`column`, `row`]}
+            gap="5"
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
           >
@@ -102,14 +102,14 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               </ExternalLink>
             </div>
             {hasShareApi ? (
-              <Stack direction={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]}>
                 <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
                 <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
-              </Stack>
+              </Box>
             ) : (
               <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
             )}
-          </Stack>
+          </Box>
           {type === `prose` && (
             <Text mt="6" fontSize={[`md`, null, null, `1.125rem`]}>
               Last updated: {post.lastUpdated}

@@ -15,6 +15,9 @@ export type SVGIconNames =
   | "pause"
   | "play"
   | "close"
+  | "check"
+  | "info"
+  | "warning"
 
 type SVGIconProps = {
   id: SVGIconNames

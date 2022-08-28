@@ -2,9 +2,10 @@ import * as React from "react"
 import Highlight, { defaultProps, Language } from "prism-react-renderer"
 import lightTheme from "prism-react-renderer/themes/nightOwlLight"
 import darkTheme from "prism-react-renderer/themes/nightOwl"
-import { Stack, Box, useColorMode } from "@chakra-ui/react"
-import { Copy } from "./copy"
+import { useTheme } from "themes-utils"
+import { Box } from "../primitives/box"
 import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
+import { Copy } from "./copy"
 
 type CodeProps = {
   codeString: string
@@ -21,7 +22,7 @@ export const Code = ({
   className: blockClassName,
   metastring = ``,
 }: CodeProps) => {
-  const { colorMode } = useColorMode()
+  const { resolvedTheme } = useTheme()
   const originalLanguage = getLanguage(blockClassName)
   const language = languageOverride(originalLanguage)
   const shouldHighlightLine = calculateLinesToHighlight(metastring)
@@ -32,28 +33,29 @@ export const Code = ({
       {...defaultProps}
       code={codeString}
       language={language as Language}
-      theme={colorMode === `light` ? lightTheme : darkTheme}
+      theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <div className="code-block-wrapper">
           {(title || originalLanguage) && (
-            <Stack
-              direction="row"
-              spacing={2}
+            <Box
+              display="flex"
+              flexDirection="row"
+              gap="2"
               alignItems="center"
               justifyContent="flex-end"
               className="gatsby-highlight-header"
             >
               {title && (
-                <Box flexGrow={1} className="code-title">
+                <Box style={{ flexGrow: 1 }} className="code-title">
                   {title}
                 </Box>
               )}
               {originalLanguage && (
                 <Box
-                  textTransform="uppercase"
                   display="inline-flex"
                   alignItems="center"
+                  style={{ textTransform: `uppercase` }}
                   className="language-display"
                   data-lang={originalLanguage}
                 >
@@ -61,7 +63,7 @@ export const Code = ({
                 </Box>
               )}
               <Copy content={codeString} fileName={title} />
-            </Stack>
+            </Box>
           )}
           <div className="gatsby-highlight" data-prism-renderer="true" data-has-line-numbers={hasLineNumbers}>
             <pre className={className} style={style}>

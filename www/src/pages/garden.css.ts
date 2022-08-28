@@ -1,6 +1,8 @@
 import { createVar, globalStyle, style } from "@vanilla-extract/css"
+import { themesSelectors } from "../styles/atoms.css"
 import { pseudoSelectors } from "../styles/selectors"
 import { vars } from "../styles/themes/contract.css"
+import { darkThemeClass } from "../styles/themes/dark.css"
 import { minMediaQuery } from "../styles/tokens/breakpoints"
 import { colorPalette } from "../styles/tokens/colors"
 
@@ -38,6 +40,14 @@ export const tagStyle = style({
     [`&.active`]: {
       background: colorPalette.blue[100],
       color: colorPalette.blue[800],
+    },
+    [themesSelectors.dark]: {
+      background: colorPalette.blueGray[800],
+      color: colorPalette.blueGray[100],
+    },
+    [`html${darkThemeClass} &.active`]: {
+      background: colorPalette.blue[800],
+      color: colorPalette.blue[100],
     },
   },
 })

@@ -1,56 +1,40 @@
 import { Container } from "@chakra-ui/react"
-import { useButton } from "@react-aria/button"
 import type { HeadFC } from "gatsby"
 import * as React from "react"
-import { FaMoon as Moon } from "react-icons/fa"
-import { MdWbSunny as Sun } from "react-icons/md"
-import { useTheme, TogglePrimitive } from "themes-utils"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Layout } from "../components/blocks/layout"
+import { Alert } from "../components/mdx/alert"
 import { SEO } from "../components/seo"
 
-const Button = (props) => {
-  const ref = React.useRef()
-  const { buttonProps } = useButton(props, ref)
-  const { children } = props
-
-  return <button {...buttonProps}>{children}</button>
-}
-
-const Toggle = () => {
-  const { resolvedTheme, setTheme } = useTheme()
-  const isLight = resolvedTheme === `light`
-
-  const toggleColorMode = React.useCallback(() => {
-    setTheme(isLight ? `dark` : `light`)
-  }, [isLight, setTheme])
-
-  return (
-    <TogglePrimitive>
-      <Button aria-label={isLight ? `Activate Dark Mode` : `Activate Light Mode`} onPress={toggleColorMode}>
-        {isLight ? <Moon /> : <Sun fontSize="1.25rem" />}
-      </Button>
-    </TogglePrimitive>
-  )
-}
-
 // This is a file to try out things in my site
-const Playground = () => {
-  const data = useTheme()
-
-  return (
-    <Layout>
-      <SkipNavContent>
-        <Container variant="proseRoot">
-          <pre>
-            <code>{JSON.stringify(data, null, 2)}</code>
-          </pre>
-          <Toggle />
-        </Container>
-      </SkipNavContent>
-    </Layout>
-  )
-}
+const Playground = () => (
+  <Layout>
+    <SkipNavContent>
+      <Container variant="proseRoot" sx={{ fontSize: `1.25rem` }}>
+        <Alert status="info" title="Note">
+          If you want to try the instructions below you can fire up the Python REPL. If you have Python installed run
+          <code>python</code> in your terminal. <a href="https://www.figma.com/downloads/">download</a>
+          editor.
+        </Alert>
+        <Alert status="success" title="What you just learned">
+          If you want to try the instructions below you can fire up the Python REPL. If you have Python installed run
+          <code>python</code> in your terminal. <a href="https://www.figma.com/downloads/">download</a>
+          editor.
+        </Alert>
+        <Alert status="warning" title="node-fetch">
+          If you want to try the instructions below you can fire up the Python REPL. If you have Python installed run
+          <code>python</code> in your terminal. <a href="https://www.figma.com/downloads/">download</a>
+          editor.
+        </Alert>
+        <Alert status="error" title="node-fetch">
+          If you want to try the instructions below you can fire up the Python REPL. If you have Python installed run
+          <code>python</code> in your terminal. <a href="https://www.figma.com/downloads/">download</a>
+          editor.
+        </Alert>
+      </Container>
+    </SkipNavContent>
+  </Layout>
+)
 
 export default Playground
 

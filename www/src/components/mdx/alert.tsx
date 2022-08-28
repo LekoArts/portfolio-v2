@@ -1,25 +1,42 @@
 import * as React from "react"
-import { Alert as ChakraAlert, AlertTitle, AlertIcon, AlertStatus, Box } from "@chakra-ui/react"
+import { alertIconStyle, AlertStatus, alertTitleStyle, alertVariants } from "./alert.css"
+import { Box } from "../primitives/box"
+import { SVGIcon } from "../primitives/svg-icon"
 
-export const Alert: React.FC<React.PropsWithChildren<{ title: string; status: AlertStatus }>> = ({
-  title,
-  status,
-  children,
-}) => (
-  <ChakraAlert
-    status={status}
+interface IAlertProps {
+  title: string
+  status: AlertStatus
+}
+
+const iconMap = {
+  info: `info`,
+  warning: `warning`,
+  success: `check`,
+  error: `warning`,
+} as const
+
+export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({ title, status, children }) => (
+  <Box
+    display="flex"
     flexDirection="column"
     alignItems="flex-start"
     borderRadius="lg"
-    my={[6, null, null, 12]}
-    mx={[0, null, null, -4]}
+    position="relative"
+    my={[`6`, null, null, `12`]}
+    px="4"
+    py="3"
     width="auto"
-    data-status={status}
+    role="alert"
+    className={alertVariants[status]}
   >
-    <Box display="flex" flexDirection="row" alignItems="center" mb={4}>
-      <AlertIcon boxSize={[`20px`, null, `30px`]} />
-      <AlertTitle>{title}</AlertTitle>
+    <Box display="flex" flexDirection="row" alignItems="center" mb="4">
+      <Box className={alertIconStyle}>
+        <SVGIcon id={iconMap[status]} />
+      </Box>
+      <Box fontWeight="bold" className={alertTitleStyle}>
+        {title}
+      </Box>
     </Box>
     {children}
-  </ChakraAlert>
+  </Box>
 )

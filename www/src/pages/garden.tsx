@@ -126,8 +126,8 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                 return state.tags.some((tag) => tags.includes(tag))
               })
               .map((post, index) => (
-                <React.Fragment>
-                  <Link to={post.slug} key={post.slug} className={gardenItemStyle}>
+                <React.Fragment key={post.slug}>
+                  <Link to={post.slug} className={gardenItemStyle}>
                     <div className={iconWrapperStyle}>
                       <SVGIcon id={post.icon} width="100%" height="100%" />
                     </div>
