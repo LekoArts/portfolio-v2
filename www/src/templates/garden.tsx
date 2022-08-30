@@ -1,21 +1,17 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { RiPlantFill as PlantIcon } from "react-icons/ri"
-import { Container, Text, Tag, TagLabel, Icon } from "@chakra-ui/react"
+import { Container, Text, Tag, TagLabel } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { ExternalLink, Link } from "../components/primitives/link"
+import { ExternalLink, Link, Spacer, Box, ShareAnywhereButton, TwitterButton, SVGIcon } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
 import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/primitives/spacer"
 import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
-import { ShareAnywhereButton, TwitterButton } from "../components/primitives/buttons"
 import { site } from "../constants/meta"
-import { Box } from "../components/primitives/box"
-import { gardenCtaStyle, metaStyle } from "./garden.css"
+import { gardenCtaStyle, metaStyle, plantIconStyle } from "./garden.css"
 
 type DataProps = {
   garden: {
@@ -119,13 +115,13 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
             alignItems="center"
             className={gardenCtaStyle}
           >
-            <Icon
-              as={PlantIcon}
-              height={[6, 8, 12]}
-              width={[6, 8, 12]}
+            <Box
+              as={SVGIcon}
+              height={[`6`, `8`, `12`]}
+              width={[`6`, `8`, `12`]}
               mr="6"
-              color="lime.300"
-              sx={{ filter: `drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.25))` }}
+              id="plant"
+              className={plantIconStyle}
             />
             <Box>
               Want to learn more?{` `}

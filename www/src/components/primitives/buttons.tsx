@@ -86,8 +86,8 @@ export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) =
       // @ts-ignore
       to={kind === `internal` ? to : undefined}
       href={kind === `external` ? to : undefined}
-      {...buttonProps}
       className={composeClassNames(buttonVariants[variant], sizesVariants[size], className)}
+      {...buttonProps}
       {...rest}
     >
       {children} {rightIcon && <ButtonIcon>{rightIcon}</ButtonIcon>}
@@ -120,8 +120,6 @@ export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?:
     kind={kind}
     to={to}
     variant="link"
-    fontSize={[`xs`, `sm`]}
-    fontWeight="medium"
     rightIcon={<BsArrowRight />}
     className={composeClassNames(arrowAnimationStyle, subtleButtonStyle)}
   >

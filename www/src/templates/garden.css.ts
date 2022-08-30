@@ -24,3 +24,8 @@ export const gardenCtaStyle = style([
     backgroundImage: `linear-gradient(to right top, ${colorPalette.green[800]}, ${colorPalette.lime[600]})`,
   },
 ])
+
+export const plantIconStyle = style({
+  color: colorPalette.lime[300],
+  filter: `drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.25))`,
+})

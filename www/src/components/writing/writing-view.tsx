@@ -4,14 +4,11 @@ import { Container, Text } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
-import { Spacer } from "../primitives/spacer"
+import { Spacer, Box, ExternalLink, ShareAnywhereButton, TwitterButton } from "../primitives"
 import { Prose } from "../typography/prose"
 import { components } from "../mdx"
-import { ShareAnywhereButton, TwitterButton } from "../primitives/buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
-import { Box } from "../primitives/box"
-import { ExternalLink } from "../primitives/link"
 
 export type WritingViewDataProps = {
   post: {

@@ -1,9 +1,8 @@
 import * as React from "react"
-import { Box } from "../primitives/box"
+import { Box, ExternalLink } from "../primitives"
 import { asideStyle, headingStyle, navStyle } from "./toc.css"
 import type { Colors } from "../../styles/tokens/colors"
 import { useActiveHash } from "../../hooks/use-active-hash"
-import { ExternalLink } from "../primitives/link"
 
 export type TocItem = {
   url: string

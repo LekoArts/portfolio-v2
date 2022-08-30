@@ -1,12 +1,12 @@
 import * as React from "react"
 import { Container, Text } from "@chakra-ui/react"
-import { space } from "../../constants/space"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Layout } from "../blocks/layout"
 import { Card } from "./card"
 import { WritingSubNavigation } from "./subnavigation"
-import { ExternalLink } from "../primitives/link"
+import { ExternalLink } from "../primitives"
 import { contentGridStyle } from "./category-view.css"
+import { paddingResponsiveArrays } from "../../styles/tokens/space"
 
 type CategoryViewProps = {
   posts: {
@@ -24,7 +24,7 @@ export const CategoryView: React.FC<React.PropsWithChildren<CategoryViewProps>> 
   <Layout subnavigation={<WritingSubNavigation />}>
     <SkipNavContent>
       {children}
-      <Container py={space.paddingMedium}>
+      <Container py={paddingResponsiveArrays.paddingMedium}>
         {posts.nodes.length > 0 ? (
           <div className={contentGridStyle}>
             {posts.nodes.map((post) => (

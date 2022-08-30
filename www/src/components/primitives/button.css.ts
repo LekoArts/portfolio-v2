@@ -2,6 +2,7 @@ import { style, StyleRule, globalStyle, createVar, styleVariants } from "@vanill
 import { themesSelectors } from "../../styles/atoms.css"
 import { pseudoSelectors } from "../../styles/selectors"
 import { vars } from "../../styles/themes/contract.css"
+import { minMediaQuery } from "../../styles/tokens/breakpoints"
 import { colorPalette } from "../../styles/tokens/colors"
 import { transition } from "../../styles/tokens/motion"
 
@@ -48,7 +49,7 @@ const buttons: Record<VariantNames, StyleRule> = {
     },
   },
   link: {
-    padding: 0,
+    padding: `0 !important`,
     height: `auto`,
     lineHeight: vars.lineHeight.base,
     verticalAlign: `baseline`,
@@ -156,7 +157,7 @@ globalStyle(`${arrowAnimationStyle} > span`, {
   transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
 })
 
-globalStyle(`${arrowAnimationStyle} > svg`, {
+globalStyle(`${arrowAnimationStyle} svg`, {
   height: `1.5em`,
   width: `1.5em`,
 })
@@ -169,6 +170,13 @@ globalStyle(`${arrowAnimationStyle}:hover > span`, {
 export const subtleButtonStyle = style({
   letterSpacing: vars.letterSpacing.wider,
   textTransform: `uppercase`,
+  fontWeight: vars.fontWeight.medium,
+  fontSize: vars.fontSize.xs,
+  "@media": {
+    [minMediaQuery(`sm`)]: {
+      fontSize: vars.fontSize.sm,
+    },
+  },
 })
 
 export const iconButtonStyle = style({

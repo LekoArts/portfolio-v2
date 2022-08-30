@@ -18,6 +18,7 @@ export type SVGIconNames =
   | "check"
   | "info"
   | "warning"
+  | "plant"
 
 type SVGIconProps = {
   id: SVGIconNames

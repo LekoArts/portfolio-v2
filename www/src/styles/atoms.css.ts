@@ -7,15 +7,6 @@ import { vars } from "./themes/contract.css"
 
 const unresponsiveAtomicProperties = defineProperties({
   properties: unresponsiveProperties,
-  shorthands: {
-    p: [`paddingBottom`, `paddingTop`, `paddingLeft`, `paddingRight`],
-    px: [`paddingLeft`, `paddingRight`],
-    py: [`paddingTop`, `paddingBottom`],
-    pt: [`paddingTop`],
-    pr: [`paddingRight`],
-    pb: [`paddingBottom`],
-    pl: [`paddingLeft`],
-  },
 })
 
 export const themesSelectors = {
@@ -68,6 +59,13 @@ const responsiveAtomicProperties = defineProperties({
     mr: [`marginRight`],
     mb: [`marginBottom`],
     ml: [`marginLeft`],
+    p: [`paddingBottom`, `paddingTop`, `paddingLeft`, `paddingRight`],
+    px: [`paddingLeft`, `paddingRight`],
+    py: [`paddingTop`, `paddingBottom`],
+    pt: [`paddingTop`],
+    pr: [`paddingRight`],
+    pb: [`paddingBottom`],
+    pl: [`paddingLeft`],
   },
 })
 

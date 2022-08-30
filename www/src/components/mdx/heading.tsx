@@ -1,6 +1,6 @@
 import * as React from "react"
 import { VisuallyHidden } from "../a11y/visually-hidden"
-import { Box } from "../primitives/box"
+import { Box } from "../primitives"
 import { anchorStyle, headingStyle, introductionStyle } from "./heading.css"
 
 type HeadingProps = {

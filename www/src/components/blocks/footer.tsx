@@ -1,9 +1,7 @@
 import * as React from "react"
-import { Box } from "../primitives/box"
-import { Link, ExternalLink } from "../primitives/link"
+import { Link, ExternalLink, Spacer, Box } from "../primitives"
 import { FullWidthContainer } from "./full-width-container"
 import { useFooterNavigation } from "../../hooks/use-footer-navigation"
-import { Spacer } from "../primitives/spacer"
 
 export const Footer: React.FC = () => {
   const footerNavigation = useFooterNavigation()

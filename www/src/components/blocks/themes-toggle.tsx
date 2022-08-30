@@ -3,7 +3,7 @@ import { TogglePrimitive, useTheme } from "themes-utils"
 import { FaMoon as Moon } from "react-icons/fa"
 import { MdWbSunny as Sun } from "react-icons/md"
 import { capitalize } from "utils"
-import { Button } from "../primitives/buttons"
+import { Button } from "../primitives"
 import { toggleIconStyle } from "./themes-toggle.css"
 import { DEFAULT_THEME, THEMES } from "../../constants/themes"
 

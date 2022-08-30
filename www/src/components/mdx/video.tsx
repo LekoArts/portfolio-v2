@@ -1,6 +1,5 @@
 import * as React from "react"
-import { Box } from "../primitives/box"
-import { SVGIcon } from "../primitives/svg-icon"
+import { Box, SVGIcon } from "../primitives"
 import { site } from "../../constants/meta"
 import { groupStyle, playPauseButtonStyle, videoStyle } from "./video.css"
 

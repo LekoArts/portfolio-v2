@@ -4,9 +4,9 @@ import { Container, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { SEO } from "../components/seo"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
-import { Link } from "../components/primitives/link"
+import { Link } from "../components/primitives"
+import { paddingResponsiveArrays } from "../styles/tokens/space"
 
 const NotFound: React.FC<PageProps> = () => {
   React.useEffect(() => {
@@ -18,7 +18,7 @@ const NotFound: React.FC<PageProps> = () => {
   return (
     <Layout>
       <SkipNavContent>
-        <Container py={space.paddingSmall}>
+        <Container py={paddingResponsiveArrays.paddingSmall}>
           <Heading as="h1">Not Found</Heading>
           <Text textStyle="prominent">
             Sorry, there is nothing at this URL. <Link to="/">Go back home.</Link>

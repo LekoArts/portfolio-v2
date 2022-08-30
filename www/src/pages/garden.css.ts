@@ -97,10 +97,6 @@ export const gardenItemStyle = style({
   gridTemplateColumns: `${mis} 1fr 20px`,
   alignItems: `center`,
   gridGap: vars.space[6],
-  paddingLeft: vars.space[2],
-  paddingRight: vars.space[2],
-  paddingTop: vars.space[2],
-  paddingBottom: vars.space[2],
   borderRadius: vars.borderRadius.lg,
   "@media": {
     [minMediaQuery(`sm`)]: {
@@ -108,10 +104,6 @@ export const gardenItemStyle = style({
     },
     [minMediaQuery(`lg`)]: {
       gridTemplateColumns: `${lgis} 1fr 24px`,
-      paddingLeft: vars.space[6],
-      paddingRight: vars.space[6],
-      paddingTop: vars.space[6],
-      paddingBottom: vars.space[6],
     },
     "(prefers-reduced-motion: reduce)": {
       vars: {

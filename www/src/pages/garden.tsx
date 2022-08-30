@@ -3,15 +3,12 @@ import { graphql, PageProps } from "gatsby"
 import { BsArrowRight } from "react-icons/bs"
 import { Container, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/primitives/link"
+import { Link, ToggleButton, Box, Spacer, SVGIconNames, SVGIcon } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { space } from "../constants/space"
 import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/primitives/spacer"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
-import { SVGIconNames, SVGIcon } from "../components/primitives/svg-icon"
 import {
   gardenItemStyle,
   gardenItemWrapperStyle,
@@ -20,9 +17,8 @@ import {
   tagStyle,
   wrapListStyle,
 } from "./garden.css"
-import { ToggleButton } from "../components/primitives/buttons"
 import { composeClassNames } from "../utils/box"
-import { Box } from "../components/primitives/box"
+import { paddingResponsiveArrays } from "../styles/tokens/space"
 
 type DataProps = {
   garden: {
@@ -77,7 +73,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
   return (
     <Layout>
       <SkipNavContent>
-        <Container py={space.paddingSmall}>
+        <Container py={paddingResponsiveArrays.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
           <Text textStyle="prominent">
             <Link to="/garden/what-is-a-digital-garden" color="heading">
@@ -128,7 +124,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
               })
               .map((post, index) => (
                 <React.Fragment key={post.slug}>
-                  <Link to={post.slug} className={gardenItemStyle}>
+                  <Link to={post.slug} p={[`2`, null, null, `6`]} className={gardenItemStyle}>
                     <div className={iconWrapperStyle}>
                       <SVGIcon id={post.icon} width="100%" height="100%" />
                     </div>

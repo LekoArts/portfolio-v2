@@ -12,8 +12,6 @@ import { FullWidthContainer } from "./components/full-width-container"
 import { Heading } from "./components/heading"
 import { Prose } from "./components/prose"
 import { Text } from "./components/text"
-import { Badge } from "./components/badge"
-import { Button } from "./components/button"
 
 // Custom breakpoints
 const breakpoints = {
@@ -41,8 +39,6 @@ const theme = extendTheme({
     Heading,
     Prose,
     Text,
-    Badge,
-    Button,
   },
   breakpoints,
   config: {

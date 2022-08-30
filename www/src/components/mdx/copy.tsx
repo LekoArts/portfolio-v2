@@ -1,6 +1,6 @@
 import * as React from "react"
 import { VisuallyHidden } from "../a11y/visually-hidden"
-import { Box } from "../primitives/box"
+import { Box } from "../primitives"
 import { copyToClipboard } from "../../utils/copy-to-clipboard"
 import { copyButtonStyle } from "./copy.css"
 

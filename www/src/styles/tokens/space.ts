@@ -1,3 +1,5 @@
+import { Atoms } from "../atoms.css"
+
 export const baseSizes = {
   "0": `0`,
   "1": `0.25rem`,
@@ -54,9 +56,9 @@ export const space = {
 }
 
 export const paddingResponsiveArrays = {
-  paddingSmall: [`12`, `16`, null, `24`, `28`],
-  paddingMedium: [`16`, `24`, null, `36`, `40`],
-  paddingLarge: [`20`, `24`, null, `40`, `48`],
+  paddingSmall: [`12`, `16`, null, `24`, `28`] as Atoms["paddingTop"],
+  paddingMedium: [`16`, `24`, null, `36`, `40`] as Atoms["paddingTop"],
+  paddingLarge: [`20`, `24`, null, `40`, `48`] as Atoms["paddingTop"],
 }
 
 export type Space = keyof typeof space

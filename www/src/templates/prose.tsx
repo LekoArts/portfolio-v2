@@ -3,7 +3,7 @@ import { PageProps, graphql, HeadFC } from "gatsby"
 import { Text } from "@chakra-ui/react"
 import { WritingViewDataProps, WritingView } from "../components/writing/writing-view"
 import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/primitives/spacer"
+import { Spacer } from "../components/primitives"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
 

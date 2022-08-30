@@ -1,10 +1,9 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
-import { Text, Flex, Tag, TagLabel } from "@chakra-ui/react"
+import { Text, Tag, TagLabel } from "@chakra-ui/react"
 import { WritingViewDataProps, WritingView } from "../components/writing/writing-view"
 import { Heading } from "../components/typography/heading"
-import { Box } from "../components/primitives/box"
-import { Spacer } from "../components/primitives/spacer"
+import { Box, Spacer } from "../components/primitives"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
 
@@ -35,14 +34,14 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
     <Spacer size="6" axis="vertical" />
     <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
     <Spacer size="4" axis="vertical" />
-    <Flex justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
+    <Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
       <Text mb="2">
         Created {post.date} – Last Updated {post.lastUpdated}
       </Text>
       <Tag alignSelf="flex-start" mb="2" colorScheme={tagColorSwitch(post.category.name)}>
         <TagLabel>{post.category.name}</TagLabel>
       </Tag>
-    </Flex>
+    </Box>
     <Spacer size="10" axis="vertical" />
   </WritingView>
 )

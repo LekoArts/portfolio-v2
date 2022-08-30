@@ -1,8 +1,7 @@
 import * as React from "react"
 import { graphql } from "gatsby"
 import { Text } from "@chakra-ui/react"
-import { MotionBox } from "../primitives/motion-box"
-import { Link } from "../primitives/link"
+import { MotionBox, Link } from "../primitives"
 import { cardStyle, headingStyle, linkStyle } from "./card.css"
 
 type CardProps = {

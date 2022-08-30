@@ -1,7 +1,6 @@
 import * as React from "react"
 import { alertIconStyle, AlertStatus, alertTitleStyle, alertVariants } from "./alert.css"
-import { Box } from "../primitives/box"
-import { SVGIcon } from "../primitives/svg-icon"
+import { Box, SVGIcon } from "../primitives"
 
 interface IAlertProps {
   title: string

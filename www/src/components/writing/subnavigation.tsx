@@ -1,7 +1,5 @@
 import * as React from "react"
-import { Box } from "../primitives/box"
-import { Link } from "../primitives/link"
-import { Spacer } from "../primitives/spacer"
+import { Box, Link, Spacer } from "../primitives"
 import { activeLinkStyle, innerWrapperStyle, wrapperStyle } from "./subnavigation.css"
 import { useCategories } from "../../hooks/use-categories"
 
