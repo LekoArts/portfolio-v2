@@ -18,8 +18,14 @@ export type SVGIconNames =
   | "check"
   | "info"
   | "warning"
-  | "plant"
+  | "lightbulb"
   | "star"
+  | "arrow-right"
+  | "share"
+  | "twitter"
+  | "moon"
+  | "sun"
+  | "computer"
 
 type SVGIconProps = {
   id: SVGIconNames
@@ -30,7 +36,7 @@ type SVGIconProps = {
  * Using a SVG sprite for performance reasons
  */
 export const SVGIcon = ({ id, ...props }: SVGIconProps) => (
-  <svg focusable="false" {...props}>
+  <svg aria-hidden focusable="false" {...props}>
     <use href={`/icons.svg#${id}`} />
   </svg>
 )

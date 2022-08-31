@@ -2,9 +2,6 @@ import * as React from "react"
 import { Link } from "gatsby"
 import { useButton, useToggleButton } from "@react-aria/button"
 import { useToggleState } from "@react-stately/toggle"
-import { BsArrowRight } from "react-icons/bs"
-import { FaTwitter } from "react-icons/fa"
-import { FiShare } from "react-icons/fi"
 import {
   arrowAnimationStyle,
   iconButtonStyle,
@@ -16,6 +13,7 @@ import {
 } from "./button.css"
 import { Box, IBoxProps } from "./box"
 import { composeClassNames } from "../../utils/box"
+import { SVGIcon } from "./svg-icon"
 
 type ButtonKind = "button" | "internal" | "external"
 
@@ -103,7 +101,13 @@ export const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; kind?
   to,
   kind = `internal`,
 }) => (
-  <Button kind={kind} to={to} variant="primary" rightIcon={<BsArrowRight />} className={arrowAnimationStyle}>
+  <Button
+    kind={kind}
+    to={to}
+    variant="primary"
+    rightIcon={<SVGIcon id="arrow-right" />}
+    className={arrowAnimationStyle}
+  >
     {children}
   </Button>
 )
@@ -120,7 +124,7 @@ export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?:
     kind={kind}
     to={to}
     variant="link"
-    rightIcon={<BsArrowRight />}
+    rightIcon={<SVGIcon id="arrow-right" />}
     className={composeClassNames(arrowAnimationStyle, subtleButtonStyle)}
   >
     {children}
@@ -148,7 +152,7 @@ export const TwitterButton = ({
     rel="noreferrer noopener"
     size="md"
     variant={variant}
-    rightIcon={<FaTwitter />}
+    rightIcon={<SVGIcon id="twitter" height="1em" width="1em" />}
   >
     Share on Twitter
   </Button>
@@ -179,7 +183,13 @@ export const ShareAnywhereButton = ({
   }
 
   return (
-    <Button kind="button" onClick={handleSocialShare} size="md" variant={variant} rightIcon={<FiShare />}>
+    <Button
+      kind="button"
+      onClick={handleSocialShare}
+      size="md"
+      variant={variant}
+      rightIcon={<SVGIcon id="share" height="1em" width="1em" />}
+    >
       Share Anywhere
     </Button>
   )

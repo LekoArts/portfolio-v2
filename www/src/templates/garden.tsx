@@ -127,7 +127,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               height={[`6`, `8`, `12`]}
               width={[`6`, `8`, `12`]}
               mr="6"
-              id="plant"
+              id="lightbulb"
               className={plantIconStyle}
             />
             <Box>

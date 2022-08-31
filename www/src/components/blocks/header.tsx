@@ -8,7 +8,7 @@ import { useDistinctCategories } from "../../hooks/use-distinct-categories"
 
 const Logo: React.FC = () => (
   <Link to="/" aria-label="lekoarts.de, Back to homepage" className={logoStyle}>
-    <SVGIcon id="logo" width="35" height="35" viewBox="0 0 150 150" aria-hidden="true" focusable="false" />
+    <SVGIcon id="logo" width="35" height="35" viewBox="0 0 150 150" />
   </Link>
 )
 

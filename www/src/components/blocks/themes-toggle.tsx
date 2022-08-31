@@ -1,19 +1,17 @@
 import * as React from "react"
 import { TogglePrimitive, useTheme } from "themes-utils"
-import { FaMoon as Moon } from "react-icons/fa"
-import { MdWbSunny as Sun } from "react-icons/md"
 import { capitalize } from "utils"
-import { Button } from "../primitives"
+import { Button, SVGIcon } from "../primitives"
 import { toggleIconStyle } from "./themes-toggle.css"
 import { DEFAULT_THEME, THEMES } from "../../constants/themes"
 
-const SunMoon = () => <span>S</span>
+const SystemIcon = () => <SVGIcon id="computer" height="1.25em" width="1.25em" />
 
 const THEMES_STATES = [DEFAULT_THEME, ...THEMES]
 const THEMES_ICONS_MAP = {
-  [DEFAULT_THEME]: <SunMoon />,
-  light: <Sun fontSize="1.25rem" />,
-  dark: <Moon />,
+  [DEFAULT_THEME]: <SystemIcon />,
+  light: <SVGIcon id="sun" height="1.25em" width="1.25em" />,
+  dark: <SVGIcon id="moon" height="1.25em" width="1.25em" />,
 }
 
 export const Toggle = () => {
@@ -25,10 +23,13 @@ export const Toggle = () => {
     setTheme(nextTheme)
   }, [setTheme, nextTheme])
 
+  const label = `Switch to "${capitalize(nextTheme)}" theme`
+
   return (
-    <TogglePrimitive fallback={<SunMoon />}>
+    <TogglePrimitive fallback={<SystemIcon />}>
       <Button
-        aria-label={`Switch to theme ${capitalize(nextTheme)}`}
+        aria-label={label}
+        title={label}
         onClick={switchTheme}
         variant="ghost"
         size="sm"

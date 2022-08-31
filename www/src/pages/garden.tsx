@@ -1,6 +1,5 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
-import { BsArrowRight } from "react-icons/bs"
 import { Container, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { Link, ToggleButton, Box, Spacer, SVGIconNames, SVGIcon } from "../components/primitives"
@@ -135,7 +134,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                       <Text fontSize={[`sm`, null, null, `md`]}>{post.lastUpdated}</Text>
                     </div>
                     <span>
-                      <BsArrowRight />
+                      <SVGIcon id="arrow-right" height="1.25em" width="1.25em" />
                     </span>
                   </Link>
                   {index !== garden.nodes.length - 1 && (

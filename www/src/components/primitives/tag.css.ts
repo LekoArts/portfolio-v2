@@ -50,10 +50,10 @@ const tags: Record<TagsColorSchemes, StyleRule> = {
 export const tagVariants = styleVariants(tags, (tag) => [tagBaseStyle, tag])
 
 export const tagIconStyle = style({
-  width: `1em`,
-  height: `1em`,
+  width: `1.2em`,
+  height: `1.2em`,
   display: `inline-block`,
-  lineHeight: `1em`,
+  lineHeight: `1.2em`,
   flexShrink: 0,
   verticalAlign: `top`,
   marginRight: vars.space[2],

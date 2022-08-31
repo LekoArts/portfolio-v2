@@ -41,11 +41,16 @@ export const alertIconStyle = style({
   marginRight: vars.space[3],
   display: `inherit`,
   flexShrink: 0,
+  lineHeight: vars.lineHeight.md,
   color: colorVar,
   "@media": {
     [minMediaQuery(`md`)]: {
-      width: `30px`,
-      height: `30px`,
+      width: `25px`,
+      height: `25px`,
+    },
+    [minMediaQuery(`lg`)]: {
+      width: `35px`,
+      height: `35px`,
     },
   },
 })
