@@ -3,6 +3,7 @@ import { Box, ExternalLink } from "../primitives"
 import { asideStyle, headingStyle, navStyle } from "./toc.css"
 import type { Colors } from "../../styles/tokens/colors"
 import { useActiveHash } from "../../hooks/use-active-hash"
+import { wrapperStyle } from "./subnavigation.css"
 
 export type TocItem = {
   url: string
@@ -64,7 +65,7 @@ export const Toc = ({ items }: { items: Array<TocItem> }) => {
 
   return (
     <Box as="aside" mb={{ mobile: `16`, "2xl": `0` }} fontSize={[`sm`, `md`]} className={asideStyle}>
-      <Box as="nav" display="flex" flexDirection="column" overflow="auto" alignItems="flex-start" className={navStyle}>
+      <Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" className={navStyle}>
         <Box as="h2" color="heading" fontWeight="medium" mb={{ mobile: `2`, "2xl": `4` }} className={headingStyle}>
           Table of Contents
         </Box>
@@ -78,7 +79,7 @@ export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: Array
   children,
   items,
 }) => (
-  <Box display={{ mobile: `block`, "2xl": `flex` }} flexDirection="row-reverse" justifyContent="flex-end" gap="20">
+  <Box flexDirection="row-reverse" justifyContent="flex-end" gap="20" className={wrapperStyle}>
     <Toc items={items} />
     {children}
   </Box>

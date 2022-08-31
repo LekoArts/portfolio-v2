@@ -6,6 +6,7 @@ export const groupStyle = style({
 
 export const videoStyle = style({
   maxWidth: `100%`,
+  cursor: `pointer`,
 })
 
 export const playPauseButtonStyle = style({

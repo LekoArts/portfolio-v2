@@ -2,6 +2,15 @@ import { style } from "@vanilla-extract/css"
 import { vars } from "../../styles/themes/contract.css"
 import { minMediaQuery } from "../../styles/tokens/breakpoints"
 
+export const wrapperStyle = style({
+  display: `block`,
+  "@media": {
+    [minMediaQuery(`2xl`)]: {
+      display: `flex`,
+    },
+  },
+})
+
 export const asideStyle = style({
   position: `relative`,
   maxHeight: `unset`,
@@ -19,6 +28,7 @@ export const navStyle = style({
   minWidth: `185px`,
   marginTop: `0`,
   maxWidth: `100%`,
+  overflow: `auto`,
   "@media": {
     [minMediaQuery(`2xl`)]: {
       marginTop: `1.8em`,

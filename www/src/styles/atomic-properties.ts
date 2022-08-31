@@ -3,10 +3,8 @@ import { zIndices } from "./tokens/z-indices"
 
 export const unresponsiveProperties = {
   position: [`relative`, `absolute`, `sticky`],
-  overflow: [`hidden`, `scroll`, `visible`, `auto`],
   opacity: [0, 0.1, 0.5, 1],
   zIndex: zIndices,
-  cursor: [`default`, `pointer`, `not-allowed`],
   fontWeight: vars.fontWeight,
   border: [`none`],
   gap: vars.space,
@@ -17,7 +15,7 @@ export const unresponsiveProperties = {
 export type UnresponsiveProperties = keyof typeof unresponsiveProperties
 
 export const responsiveProperties = {
-  display: [`block`, `inline-block`, `flex`, `inline-flex`, `none`],
+  display: [`block`, `inline-block`, `flex`, `inline-flex`],
   fontSize: vars.fontSize,
   marginTop: vars.space,
   marginBottom: vars.space,

@@ -60,7 +60,6 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           position="relative"
           display="block"
           m="auto"
-          cursor="pointer"
           autoPlay
           playsInline
           loop
