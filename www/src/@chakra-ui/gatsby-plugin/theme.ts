@@ -9,9 +9,7 @@ import { semanticTokens } from "./foundations/semantic-tokens"
 // Components overrides & custom
 import { Container } from "./components/container"
 import { FullWidthContainer } from "./components/full-width-container"
-import { Heading } from "./components/heading"
 import { Prose } from "./components/prose"
-import { Text } from "./components/text"
 
 // Custom breakpoints
 const breakpoints = {
@@ -36,9 +34,7 @@ const theme = extendTheme({
   components: {
     Container,
     FullWidthContainer,
-    Heading,
     Prose,
-    Text,
   },
   breakpoints,
   config: {

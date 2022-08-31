@@ -2,10 +2,9 @@ import * as React from "react"
 import { prominent } from "../../styles/typography.css"
 import { composeClassNames } from "../../utils/box"
 import { Box, IBoxProps } from "../primitives"
-import { TextVariants } from "./text.css"
 
 interface ITextProps extends IBoxProps {
-  variant?: TextVariants
+  variant?: "prominent"
 }
 
 export const Text: React.FC<React.PropsWithChildren<ITextProps>> = ({

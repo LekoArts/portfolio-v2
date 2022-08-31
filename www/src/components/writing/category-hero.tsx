@@ -17,7 +17,7 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
     <Container py={paddingResponsiveArrays.paddingSmall}>
       <div className={contentWrapperStyle}>
         <Box display="flex" flexDirection="column">
-          <Heading as="h1" color="white">
+          <Heading as="h1" __color="white">
             {title}
           </Heading>
           <Text variant="prominent" className={descriptionStyle}>
