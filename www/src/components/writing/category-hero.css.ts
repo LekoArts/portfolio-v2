@@ -4,7 +4,7 @@ import { colorPalette } from "../../styles/tokens/colors"
 
 export const contentWrapperStyle = style({
   display: `grid`,
-  gridTemplateColumns: `auto`,
+  gridTemplateColumns: vars.space.auto,
   gap: vars.space[12],
 })
 

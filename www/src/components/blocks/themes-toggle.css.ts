@@ -1,6 +1,7 @@
-import { style } from "@vanilla-extract/css"
+import { globalStyle, style } from "@vanilla-extract/css"
 import { pseudoSelectors } from "../../styles/selectors"
 import { vars } from "../../styles/themes/contract.css"
+import { colorPalette } from "../../styles/tokens/colors"
 
 export const toggleIconStyle = style({
   color: vars.color.textMuted,
@@ -13,4 +14,12 @@ export const toggleIconStyle = style({
       color: vars.color.heading,
     },
   },
+})
+
+globalStyle(`div[data-variant-name="fullBleed"] .${toggleIconStyle}`, {
+  color: colorPalette.gray[100],
+})
+
+globalStyle(`div[data-variant-name="fullBleed"] .${toggleIconStyle}:hover`, {
+  color: `white`,
 })

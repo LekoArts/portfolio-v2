@@ -20,9 +20,9 @@ export const skipNavLinkStyle = style({
       left: `10px`,
       background: vars.color.bg,
       zIndex: zIndices.skipLink,
-      width: `auto`,
-      height: `auto`,
-      clip: `auto`,
+      width: vars.space.auto,
+      height: vars.space.auto,
+      clip: vars.space.auto,
     },
   },
 })

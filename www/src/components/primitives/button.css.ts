@@ -50,7 +50,7 @@ const buttons: Record<VariantNames, StyleRule> = {
   },
   link: {
     padding: `0 !important`,
-    height: `auto`,
+    height: vars.space.auto,
     lineHeight: vars.lineHeight.base,
     verticalAlign: `baseline`,
     color: colorPalette.gray[500],

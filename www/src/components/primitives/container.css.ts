@@ -1,6 +1,7 @@
 import { style, StyleRule, styleVariants } from "@vanilla-extract/css"
 import { vars } from "../../styles/themes/contract.css"
 import { minMediaQuery } from "../../styles/tokens/breakpoints"
+import { colorPalette } from "../../styles/tokens/colors"
 
 const containerBaseStyle = style({
   width: vars.space.full,
@@ -17,23 +18,16 @@ const containerBaseStyle = style({
   },
 })
 
-export type ContainerVariants =
-  | "default"
-  | "hero"
-  | "light"
-  | "dark"
-  | "navigation"
-  | "navigationWithSub"
-  | "fullBleed"
-  | "proseRoot"
+export type ContainerVariants = "default" | "hero" | "light" | "dark" | "navigation" | "fullBleed" | "proseRoot"
 
 const containers: Record<ContainerVariants, StyleRule> = {
   default: {},
   hero: {},
   light: {},
-  dark: {},
+  dark: {
+    color: colorPalette.blueGray[300],
+  },
   navigation: {},
-  navigationWithSub: {},
   fullBleed: {},
   proseRoot: {
     paddingTop: vars.space[16],

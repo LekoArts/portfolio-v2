@@ -20,13 +20,21 @@ export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => 
   const categorySlugs = useDistinctCategories()
   const location = useLocation()
   const isCategoryPage = categorySlugs.includes(location.pathname)
-  const variant = subnavigation ? `navigationWithSub` : `navigation`
   const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
+  const variant = isCategoryPage ? `fullBleed` : `navigation`
 
   return (
     <>
-      <FullWidthContainer variant={isCategoryPage ? `fullBleed` : variant} height={height}>
-        <Box display="flex" as="header" alignItems="center" justifyContent="space-between" className={innerHeaderStyle}>
+      <FullWidthContainer variant={variant} height={height} data-variant-name={variant}>
+        <Box
+          display="flex"
+          as="header"
+          color={variant === `navigation` ? `heading` : undefined}
+          alignItems="center"
+          justifyContent="space-between"
+          __color={variant === `fullBleed` ? `white` : undefined}
+          className={innerHeaderStyle}
+        >
           <Logo />
           <Navigation />
         </Box>

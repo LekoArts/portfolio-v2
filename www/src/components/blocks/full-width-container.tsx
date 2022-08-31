@@ -1,22 +1,17 @@
 import * as React from "react"
-import { useMultiStyleConfig, Box, Container, BoxProps } from "@chakra-ui/react"
+import { IBoxProps, Box, Container } from "../primitives"
+import { fullWidthContainerVariants, FullWidthContainerVariants } from "./full-width-container.css"
 
-interface IFullWidthContainerProps extends BoxProps {
-  variant?: "default" | "hero" | "light" | "dark" | "navigation" | "navigationWithSub" | "fullBleed" | undefined
+interface IFullWidthContainerProps extends IBoxProps {
+  variant?: FullWidthContainerVariants
 }
 
 export const FullWidthContainer: React.FC<React.PropsWithChildren<IFullWidthContainerProps>> = ({
-  variant = undefined,
+  variant = `default`,
   children,
   ...rest
-}) => {
-  const styles = useMultiStyleConfig(`FullWidthContainer`, { variant })
-
-  return (
-    <Box data-name="full-width-container-outer" sx={{ ...styles.outer }} {...rest}>
-      <Container data-name="full-width-container-inner" sx={{ ...styles.inner }}>
-        {children}
-      </Container>
-    </Box>
-  )
-}
+}) => (
+  <Box className={fullWidthContainerVariants[variant]} {...rest}>
+    <Container variant={variant}>{children}</Container>
+  </Box>
+)

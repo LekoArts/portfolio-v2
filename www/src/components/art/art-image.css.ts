@@ -3,6 +3,6 @@ import { vars } from "../../styles/themes/contract.css"
 
 export const artImageStyle = style({
   boxShadow: vars.shadow.lg,
-  marginLeft: `auto`,
-  marginRight: `auto`,
+  marginLeft: vars.space.auto,
+  marginRight: vars.space.auto,
 })
