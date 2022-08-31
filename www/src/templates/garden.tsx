@@ -1,7 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import {
   ExternalLink,
@@ -12,6 +11,7 @@ import {
   TwitterButton,
   SVGIcon,
   Tag,
+  Container,
 } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { SEO } from "../components/seo"

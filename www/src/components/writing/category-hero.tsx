@@ -1,7 +1,6 @@
 import * as React from "react"
-import { Container } from "@chakra-ui/react"
 import { Heading, Text } from "../typography"
-import { Box } from "../primitives"
+import { Box, Container } from "../primitives"
 import { contentWrapperStyle, descriptionStyle } from "./category-hero.css"
 import { paddingResponsiveArrays } from "../../styles/tokens/space"
 

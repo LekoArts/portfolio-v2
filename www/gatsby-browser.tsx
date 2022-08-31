@@ -1,8 +1,9 @@
 import * as React from "react"
 import type { GatsbyBrowser } from "gatsby"
+import "./src/styles/reset.css"
+import "./src/styles/fonts.css"
 import { ThemeProvider } from "./src/styles/theme-provider"
 import "./src/styles/global.css"
-import "./src/styles/fonts.css"
 
 export const onRouteUpdate: GatsbyBrowser["onRouteUpdate"] = () => {
   if (process.env.NODE_ENV === `production` && typeof window.plausible !== `undefined`) {

@@ -26,13 +26,6 @@ export const baseSizes = {
   px: `1px`,
 }
 
-const container = {
-  containerSM: `640px`,
-  containerMD: `768px`,
-  containerLG: `1024px`,
-  containerXL: `1280px`,
-}
-
 export const navigation = {
   navigationHeight: `61px`,
   navigationWithSubHeight: `111px`,
@@ -50,7 +43,6 @@ export const space = {
   auto: `auto`,
   ...navigation,
   ...negativeNavigation,
-  ...container,
 }
 
 export const paddingResponsiveArrays = {

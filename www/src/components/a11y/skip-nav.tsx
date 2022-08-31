@@ -11,7 +11,7 @@ export const SkipNavLink: React.FC<React.PropsWithChildren<{ contentId?: string 
   const id = contentId || defaultId
 
   return (
-    <a {...props} className={skipNavLinkStyle} href={`#${id}`} data-skip-to-content>
+    <a {...props} className={skipNavLinkStyle} href={`#${id}`}>
       {children}
     </a>
   )

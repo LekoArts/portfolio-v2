@@ -1,7 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { Container } from "@chakra-ui/react"
 import {
   ExternalLink,
   Link,
@@ -12,6 +11,7 @@ import {
   Box,
   Badge,
   Tag,
+  Container,
 } from "../components/primitives"
 import { Layout } from "../components/blocks/layout"
 import { FullWidthContainer } from "../components/blocks/full-width-container"

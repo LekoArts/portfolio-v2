@@ -1,11 +1,10 @@
 import * as React from "react"
 import { PageProps } from "gatsby"
-import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { SEO } from "../components/seo"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Heading, Text } from "../components/typography"
-import { Link } from "../components/primitives"
+import { Link, Container } from "../components/primitives"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
 
 const NotFound: React.FC<PageProps> = () => {

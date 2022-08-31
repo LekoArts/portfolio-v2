@@ -1,11 +1,10 @@
 import * as React from "react"
-import { Container } from "@chakra-ui/react"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Layout } from "../blocks/layout"
 import { Text } from "../typography"
 import { Card } from "./card"
 import { WritingSubNavigation } from "./subnavigation"
-import { ExternalLink } from "../primitives"
+import { ExternalLink, Container } from "../primitives"
 import { contentGridStyle } from "./category-view.css"
 import { paddingResponsiveArrays } from "../../styles/tokens/space"
 
