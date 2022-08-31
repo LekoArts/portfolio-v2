@@ -11,4 +11,7 @@ globalStyle(`body`, {
   color: vars.color.text,
   scrollbarWidth: `thin`,
   scrollbarColor: `${vars.color.scrollbarTrack} ${vars.color.scrollbarThumb}`,
+  transitionProperty: `background-color, color`,
+  transitionDuration: `0.3s`,
+  lineHeight: vars.lineHeight.base,
 })

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import {
   ExternalLink,
@@ -14,9 +14,8 @@ import {
   Tag,
 } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text, Prose } from "../components/typography"
 import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
 import { site } from "../constants/meta"

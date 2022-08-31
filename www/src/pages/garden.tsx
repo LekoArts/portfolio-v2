@@ -1,10 +1,10 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { Link, ToggleButton, Box, Spacer, SVGIconNames, SVGIcon } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text } from "../components/typography"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
@@ -74,7 +74,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
       <SkipNavContent>
         <Container py={paddingResponsiveArrays.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
-          <Text textStyle="prominent">
+          <Text variant="prominent">
             <Link to="/garden/what-is-a-digital-garden" color="heading">
               What is a Digital Garden?
             </Link>

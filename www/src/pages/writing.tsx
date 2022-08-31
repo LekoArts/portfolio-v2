@@ -1,10 +1,10 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { WritingSubNavigation } from "../components/writing/subnavigation"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text } from "../components/typography"
 import { ExternalLink, Link, Box } from "../components/primitives"
 import { Card } from "../components/writing/card"
 import { SEO } from "../components/seo"
@@ -31,7 +31,7 @@ const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
         <Box display="flex" flexDirection="column" gap="20" alignItems="center">
           <Box display="flex" flexDirection="column" gap="3" alignItems="center">
             <Heading as="h1">Writing</Heading>
-            <Text variant="prominent" maxWidth="45ch" textAlign="center">
+            <Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
               So far I’ve written {posts.totalCount} longform tutorials & articles. For more compact content visit my
               {` `}
               <Link to="/garden">Digital Garden</Link>. <ExternalLink href="/rss.xml">RSS</ExternalLink>.

@@ -1,11 +1,11 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Spacer, Box, ExternalLink, ShareAnywhereButton, TwitterButton } from "../primitives"
-import { Prose } from "../typography/prose"
+import { Prose, Text } from "../typography"
 import { components } from "../mdx"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
@@ -108,7 +108,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
             )}
           </Box>
           {type === `prose` && (
-            <Text mt="6" fontSize={[`md`, null, null, `1.125rem`]}>
+            <Text mt="6" fontSize={[`md`, null, null, `lg`]}>
               Last updated: {post.lastUpdated}
             </Text>
           )}

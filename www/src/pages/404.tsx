@@ -1,10 +1,10 @@
 import * as React from "react"
 import { PageProps } from "gatsby"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
 import { SEO } from "../components/seo"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text } from "../components/typography"
 import { Link } from "../components/primitives"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
 
@@ -20,7 +20,7 @@ const NotFound: React.FC<PageProps> = () => {
       <SkipNavContent>
         <Container py={paddingResponsiveArrays.paddingSmall}>
           <Heading as="h1">Not Found</Heading>
-          <Text textStyle="prominent">
+          <Text variant="prominent">
             Sorry, there is nothing at this URL. <Link to="/">Go back home.</Link>
           </Text>
         </Container>

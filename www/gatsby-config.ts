@@ -28,6 +28,9 @@ const gatsbyConfig: GatsbyConfig = {
       options: {
         path: path.resolve(`src/pages`),
         slugify: slugifyOptions,
+        ignore: {
+          patterns: [`**/*.css.ts`],
+        },
       },
     },
     {

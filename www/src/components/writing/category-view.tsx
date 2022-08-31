@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { SkipNavContent } from "../a11y/skip-nav"
 import { Layout } from "../blocks/layout"
+import { Text } from "../typography"
 import { Card } from "./card"
 import { WritingSubNavigation } from "./subnavigation"
 import { ExternalLink } from "../primitives"
@@ -38,7 +39,7 @@ export const CategoryView: React.FC<React.PropsWithChildren<CategoryViewProps>> 
             ))}
           </div>
         ) : (
-          <Text textStyle="prominent">
+          <Text variant="prominent">
             Sadly there's no content for this category available yet. Be sure to follow me on{` `}
             <ExternalLink href="https://twitter.com/lekoarts_de">Twitter</ExternalLink> to not miss any announcements
             about new posts :)

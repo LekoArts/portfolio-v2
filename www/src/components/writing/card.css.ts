@@ -23,6 +23,7 @@ export const linkStyle = style({
 })
 
 export const headingStyle = style({
+  transition: `color 0.3s ease-in-out`,
   selectors: {
     [`${linkStyle}:hover &`]: {
       color: vars.color.primary,

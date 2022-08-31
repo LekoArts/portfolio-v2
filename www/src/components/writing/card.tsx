@@ -1,7 +1,7 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Text } from "@chakra-ui/react"
 import { MotionBox, Link } from "../primitives"
+import { Text } from "../typography"
 import { cardStyle, headingStyle, linkStyle } from "./card.css"
 
 type CardProps = {
@@ -14,18 +14,11 @@ type CardProps = {
 export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }) => (
   <MotionBox p="6" borderRadius="lg" bg="cardBg" className={cardStyle} key={slug}>
     <Link to={slug} className={linkStyle}>
-      <Text
-        as="h2"
-        fontSize="1.3125rem"
-        fontWeight="bold"
-        color="heading"
-        transition="color 0.3s ease-in-out"
-        className={headingStyle}
-      >
+      <Text as="h2" fontSize="lgx" fontWeight="bold" color="heading" className={headingStyle}>
         {title}
       </Text>
       {subtitle && (
-        <Text as="h3" fontSize="1.125rem" fontWeight="medium" color="textMuted">
+        <Text as="h3" fontSize="lg" fontWeight="medium" color="textMuted">
           {subtitle}
         </Text>
       )}

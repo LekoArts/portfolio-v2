@@ -1,8 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
-import { Text } from "@chakra-ui/react"
 import { WritingViewDataProps, WritingView } from "../components/writing/writing-view"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text } from "../components/typography"
 import { Spacer } from "../components/primitives"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
@@ -13,12 +12,7 @@ const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
   children: mdxContent,
 }) => (
   <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="prose">
-    <Text
-      color="textEmphasized"
-      fontWeight={500}
-      textAlign="center"
-      fontSize={[`md`, null, null, `1.125rem`, `1.3125rem`]}
-    >
+    <Text color="textEmphasized" fontWeight="medium" textAlign="center" fontSize={[`md`, null, null, `lg`, `lgx`]}>
       {post.category.name}
     </Text>
     <Spacer size="6" axis="vertical" />

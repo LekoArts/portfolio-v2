@@ -16,10 +16,12 @@ export const prominent = style({
 
 globalStyle(`${prominent} strong`, {
   fontWeight: vars.fontWeight.medium,
+  color: vars.color.proseLink,
 })
 
 globalStyle(`${prominent} a`, {
   fontWeight: vars.fontWeight.medium,
+  color: vars.color.proseLink,
 })
 
 /*

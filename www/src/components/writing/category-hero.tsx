@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Container, Text } from "@chakra-ui/react"
-import { Heading } from "../typography/heading"
+import { Container } from "@chakra-ui/react"
+import { Heading, Text } from "../typography"
 import { Box } from "../primitives"
-import { contentWrapperStyle } from "./category-hero.css"
+import { contentWrapperStyle, descriptionStyle } from "./category-hero.css"
 import { paddingResponsiveArrays } from "../../styles/tokens/space"
 
 type CategoryHeroProps = {
@@ -20,7 +20,7 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
           <Heading as="h1" color="white">
             {title}
           </Heading>
-          <Text textStyle="prominent" color="gray.100" maxWidth="65ch">
+          <Text variant="prominent" className={descriptionStyle}>
             {description}
           </Text>
         </Box>

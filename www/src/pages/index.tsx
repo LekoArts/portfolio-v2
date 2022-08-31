@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { Container, Text } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import {
   ExternalLink,
   Link,
@@ -16,7 +16,7 @@ import {
 import { Layout } from "../components/blocks/layout"
 import { FullWidthContainer } from "../components/blocks/full-width-container"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { Heading } from "../components/typography/heading"
+import { Heading, Text } from "../components/typography"
 import { SEO } from "../components/seo"
 import { homepage } from "../constants/json-ld"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
@@ -106,11 +106,11 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             py={paddingResponsiveArrays.paddingLarge}
           >
             <Heading as="h1">Hi, I’m Lennart!</Heading>
-            <Text variant="prominent" maxWidth="45ch" textAlign="center">
+            <Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
               <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
               I’m passionate about working on open source products & building thriving communities around them.
             </Text>
-            <Text variant="prominent" maxWidth="40ch" textAlign="center">
+            <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
               I’m currently working remotely at <ExternalLink href="https://www.gatsbyjs.com">Gatsby</ExternalLink> on
               the open source project.
             </Text>
@@ -128,7 +128,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               <Badge variant="light">Latest Post</Badge>
               <div>
                 <Heading as="h2">{firstPost.title}</Heading>
-                <Text variant="lightContainer">{firstPost.description}</Text>
+                <Text>{firstPost.description}</Text>
               </div>
               <PrimaryButton to={firstPost.slug}>Continue Reading</PrimaryButton>
             </Box>
@@ -224,7 +224,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
         <Container>
           <Box display="flex" alignItems="center" flexDirection="column" py={paddingResponsiveArrays.paddingLarge}>
             <Heading as="h2">Open Source</Heading>
-            <Text variant="prominent" maxWidth="40ch" textAlign="center">
+            <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
               Working in the open, interacting with the community & building projects that are accessible to everyone
               fill me with joy.
             </Text>
