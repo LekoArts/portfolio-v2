@@ -5,6 +5,7 @@ import { vars } from "../../styles/themes/contract.css"
 import { minMediaQuery } from "../../styles/tokens/breakpoints"
 import { colorPalette } from "../../styles/tokens/colors"
 import { em } from "../../utils/css"
+import { codeBlockWrapper, gatsbyHighlightHeaderStyle } from "./code.css"
 
 export type AlertStatus = "info" | "warning" | "error" | "success"
 
@@ -75,6 +76,16 @@ globalStyle(`${alertBaseStyle} a`, {
 globalStyle(`${alertBaseStyle} p`, {
   marginBottom: em(20, 16),
   marginTop: vars.space[0],
+  "@media": {
+    [minMediaQuery(`lg`)]: {
+      marginBottom: em(24, 18),
+      marginTop: vars.space[0],
+    },
+    [minMediaQuery(`xl`)]: {
+      marginBottom: em(24, 20),
+      marginTop: vars.space[0],
+    },
+  },
 })
 
 globalStyle(`${alertBaseStyle} p:first-of-type`, {
@@ -86,16 +97,16 @@ globalStyle(`${alertBaseStyle} p:last-of-type`, {
   marginBottom: vars.space[0],
 })
 
-globalStyle(`${alertBaseStyle} .code-block-wrapper`, {
+globalStyle(`${alertBaseStyle} .${codeBlockWrapper}`, {
   width: `100%`,
 })
 
-globalStyle(`${alertBaseStyle} .code-block-wrapper pre`, {
+globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre`, {
   marginLeft: vars.space[0],
   marginRight: vars.space[0],
 })
 
-globalStyle(`${alertBaseStyle} .code-block-wrapper .gatsby-highlight-header`, {
+globalStyle(`${alertBaseStyle} .${codeBlockWrapper} .${gatsbyHighlightHeaderStyle}`, {
   marginLeft: vars.space[0],
   marginRight: vars.space[0],
 })

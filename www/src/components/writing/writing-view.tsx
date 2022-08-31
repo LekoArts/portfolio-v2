@@ -61,7 +61,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
           {children}
           {type === `tutorial` && post.tableOfContents?.items ? (
             <WithSidebarWrapper items={post.tableOfContents.items}>
-              <Prose as="article" flex="1 1 100%" minW="100%">
+              <Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
                 <MDXProvider components={components}>{mdxContent}</MDXProvider>
               </Prose>
             </WithSidebarWrapper>

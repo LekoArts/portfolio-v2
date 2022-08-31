@@ -168,26 +168,10 @@ const smVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
-  ".gatsby-highlight-header": {
-    fontSize: em(12, 14),
-    marginTop: em(20, 12),
-    paddingRight: em(12, 12),
-    paddingLeft: em(12, 12),
-  },
   ".gatsby-highlight[data-prism-renderer='true']": {
     ".token-line": {
       px: em(12, 12),
       mx: `-${em(12, 12)}`,
-    },
-  },
-  ".code-block-split-view": {
-    gridTemplateColumns: `1fr`,
-    gridGap: 0,
-    ".code-block-wrapper:first-of-type": {
-      ml: 0,
-    },
-    ".code-block-wrapper:last-of-type": {
-      mr: 0,
     },
   },
 }
@@ -360,31 +344,10 @@ const lgVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
-  ".gatsby-highlight-header": {
-    fontSize: em(14, 18),
-    marginTop: em(32, 16),
-    paddingRight: em(24, 14),
-    paddingLeft: em(24, 14),
-    mx: `-${em(24, 14)}`,
-  },
   ".gatsby-highlight[data-prism-renderer='true']": {
     ".token-line": {
       px: em(24, 16),
       mx: `-${em(24, 16)}`,
-    },
-  },
-  ".code-block-split-view": {
-    ".code-block-wrapper:first-of-type": {
-      ml: `-${em(18, 14)}`,
-    },
-    ".code-block-wrapper:last-of-type": {
-      mr: `-${em(18, 14)}`,
-    },
-  },
-  ".chakra-alert": {
-    p: {
-      mb: em(24, 18),
-      mt: 0,
     },
   },
 }
@@ -556,31 +519,10 @@ const xlVariant = {
   "tbody td:last-of-type": {
     paddingRight: `0`,
   },
-  ".gatsby-highlight-header": {
-    fontSize: em(15, 20),
-    marginTop: em(36, 18),
-    paddingRight: em(24, 15),
-    paddingLeft: em(24, 15),
-    mx: `-${em(24, 15)}`,
-  },
   ".gatsby-highlight[data-prism-renderer='true']": {
     ".token-line": {
       px: em(24, 18),
       mx: `-${em(24, 18)}`,
-    },
-  },
-  ".code-block-split-view": {
-    ".code-block-wrapper:first-of-type": {
-      ml: `-${em(24, 15)}`,
-    },
-    ".code-block-wrapper:last-of-type": {
-      mr: `-${em(24, 15)}`,
-    },
-  },
-  ".chakra-alert": {
-    p: {
-      mb: em(24, 20),
-      mt: 0,
     },
   },
 }
@@ -877,7 +819,6 @@ export const Prose = {
     },
     ".gatsby-highlight[data-prism-renderer='true']": {
       pre: {
-        // backgroundColor: `rgb(1 28 49) !important`,
         marginTop: 0,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
@@ -944,131 +885,10 @@ export const Prose = {
         display: `inline-block`,
       },
     },
-    ".gatsby-highlight-header": {
-      fontSize: em(14, 16),
-      marginTop: em(24, 14),
-      borderTopLeftRadius: rem(6),
-      borderTopRightRadius: rem(6),
-      color: mode(`rgb(64, 63, 83)`, `rgb(214, 222, 235)`)(props),
-      background: mode(
-        `linear-gradient(to bottom, rgb(253, 253, 253) 0%, rgb(243, 243, 243) 100%)`,
-        `linear-gradient(to bottom, rgb(2, 38, 67) 0%, rgb(1, 22, 39) 100%)`
-      )(props),
-      borderBottom: mode(`1px solid rgba(107, 111, 117, 0.15)`, `1px solid rgba(214, 222, 235, 0.15)`)(props),
-      paddingTop: em(6, 14),
-      paddingRight: em(16, 14),
-      paddingBottom: em(6, 14),
-      paddingLeft: em(16, 14),
-    },
-    ".language-display": {
-      borderRadius: rem(6),
-      paddingRight: em(6, 14),
-      paddingLeft: em(6, 14),
-      "--display-opacity": mode(0.75, 0.25)(props),
-      "&[data-lang='js'], &[data-lang='javascript']": {
-        background: `rgba(247, 223, 30, var(--display-opacity))`,
-        color: mode(`black`, `rgb(247, 223, 30)`)(props),
-      },
-      "&[data-lang='jsx']": {
-        background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
-      },
-      "&[data-lang='ts']": {
-        background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
-      },
-      "&[data-lang='tsx']": {
-        background: `rgba(97, 218, 251, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(127, 222, 253)`)(props),
-      },
-      "&[data-lang='html']": {
-        background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: mode(`white`, `rgb(114, 192, 253)`)(props),
-      },
-      "&[data-lang='xml']": {
-        background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: mode(`white`, `rgb(114, 192, 253)`)(props),
-      },
-      "&[data-lang='svg']": {
-        background: `rgba(0, 90, 156, var(--display-opacity))`,
-        color: mode(`white`, `rgb(114, 192, 253)`)(props),
-      },
-      "&[data-lang='graphql']": {
-        background: `rgba(225, 0, 152, var(--display-opacity))`,
-        color: mode(`white`, `rgb(255, 82, 181)`)(props),
-      },
-      "&[data-lang='css']": {
-        background: `rgba(255, 152, 0, var(--display-opacity))`,
-        color: mode(`white`, `rgb(255, 165, 48)`)(props),
-      },
-      "&[data-lang='mdx']": {
-        background: `rgba(249, 172, 0, var(--display-opacity))`,
-        color: mode(`white`, `rgb(255, 165, 48)`)(props),
-      },
-      "&[data-lang='py']": {
-        background: `rgba(51, 111, 160, var(--display-opacity))`,
-        color: `rgb(255, 229, 194)`,
-      },
-      "&[data-lang='text']": {
-        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
-      },
-      "&[data-lang='sh']": {
-        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
-      },
-      "&[data-lang='yaml']": {
-        background: `rgba(255, 168, 223, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(255, 168, 223)`)(props),
-      },
-      "&[data-lang='md']": {
-        background: mode(`white`, `rgba(255, 255, 255, var(--display-opacity))`)(props),
-      },
-      "&[data-lang='json']": {
-        background: `rgba(250, 240, 230, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(250, 240, 230)`)(props),
-      },
-      "&[data-lang='diff']": {
-        background: `rgba(230, 255, 237, var(--display-opacity))`,
-        color: mode(`blueGray.800`, `rgb(230, 255, 237)`)(props),
-      },
-      "&[data-lang='svelte']": {
-        background: mode(`rgb(255, 62, 0)`, `rgba(255, 62, 0, var(--display-opacity))`)(props),
-        color: mode(`white`, `rgb(255, 221, 211)`)(props),
-      },
-    },
     ".img-left-wrap-text": {
       display: `grid`,
       gridTemplateColumns: [`1fr`, `1fr 2fr`, `1fr 1.75fr`],
       gridGap: [4, 6, 12],
-    },
-    ".code-block-split-view": {
-      display: `grid`,
-      gridTemplateColumns: `repeat(2, 1fr)`,
-      gridGap: 6,
-      ".code-block-wrapper": {},
-      ".gatsby-highlight-header, .prism-code": {
-        marginInlineStart: `0 !important`,
-        marginInlineEnd: `0 !important`,
-      },
-    },
-    details: {
-      ".code-block-wrapper": {
-        width: `100%`,
-        ".gatsby-highlight-header": {
-          mx: 0,
-        },
-        pre: {
-          mx: 0,
-        },
-      },
-      "p:first-of-type": {
-        mt: 4,
-      },
-      "p:last-of-type": {
-        mb: 0,
-      },
-      a: {
-        textDecorationColor: `blueLinkDecoration`,
-      },
     },
   }),
   variants: {

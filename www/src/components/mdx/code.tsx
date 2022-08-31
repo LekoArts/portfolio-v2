@@ -6,6 +6,7 @@ import { useTheme } from "themes-utils"
 import { Box } from "../primitives"
 import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
 import { Copy } from "./copy"
+import { codeBlockWrapper, gatsbyHighlightHeaderStyle, languageDisplayStyle } from "./code.css"
 
 type CodeProps = {
   codeString: string
@@ -36,7 +37,7 @@ export const Code = ({
       theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <div className="code-block-wrapper">
+        <div className={codeBlockWrapper}>
           {(title || originalLanguage) && (
             <Box
               display="flex"
@@ -44,19 +45,15 @@ export const Code = ({
               gap="2"
               alignItems="center"
               justifyContent="flex-end"
-              className="gatsby-highlight-header"
+              className={gatsbyHighlightHeaderStyle}
             >
-              {title && (
-                <Box style={{ flexGrow: 1 }} className="code-title">
-                  {title}
-                </Box>
-              )}
+              {title && <Box style={{ flexGrow: 1 }}>{title}</Box>}
               {originalLanguage && (
                 <Box
                   display="inline-flex"
                   alignItems="center"
                   style={{ textTransform: `uppercase` }}
-                  className="language-display"
+                  className={languageDisplayStyle}
                   data-lang={originalLanguage}
                 >
                   {originalLanguage}
