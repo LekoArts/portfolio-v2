@@ -104,7 +104,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                     {tag.title}
                     {isActive && (
                       <span className={tagCloseIconStyle} aria-hidden>
-                        <SVGIcon id="close" focusable="false" width="100%" height="100%" />
+                        <SVGIcon id="close" width="100%" height="100%" />
                       </span>
                     )}
                   </>

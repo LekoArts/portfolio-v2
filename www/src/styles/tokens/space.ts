@@ -45,8 +45,6 @@ export const negativeNavigation = {
 
 export const space = {
   ...baseSizes,
-  max: `max-content`,
-  min: `min-content`,
   full: `100%`,
   unset: `unset`,
   auto: `auto`,

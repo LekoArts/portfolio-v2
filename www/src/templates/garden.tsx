@@ -1,9 +1,18 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { Container, Text, Tag, TagLabel } from "@chakra-ui/react"
+import { Container, Text } from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { ExternalLink, Link, Spacer, Box, ShareAnywhereButton, TwitterButton, SVGIcon } from "../components/primitives"
+import {
+  ExternalLink,
+  Link,
+  Spacer,
+  Box,
+  ShareAnywhereButton,
+  TwitterButton,
+  SVGIcon,
+  Tag,
+} from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
@@ -60,10 +69,8 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
                 </React.Fragment>
               ))}
             </Box>
-            <Tag colorScheme="green" justifySelf="flex-start">
-              <TagLabel>
-                <Link to="/garden">Digital Garden</Link>
-              </TagLabel>
+            <Tag colorScheme="green" style={{ justifySelf: `flex-start` }}>
+              <Link to="/garden">Digital Garden</Link>
             </Tag>
           </Box>
           <Spacer size="12" axis="vertical" />

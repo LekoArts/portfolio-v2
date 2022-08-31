@@ -1,8 +1,7 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { FaStar } from "react-icons/fa"
-import { Container, Text, Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react"
+import { Container, Text } from "@chakra-ui/react"
 import {
   ExternalLink,
   Link,
@@ -12,6 +11,7 @@ import {
   SubtleButton,
   Box,
   Badge,
+  Tag,
 } from "../components/primitives"
 import { Layout } from "../components/blocks/layout"
 import { FullWidthContainer } from "../components/blocks/full-width-container"
@@ -249,9 +249,8 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                         >
                           {primRepo.name}
                         </ExternalLink>
-                        <Tag variant="subtle" colorScheme="blue">
-                          <TagLeftIcon as={FaStar} />
-                          <TagLabel>{primRepo.stargazerCount}</TagLabel>
+                        <Tag colorScheme="blue" iconId="star">
+                          {primRepo.stargazerCount}
                         </Tag>
                       </Box>
                       <Text>{primRepo.description}</Text>
@@ -261,9 +260,8 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                         <ExternalLink fontSize={[`lg`, null, null, null, `lgx`]} fontWeight="bold" href={secRepo.url}>
                           {secRepo.name}
                         </ExternalLink>
-                        <Tag variant="subtle" colorScheme="gray">
-                          <TagLeftIcon as={FaStar} />
-                          <TagLabel>{secRepo.stargazerCount}</TagLabel>
+                        <Tag colorScheme="gray" iconId="star">
+                          {secRepo.stargazerCount}
                         </Tag>
                       </Box>
                       <Text>{secRepo.description}</Text>

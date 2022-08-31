@@ -13,6 +13,7 @@ export { Link, ExternalLink } from "./link"
 export { MotionBox } from "./motion-box"
 export { Spacer } from "./spacer"
 export { SVGIcon } from "./svg-icon"
+export { Tag } from "./tag"
 
 export type { IBoxProps } from "./box"
 export type { SVGIconNames } from "./svg-icon"

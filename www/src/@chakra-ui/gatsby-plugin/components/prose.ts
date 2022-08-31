@@ -190,12 +190,6 @@ const smVariant = {
       mr: 0,
     },
   },
-  ".chakra-alert": {
-    p: {
-      mb: em(16, 14),
-      mt: 0,
-    },
-  },
 }
 const mdVariant = {}
 const lgVariant = {
