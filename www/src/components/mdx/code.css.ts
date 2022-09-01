@@ -1,10 +1,11 @@
-import { createVar, style } from "@vanilla-extract/css"
+import { createVar, globalStyle, style, StyleRule } from "@vanilla-extract/css"
 import { themesSelectors } from "../../styles/atoms.css"
+import { vars } from "../../styles/themes/contract.css"
 import { darkThemeClass } from "../../styles/themes/dark.css"
 import { minMediaQuery } from "../../styles/tokens/breakpoints"
 import { colorPalette } from "../../styles/tokens/colors"
 import { em, rem } from "../../utils/css"
-import { responsiveSelectorStyles } from "../../utils/vanilla-extract"
+import { themeAwareStyles } from "../../utils/vanilla-extract"
 
 export const codeBlockWrapper = style({})
 
@@ -140,6 +141,88 @@ export const languageDisplayStyle = style({
         [displayOpacityVar]: `0.25`,
       },
     },
-    ...responsiveSelectorStyles(badgeStyles, `light`, darkThemeClass),
+    ...themeAwareStyles({ selectorMap: badgeStyles, defaultTheme: `light`, darkThemeClass }),
   },
+})
+
+export const gatsbyHighlightStyle = style({})
+
+export const gatsbyHighlightPreStyle = style({
+  marginTop: `${vars.space[0]} !important`,
+  borderTopLeftRadius: `${vars.borderRadius.none} !important`,
+  borderTopRightRadius: `${vars.borderRadius.none} !important`,
+  wordSpacing: `normal`,
+  wordBreak: `normal`,
+  overflowWrap: `normal`,
+  tabSize: 4,
+  minWidth: vars.space.full,
+  maxHeight: `80vh`,
+  hyphens: `none`,
+})
+
+export const codeStyle = style({
+  wordSpacing: `normal`,
+  wordBreak: `normal`,
+  overflowWrap: `normal`,
+  tabSize: 4,
+  hyphens: `none`,
+  float: `left`,
+  minWidth: vars.space.full,
+})
+
+export const lineNumberStyle = style({
+  display: `inline-block`,
+  width: `2em`,
+  userSelect: `none`,
+  opacity: 0.3,
+  textAlign: `left`,
+  position: `relative`,
+})
+
+export const tokenLineStyle = style({
+  paddingLeft: em(16, 14),
+  paddingRight: em(16, 14),
+  marginLeft: `-${em(16, 14)}`,
+  marginRight: `-${em(16, 14)}`,
+  "@media": {
+    [minMediaQuery(`sm`)]: {
+      paddingLeft: em(12, 12),
+      paddingRight: em(12, 12),
+      marginLeft: `-${em(12, 12)}`,
+      marginRight: `-${em(12, 12)}`,
+    },
+    [minMediaQuery(`lg`)]: {
+      paddingLeft: em(24, 16),
+      paddingRight: em(24, 16),
+      marginLeft: `-${em(24, 16)}`,
+      marginRight: `-${em(24, 16)}`,
+    },
+    [minMediaQuery(`xl`)]: {
+      paddingLeft: em(24, 18),
+      paddingRight: em(24, 18),
+      marginLeft: `-${em(24, 18)}`,
+      marginRight: `-${em(24, 18)}`,
+    },
+  },
+})
+
+export const highlightLineStyle = style({
+  background: `linear-gradient(90deg, rgb(140, 175, 255) 0% .5%, rgb(243, 242, 248) .5% 100%)`,
+  selectors: {
+    [themesSelectors.dark]: {
+      background: `linear-gradient(90deg, rgb(11, 142, 215) 0% .5%, rgb(3, 46, 67) .5% 100%)`,
+    },
+  },
+})
+
+globalStyle(`${highlightLineStyle} ${lineNumberStyle}`, {
+  opacity: 0.5,
+})
+
+globalStyle(`${gatsbyHighlightStyle} .token-line .function`, {
+  fontStyle: `normal !important`, // The light-theme syntax made those italic
+})
+
+globalStyle(`${gatsbyHighlightStyle} .token`, {
+  display: `inline-block`,
 })

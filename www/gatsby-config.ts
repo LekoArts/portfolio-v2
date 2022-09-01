@@ -19,7 +19,6 @@ const gatsbyConfig: GatsbyConfig = {
   trailingSlash: `never`,
   plugins: [
     `gatsby-theme-core`,
-    `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-vanilla-extract`,
     `gatsby-plugin-image`,
     // Overwrite the default "slugify" option

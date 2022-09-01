@@ -1,7 +1,7 @@
 import * as React from "react"
 import type { GatsbyBrowser } from "gatsby"
-import "./src/styles/reset.css"
 import "./src/styles/fonts.css"
+import "./src/styles/reset.css"
 import { ThemeProvider } from "./src/styles/theme-provider"
 import "./src/styles/global.css"
 

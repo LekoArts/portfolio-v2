@@ -1,0 +1,10 @@
+{
+  "name": "rehype-meta-as-attributes",
+  "description": "Pass MDX meta as prop to component",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "unist-util-visit": "^2.0.3"
+  }
+}

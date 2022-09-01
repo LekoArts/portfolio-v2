@@ -63,7 +63,7 @@ const colorMap = {
   error: `red`,
 } as const
 
-const darkBgOpacity = 0.2
+const darkBgOpacity = 0.15
 const darkBg = 200
 const darkColor = 300
 const bg = 100

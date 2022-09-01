@@ -19,6 +19,7 @@
     "lodash.camelcase": "^4.3.0",
     "lodash.get": "^4.4.2",
     "prando": "^6.0.1",
+    "rehype-meta-as-attributes": "^0.0.1",
     "remark-slug": "^6.0.0",
     "remark-smartypants": "^0.0.1",
     "remark-unwrap-images": "^2.0.0",

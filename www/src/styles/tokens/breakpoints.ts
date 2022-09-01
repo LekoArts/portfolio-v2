@@ -11,4 +11,5 @@ export const breakpoints = {
 
 export type Breakpoint = keyof typeof breakpoints
 
-export const minMediaQuery = (breakpoint: Breakpoint) => `screen and (min-width: ${breakpoints[breakpoint]}px)`
+export const minMediaQuery = (breakpoint: Exclude<Breakpoint, "mobile">) =>
+  `screen and (min-width: ${breakpoints[breakpoint]}px)`

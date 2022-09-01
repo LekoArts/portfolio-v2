@@ -1,3 +1,8 @@
+/**
+ * Copies a string to the user's clipboard
+ * @example
+ * await copyToClipboard(`Hello world`)
+ */
 export const copyToClipboard = (str: string) => {
   const { clipboard } = window.navigator
   /*

@@ -6,14 +6,26 @@ import { useTheme } from "themes-utils"
 import { Box } from "../primitives"
 import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
 import { Copy } from "./copy"
-import { codeBlockWrapper, gatsbyHighlightHeaderStyle, languageDisplayStyle } from "./code.css"
+import {
+  codeBlockWrapper,
+  codeStyle,
+  gatsbyHighlightHeaderStyle,
+  gatsbyHighlightPreStyle,
+  gatsbyHighlightStyle,
+  highlightLineStyle,
+  languageDisplayStyle,
+  lineNumberStyle,
+  tokenLineStyle,
+} from "./code.css"
+import { composeClassNames } from "../../utils/box"
 
 type CodeProps = {
   codeString: string
   language: string
   withLineNumbers?: boolean
-  metastring?: string
-  [key: string]: any
+  highlight?: string
+  title?: string
+  className: string
 }
 
 export const Code = ({
@@ -21,12 +33,12 @@ export const Code = ({
   withLineNumbers = false,
   title = undefined,
   className: blockClassName,
-  metastring = ``,
+  highlight = ``,
 }: CodeProps) => {
   const { resolvedTheme } = useTheme()
   const originalLanguage = getLanguage(blockClassName)
   const language = languageOverride(originalLanguage)
-  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+  const shouldHighlightLine = calculateLinesToHighlight(highlight)
   const hasLineNumbers = withLineNumbers && language !== `withLineNumbers`
 
   return (
@@ -62,19 +74,21 @@ export const Code = ({
               <Copy content={codeString} fileName={title} />
             </Box>
           )}
-          <div className="gatsby-highlight" data-prism-renderer="true" data-has-line-numbers={hasLineNumbers}>
-            <pre className={className} style={style}>
-              <code className={`language-${language}`}>
+          <div className={gatsbyHighlightStyle}>
+            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)} style={style}>
+              <code className={composeClassNames(`language-${language}`, codeStyle)}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
 
+                  lineProps.className = composeClassNames(lineProps.className, tokenLineStyle)
+
                   if (shouldHighlightLine(i)) {
-                    lineProps.className = `${lineProps.className} highlight-line`
+                    lineProps.className = composeClassNames(lineProps.className, highlightLineStyle)
                   }
 
                   return (
                     <div {...lineProps}>
-                      {hasLineNumbers && <span className="line-number-style">{i + 1}</span>}
+                      {hasLineNumbers && <span className={lineNumberStyle}>{i + 1}</span>}
                       {line.map((token, key) => (
                         <span {...getTokenProps({ token, key })} />
                       ))}
