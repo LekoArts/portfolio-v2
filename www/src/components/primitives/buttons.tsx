@@ -100,6 +100,7 @@ export const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; kind?
   children,
   to,
   kind = `internal`,
+  ...rest
 }) => (
   <Button
     kind={kind}
@@ -107,6 +108,7 @@ export const PrimaryButton: React.FC<React.PropsWithChildren<{ to: string; kind?
     variant="primary"
     rightIcon={<SVGIcon id="arrow-right" />}
     className={arrowAnimationStyle}
+    {...rest}
   >
     {children}
   </Button>
@@ -119,6 +121,7 @@ export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?:
   children,
   to,
   kind = `internal`,
+  ...rest
 }) => (
   <Button
     kind={kind}
@@ -126,6 +129,7 @@ export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?:
     variant="link"
     rightIcon={<SVGIcon id="arrow-right" />}
     className={composeClassNames(arrowAnimationStyle, subtleButtonStyle)}
+    {...rest}
   >
     {children}
   </Button>

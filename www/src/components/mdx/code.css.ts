@@ -10,17 +10,17 @@ import { themeAwareStyles } from "../../utils/vanilla-extract"
 export const codeBlockWrapper = style({})
 
 export const gatsbyHighlightHeaderStyle = style({
-  fontSize: em(14, 16),
-  marginTop: em(24, 14),
+  fontSize: em(12, 14),
+  marginTop: em(20, 12),
   borderTopLeftRadius: rem(6),
   borderTopRightRadius: rem(6),
   color: `rgb(64, 63, 83)`,
   background: `linear-gradient(to bottom, rgb(253, 253, 253) 0%, rgb(243, 243, 243) 100%)`,
   borderBottom: `1px solid rgba(107, 111, 117, 0.15)`,
   paddingTop: em(6, 14),
-  paddingRight: em(16, 14),
   paddingBottom: em(6, 14),
-  paddingLeft: em(16, 14),
+  paddingRight: em(12, 12),
+  paddingLeft: em(12, 12),
   selectors: {
     [themesSelectors.dark]: {
       color: `rgb(214, 222, 235)`,
@@ -30,10 +30,10 @@ export const gatsbyHighlightHeaderStyle = style({
   },
   "@media": {
     [minMediaQuery(`sm`)]: {
-      fontSize: em(12, 14),
-      marginTop: em(20, 12),
-      paddingRight: em(12, 12),
-      paddingLeft: em(12, 12),
+      fontSize: em(14, 16),
+      marginTop: em(24, 14),
+      paddingLeft: em(16, 14),
+      paddingRight: em(16, 14),
     },
     [minMediaQuery(`lg`)]: {
       fontSize: em(14, 18),
@@ -180,16 +180,16 @@ export const lineNumberStyle = style({
 })
 
 export const tokenLineStyle = style({
-  paddingLeft: em(16, 14),
-  paddingRight: em(16, 14),
-  marginLeft: `-${em(16, 14)}`,
-  marginRight: `-${em(16, 14)}`,
+  paddingLeft: em(12, 12),
+  paddingRight: em(12, 12),
+  marginLeft: `-${em(12, 12)}`,
+  marginRight: `-${em(12, 12)}`,
   "@media": {
     [minMediaQuery(`sm`)]: {
-      paddingLeft: em(12, 12),
-      paddingRight: em(12, 12),
-      marginLeft: `-${em(12, 12)}`,
-      marginRight: `-${em(12, 12)}`,
+      paddingLeft: em(16, 14),
+      paddingRight: em(16, 14),
+      marginLeft: `-${em(16, 14)}`,
+      marginRight: `-${em(16, 14)}`,
     },
     [minMediaQuery(`lg`)]: {
       paddingLeft: em(24, 16),

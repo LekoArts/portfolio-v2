@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@vanilla-extract/css"
+import { globalStyle, style, styleVariants } from "@vanilla-extract/css"
 
 export const groupStyle = style({
   boxSizing: `content-box`,
@@ -23,4 +23,13 @@ export const playPauseButtonStyle = style({
 
 globalStyle(`${groupStyle}:hover ${playPauseButtonStyle}`, {
   opacity: 1,
+})
+
+export const marginBottomVariants = styleVariants({
+  default: {
+    marginBottom: `auto`,
+  },
+  withDescription: {
+    marginBottom: `0 !important`,
+  },
 })

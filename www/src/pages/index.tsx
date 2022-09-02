@@ -135,7 +135,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Box display="flex" flexDirection="column" width="full" gap="6">
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Badge variant="light">More Posts</Badge>
-                <SubtleButton to="/writing">Read all</SubtleButton>
+                <SubtleButton aria-label="Read all long-form posts" to="/writing">
+                  Read all
+                </SubtleButton>
               </Box>
               <Box className={cardsGridStyle}>
                 {otherPosts.map((item, index) => (
@@ -158,7 +160,9 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Box display="flex" flexDirection="column" width="full" gap="6">
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Badge variant="light">Digital Garden</Badge>
-                <SubtleButton to="/garden">Read all</SubtleButton>
+                <SubtleButton aria-label="Read all Digital Garden posts" to="/garden">
+                  Read all
+                </SubtleButton>
               </Box>
               <Box className={cardsGridStyle}>
                 {data.garden.nodes.map((item, index) => (

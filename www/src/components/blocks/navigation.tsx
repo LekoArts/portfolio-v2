@@ -14,16 +14,23 @@ export const Navigation: React.FC = () => {
     <Box display="flex" alignItems="center" flexDirection="row">
       <nav aria-label="Primary navigation">
         <Box display="flex" alignItems="center" flexDirection="row" as="ul" className={navItemsWrapperStyle}>
-          {primaryNavigation.map((item, index) => (
-            <React.Fragment key={item.link}>
-              <li>
-                <Link to={item.link} fontSize={[`md`, null, null, `lg`]} p="2" activeClassName="active">
+          {primaryNavigation.map((item, index) => {
+            const notLastItem = index !== primaryNavigation.length - 1
+
+            return (
+              <li key={item.link}>
+                <Link
+                  to={item.link}
+                  fontSize={[`md`, null, null, `lg`]}
+                  mr={notLastItem ? [`2`, `4`] : undefined}
+                  p="2"
+                  activeClassName="active"
+                >
                   {item.name}
                 </Link>
               </li>
-              {index !== primaryNavigation.length - 1 && <Spacer axis="horizontal" size={[`2`, `4`]} />}
-            </React.Fragment>
-          ))}
+            )
+          })}
         </Box>
       </nav>
       <Spacer axis="horizontal" size={[`2`, `4`]} />

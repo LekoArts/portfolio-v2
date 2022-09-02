@@ -74,9 +74,13 @@ globalStyle(`${alertBaseStyle} a`, {
 })
 
 globalStyle(`${alertBaseStyle} p`, {
-  marginBottom: em(20, 16),
+  marginBottom: em(16, 14),
   marginTop: vars.space[0],
   "@media": {
+    [minMediaQuery(`sm`)]: {
+      marginBottom: em(20, 16),
+      marginTop: vars.space[0],
+    },
     [minMediaQuery(`lg`)]: {
       marginBottom: em(24, 18),
       marginTop: vars.space[0],

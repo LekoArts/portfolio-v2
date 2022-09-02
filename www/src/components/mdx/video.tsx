@@ -1,7 +1,8 @@
 import * as React from "react"
 import { Box, SVGIcon } from "../primitives"
 import { site } from "../../constants/meta"
-import { groupStyle, playPauseButtonStyle, videoStyle } from "./video.css"
+import { groupStyle, marginBottomVariants, playPauseButtonStyle, videoStyle } from "./video.css"
+import { composeClassNames } from "../../utils/box"
 
 type VideoProps = {
   src: string
@@ -29,6 +30,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
   const videoRef = React.useRef(null)
   const [play, setPlay] = React.useState(true)
   const iconSize = `30px`
+  const mbVariant = description ? `withDescription` : `default`
 
   const playVideo = () => {
     videoRef.current.play()
@@ -59,7 +61,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           as="video"
           position="relative"
           display="block"
-          m="auto"
+          mx="auto"
           autoPlay
           playsInline
           loop
@@ -67,8 +69,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           preload="none"
           ref={videoRef}
           aria-label={ariaLabel}
-          className={videoStyle}
-          style={{ marginBottom: description ? `0 !important` : undefined }}
+          className={composeClassNames(videoStyle, marginBottomVariants[mbVariant])}
         >
           <source src={src} type="video/mp4" />
           <p>
@@ -79,7 +80,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
         </Box>
         <Box
           position="absolute"
-          m="auto"
+          mx="auto"
           display="flex"
           justifyContent="center"
           alignItems="center"
