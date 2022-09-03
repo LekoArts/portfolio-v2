@@ -53,7 +53,7 @@ You've successfully set up the boilerplate for this tutorial! In the next steps 
 
 Go into `src/main.tsx` to wrap the `<App />` with the Chakra UI Provider:
 
-```ts title=src/main.tsx {3,5,9-11}
+```ts title=src/main.tsx highlight=3,5,9-11
 import React from "react"
 import ReactDOM from "react-dom"
 import { ChakraProvider } from "@chakra-ui/react"
@@ -197,7 +197,7 @@ export default Container
 
 This means that every instance of `<Container />` has the `baseStyle` and the `colorScheme` of `gray` by default. But only creating the file doesn't do anything yet, you'll need to tell Chakra UI to use this file for `Container` now. You do this by passing overwrites for built-in components and also files for new components into the `components` key of the `extendTheme` function:
 
-```ts title=src/theme.ts {2,18-20}
+```ts title=src/theme.ts highlight=2,18-20
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
 import Container from "./chakra/container"
 
@@ -351,7 +351,7 @@ The file already contains the `variants` and `sizes` defined in the `MultiContai
 
 Let's wire up the custom component into the app so that you can see the changes made to the component style. Edit the `theme`:
 
-```ts title=src/theme.ts {10}
+```ts title=src/theme.ts highlight=10
 // Existing imports
 // ...
 import CustomContainer from "./chakra/custom-container"
@@ -471,7 +471,7 @@ Time to change that!
 
 Edit the component style to lay out some baseline config:
 
-```ts title=src/chakra/custom-container.ts {2-3,8-14,22,31-36}
+```ts title=src/chakra/custom-container.ts highlight=2-3,8-14,22,31-36
 import { ComponentStyleConfig } from "@chakra-ui/react"
 import InnerContainerStyles from "./container"
 import { percentageWidths } from "./utils"

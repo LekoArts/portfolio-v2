@@ -63,7 +63,7 @@ With the function `createTypes` you'll explicitly define the GraphQL types (in t
 
 Since the QR code should be available at the field `qrCodeDataURL` it needs to be added to the desired GraphQL type.
 
-```js title=gatsby-node.js {7-11}
+```js title=gatsby-node.js highlight=7-11
 const get = require("lodash.get")
 const QRCode = require("qrcode")
 
@@ -84,7 +84,7 @@ But if you'd query this field now you'd only get `null` as a result. The data ne
 
 Use the `createFieldExtension` action to create a custom directive that you can use on the newly created `qrCodeDataURL` field:
 
-```js title=gatsby-node.js {7-17,21}
+```js title=gatsby-node.js highlight=7-17,21
 const get = require("lodash.get")
 const QRCode = require("qrcode")
 
@@ -113,7 +113,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 But the last piece to this puzzle is missing: The `createQRCode` function. The field extension will use result of it as the value of the `qrCodeDataURL` field. `createQRCode` gets passed all the `fieldName` you use (in this example `"link"`).
 
-```js title=gatsby-node.js {7-18}
+```js title=gatsby-node.js highlight=7-18
 const get = require("lodash.get")
 const QRCode = require("qrcode")
 

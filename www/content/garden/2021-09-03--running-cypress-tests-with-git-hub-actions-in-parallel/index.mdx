@@ -45,7 +45,7 @@ You can adjust the `on` trigger to your needs and change the `container` (at the
 
 Add the necessary checkout, Cypress action and build steps to the workflow:
 
-```yaml title=.github/workflows/e2e_testing.yml {6-20,25-32}
+```yaml title=.github/workflows/e2e_testing.yml highlight=6-20,25-32
 name: E2E Testing
 on: pull_request
 jobs:
@@ -86,7 +86,7 @@ In this last step you use the [`matrix` feature](https://docs.github.com/en/acti
 
 Here's the complete workflow file:
 
-```yaml title=.github/workflows/e2e_testing.yml {25-28,37-44}
+```yaml title=.github/workflows/e2e_testing.yml highlight=25-28,37-44
 name: E2E Testing
 on: pull_request
 jobs:

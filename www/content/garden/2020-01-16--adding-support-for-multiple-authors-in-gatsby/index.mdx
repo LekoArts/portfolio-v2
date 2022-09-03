@@ -68,7 +68,7 @@ For this to work you'll need to create a foreign-key relationship between the bl
 
 Add to your `gatsby-node.js` file:
 
-```js title=gatsby-node.js {9}
+```js title=gatsby-node.js highlight=9
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `

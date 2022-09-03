@@ -176,7 +176,7 @@ curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&pro
 
 Here, for a period of 6 months the top 5 pages are returned for the given site id. By default, the `limit` is 100. Translating that `curl` command into the shape of `node-fetch` looks something like this:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {3,11-16}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=3,11-16
 const fetch = require("node-fetch")
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -202,7 +202,7 @@ To authenticate your request to Plausible you set an `Authorization` header in t
 
 All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.js` file:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {18-31}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=18-31
 const fetch = require("node-fetch")
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -243,7 +243,7 @@ Each node needs a unique `id` and by using the helper function `createNodeId` yo
 
 Congrats, you wrote a source plugin! Time to test it out and see if it all works. Before you can start the development server, you first need to add your newly created local plugin to `gatsby-config.js`. When using `.env` files you'll also need to initialize `dotenv`. You saved the `PLAUSIBLE_API_KEY` earlier in an `.env` file, and the `siteId` is the same thing as the `domain` for `gatsby-plugin-plausible`.
 
-```js title=gatsby-config.js {1,7-13}
+```js title=gatsby-config.js highlight=1,7-13
 require("dotenv").config()
 
 module.exports = {
@@ -348,7 +348,7 @@ The result will be an array of objects with the `slug` key. For easier compariso
 
 The complete `gatsby-node.js` looks something like this:
 
-```js title=gatsby-node.js {15-23,27,30-31,38}
+```js title=gatsby-node.js highlight=15-23,27,30-31,38
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
 
 exports.createPages = async ({ graphql, actions }) => {
