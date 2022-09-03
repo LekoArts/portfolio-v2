@@ -28,7 +28,7 @@ type CreatePagesResult = {
 const gardenTemplate = path.resolve(`src/templates/garden.tsx`)
 const proseTemplate = path.resolve(`src/templates/prose.tsx`)
 const tutorialTemplate = path.resolve(`src/templates/tutorial.tsx`)
-const playgroundTemplate = path.resolve(`src/templates/playground.tsx`)
+const kitchenSinkTemplate = path.resolve(`src/templates/kitchen-sink.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
@@ -72,10 +72,10 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
-  if (process.env.gatsby_executing_command === `develop`) {
+  if (process.env.gatsby_executing_command === `develop` || process.env.IS_PLAYWRIGHT) {
     createPage({
-      path: `/playground`,
-      component: playgroundTemplate,
+      path: `/kitchen-sink`,
+      component: kitchenSinkTemplate,
       context: {},
     })
   }

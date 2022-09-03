@@ -107,7 +107,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
           >
             <Heading as="h1">Hi, I’m Lennart!</Heading>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
-              <strong>Software Engineer</strong> from Darmstadt, Germany. <br />
+              <strong>Software Engineer</strong> from Germany. <br />
               I’m passionate about working on open source products & building thriving communities around them.
             </Text>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>

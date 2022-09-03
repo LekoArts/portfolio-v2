@@ -70,35 +70,35 @@ const bg = 100
 const color = 500
 
 globalStyle(`${alertBaseStyle} a`, {
-  textDecorationColor: linkDecorationVar,
+  textDecorationColor: `${linkDecorationVar} !important`,
 })
 
 globalStyle(`${alertBaseStyle} p`, {
-  marginBottom: em(16, 14),
-  marginTop: vars.space[0],
+  marginBottom: `${em(16, 14)} !important`,
+  marginTop: `${vars.space[0]} !important`,
   "@media": {
     [minMediaQuery(`sm`)]: {
-      marginBottom: em(20, 16),
-      marginTop: vars.space[0],
+      marginBottom: `${em(20, 16)} !important`,
+      marginTop: `${vars.space[0]} !important`,
     },
     [minMediaQuery(`lg`)]: {
-      marginBottom: em(24, 18),
-      marginTop: vars.space[0],
+      marginBottom: `${em(24, 18)} !important`,
+      marginTop: `${vars.space[0]} !important`,
     },
     [minMediaQuery(`xl`)]: {
-      marginBottom: em(24, 20),
-      marginTop: vars.space[0],
+      marginBottom: `${em(24, 20)} !important`,
+      marginTop: `${vars.space[0]} !important`,
     },
   },
 })
 
 globalStyle(`${alertBaseStyle} p:first-of-type`, {
-  marginTop: vars.space[0],
+  marginTop: `${vars.space[0]} !important`,
 })
 
 globalStyle(`${alertBaseStyle} p:last-of-type`, {
-  marginTop: vars.space[0],
-  marginBottom: vars.space[0],
+  marginTop: `${vars.space[0]} !important`,
+  marginBottom: `${vars.space[0]} !important`,
 })
 
 globalStyle(`${alertBaseStyle} .${codeBlockWrapper}`, {
@@ -106,13 +106,17 @@ globalStyle(`${alertBaseStyle} .${codeBlockWrapper}`, {
 })
 
 globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre`, {
-  marginLeft: vars.space[0],
-  marginRight: vars.space[0],
+  marginLeft: `${vars.space[0]} !important`,
+  marginRight: `${vars.space[0]} !important`,
+})
+
+globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre:last-of-type`, {
+  marginBottom: `${vars.space[0]} !important`,
 })
 
 globalStyle(`${alertBaseStyle} .${codeBlockWrapper} .${gatsbyHighlightHeaderStyle}`, {
-  marginLeft: vars.space[0],
-  marginRight: vars.space[0],
+  marginLeft: `${vars.space[0]} !important`,
+  marginRight: `${vars.space[0]} !important`,
 })
 
 const alerts: Record<AlertStatus, StyleRule> = {

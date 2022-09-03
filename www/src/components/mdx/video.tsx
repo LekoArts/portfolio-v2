@@ -43,7 +43,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
     <FigureWrapper description={description}>
       <Box
         position="relative"
-        mx="auto"
+        m="auto"
         role="group"
         style={{ maxWidth }}
         className={groupStyle}
@@ -61,7 +61,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           as="video"
           position="relative"
           display="block"
-          mx="auto"
+          m="auto"
           autoPlay
           playsInline
           loop
@@ -80,7 +80,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
         </Box>
         <Box
           position="absolute"
-          mx="auto"
+          m="auto"
           display="flex"
           justifyContent="center"
           alignItems="center"

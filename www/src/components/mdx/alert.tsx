@@ -16,9 +16,6 @@ const iconMap = {
 
 export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({ title, status, children }) => (
   <Box
-    display="flex"
-    flexDirection="column"
-    alignItems="flex-start"
     borderRadius="lg"
     position="relative"
     my={[`6`, null, null, `12`]}
