@@ -8,7 +8,7 @@ async function firstClick(page: Page, selector: string) {
   return Promise.all([page.waitForNavigation(), page.locator(selector).first().click()])
 }
 
-test.describe(`Kitchen Sink`, () => {
+test.describe(`Navigation`, () => {
   test(`visiting primary navigation`, async ({ page }) => {
     await page.goto(`/`)
 
@@ -51,7 +51,7 @@ test.describe(`Kitchen Sink`, () => {
     await click(page, `footer[role="contentinfo"] >> text=Digital Garden`)
     await expect(page).toHaveURL(`/garden`)
   })
-  test(`content pages`, async ({ page }) => {
+  test(`visiting some content pages`, async ({ page }) => {
     await page.goto(`/gatsby/using-deferred-static-generation-with-analytics-tools`)
     await page.goto(`/design/introducing-the-theme-ui-plugin-for-figma`)
     await page.goto(`/garden/running-cypress-tests-with-github-actions-in-parallel`)
