@@ -22,7 +22,7 @@ export const Navigation: React.FC = () => {
                 <Link
                   to={item.link}
                   fontSize={[`md`, null, null, `lg`]}
-                  mr={notLastItem ? [`2`, `4`] : undefined}
+                  marginRight={notLastItem ? [`2`, `4`] : undefined}
                   p="2"
                   activeClassName="active"
                 >

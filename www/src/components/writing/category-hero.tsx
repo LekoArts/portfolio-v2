@@ -12,7 +12,11 @@ type CategoryHeroProps = {
 }
 
 export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, description, image = undefined }) => (
-  <Box mt="-navigationWithSubHeight" pt="navigationWithSubHeight" style={{ backgroundImage: bgGradient }}>
+  <Box
+    marginTop="-navigationWithSubHeight"
+    paddingTop="navigationWithSubHeight"
+    style={{ backgroundImage: bgGradient }}
+  >
     <Container py={paddingResponsiveArrays.paddingSmall}>
       <div className={contentWrapperStyle}>
         <Box display="flex" flexDirection="column">

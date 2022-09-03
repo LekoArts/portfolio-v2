@@ -125,7 +125,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               as={SVGIcon}
               height={[`6`, `8`, `12`]}
               width={[`6`, `8`, `12`]}
-              mr="6"
+              marginRight="6"
               id="lightbulb"
               className={plantIconStyle}
             />

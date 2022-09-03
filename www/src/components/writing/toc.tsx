@@ -44,9 +44,9 @@ const renderItems = ({
           <ExternalLink
             fontWeight={isActive ? `medium` : `normal`}
             color={isActive ? activeColor : `inherit`}
-            mt={level ? `1` : { mobile: `2`, "2xl": `3` }}
-            ml={level ? `${level * 2}` : `0`}
-            pr="1"
+            marginTop={level ? `1` : { mobile: `2`, "2xl": `3` }}
+            marginLeft={level ? `${level * 2}` : `0`}
+            paddingRight="1"
             href={item.url}
           >
             {item.title}
@@ -63,9 +63,15 @@ export const Toc = ({ items }: { items: Array<TocItem> }) => {
   const activeItemHash = useActiveHash(ids)
 
   return (
-    <Box as="aside" mb={{ mobile: `16`, "2xl": `0` }} fontSize={[`sm`, `md`]} className={asideStyle}>
+    <Box as="aside" marginBottom={{ mobile: `16`, "2xl": `0` }} fontSize={[`sm`, `md`]} className={asideStyle}>
       <Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" className={navStyle}>
-        <Box as="h2" color="heading" fontWeight="medium" mb={{ mobile: `2`, "2xl": `4` }} className={headingStyle}>
+        <Box
+          as="h2"
+          color="heading"
+          fontWeight="medium"
+          marginBottom={{ mobile: `2`, "2xl": `4` }}
+          className={headingStyle}
+        >
           Table of Contents
         </Box>
         {renderItems({ items, activeId: activeItemHash, activeColor: `primary` })}

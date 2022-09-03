@@ -25,7 +25,7 @@ export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({ title, s
     role="alert"
     className={alertVariants[status]}
   >
-    <Box display="flex" flexDirection="row" alignItems="center" mb="4">
+    <Box display="flex" flexDirection="row" alignItems="center" marginBottom="4">
       <Box className={alertIconStyle}>
         <SVGIcon id={iconMap[status]} />
       </Box>

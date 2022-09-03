@@ -244,7 +244,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                 {primRepo && secRepo ? (
                   <>
                     <Box bg="primaryAsBg" p="6" borderRadius="lg" __color="#e7f1ff">
-                      <Box display="flex" flexDirection="row" justifyContent="space-between" mb="6">
+                      <Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom="6">
                         <ExternalLink
                           fontSize={[`lg`, null, null, null, `lgx`]}
                           fontWeight="bold"
@@ -260,7 +260,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                       <Text>{primRepo.description}</Text>
                     </Box>
                     <Box bg="mutedAsBg" p="6" borderRadius="lg">
-                      <Box display="flex" flexDirection="row" justifyContent="space-between" mb="6">
+                      <Box display="flex" flexDirection="row" justifyContent="space-between" marginBottom="6">
                         <ExternalLink fontSize={[`lg`, null, null, null, `lgx`]} fontWeight="bold" href={secRepo.url}>
                           {secRepo.name}
                         </ExternalLink>

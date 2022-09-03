@@ -15,19 +15,25 @@ export const Footer: React.FC = () => {
               const { heading } = section
 
               return (
-                <Box display="flex" key={heading.name} flexDirection="column" alignItems="flex-start" mb={[`8`, `0`]}>
+                <Box
+                  display="flex"
+                  key={heading.name}
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  marginBottom={[`8`, `0`]}
+                >
                   {heading.link ? (
                     <Link
                       to={heading.link}
                       p="1"
                       color="textEmphasizedOnBg"
                       fontSize={[`lg`, null, `lgx`]}
-                      mb={[`2`, `3`]}
+                      marginBottom={[`2`, `3`]}
                     >
                       {heading.name}
                     </Link>
                   ) : (
-                    <Box color="textEmphasizedOnBg" p="1" fontSize={[`lg`, null, `lgx`]} mb={[`2`, `3`]}>
+                    <Box color="textEmphasizedOnBg" p="1" fontSize={[`lg`, null, `lgx`]} marginBottom={[`2`, `3`]}>
                       {heading.name}
                     </Box>
                   )}
@@ -40,11 +46,11 @@ export const Footer: React.FC = () => {
                     {section.items.map((item) => (
                       <React.Fragment key={item.link}>
                         {item.isExternal ? (
-                          <ExternalLink mr={[`2`, `0`]} p="1" href={item.link}>
+                          <ExternalLink marginRight={[`2`, `0`]} p="1" href={item.link}>
                             {item.name}
                           </ExternalLink>
                         ) : (
-                          <Link mr={[`2`, `0`]} p="1" to={item.link}>
+                          <Link marginRight={[`2`, `0`]} p="1" to={item.link}>
                             {item.name}
                           </Link>
                         )}

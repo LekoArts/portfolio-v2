@@ -22,7 +22,7 @@ export const Card: React.FC<CardProps> = ({ slug, title, subtitle, description }
           {subtitle}
         </Text>
       )}
-      <Text mt="6">{description}</Text>
+      <Text marginTop="6">{description}</Text>
     </Link>
   </MotionBox>
 )

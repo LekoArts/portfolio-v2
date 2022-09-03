@@ -55,17 +55,9 @@ const responsiveAtomicProperties = defineProperties({
     m: [`marginBottom`, `marginTop`, `marginLeft`, `marginRight`],
     mx: [`marginLeft`, `marginRight`],
     my: [`marginTop`, `marginBottom`],
-    mt: [`marginTop`],
-    mr: [`marginRight`],
-    mb: [`marginBottom`],
-    ml: [`marginLeft`],
     p: [`paddingBottom`, `paddingTop`, `paddingLeft`, `paddingRight`],
     px: [`paddingLeft`, `paddingRight`],
     py: [`paddingTop`, `paddingBottom`],
-    pt: [`paddingTop`],
-    pr: [`paddingRight`],
-    pb: [`paddingBottom`],
-    pl: [`paddingLeft`],
   },
 })
 
