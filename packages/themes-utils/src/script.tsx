@@ -9,7 +9,6 @@ export const ThemeScript = React.memo(
   ({ storageKey = `lekoarts-themes`, defaultTheme = `system`, attrs, value }: IThemeScriptProps) => {
     const defaultSystem = defaultTheme === `system`
 
-    // Code-golfing the amount of characters in the script
     const optimization = (() => {
       const removeClasses = `c.remove(${attrs.map((t: string) => `'${t}'`).join(`,`)})`
       return `var d=document.documentElement,c=d.classList;${removeClasses};`

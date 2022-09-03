@@ -70,7 +70,6 @@ Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
   globalStyle(selector, selectorStyle)
 })
 
-// const proseResponsiveArray = [`sm`, `md`, null, `lg`, `xl`]
 const proseResponsiveStyles = responsiveStyles([
   proseSmVariant,
   proseMdVariant,
