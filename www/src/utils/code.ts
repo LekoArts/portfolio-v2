@@ -5,7 +5,7 @@
  * @example
  * getLanguage('language-js')
  */
-export const getLanguage = (className = ``): string => className.split(`language-`).pop()
+export const getLanguage = (className = ``) => className.split(`language-`).pop()
 
 const OVERRIDES = {
   svelte: `html`,
@@ -20,7 +20,28 @@ const OVERRIDES = {
  */
 export const languageOverride = (input: string): string => OVERRIDES?.[input] ?? input
 
-export const preToCodeBlock = (preProps) => {
+interface IPreProps {
+  children: {
+    props: {
+      // Default props
+      children: string
+      className?: string
+      // My custom props
+      title?: string
+      highlight?: string
+      withLineNumbers?: boolean
+      [key: string]: any
+    }
+    type: string
+  }
+}
+
+/**
+ * Converts the props coming from a `<pre>` MDX tag into a shape for the `<Code />` component
+ * @example
+ * preToCodeBlock(props)
+ */
+export const preToCodeBlock = (preProps: IPreProps) => {
   if (preProps?.children?.type === `code`) {
     const { children: codeString, className = ``, ...props } = preProps.children.props
 
@@ -36,24 +57,20 @@ export const preToCodeBlock = (preProps) => {
   return undefined
 }
 
-const RE = /{([\d,-]+)}/
-
 /**
  * Get the lines to highlight in a code block
  * @param meta
  * @returns A function that returns a boolean depending on if the index should be highlighted or not (zero-indexed)
  * @example
- * calculateLinesToHighlight('title=gatsby-config.js {3-6}')
- * calculateLinesToHighlight('title=gatsby-config.js {3}')
- * calculateLinesToHighlight('title=gatsby-config.js {3-6,8}')
+ * calculateLinesToHighlight('3')
+ * calculateLinesToHighlight('3-6')
+ * calculateLinesToHighlight('3-6,8')
  */
 export const calculateLinesToHighlight = (meta: string) => {
-  if (!RE.test(meta)) {
+  if (!meta) {
     return () => false
   }
-  const lineNumbers = RE.exec(meta)![1]
-    .split(`,`)
-    .map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
+  const lineNumbers = meta.split(`,`).map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
   return (index: number) => {
     const lineNumber = index + 1
     return lineNumbers.some(([start, end]) => (end ? lineNumber >= start && lineNumber <= end : lineNumber === start))

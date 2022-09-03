@@ -1,6 +1,7 @@
 import * as React from "react"
 import type { GatsbySSR } from "gatsby"
 import { site } from "./src/constants/meta"
+import { ThemeProvider } from "./src/styles/theme-provider"
 // @ts-ignore
 import interVariableWoff2 from "./src/assets/fonts/Inter-roman.var.woff2"
 // @ts-ignore
@@ -50,3 +51,5 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, set
     ])
   }
 }
+
+export const wrapRootElement: GatsbySSR["wrapRootElement"] = ({ element }) => <ThemeProvider>{element}</ThemeProvider>

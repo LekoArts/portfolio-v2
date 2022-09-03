@@ -1,31 +1,25 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { RiPlantFill as PlantIcon } from "react-icons/ri"
-import {
-  Container,
-  Text,
-  Divider,
-  Flex,
-  Tag,
-  TagLabel,
-  Grid,
-  Box,
-  Link as ExternalLink,
-  Icon,
-  Stack,
-} from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/link"
+import {
+  ExternalLink,
+  Link,
+  Spacer,
+  Box,
+  ShareAnywhereButton,
+  TwitterButton,
+  SVGIcon,
+  Tag,
+  Container,
+} from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { Prose } from "../components/typography/prose"
 import { SEO } from "../components/seo"
-import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/blocks/spacer"
+import { Heading, Text, Prose } from "../components/typography"
 import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
-import { ShareAnywhereButton, TwitterButton } from "../components/buttons"
 import { site } from "../constants/meta"
+import { gardenCtaStyle, metaStyle, plantIconStyle } from "./garden.css"
 
 type DataProps = {
   garden: {
@@ -59,43 +53,42 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
       <Container variant="proseRoot">
         <SkipNavContent>
           <Heading as="h1">{garden.title}</Heading>
-          <Spacer size={6} axis="vertical" />
-          <Divider />
-          <Spacer size={4} axis="vertical" />
-          <Grid gridGap={2} gridTemplateColumns={[`1fr`, null, `1fr auto`]} fontSize={[`sm`, `md`, null, null, `lg`]}>
+          <Spacer size="6" axis="vertical" />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+          <Spacer size="4" axis="vertical" />
+          <Box className={metaStyle} fontSize={[`sm`, `md`, null, null, `lg`]}>
             <Text>
               Created {garden.date} – Last Updated {garden.lastUpdated}
             </Text>
-            <Flex flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
-              {garden.tags.map((tag) => (
-                <Box as="span" ml={2} _first={{ ml: 0 }} key={tag}>
-                  {tag}
-                </Box>
+            <Box display="flex" flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
+              {garden.tags.map((tag, index) => (
+                <React.Fragment key={tag}>
+                  <Box as="span">{tag}</Box>
+                  {index !== garden.tags.length - 1 && <Spacer axis="horizontal" size="2" />}
+                </React.Fragment>
               ))}
-            </Flex>
-            <Tag colorScheme="green" justifySelf="flex-start">
-              <TagLabel>
-                <Link to="/garden">Digital Garden</Link>
-              </TagLabel>
+            </Box>
+            <Tag colorScheme="green" style={{ justifySelf: `flex-start` }}>
+              <Link to="/garden">Digital Garden</Link>
             </Tag>
-          </Grid>
-          <Spacer size={12} axis="vertical" />
+          </Box>
+          <Spacer size="12" axis="vertical" />
           <Prose>
             <MDXProvider components={components}>{children}</MDXProvider>
           </Prose>
-          <Spacer size={12} axis="vertical" />
-          <Divider />
-          <Spacer size={6} axis="vertical" />
-          <Stack
-            direction={[`column`, `row`]}
+          <Spacer size="12" axis="vertical" />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+          <Spacer size="6" axis="vertical" />
+          <Box
+            flexDirection={[`column`, `row`]}
             display="flex"
-            spacing="5"
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
+            gap="5"
           >
             <Box>
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/garden/${garden.parent.parent.relativePath}`}
               >
@@ -103,7 +96,7 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </ExternalLink>
               {` `}-{` `}
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
               >
@@ -111,38 +104,34 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
               </ExternalLink>
             </Box>
             {hasShareApi ? (
-              <Stack direction={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]} gap="2">
                 <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />
                 <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} variant="outline" />
-              </Stack>
+              </Box>
             ) : (
               <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} />
             )}
-          </Stack>
-          <Spacer size={12} axis="vertical" />
+          </Box>
+          <Spacer size="12" axis="vertical" />
           <Box
-            textStyle="prominent"
-            bgGradient="linear(to-tr, green.800, lime.600)"
             borderRadius="xl"
-            p={6}
+            p="6"
             display="flex"
             flexDirection="row"
             alignItems="center"
-            color="green.100"
-            boxShadow="xl"
-            textShadow="0px 2px 0px rgba(0, 0, 0, 0.35)"
+            className={gardenCtaStyle}
           >
-            <Icon
-              as={PlantIcon}
-              height={[6, 8, 12]}
-              width={[6, 8, 12]}
-              mr={6}
-              color="lime.300"
-              sx={{ filter: `drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.25))` }}
+            <Box
+              as={SVGIcon}
+              height={[`6`, `8`, `12`]}
+              width={[`6`, `8`, `12`]}
+              mr="6"
+              id="lightbulb"
+              className={plantIconStyle}
             />
             <Box>
               Want to learn more?{` `}
-              <Link to="/garden" color="white">
+              <Link to="/garden" __color="white">
                 Browse my Digital Garden
               </Link>
             </Box>

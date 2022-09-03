@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Box } from "@chakra-ui/react"
+import { Box, SVGIcon } from "../primitives"
 import { site } from "../../constants/meta"
-import { SVGIcon } from "../blocks/svg-icon"
+import { groupStyle, marginBottomVariants, playPauseButtonStyle, videoStyle } from "./video.css"
+import { composeClassNames } from "../../utils/box"
 
 type VideoProps = {
   src: string
@@ -28,7 +29,8 @@ const FigureWrapper: React.FC<React.PropsWithChildren<{ description: VideoProps[
 export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoProps) => {
   const videoRef = React.useRef(null)
   const [play, setPlay] = React.useState(true)
-  const iconSize = `26px`
+  const iconSize = `30px`
+  const mbVariant = description ? `withDescription` : `default`
 
   const playVideo = () => {
     videoRef.current.play()
@@ -41,10 +43,10 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
     <FigureWrapper description={description}>
       <Box
         position="relative"
-        boxSizing="content-box"
-        maxWidth={maxWidth}
-        mx="auto"
+        m="auto"
         role="group"
+        style={{ maxWidth }}
+        className={groupStyle}
         onClick={() => {
           if (play) {
             pauseVideo()
@@ -59,9 +61,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           as="video"
           position="relative"
           display="block"
-          maxW="100%"
-          margin="auto"
-          cursor="pointer"
+          m="auto"
           autoPlay
           playsInline
           loop
@@ -69,7 +69,7 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
           preload="none"
           ref={videoRef}
           aria-label={ariaLabel}
-          marginBottom={description ? `0 !important` : undefined}
+          className={composeClassNames(videoStyle, marginBottomVariants[mbVariant])}
         >
           <source src={src} type="video/mp4" />
           <p>
@@ -80,22 +80,11 @@ export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoP
         </Box>
         <Box
           position="absolute"
-          inset="0px"
-          margin="auto"
-          width="64px"
-          height="64px"
-          background="rgba(0, 0, 0, 0.6)"
-          borderRadius="50%"
-          color="white"
+          m="auto"
           display="flex"
           justifyContent="center"
           alignItems="center"
-          transition="opacity 500ms ease 0s"
-          pointerEvents="none"
-          opacity="0"
-          _groupHover={{
-            opacity: 1,
-          }}
+          className={playPauseButtonStyle}
         >
           {play ? (
             <SVGIcon id="pause" width={iconSize} height={iconSize} style={{ strokeWidth: `2px` }} />

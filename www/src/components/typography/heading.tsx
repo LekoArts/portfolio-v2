@@ -1,16 +1,17 @@
 import * as React from "react"
-import { Heading as ChakraHeading, HeadingProps as ChakraHeadingProps } from "@chakra-ui/react"
+import { Headings, headingVariants } from "../../styles/typography.css"
+import { composeClassNames } from "../../utils/box"
+import { Box, IBoxProps } from "../primitives"
 
-interface IHeadingProps extends ChakraHeadingProps {
-  as: "h1" | "h2" | "h3" | "h4"
+interface IHeadingProps extends IBoxProps {
+  as: Headings
 }
 
 /**
- * Heading component accepting heading levels
- * Wraps the Heading component from Chakra
+ * Heading component accepting heading levels from h1 to h4
  */
-export const Heading: React.FC<React.PropsWithChildren<IHeadingProps>> = ({ as, children, ...rest }) => (
-  <ChakraHeading as={as} variant={as} {...rest}>
+export const Heading: React.FC<React.PropsWithChildren<IHeadingProps>> = ({ as, children, className, ...rest }) => (
+  <Box as={as} className={composeClassNames(headingVariants[as], className)} {...rest}>
     {children}
-  </ChakraHeading>
+  </Box>
 )

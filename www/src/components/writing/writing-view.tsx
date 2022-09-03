@@ -1,13 +1,11 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
-import { Spacer } from "../blocks/spacer"
-import { Prose } from "../typography/prose"
+import { Spacer, Box, ExternalLink, ShareAnywhereButton, TwitterButton, Container } from "../primitives"
+import { Prose, Text } from "../typography"
 import { components } from "../mdx"
-import { ShareAnywhereButton, TwitterButton } from "../buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
 
@@ -63,7 +61,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
           {children}
           {type === `tutorial` && post.tableOfContents?.items ? (
             <WithSidebarWrapper items={post.tableOfContents.items}>
-              <Prose as="article" flex="1 1 100%" minW="100%">
+              <Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
                 <MDXProvider components={components}>{mdxContent}</MDXProvider>
               </Prose>
             </WithSidebarWrapper>
@@ -72,19 +70,19 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               <MDXProvider components={components}>{mdxContent}</MDXProvider>
             </Prose>
           )}
-          <Spacer size={12} axis="vertical" />
-          <Divider />
-          <Spacer size={6} axis="vertical" />
-          <Stack
-            direction={[`column`, `row`]}
+          <Spacer size="12" axis="vertical" />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+          <Spacer size="6" axis="vertical" />
+          <Box
             display="flex"
-            spacing="5"
+            flexDirection={[`column`, `row`]}
+            gap="5"
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
           >
-            <Box>
+            <div>
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/writing/${post.parent.parent.relativePath}`}
               >
@@ -92,24 +90,24 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               </ExternalLink>
               {` `}-{` `}
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
               >
                 Discuss on Twitter
               </ExternalLink>
-            </Box>
+            </div>
             {hasShareApi ? (
-              <Stack direction={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]}>
                 <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
                 <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
-              </Stack>
+              </Box>
             ) : (
               <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
             )}
-          </Stack>
+          </Box>
           {type === `prose` && (
-            <Text mt={6} fontSize={[`md`, null, null, `1.125rem`]}>
+            <Text mt="6" fontSize={[`md`, null, null, `lg`]}>
               Last updated: {post.lastUpdated}
             </Text>
           )}

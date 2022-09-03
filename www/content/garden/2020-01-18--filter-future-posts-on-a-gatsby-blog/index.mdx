@@ -47,7 +47,7 @@ Since gatsby-starter-blog is powered by Markdown you'll want to add your `isFutu
 
 Adding this type definition defines the mentioned field at the root of the Markdown type:
 
-```js title=gatsby-node.js {6-10}
+```js title=gatsby-node.js highlight=6-10
 const get = require("lodash.get")
 
 exports.createSchemaCustomization = ({ actions }) => {
@@ -67,7 +67,7 @@ The notation `Boolean!` means that the field is of type Boolean and is Non-Nulla
 
 In the next step you'll create the helper function that returns either true or false depending on whether the input date is in the future or not.
 
-```js title=gatsby-node.js {6-9}
+```js title=gatsby-node.js highlight=6-9
 const get = require("lodash.get")
 
 exports.createSchemaCustomization = ({ actions }) => {
@@ -101,7 +101,7 @@ So what is that function doing? With the `lodash.get` function you're able to in
 
 Next, use `createFieldExtension` and the just created `isFuture` function:
 
-```js title=gatsby-node.js {11-21}
+```js title=gatsby-node.js highlight=11-21
 const get = require("lodash.get")
 
 exports.createSchemaCustomization = ({ actions }) => {
@@ -159,7 +159,7 @@ So the the code you'll be using is destructuring the `options` and passing `sour
 
 After adding the field extension to the field, the final code should look like:
 
-```js title=gatsby-node.js {25}
+```js title=gatsby-node.js highlight=25
 const get = require("lodash.get")
 
 exports.createSchemaCustomization = ({ actions }) => {

@@ -1,9 +1,8 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
-import { Divider, Text, Flex, Tag, TagLabel } from "@chakra-ui/react"
 import { WritingViewDataProps, WritingView } from "../components/writing/writing-view"
-import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/blocks/spacer"
+import { Heading, Text } from "../components/typography"
+import { Box, Spacer, Tag } from "../components/primitives"
 import { SEO } from "../components/seo"
 import { article } from "../constants/json-ld"
 
@@ -31,18 +30,18 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
 }) => (
   <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="tutorial">
     <Heading as="h1">{post.title}</Heading>
-    <Spacer size={6} axis="vertical" />
-    <Divider />
-    <Spacer size={4} axis="vertical" />
-    <Flex justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
-      <Text mb={2}>
+    <Spacer size="6" axis="vertical" />
+    <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+    <Spacer size="4" axis="vertical" />
+    <Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
+      <Text mb="2">
         Created {post.date} – Last Updated {post.lastUpdated}
       </Text>
-      <Tag alignSelf="flex-start" mb={2} colorScheme={tagColorSwitch(post.category.name)}>
-        <TagLabel>{post.category.name}</TagLabel>
+      <Tag mb="2" colorScheme={tagColorSwitch(post.category.name)} style={{ alignSelf: `flex-start` }}>
+        {post.category.name}
       </Tag>
-    </Flex>
-    <Spacer size={10} axis="vertical" />
+    </Box>
+    <Spacer size="10" axis="vertical" />
   </WritingView>
 )
 

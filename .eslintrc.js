@@ -1,10 +1,10 @@
 module.exports = {
-  parser: `@typescript-eslint/parser`, // Specifies the ESLint parser
+  parser: `@typescript-eslint/parser`,
   extends: [`airbnb`, `plugin:prettier/recommended`],
   plugins: [`@typescript-eslint`, `prettier`, `react-hooks`],
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: `module`, // Allows for the use of imports
+    ecmaVersion: 2018,
+    sourceType: `module`,
     ecmaFeatures: {
       jsx: true,
     },
@@ -137,6 +137,7 @@ module.exports = {
     "linebreak-style": 0,
     "consistent-return": 0,
     import: 0,
+    "no-unused-vars": 0,
     camelcase: 1,
     "import/no-unresolved": 0,
     "func-names": 0,
@@ -161,6 +162,7 @@ module.exports = {
     "react/jsx-curly-brace-presence": 0,
     "react/jsx-pascal-case": 0,
     "react/function-component-definition": 0,
+    "react/button-has-type": 0,
     "react/jsx-filename-extension": [
       1,
       {

@@ -1,16 +1,14 @@
 import * as React from "react"
-import { Flex } from "@chakra-ui/react"
-import { useLocation } from "@reach/router"
-import { useDistinctCategories } from "../../hooks/use-distinct-categories"
-import { Link } from "../link"
-import { Navigation } from "./navigation"
+import { useLocation } from "@gatsbyjs/reach-router"
+import { Box, Link, Spacer, SVGIcon } from "../primitives"
 import { FullWidthContainer } from "./full-width-container"
-import { Spacer } from "./spacer"
-import { SVGIcon } from "./svg-icon"
+import { Navigation } from "./navigation"
+import { innerHeaderStyle, logoStyle } from "./header.css"
+import { useDistinctCategories } from "../../hooks/use-distinct-categories"
 
 const Logo: React.FC = () => (
-  <Link to="/" transform="scale(1)" _hover={{ transform: `scale(1.1)` }} aria-label="lekoarts.de, Back to homepage">
-    <SVGIcon id="logo" width="35" height="35" viewBox="0 0 150 150" aria-hidden="true" focusable="false" />
+  <Link to="/" aria-label="lekoarts.de, Back to homepage" className={logoStyle}>
+    <SVGIcon id="logo" width="35" height="35" viewBox="0 0 150 150" />
   </Link>
 )
 
@@ -22,16 +20,24 @@ export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => 
   const categorySlugs = useDistinctCategories()
   const location = useLocation()
   const isCategoryPage = categorySlugs.includes(location.pathname)
-  const variant = subnavigation ? `navigationWithSub` : `navigation`
   const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
+  const variant = isCategoryPage ? `fullBleed` : `navigation`
 
   return (
     <>
-      <FullWidthContainer variant={isCategoryPage ? `fullBleed` : variant} height={height}>
-        <Flex as="header" alignItems="center" justifyContent="space-between" py="13px">
+      <FullWidthContainer variant={variant} height={height} data-variant-name={variant}>
+        <Box
+          display="flex"
+          as="header"
+          color={variant === `navigation` ? `heading` : undefined}
+          alignItems="center"
+          justifyContent="space-between"
+          __color={variant === `fullBleed` ? `white` : undefined}
+          className={innerHeaderStyle}
+        >
           <Logo />
           <Navigation />
-        </Flex>
+        </Box>
         {subnavigation}
       </FullWidthContainer>
       {!isCategoryPage && <Spacer size={height} axis="vertical" />}

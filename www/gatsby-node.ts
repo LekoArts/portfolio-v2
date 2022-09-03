@@ -28,6 +28,7 @@ type CreatePagesResult = {
 const gardenTemplate = path.resolve(`src/templates/garden.tsx`)
 const proseTemplate = path.resolve(`src/templates/prose.tsx`)
 const tutorialTemplate = path.resolve(`src/templates/tutorial.tsx`)
+const kitchenSinkTemplate = path.resolve(`src/templates/kitchen-sink.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
@@ -71,6 +72,14 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
+  if (process.env.gatsby_executing_command === `develop` || process.env.IS_PLAYWRIGHT) {
+    createPage({
+      path: `/kitchen-sink`,
+      component: kitchenSinkTemplate,
+      context: {},
+    })
+  }
+
   garden.nodes.forEach((post) => {
     createPage({
       path: post.slug,
@@ -92,4 +101,15 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
       },
     })
   })
+}
+
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ stage, actions, getConfig }) => {
+  if (stage === `develop` || stage === `build-javascript`) {
+    const config = getConfig()
+    const miniCssExtractPlugin = config.plugins.find((plugin) => plugin.constructor.name === `MiniCssExtractPlugin`)
+    if (miniCssExtractPlugin) {
+      miniCssExtractPlugin.options.ignoreOrder = true
+    }
+    actions.replaceWebpackConfig(config)
+  }
 }

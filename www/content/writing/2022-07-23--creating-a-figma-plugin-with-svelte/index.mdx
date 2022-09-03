@@ -66,7 +66,7 @@ You can learn more about the `manifest.json` file in the [Figma Plugin Manifest 
 
 Add a new key called `ui` to `manifest.json` and change the location of `main`:
 
-```json title=manifest.json {5-6}
+```json title=manifest.json highlight=5-6
 {
   "name": "SvelteTutorial",
   "id": "1234567890123456789",
@@ -341,7 +341,7 @@ In the rest of this tutorial the `<style>` block inside `App.svelte` won't chang
 
 Time to add some inputs. For this, add the `Type`, `Label`, and `Button` component to your `App.svelte`:
 
-```svelte title=src/App.svelte {2,6-30}
+```svelte title=src/App.svelte highlight=2,6-30
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
 </script>
@@ -381,7 +381,7 @@ At the time of writing this guide the [`Input` component](https://github.com/tho
 
 Create a new file called `Input.svelte` inside `src`:
 
-```svelte title=src/Input.svelte {8}
+```svelte title=src/Input.svelte highlight=8
 <script lang="ts">
   export let id = null
   export let value = null
@@ -449,7 +449,7 @@ It's not exactly the same as the `<Input />` component from `figma-plugin-ds-sve
 
 Now it's time to use the `<Input />` component in your `App.svelte`:
 
-```svelte title=src/App.svelte {3-10,22,26,30}
+```svelte title=src/App.svelte highlight=3-10,22,26,30
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"
@@ -509,7 +509,7 @@ Now that the UI is in place, the last task is to wire up the business logic to a
 
 To get started, create an async function called `getImage` and define a `API_URL` constant inside your `App.svelte`:
 
-```svelte title=src/App.svelte {5,13}
+```svelte title=src/App.svelte highlight=5,13
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"
@@ -562,7 +562,7 @@ Fetching data from remote APIs should always be handled gracefully since a lot o
 
 Add new variables called `error`, `loading`, and `imageBytes` to `App.svelte`. Also add an async function called `addImage`:
 
-```svelte title=src/App.svelte {7,8,10,18}
+```svelte title=src/App.svelte highlight=7,8,10,18
 <script lang="ts">
   import { GlobalCSS, Type, Label, Button } from "figma-plugin-ds-svelte"
   import Input from "./Input.svelte"

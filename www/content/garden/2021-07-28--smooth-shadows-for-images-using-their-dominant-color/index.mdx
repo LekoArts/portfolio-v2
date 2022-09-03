@@ -28,7 +28,7 @@ process your images and get back information like the dominant color in any JS f
 
 Query your images and make sure that you have the `DOMINANT_COLOR` option for the `placeholder` for `gatsbyImageData`. An example page could be:
 
-```jsx title=src/pages/index.js {22}
+```jsx title=src/pages/index.js highlight=22
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
@@ -121,7 +121,7 @@ So `offset-x` goes into `shadowX`, `offset-y` into `shadowY`, and the last value
 
 Depending on your values your `generateShadow` function now should look something like this:
 
-```jsx title=src/pages/index.js {5-7}
+```jsx title=src/pages/index.js highlight=5-7
 // Rest of imports
 import { rgba } from "polished"
 
@@ -196,7 +196,7 @@ export const query = graphql`
 
 The last step is to use the [`style` prop](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#shared-props) from `gatsby-plugin-image` to apply the `box-shadow` to the outer wrapper of `<GatsbyImage />`.
 
-```jsx {7}
+```jsx highlight=7
 {
   data.images.nodes.map((image) => (
     <GatsbyImage

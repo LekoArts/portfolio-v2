@@ -1,7 +1,9 @@
 import { GatsbyConfig, PluginOptions } from "gatsby"
 import remarkSlug from "remark-slug"
+import remarkGfm from "remark-gfm"
 import remarkSmartyPants from "remark-smartypants"
 import remarkUnwrapImages from "remark-unwrap-images"
+import rehypeMetaAsAttributes from "rehype-meta-as-attributes"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
@@ -86,7 +88,8 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
             },
           ],
           mdxOptions: {
-            remarkPlugins: [remarkSlug, remarkSmartyPants, remarkUnwrapImages],
+            remarkPlugins: [remarkGfm, remarkSlug, remarkSmartyPants, remarkUnwrapImages],
+            rehypePlugins: [rehypeMetaAsAttributes],
           },
         },
       },

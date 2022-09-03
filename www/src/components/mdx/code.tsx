@@ -2,16 +2,30 @@ import * as React from "react"
 import Highlight, { defaultProps, Language } from "prism-react-renderer"
 import lightTheme from "prism-react-renderer/themes/nightOwlLight"
 import darkTheme from "prism-react-renderer/themes/nightOwl"
-import { Stack, Box, useColorMode } from "@chakra-ui/react"
-import { Copy } from "./copy"
+import { useTheme } from "themes-utils"
+import { Box } from "../primitives"
 import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
+import { Copy } from "./copy"
+import {
+  codeBlockWrapper,
+  codeStyle,
+  gatsbyHighlightHeaderStyle,
+  gatsbyHighlightPreStyle,
+  gatsbyHighlightStyle,
+  highlightLineStyle,
+  languageDisplayStyle,
+  lineNumberStyle,
+  tokenLineStyle,
+} from "./code.css"
+import { composeClassNames } from "../../utils/box"
 
 type CodeProps = {
   codeString: string
   language: string
   withLineNumbers?: boolean
-  metastring?: string
-  [key: string]: any
+  highlight?: string
+  title?: string
+  className: string
 }
 
 export const Code = ({
@@ -19,12 +33,12 @@ export const Code = ({
   withLineNumbers = false,
   title = undefined,
   className: blockClassName,
-  metastring = ``,
+  highlight = ``,
 }: CodeProps) => {
-  const { colorMode } = useColorMode()
+  const { resolvedTheme } = useTheme()
   const originalLanguage = getLanguage(blockClassName)
   const language = languageOverride(originalLanguage)
-  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+  const shouldHighlightLine = calculateLinesToHighlight(highlight)
   const hasLineNumbers = withLineNumbers && language !== `withLineNumbers`
 
   return (
@@ -32,50 +46,49 @@ export const Code = ({
       {...defaultProps}
       code={codeString}
       language={language as Language}
-      theme={colorMode === `light` ? lightTheme : darkTheme}
+      theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <div className="code-block-wrapper">
+        <div className={codeBlockWrapper}>
           {(title || originalLanguage) && (
-            <Stack
-              direction="row"
-              spacing={2}
+            <Box
+              display="flex"
+              flexDirection="row"
+              gap="2"
               alignItems="center"
               justifyContent="flex-end"
-              className="gatsby-highlight-header"
+              className={gatsbyHighlightHeaderStyle}
             >
-              {title && (
-                <Box flexGrow={1} className="code-title">
-                  {title}
-                </Box>
-              )}
+              {title && <Box style={{ flexGrow: 1 }}>{title}</Box>}
               {originalLanguage && (
                 <Box
-                  textTransform="uppercase"
                   display="inline-flex"
                   alignItems="center"
-                  className="language-display"
+                  style={{ textTransform: `uppercase` }}
+                  className={languageDisplayStyle}
                   data-lang={originalLanguage}
                 >
                   {originalLanguage}
                 </Box>
               )}
               <Copy content={codeString} fileName={title} />
-            </Stack>
+            </Box>
           )}
-          <div className="gatsby-highlight" data-prism-renderer="true" data-has-line-numbers={hasLineNumbers}>
-            <pre className={className} style={style}>
-              <code className={`language-${language}`}>
+          <div className={gatsbyHighlightStyle}>
+            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)} style={style}>
+              <code className={composeClassNames(`language-${language}`, codeStyle)}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
 
+                  lineProps.className = composeClassNames(lineProps.className, tokenLineStyle)
+
                   if (shouldHighlightLine(i)) {
-                    lineProps.className = `${lineProps.className} highlight-line`
+                    lineProps.className = composeClassNames(lineProps.className, highlightLineStyle)
                   }
 
                   return (
                     <div {...lineProps}>
-                      {hasLineNumbers && <span className="line-number-style">{i + 1}</span>}
+                      {hasLineNumbers && <span className={lineNumberStyle}>{i + 1}</span>}
                       {line.map((token, key) => (
                         <span {...getTokenProps({ token, key })} />
                       ))}
