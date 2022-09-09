@@ -59,7 +59,7 @@ export const Flickr3D = () => {
           photoId={img.photoId}
           height={img.imageUrls?.image?.height}
           width={img.imageUrls?.image?.width}
-          src={img.imageUrls.image.url}
+          src={img.imageUrls?.image?.url}
           title={img.title}
         />
       ))}
