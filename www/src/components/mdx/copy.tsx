@@ -18,8 +18,8 @@ export const Copy = ({ content, duration = 5000, fileName = ``, trim = false }: 
   const [copied, setCopied] = React.useState(false)
 
   const label = copied
-    ? `${fileName ? `${fileName} ` : ``}copied to clipboard`
-    : `${fileName ? `${fileName}: ` : ``}copy code to clipboard`
+    ? `${fileName ? `${fileName} ` : ``}Copied to clipboard`
+    : `${fileName ? `${fileName}: ` : ``}Copy code to clipboard`
 
   return (
     <Box

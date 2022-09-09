@@ -23,6 +23,7 @@ export const Alert: React.FC<React.PropsWithChildren<IAlertProps>> = ({ title, s
     py="3"
     width="auto"
     role="alert"
+    data-testid={`alert-${status}`}
     className={alertVariants[status]}
   >
     <Box display="flex" flexDirection="row" alignItems="center" marginBottom="4">

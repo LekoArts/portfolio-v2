@@ -1,3 +1,36 @@
+export type Language =
+  | "bash"
+  | "sh"
+  | "shell"
+  | "css"
+  | "javascript"
+  | "js"
+  | "jsx"
+  | "diff"
+  | "git"
+  | "go"
+  | "graphql"
+  | "handlebars"
+  | "json"
+  | "less"
+  | "markdown"
+  | "mdx"
+  | "python"
+  | "py"
+  | "sass"
+  | "scss"
+  | "tsx"
+  | "typescript"
+  | "ts"
+  | "wasm"
+  | "yaml"
+  | "rust"
+  | "svelte"
+  | "html"
+  | "text"
+
+export type GetLanguageInput = `language-${Language}` | ""
+
 /**
  * Get the language and optional parameters back
  * @param {string} className
@@ -5,11 +38,14 @@
  * @example
  * getLanguage('language-js')
  */
-export const getLanguage = (className = ``) => className.split(`language-`).pop()
+export const getLanguage = (className: GetLanguageInput = ``) => className.split(`language-`).pop() as Language
 
 const OVERRIDES = {
   svelte: `html`,
 } as const
+
+type OverridesInput = keyof typeof OVERRIDES
+type OverridesOutput = typeof OVERRIDES[OverridesInput]
 
 /**
  * Overrides a language to another one to e.g. have correct syntax highlighting support
@@ -18,7 +54,8 @@ const OVERRIDES = {
  * @example
  * languageOverride('svelte')
  */
-export const languageOverride = (input: string): string => OVERRIDES?.[input] ?? input
+export const languageOverride = (input: OverridesInput | Language): OverridesOutput | Language =>
+  OVERRIDES?.[input] ?? input
 
 interface IPreProps {
   children: {

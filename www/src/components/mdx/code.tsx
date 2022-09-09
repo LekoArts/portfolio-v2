@@ -1,10 +1,10 @@
 import * as React from "react"
-import Highlight, { defaultProps, Language } from "prism-react-renderer"
+import Highlight, { defaultProps } from "prism-react-renderer"
 import lightTheme from "prism-react-renderer/themes/nightOwlLight"
 import darkTheme from "prism-react-renderer/themes/nightOwl"
 import { useTheme } from "themes-utils"
 import { Box } from "../primitives"
-import { calculateLinesToHighlight, getLanguage, languageOverride } from "../../utils/code"
+import { calculateLinesToHighlight, getLanguage, GetLanguageInput, languageOverride } from "../../utils/code"
 import { Copy } from "./copy"
 import {
   codeBlockWrapper,
@@ -21,11 +21,10 @@ import { composeClassNames } from "../../utils/box"
 
 type CodeProps = {
   codeString: string
-  language: string
   withLineNumbers?: boolean
   highlight?: string
   title?: string
-  className: string
+  className: GetLanguageInput
 }
 
 export const Code = ({
@@ -39,17 +38,17 @@ export const Code = ({
   const originalLanguage = getLanguage(blockClassName)
   const language = languageOverride(originalLanguage)
   const shouldHighlightLine = calculateLinesToHighlight(highlight)
-  const hasLineNumbers = withLineNumbers && language !== `withLineNumbers`
 
   return (
     <Highlight
       {...defaultProps}
       code={codeString}
-      language={language as Language}
+      // @ts-ignore
+      language={language}
       theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <div className={codeBlockWrapper}>
+        <div className={codeBlockWrapper} data-testid="code-wrapper">
           {(title || originalLanguage) && (
             <Box
               display="flex"
@@ -58,8 +57,13 @@ export const Code = ({
               alignItems="center"
               justifyContent="flex-end"
               className={gatsbyHighlightHeaderStyle}
+              data-testid="code-header"
             >
-              {title && <Box style={{ flexGrow: 1 }}>{title}</Box>}
+              {title && (
+                <Box style={{ flexGrow: 1 }} data-testid="code-title">
+                  {title}
+                </Box>
+              )}
               {originalLanguage && (
                 <Box
                   display="inline-flex"
@@ -88,7 +92,7 @@ export const Code = ({
 
                   return (
                     <div {...lineProps}>
-                      {hasLineNumbers && <span className={lineNumberStyle}>{i + 1}</span>}
+                      {withLineNumbers && <span className={lineNumberStyle}>{i + 1}</span>}
                       {line.map((token, key) => (
                         <span {...getTokenProps({ token, key })} />
                       ))}
