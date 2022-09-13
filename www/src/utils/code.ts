@@ -85,7 +85,7 @@ export const preToCodeBlock = (preProps: IPreProps) => {
     const match = className.match(/language-([\0-\uFFFF]*)/)
     return {
       codeString: codeString.trim(),
-      className,
+      className: className as GetLanguageInput,
       language: match !== null ? match[1] : ``,
       ...props,
     }
