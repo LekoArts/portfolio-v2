@@ -1,8 +1,8 @@
 import { globalFontFace, style } from "@vanilla-extract/css"
 // @ts-ignore
-import interVariableWoff2 from "../assets/fonts/Inter-roman.var.woff2"
+import interVariableWoff2 from "../assets/fonts/inter-latin.var.woff2"
 // @ts-ignore
-import crimsonProVariableWoff2 from "../assets/fonts/Crimson-Pro.var.woff2"
+import crimsonProVariableWoff2 from "../assets/fonts/crimson-pro-latin.var.woff2"
 
 const interUI = `Inter`
 const crimsonPro = `Crimson Pro`
