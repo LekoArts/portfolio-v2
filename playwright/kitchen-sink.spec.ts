@@ -92,7 +92,7 @@ test.describe(`Code`, () => {
     expect(await three.isVisible()).toBe(true)
     expect(await four.isVisible()).toBe(true)
 
-    const highlightCSS = `rgba(0, 0, 0, 0) linear-gradient(90deg, rgb(140, 175, 255) 0%, rgb(140, 175, 255) 0.5%, rgb(243, 242, 248) 0.5%, rgb(243, 242, 248) 100%) repeat scroll 0% 0% / auto padding-box border-box`
+    const highlightCSS = /linear-gradient\(90deg, rgb\(140, 175, 255\)/gm
 
     await expect(await one.locator(`..`)).toHaveCSS(`background`, highlightCSS)
     await expect(await two.locator(`..`)).toHaveCSS(`background-color`, `rgba(0, 0, 0, 0)`)

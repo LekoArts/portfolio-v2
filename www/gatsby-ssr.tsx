@@ -3,9 +3,9 @@ import type { GatsbySSR } from "gatsby"
 import { site } from "./src/constants/meta"
 import { ThemeProvider } from "./src/styles/theme-provider"
 // @ts-ignore
-import interVariableWoff2 from "./src/assets/fonts/Inter-roman.var.woff2"
+import interVariableWoff2 from "./src/assets/fonts/inter-latin.var.woff2"
 // @ts-ignore
-import crimsonProVariableWoff2 from "./src/assets/fonts/Crimson-Pro.var.woff2"
+import crimsonProVariableWoff2 from "./src/assets/fonts/crimson-pro-latin.var.woff2"
 
 const PLAUSIBLE_DOMAIN = `plausible.io`
 const SCRIPT_URI = `/js/plausible.js`
