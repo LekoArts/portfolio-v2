@@ -1467,7 +1467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.12.13, @babel/template@npm:^7.16.7, @babel/template@npm:^7.18.10":
+"@babel/template@npm:^7.16.7, @babel/template@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
   dependencies:
@@ -4486,14 +4486,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/babel-plugin@npm:^1.1.7":
-  version: 1.2.0
-  resolution: "@vanilla-extract/babel-plugin@npm:1.2.0"
+"@vanilla-extract/babel-plugin-debug-ids@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@vanilla-extract/babel-plugin-debug-ids@npm:1.0.0"
   dependencies:
     "@babel/core": ^7.13.10
-    "@babel/template": ^7.12.13
-    "@vanilla-extract/integration": ^5.0.0
-  checksum: a9871e9d374887e58d285ff3c628dd76af82116a21e601164c73182b3c0548ce329b75a24d10473e7731872cdbccd98038a2a1dd0d8675ed61ce6df1caa97093
+  checksum: cb5d3496634bdeca8f48470ee0803ca5a1d63642af7be93a2a28e9c71bc38c6024e6f970bbaafb7fdf508351a3c83eb65a9e8bfa9262af4f04a8da6c58222b29
   languageName: node
   linkType: hard
 
@@ -4516,10 +4514,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/integration@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "@vanilla-extract/integration@npm:5.0.1"
+"@vanilla-extract/css@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "@vanilla-extract/css@npm:1.9.1"
   dependencies:
+    "@emotion/hash": ^0.8.0
+    "@vanilla-extract/private": ^1.0.3
+    ahocorasick: 1.0.2
+    chalk: ^4.1.1
+    css-what: ^5.0.1
+    cssesc: ^3.0.0
+    csstype: ^3.0.7
+    deep-object-diff: ^1.1.0
+    deepmerge: ^4.2.2
+    media-query-parser: ^2.0.2
+    outdent: ^0.8.0
+  checksum: 91127d8e2eaaf521b155a39fb6a93e0fbfe5ddd5a8bdf1c732aba278cfdb9505cba24c755a982bc47682b9ff582a06d11e51e6f8d810404164ba098799ce6800
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/integration@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@vanilla-extract/integration@npm:6.0.0"
+  dependencies:
+    "@babel/core": ^7.13.10
+    "@babel/plugin-syntax-typescript": ^7.18.6
+    "@vanilla-extract/babel-plugin-debug-ids": ^1.0.0
     "@vanilla-extract/css": ^1.7.2
     esbuild: ^0.11.16
     eval: 0.1.6
@@ -4527,7 +4547,7 @@ __metadata:
     javascript-stringify: ^2.0.1
     lodash: ^4.17.21
     outdent: ^0.8.0
-  checksum: 3705151cd549669ab2e5287c5804d039cb936c89617ab800afd1638b3b101d2186461b9d24a7ea8552770ce61ca2dcbf8893d470ae8dba3dfa3cbb6436e46aaa
+  checksum: b1ad1ddc60e4edee0996c1e5d8c458c045dff3f3af8a6b0debb695e5505d4c8c9bbd0027e2de0299d41596c45495d8a3b549becd45163b7b3ec908fd6454370d
   languageName: node
   linkType: hard
 
@@ -4538,26 +4558,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/sprinkles@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@vanilla-extract/sprinkles@npm:1.4.1"
+"@vanilla-extract/sprinkles@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@vanilla-extract/sprinkles@npm:1.5.0"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: e72407ca6afad27c9e609ec3b23f8216c17374f40728ed8f8fc4decc0ea65216d9fb0f74daf31b846dffc7a90c0fe8f40a16d0b468c8f81a0600eea570a437bf
+  checksum: 522b96afe856a72d76072ab41453edc35117772a6ac829c8a5ad09cddd69152e152b1cbda0b4344d50dbde59d0effa39301beb7acf319ef88f485966c89c80fd
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:^2.1.11":
-  version: 2.1.12
-  resolution: "@vanilla-extract/webpack-plugin@npm:2.1.12"
+"@vanilla-extract/webpack-plugin@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@vanilla-extract/webpack-plugin@npm:2.2.0"
   dependencies:
-    "@vanilla-extract/integration": ^5.0.0
+    "@vanilla-extract/integration": ^6.0.0
     chalk: ^4.1.1
     debug: ^4.3.1
     loader-utils: ^2.0.0
   peerDependencies:
     webpack: ^4.30.0 || ^5.20.2
-  checksum: 1c948e82e3fe33a5a3d675c1fb3ea8bea7781922acb4782bdefffbda2557b3b59598a60b835b7b2024fdb5304861cf55c55b203c043fe161c420904d10bef8b7
+  checksum: 3e1741062eb849192558718e85c99d2e1aeefab01f17863d2381d493ec337a1a5137b8aef7bb60687ad754facda184d15ba763231f7bdad307170761755abf67
   languageName: node
   linkType: hard
 
@@ -4894,6 +4914,13 @@ __metadata:
     clean-stack: ^2.0.0
     indent-string: ^4.0.0
   checksum: 1101a33f21baa27a2fa8e04b698271e64616b886795fd43c31068c07533c7b3facfcaf4e9e0cab3624bd88f729a592f1c901a1a229c9e490eafce411a8644b79
+  languageName: node
+  linkType: hard
+
+"ahocorasick@npm:1.0.2":
+  version: 1.0.2
+  resolution: "ahocorasick@npm:1.0.2"
+  checksum: a13ce4403554ae782cf5e28d468a732acf1fd3d0bff251f5dcfddfa5497b6cc343948d69cd94dfdbe8d4dfdb81e2b34cb1c92079e6301f38b0143d314fb95bd6
   languageName: node
   linkType: hard
 
@@ -9801,15 +9828,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-plugin-vanilla-extract@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "gatsby-plugin-vanilla-extract@npm:2.0.1"
+"gatsby-plugin-vanilla-extract@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "gatsby-plugin-vanilla-extract@npm:3.0.0"
   peerDependencies:
-    "@vanilla-extract/babel-plugin": ^1.0.0
     "@vanilla-extract/css": ^1.0.0
-    "@vanilla-extract/webpack-plugin": ^2.0.0
+    "@vanilla-extract/webpack-plugin": ^2.2.0
     gatsby: ^3.0.0 || ^4.0.0
-  checksum: 0a30d76bd21875a83f6a289e81874ca79a09b0453d316ece0795de6c9c868857c77713d74b574c91f9a77c69e9d98de931288919e6c6271df57d4bcee9abe8bc
+  checksum: 3a3bb5841657de503d5c3fa3309fc2fcdcf9f6261fc57553bb5d58646aa0bd767b7433660096f9f49854529e08b6d6b974f4d07e40173e985ffef3c401e31b5a
   languageName: node
   linkType: hard
 
@@ -19006,10 +19032,9 @@ __metadata:
     "@lekoarts/gatsby-source-flickr": ^0.0.1
     "@react-aria/button": ^3.6.0
     "@react-stately/toggle": ^3.4.0
-    "@vanilla-extract/babel-plugin": ^1.1.7
-    "@vanilla-extract/css": ^1.7.2
-    "@vanilla-extract/sprinkles": ^1.4.1
-    "@vanilla-extract/webpack-plugin": ^2.1.11
+    "@vanilla-extract/css": ^1.9.1
+    "@vanilla-extract/sprinkles": ^1.5.0
+    "@vanilla-extract/webpack-plugin": ^2.2.0
     gatsby: next
     gatsby-plugin-feed: next
     gatsby-plugin-gatsby-cloud: next
@@ -19017,7 +19042,7 @@ __metadata:
     gatsby-plugin-manifest: next
     gatsby-plugin-perf-budgets: ^0.0.18
     gatsby-plugin-sitemap: next
-    gatsby-plugin-vanilla-extract: ^2.0.1
+    gatsby-plugin-vanilla-extract: ^3.0.0
     gatsby-plugin-webpack-bundle-analyser-v2: ^1.1.26
     gatsby-theme-core: ^0.0.1
     lodash.mergewith: ^4.6.2
