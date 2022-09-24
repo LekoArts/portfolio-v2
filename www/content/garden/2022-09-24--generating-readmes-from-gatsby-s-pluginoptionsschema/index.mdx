@@ -1,0 +1,298 @@
+---
+title: "Generating READMEs from Gatsby's pluginOptionsSchema"
+date: 2022-09-24
+lastUpdated: 2022-09-24
+icon: gatsby
+tags:
+  - Gatsby
+---
+
+For my latest Gatsby plugin [`gatsby-source-flickr`](https://github.com/LekoArts/gatsby-source-flickr) I created — of course 🙄 — a boilerplate first before doing the actual work. The result is my personal [gatsby-plugin-starter](https://github.com/LekoArts/gatsby-plugin-starter). Feel free to also use it for your projects! I want to showcase one feature I built in this blog post: The ability to automatically generate the project's README from the [`pluginOptionsSchema`](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/#how-to-validate-plugin-options) of your plugin. This is pretty cool as it means that the source of truth for the documentation always is code-first, you just have to regenerate the README.
+
+You can follow this post best if you already have set up a project, e.g. by following the [Creating a Source Plugin guide](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
+
+If you want to see the TypeScript version of this, have a look at the [gatsby-plugin-starter](https://github.com/LekoArts/gatsby-plugin-starter).
+
+## Setup
+
+You should have a `gatsby-node.js` file for your plugin and an NPM project already initialized.
+
+```shell
+your-project/
+├─ package.json
+├─ gatsby-node.js
+```
+
+Install the necessary dependencies:
+
+```shell
+npm install gatsby-plugin-utils fs-extra prettier handlebars lodash.startcase markdown-toc
+```
+
+Create an empty `generate-readme.js` file and an empty `plugin-options-schema.js` file at the root.
+
+Add a `generate-readme` script to the `package.json`:
+
+```json title=package.json
+{
+  "scripts": {
+    "generate-readme": "node generate-readme.js"
+  }
+}
+```
+
+## Creating pluginOptionsSchema
+
+Suppose the plugin you're creating has two options, `api_key` is required and `username` is optional. You can enforce these options via `pluginOptionsSchema` for your users.
+
+Open the `plugin-options-schema.js` file and add the following:
+
+```js title=plugin-options-schema.js
+const wrapOptions = (innerOptions) => `{
+  resolve: \`name-of-your-plugin\`,
+  options: {
+    ${innerOptions.trim()}
+  },
+}
+`
+
+const pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    api_key: Joi.string()
+      .required()
+      .description(`API Key required for login`)
+      .meta({ example: wrapOptions(`api_key: "123456789",`) }),
+    username: Joi.string()
+      .default(``)
+      .description(`Optional username for other stuff`)
+      .meta({ example: wrapOptions(`username: "hello",`) }),
+  })
+
+exports.pluginOptionsSchema = pluginOptionsSchema
+```
+
+You've successfully defined the schema for your plugin options! The `.meta()` portion will be accessed by the README generation script later.
+
+As a last step you need to define the `pluginOptionsSchema` in your `gatsby-node.js`:
+
+```js title=gatsby-node.js
+const { pluginOptionsSchema } = require("./plugin-options-schema")
+
+exports.pluginOptionsSchema = pluginOptionsSchema
+```
+
+## Generating the README
+
+Now that your `pluginOptionsSchema` is easily accessible you can switch over to the `generate-readme.js` file and add the following:
+
+```js title=generate-readme.js
+const { Joi } = require("gatsby-plugin-utils")
+const fs = require("fs-extra")
+const prettier = require("prettier")
+const Handlebars = require("handlebars")
+const startCase = require("lodash.startcase")
+const toc = require("markdown-toc")
+
+const { pluginOptionsSchema } = require("./src/plugin-options-schema")
+
+const PLUGIN_NAME = `name-of-your-plugin`
+const DEFAULT_README = `# ${PLUGIN_NAME}
+
+Your description goes here.
+
+## Install
+
+\`\`\`shell
+npm install ${PLUGIN_NAME}
+\`\`\`
+
+## How to use
+
+Add the plugin to your \`gatsby-config\` file:
+
+\`\`\`js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: \`${PLUGIN_NAME}\`,
+      options: {}
+    }
+  ]
+}
+\`\`\`
+
+## Plugin Options
+
+`
+
+const PRETTIER_CONFIG = {
+  printWidth: 80,
+  semi: false,
+  trailingComma: `es5`,
+}
+
+async function writeReadme() {
+  console.info(`Writing README.md...`)
+
+  try {
+    const mdString = await getMdString()
+    await fs.writeFile(`./README.md`, mdString)
+    console.info(`Successfully created README.md`)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+if (process.env.NODE_ENV !== `test`) {
+  writeReadme()
+}
+
+async function getMdString() {
+  const schema = pluginOptionsSchema({ Joi }).describe()
+  const mdString = generateMdStringFromSchemaDescription(schema)
+  return mdString
+}
+
+async function generateMdStringFromSchemaDescription(schema) {
+  const template = Handlebars.compile(`{{{defaultReadme}}}
+{{{tableOfContents}}}
+{{{docs}}}`)
+
+  const docs = joiKeysToMD({
+    keys: schema.keys,
+  })
+  const tableOfContents = toc(docs).content
+
+  const mdContents = template({
+    defaultReadme: DEFAULT_README,
+    tableOfContents,
+    docs,
+  })
+
+  const mdStringFormatted = prettier.format(mdContents, {
+    parser: `markdown`,
+    ...PRETTIER_CONFIG,
+  })
+
+  return mdStringFormatted
+}
+
+function joiKeysToMD({
+  keys,
+  inputMdString = ``,
+  level = 2,
+  parent = null,
+  parentMetas = [],
+}) {
+  if (
+    !keys ||
+    (parentMetas.length && parentMetas.find((meta) => meta.portableOptions))
+  ) {
+    return inputMdString
+  }
+
+  let mdString = inputMdString
+
+  Object.entries(keys).forEach(([key, value]) => {
+    const isRequired = value.flags && value.flags.presence === `required`
+
+    const title = `${parent ? `${parent}.` : ``}${key}${
+      isRequired ? ` (**required**)` : ``
+    }`
+
+    mdString += `${`#`.repeat(level + 1)} ${title}`
+
+    if (value.flags.description) {
+      mdString += `\n\n`
+      const description = value.flags.description.trim()
+      mdString += description.endsWith(`.`) ? description : `${description}.`
+    }
+
+    if (value.type) {
+      const { trueType } =
+        (value.metas && value.metas.find((meta) => `trueType` in meta)) || {}
+
+      mdString += `\n\n`
+      mdString += `**Field type**: \`${(trueType || value.type)
+        .split(`|`)
+        .map((typename) => startCase(typename))
+        .join(` | `)}\``
+    }
+
+    if (
+      (value.flags && `default` in value.flags) ||
+      (value.metas && value.metas.find((meta) => `default` in meta))
+    ) {
+      const defaultValue =
+        ((value.metas && value.metas.find((meta) => `default` in meta)) || {})
+          .default || value.flags.default
+
+      let printedValue
+
+      if (typeof defaultValue === `string`) {
+        printedValue = defaultValue
+      } else if (Array.isArray(defaultValue)) {
+        printedValue = `[${defaultValue.join(`, `)}]`
+      } else if (
+        [`boolean`, `function`, `number`].includes(typeof defaultValue)
+      ) {
+        printedValue = defaultValue.toString()
+      } else if (defaultValue === null) {
+        printedValue = `null`
+      }
+
+      if (typeof printedValue === `string`) {
+        mdString += `\n\n`
+        mdString += `**Default value**: ${
+          printedValue.includes(`\n`)
+            ? `\n\`\`\`js\n${printedValue}\n\`\`\``
+            : `\`${printedValue}\``
+        }`
+      }
+    }
+
+    if (value.metas) {
+      const examples = value.metas.filter((meta) => `example` in meta)
+      examples.forEach(({ example }) => {
+        mdString += `\n\n\`\`\`js\n${example}\`\`\`\n`
+      })
+    }
+
+    mdString += `\n\n`
+
+    if (value.keys) {
+      mdString = joiKeysToMD({
+        keys: value.keys,
+        inputMdString: mdString,
+        level: level + 1,
+        parent: title,
+        parentMetas: value.metas,
+      })
+    }
+
+    if (value.items && value.items.length) {
+      value.items.forEach((item) => {
+        if (item.keys) {
+          mdString = joiKeysToMD({
+            keys: item.keys,
+            inputMdString: mdString,
+            level: level + 1,
+            parent: `${title}[]`,
+            parentMetas: value.metas,
+          })
+        }
+      })
+    }
+  })
+
+  return mdString
+}
+```
+
+Try it out if it works by running the script in your terminal:
+
+```shell
+npm run generate-readme
+```
+
+You should now have a `README.md` file with the desired contents.
