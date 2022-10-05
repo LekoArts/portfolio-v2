@@ -1,44 +1,30 @@
 import * as React from "react"
-import { chakra, useColorModeValue } from "@chakra-ui/react"
+import { skipNavLinkStyle } from "./skip-nav.css"
 
 const defaultId = `skip-to-content`
 
-const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to content`, contentId, ...props }) => {
+export const SkipNavLink: React.FC<React.PropsWithChildren<{ contentId?: string }>> = ({
+  children = `Skip to content`,
+  contentId,
+  ...props
+}) => {
   const id = contentId || defaultId
-  const background = useColorModeValue(`brand.bg`, `brand.dark.bg`)
 
   return (
-    <chakra.a
-      {...props}
-      border={0}
-      height="1px"
-      width="1px"
-      margin="-1px"
-      padding={0}
-      overflow="hidden"
-      position="absolute"
-      _focus={{
-        padding: `1rem`,
-        position: `fixed`,
-        top: `10px`,
-        left: `10px`,
-        background,
-        zIndex: `skipLink`,
-        width: `auto`,
-        height: `auto`,
-      }}
-      href={`#${id}`}
-      data-skip-to-content
-    >
+    <a {...props} className={skipNavLinkStyle} href={`#${id}`}>
       {children}
-    </chakra.a>
+    </a>
   )
 }
 
 /**
  * Wrap the main content of a page with this, thus also the <main> tag
  */
-const SkipNavContent: React.FC<{ id?: string }> = ({ children, id: idProp, ...props }) => {
+export const SkipNavContent: React.FC<React.PropsWithChildren<{ id?: string }>> = ({
+  children,
+  id: idProp,
+  ...props
+}) => {
   const id = idProp || defaultId
 
   return (
@@ -47,5 +33,3 @@ const SkipNavContent: React.FC<{ id?: string }> = ({ children, id: idProp, ...pr
     </main>
   )
 }
-
-export { SkipNavLink, SkipNavContent }

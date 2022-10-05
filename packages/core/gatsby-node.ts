@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
+import readingTime from "reading-time"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): any => {
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): void => {
   const { createTypes, createFieldExtension } = actions
 
   const getFieldValue = (fieldName, source) => get(source, fieldName)
@@ -39,7 +38,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     },
   })
 
-  createTypes(`
+  createTypes(`#graphql
     enum PostTypeEnum {
       prose
       tutorial
@@ -49,8 +48,6 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       id: ID!
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 160): String!
-      body: String!
-      html: String
       tableOfContents: JSON
       timeToRead: Int
       image: String
@@ -62,15 +59,14 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       subtitle: String
       title: String!
       type: PostTypeEnum!
+      contentFilePath: String!
     }
 
     type MdxPost implements Node & Post {
       slug: String! @slugify(fieldName: "category")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
-      body: String! @mdxpassthrough(fieldName: "body")
-      html: String! @mdxpassthrough(fieldName: "html")
       tableOfContents: JSON @mdxpassthrough(fieldName: "tableOfContents")
-      timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
+      timeToRead: Int
       image: String
       category: Category! @link(by: "name")
       date: Date! @dateformat
@@ -80,6 +76,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       subtitle: String
       title: String!
       type: PostTypeEnum!
+      contentFilePath: String!
     }
 
     type Category implements Node {
@@ -95,53 +92,72 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       id: ID!
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 160): String!
-      body: String!
-      html: String
       timeToRead: Int
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
+      contentFilePath: String!
     }
 
     type MdxGarden implements Node & Garden {
       slug: String! @slugify(fallback: "garden")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
-      body: String! @mdxpassthrough(fieldName: "body")
-      html: String! @mdxpassthrough(fieldName: "html")
-      timeToRead: Int @mdxpassthrough(fieldName: "timeToRead")
+      timeToRead: Int
       date: Date! @dateformat
       lastUpdated: Date! @dateformat
       title: String!
       tags: [String!]!
       icon: String!
+      contentFilePath: String!
     }
 
     type CoreConfig implements Node {
       writingSource: String
       gardenSource: String
     }
+
+    type github implements Node {
+      repository(name: String, owner: String): Repository
+    }
+
+    type Repository {
+      stargazerCount: Int
+      description: String
+      name: String
+      url: String
+    }
+
+    type FlickrPhotosetsList implements Node {
+      _id: String
+      title: String
+      content: [FlickrPhotosetsPhotos] @link(by: "photoset_id", from: "_id")
+      date_update: Date @dateformat
+    }
+
+    type FlickrPhotosetsPhotos implements Node {
+      title: String
+      _id: String
+      photoset_id: String
+      description: String
+      imageUrls: FlickrImageUrls
+      datetaken: Date @dateformat
+    }
+
+    type FlickrImageUrls {
+      _1024px: FlickrImageUrlsContent
+    }
+
+    type FlickrImageUrlsContent {
+      url: String
+      width: Int
+      height: Int
+    }
   `)
 }
 
-const replacePath = (_path: string) => (_path === `/` ? _path : _path.replace(/\/$/, ``))
-
-export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-
-  return new Promise((resolve) => {
-    const oldPage = { ...page }
-    page.path = replacePath(page.path)
-    if (page.path !== oldPage.path) {
-      deletePage(oldPage)
-      createPage(page)
-    }
-    resolve()
-  })
-}
-
-export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentDigest }, themeOptions): any => {
+export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentDigest }, themeOptions): void => {
   const { createNode } = actions
   const defaultOptions = withDefaults(themeOptions)
 
@@ -160,29 +176,29 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
 }
 
 type WritingNode = {
-  frontmatter: {
-    slug?: string
-    image?: string
-    category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
-    date: string
-    lastUpdated?: string
-    description: string
-    published: boolean
-    subtitle?: string
-    title: string
-    type: "prose" | "tutorial"
-  }
+  slug?: string
+  image?: string
+  category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
+  date: string
+  lastUpdated?: string
+  description: string
+  published: boolean
+  subtitle?: string
+  title: string
+  type: "prose" | "tutorial"
+  contentFilePath: string
+  timeToRead: number
 }
 
 type GardenNode = {
-  frontmatter: {
-    slug?: string
-    date: string
-    lastUpdated?: string
-    title: string
-    tags: string[]
-    icon: string
-  }
+  slug?: string
+  date: string
+  lastUpdated?: string
+  title: string
+  tags: Array<string>
+  icon: string
+  contentFilePath: string
+  timeToRead: number
 }
 
 type MdxNode = WritingNode | GardenNode
@@ -200,10 +216,11 @@ export const onCreateNode = (
 
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
+  const timeToRead = Math.round(readingTime(node.body as string).minutes)
 
   if (source === writingSource) {
-    const f = node.frontmatter as WritingNode["frontmatter"]
-    const fieldData: WritingNode["frontmatter"] = {
+    const f = node.frontmatter as WritingNode
+    const fieldData: WritingNode = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       subtitle: f.subtitle ? f.subtitle : undefined,
@@ -214,6 +231,8 @@ export const onCreateNode = (
       description: f.description,
       published: f.published ?? true,
       type: f.type,
+      contentFilePath: fileNode.absolutePath as string,
+      timeToRead,
     }
 
     const mdxPostId = createNodeId(`${node.id} >>> MdxPost`)
@@ -235,14 +254,16 @@ export const onCreateNode = (
   }
 
   if (source === gardenSource) {
-    const f = node.frontmatter as GardenNode["frontmatter"]
-    const fieldData: GardenNode["frontmatter"] = {
+    const f = node.frontmatter as GardenNode
+    const fieldData: GardenNode = {
       slug: f.slug ? f.slug : undefined,
       title: f.title,
       date: f.date,
       lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,
       icon: f.icon,
       tags: f.tags,
+      contentFilePath: fileNode.absolutePath as string,
+      timeToRead,
     }
 
     const mdxGardenId = createNodeId(`${node.id} >>> MdxGarden`)
@@ -264,7 +285,7 @@ export const onCreateNode = (
   }
 }
 
-export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArgs): any => {
+export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArgs): void => {
   const resolvers = {
     Query: {
       randomPosts: {
@@ -279,11 +300,11 @@ export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArg
             description: `Input a seed (e.g. the current id of the node) to deterministically retrieve the same nodes on every run`,
           },
         },
-        async resolve(source, args, context) {
+        async resolve(_source, args, context) {
           const { count = 2, seed } = args || {}
           const rng = new Prando(seed)
           const s = rng.next()
-          const allNodes = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             query: {
               sort: {
                 fields: [`date`],
@@ -291,8 +312,8 @@ export const createResolvers: GatsbyNode["createResolvers"] = (createResolverArg
               },
             },
             type: `Post`,
-            firstOnly: false,
           })
+          const allNodes = Array.from(entries)
           rng.reset()
           return shuffle(allNodes, s, count)
         },

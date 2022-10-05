@@ -1,11 +1,13 @@
 import { MDXLayout as PageLayout } from "../../components/blocks/mdx-layout"
 import { SEO } from "../../components/seo"
 
-<SEO
-  title="Art"
-  description="Besides software development I have another huge passion of mine: Designing UI in Figma, creating photo manipulations in Photoshop, tinkering with abstract art in Cinema4D, and exploring nature & capturing it with my Fujifilm camera. Or in other words: I enjoy art!"
-  breadcrumbListItems={[{ name: `Art`, url: `/art` }]}
-/>
+export const Head = () => (
+  <SEO
+    title="Art"
+    description="Besides software development I have another huge passion of mine: Designing UI in Figma, creating photo manipulations in Photoshop, tinkering with abstract art in Cinema4D, and exploring nature & capturing it with my Fujifilm camera. Or in other words: I enjoy art!"
+    breadcrumbListItems={[{ name: `Art`, url: `/art` }]}
+  />
+)
 
 export default PageLayout
 
@@ -15,6 +17,6 @@ Besides software development I have another huge passion of mine: Designing UI i
 
 ![The image is divided in three equal parts. It shows on the left a preview of a webdesign (a Figma screenshot of the design for themes.lekoarts.de). In the middle a 3D generated purple hand reaching out of the water (the hand is broken into pieces at the bottom and some float on the water) with a sunset sky. And on the right a photo of the coast in San Francisco at the "Suthro Baths".](./art-cover-image.jpg)
 
-I've started my journey in High School as I wanted to have custom signatures (little graphics under your post) in a couple of online forums. There was and still is a community of people doing these little _tags_ on [DeviantArt](https://www.deviantart.com/) and it was my entry to the world of using Photoshop. Like a sponge I absorbed every tutorial there was online and probably used it daily for a couple of years. Soon I began doing webdesign (in Photoshop, I know 😀) and photo manipulations -- the former for some extra money, the latter as it was more advanced and really challenged all my acquired skills. It's both difficult & rewarding blending multiple photos seamlessly together into a picture while telling a story via the image itself. Over the years I learned new tools and shifted some work out of Photoshop and e.g. to Figma. Nowadays I do UI design for all my own projects (it also helps for frontend development in my day job) and the rest as a hobby in my free time.
+I've started my journey in High School as I wanted to have custom signatures (little graphics under your post) in a couple of online forums. There was and still is a community of people doing these little _tags_ on [DeviantArt](https://www.deviantart.com/) and it was my entry to the world of using Photoshop. Like a sponge I absorbed every tutorial there was online and probably used it daily for a couple of years. Soon I began doing webdesign (in Photoshop, I know 😀) and photo manipulations – the former for some extra money, the latter as it was more advanced and really challenged all my acquired skills. It's both difficult & rewarding blending multiple photos seamlessly together into a picture while telling a story via the image itself. Over the years I learned new tools and shifted some work out of Photoshop and e.g. to Figma. Nowadays I do UI design for all my own projects (it also helps for frontend development in my day job) and the rest as a hobby in my free time.
 
 Under the [Design](/art/design) category you'll primarily find compositings, webdesigns & related graphics made in Figma. The [3D Art](/art/3d) section features my favourite art made in various 3D software. Last but not least, the [Photography](/art/photography) page shows the photos (primarily landscapes) I'm most proud of!

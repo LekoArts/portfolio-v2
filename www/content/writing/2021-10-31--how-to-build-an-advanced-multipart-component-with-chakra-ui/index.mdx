@@ -2,7 +2,7 @@
 title: "How To Build an Advanced Multipart Component with Chakra UI"
 subtitle: "Learn all about Chakra UI's theming system"
 date: 2021-10-31
-lastUpdated: 2021-10-31
+lastUpdated: 2022-08-07
 description: "Chakra UI has a powerful theming system that includes component styles. Learn how to create a custom made container component that supports light/dark mode, variants, sizes, and color schemes."
 type: "tutorial"
 category: "React"
@@ -53,7 +53,7 @@ You've successfully set up the boilerplate for this tutorial! In the next steps 
 
 Go into `src/main.tsx` to wrap the `<App />` with the Chakra UI Provider:
 
-```ts title=src/main.tsx {3,5,9-11}
+```ts title=src/main.tsx highlight=3,5,9-11
 import React from "react"
 import ReactDOM from "react-dom"
 import { ChakraProvider } from "@chakra-ui/react"
@@ -74,15 +74,14 @@ The `theme` doesn't exist yet so create a new file at `src/theme.ts`. By default
 
 ```ts title=src/theme.ts
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
-import { createBreakpoints } from "@chakra-ui/theme-tools"
 
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
   "2xl": "1536px",
-})
+}
 
 const config: ThemeConfig = {
   initialColorMode: "light",
@@ -198,18 +197,17 @@ export default Container
 
 This means that every instance of `<Container />` has the `baseStyle` and the `colorScheme` of `gray` by default. But only creating the file doesn't do anything yet, you'll need to tell Chakra UI to use this file for `Container` now. You do this by passing overwrites for built-in components and also files for new components into the `components` key of the `extendTheme` function:
 
-```ts title=src/theme.ts {3,19-21}
+```ts title=src/theme.ts highlight=2,18-20
 import { extendTheme, ThemeConfig } from "@chakra-ui/react"
-import { createBreakpoints } from "@chakra-ui/theme-tools"
 import Container from "./chakra/container"
 
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
   "2xl": "1536px",
-})
+}
 
 const config: ThemeConfig = {
   initialColorMode: "light",
@@ -306,7 +304,7 @@ You can leverage the `useStyleConfig` and `useMultiStyleConfig` React hooks to a
 
 ### Defining the Component Styles
 
-Create a new file at `src/chakra/custom-container.ts`. You'll notice that the shape of the config differs a little bit -- for multipart components a new top-level `parts` key is needed and each part is a key inside `baseStyle`, `sizes`, `variants`, and `defaultProps`:
+Create a new file at `src/chakra/custom-container.ts`. You'll notice that the shape of the config differs a little bit – for multipart components a new top-level `parts` key is needed and each part is a key inside `baseStyle`, `sizes`, `variants`, and `defaultProps`:
 
 ```ts title=src/chakra/custom-container.ts
 import { ComponentStyleConfig } from "@chakra-ui/react"
@@ -353,7 +351,7 @@ The file already contains the `variants` and `sizes` defined in the `MultiContai
 
 Let's wire up the custom component into the app so that you can see the changes made to the component style. Edit the `theme`:
 
-```ts title=src/theme.ts {10}
+```ts title=src/theme.ts highlight=10
 // Existing imports
 // ...
 import CustomContainer from "./chakra/custom-container"
@@ -473,7 +471,7 @@ Time to change that!
 
 Edit the component style to lay out some baseline config:
 
-```ts title=src/chakra/custom-container.ts {2-3,8-14,22,31-36}
+```ts title=src/chakra/custom-container.ts highlight=2-3,8-14,22,31-36
 import { ComponentStyleConfig } from "@chakra-ui/react"
 import InnerContainerStyles from "./container"
 import { percentageWidths } from "./utils"
@@ -649,7 +647,7 @@ This line is also interesting:
 const { bg = `${c}.500`, color = "white" } = accessibleColorMap[c] || {}
 ```
 
-If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white` for `color`. This ensures good contrast for text on otherwise to light background.
+If the `colorScheme` is `yellow` or `cyan` the values from `accessibleColorMap` should be used. Otherwise use `${c}.500` for the `bg` and `white` for `color`. This ensures good contrast for text on otherwise too light background.
 
 </Collapsible>
 

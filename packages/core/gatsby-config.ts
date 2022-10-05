@@ -1,12 +1,16 @@
 import { GatsbyConfig, PluginOptions } from "gatsby"
 import remarkSlug from "remark-slug"
+import remarkGfm from "remark-gfm"
 import remarkSmartyPants from "remark-smartypants"
+import remarkUnwrapImages from "remark-unwrap-images"
+import rehypeMetaAsAttributes from "rehype-meta-as-attributes"
 import camelCase from "lodash.camelcase"
 import { withDefaults, capitalize } from "utils"
 
+const { GITHUB_TOKEN, FLICKR_API_KEY } = process.env
+
 const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
   const options = withDefaults(themeOptions)
-  const { mdx = true } = themeOptions
 
   return {
     plugins: [
@@ -34,27 +38,44 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          name: `src/pages`,
+          name: `pages`,
           path: `src/pages`,
         },
       },
-      {
+      GITHUB_TOKEN && {
         resolve: `gatsby-source-graphql`,
         options: {
           typeName: `GitHub`,
           fieldName: `github`,
           url: `https://api.github.com/graphql`,
           headers: {
-            Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+            Authorization: `bearer ${GITHUB_TOKEN}`,
           },
           fetchOptions: {},
         },
       },
-      `gatsby-remark-images`,
-      mdx && {
+      FLICKR_API_KEY && {
+        resolve: `@lekoarts/gatsby-source-flickr`,
+        options: {
+          api_key: FLICKR_API_KEY,
+          username: `ars_aurea`,
+          endpoints: [
+            {
+              method: `flickr.photosets.getList`,
+              extension: {
+                method: `flickr.photosets.getPhotos`,
+                mapping: `id:photoset_id`,
+                args: {
+                  extras: `description,last_update,date_taken,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o,media,views,original_format`,
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         resolve: `gatsby-plugin-mdx`,
         options: {
-          lessBabel: true,
           extensions: [`.mdx`, `.md`],
           gatsbyRemarkPlugins: [
             {
@@ -66,7 +87,10 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
               },
             },
           ],
-          remarkPlugins: [remarkSlug, remarkSmartyPants],
+          mdxOptions: {
+            remarkPlugins: [remarkGfm, remarkSlug, remarkSmartyPants, remarkUnwrapImages],
+            rehypePlugins: [rehypeMetaAsAttributes],
+          },
         },
       },
       `gatsby-transformer-sharp`,
@@ -78,7 +102,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       },
       `gatsby-plugin-sharp`,
       `gatsby-plugin-catch-links`,
-    ],
+    ].filter(Boolean),
   }
 }
 

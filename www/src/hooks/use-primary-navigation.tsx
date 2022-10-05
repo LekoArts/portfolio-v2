@@ -2,10 +2,10 @@ import { graphql, useStaticQuery } from "gatsby"
 
 type Props = {
   allPrimaryNavigation: {
-    nodes: {
+    nodes: Array<{
       name: string
       link: string
-    }[]
+    }>
   }
 }
 

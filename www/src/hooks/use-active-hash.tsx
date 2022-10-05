@@ -1,7 +1,7 @@
 import * as React from "react"
 
 export const useActiveHash = (
-  itemIds: string[],
+  itemIds: Array<string>,
   options: {
     root?: Element | null
     rootMargin?: string

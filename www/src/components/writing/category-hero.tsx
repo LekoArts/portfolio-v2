@@ -1,30 +1,34 @@
 import * as React from "react"
-import { Box, Container, Flex, Text, Grid } from "@chakra-ui/react"
-import { BackgroundProps } from "@chakra-ui/system"
-import { space } from "../../constants/space"
-import { Heading } from "../typography/heading"
+import { Heading, Text } from "../typography"
+import { Box, Container } from "../primitives"
+import { contentWrapperStyle, descriptionStyle } from "./category-hero.css"
+import { paddingResponsiveArrays } from "../../styles/tokens/space"
 
 type CategoryHeroProps = {
-  bgGradient: BackgroundProps["bgGradient"]
+  bgGradient: string
   title: string
   description: React.ReactNode
   image?: React.ReactNode
 }
 
 export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, description, image = undefined }) => (
-  <Box mt="-navigationWithSubHeight" bgGradient={bgGradient} pt="navigationWithSubHeight">
-    <Container py={space.paddingSmall}>
-      <Grid templateColumns="auto" gap={12}>
-        <Flex direction="column">
-          <Heading as="h1" color="white">
+  <Box
+    marginTop="-navigationWithSubHeight"
+    paddingTop="navigationWithSubHeight"
+    style={{ backgroundImage: bgGradient }}
+  >
+    <Container py={paddingResponsiveArrays.paddingSmall}>
+      <div className={contentWrapperStyle}>
+        <Box display="flex" flexDirection="column">
+          <Heading as="h1" __color="white">
             {title}
           </Heading>
-          <Text textStyle="prominent" color="gray.100" maxWidth="65ch">
+          <Text variant="prominent" className={descriptionStyle}>
             {description}
           </Text>
-        </Flex>
+        </Box>
         {image}
-      </Grid>
+      </div>
     </Container>
   </Box>
 )

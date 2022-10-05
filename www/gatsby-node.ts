@@ -1,30 +1,34 @@
 import { GatsbyNode } from "gatsby"
+import path from "path"
 
 type CreatePagesResult = {
   redirects: {
-    nodes: {
+    nodes: Array<{
       fromPath: string
       toPath: string
-    }[]
+    }>
   }
   garden: {
-    nodes: {
+    nodes: Array<{
       id: string
       slug: string
-    }[]
+      contentFilePath: string
+    }>
   }
   writing: {
-    nodes: {
+    nodes: Array<{
       id: string
       slug: string
       type: "prose" | "tutorial"
-    }[]
+      contentFilePath: string
+    }>
   }
 }
 
-const gardenTemplate = require.resolve(`./src/templates/garden.tsx`)
-const proseTemplate = require.resolve(`./src/templates/prose.tsx`)
-const tutorialTemplate = require.resolve(`./src/templates/tutorial.tsx`)
+const gardenTemplate = path.resolve(`src/templates/garden.tsx`)
+const proseTemplate = path.resolve(`src/templates/prose.tsx`)
+const tutorialTemplate = path.resolve(`src/templates/tutorial.tsx`)
+const kitchenSinkTemplate = path.resolve(`src/templates/kitchen-sink.tsx`)
 
 export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions, reporter }) => {
   const { createRedirect, createPage } = actions
@@ -41,6 +45,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
         nodes {
           id
           slug
+          contentFilePath
         }
       }
       writing: allPost(filter: { published: { eq: true } }) {
@@ -48,6 +53,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
           id
           slug
           type
+          contentFilePath
         }
       }
     }
@@ -58,29 +64,52 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
     return
   }
 
-  result.data.redirects.nodes.forEach((redirect) => {
+  const {
+    data: { redirects, garden, writing },
+  } = result
+
+  redirects.nodes.forEach((redirect) => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
-  result.data.garden.nodes.forEach((garden) => {
+  if (process.env.gatsby_executing_command === `develop` || process.env.IS_PLAYWRIGHT) {
     createPage({
-      path: garden.slug,
-      component: gardenTemplate,
+      path: `/kitchen-sink`,
+      component: kitchenSinkTemplate,
+      context: {},
+    })
+  }
+
+  garden.nodes.forEach((post) => {
+    createPage({
+      path: post.slug,
+      component: `${gardenTemplate}?__contentFilePath=${post.contentFilePath}`,
       context: {
-        id: garden.id,
+        id: post.id,
       },
     })
   })
 
-  result.data.writing.nodes.forEach((article) => {
-    const component = article.type === `tutorial` ? tutorialTemplate : proseTemplate
+  writing.nodes.forEach((article) => {
+    const writingTemplate = article.type === `tutorial` ? tutorialTemplate : proseTemplate
 
     createPage({
       path: article.slug,
-      component,
+      component: `${writingTemplate}?__contentFilePath=${article.contentFilePath}`,
       context: {
         id: article.id,
       },
     })
   })
+}
+
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ stage, actions, getConfig }) => {
+  if (stage === `develop` || stage === `build-javascript`) {
+    const config = getConfig()
+    const miniCssExtractPlugin = config.plugins.find((plugin) => plugin.constructor.name === `MiniCssExtractPlugin`)
+    if (miniCssExtractPlugin) {
+      miniCssExtractPlugin.options.ignoreOrder = true
+    }
+    actions.replaceWebpackConfig(config)
+  }
 }

@@ -2,14 +2,14 @@ import * as React from "react"
 import { navigate } from "gatsby"
 import { WindowLocation } from "@reach/router"
 
-export interface Isomorphism<State, QueryString> {
+export interface IIsomorphism<State, QueryString> {
   from: (v: QueryString) => State
   to: (t: State) => QueryString
 }
 
 export function useQueryString<State>(opts: {
   initialState: State
-  iso: Isomorphism<State, string>
+  iso: IIsomorphism<State, string>
   location: WindowLocation
 }): [State, (v: State) => void] {
   const { initialState, iso, location } = opts

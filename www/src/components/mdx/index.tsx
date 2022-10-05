@@ -3,6 +3,8 @@ import { headings } from "./heading"
 import { Code } from "./code"
 import { Alert } from "./alert"
 import { Collapsible } from "./collapsible"
+import { Video } from "./video"
+import { YouTube } from "./youtube"
 import { preToCodeBlock } from "../../utils/code"
 
 export const components = {
@@ -17,6 +19,7 @@ export const components = {
   },
   Alert,
   Collapsible,
-  wrapper: ({ children }) => <>{children}</>,
+  Video,
+  YouTube,
   ...headings,
 }

@@ -1,56 +1,49 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
-import { BsArrowRight } from "react-icons/bs"
-import {
-  Container,
-  Tag,
-  TagLabel,
-  TagCloseButton,
-  Wrap,
-  WrapItem,
-  Heading as ChakraHeading,
-  Stack,
-  Text,
-  Box,
-  useColorModeValue,
-  usePrefersReducedMotion,
-} from "@chakra-ui/react"
 import { Layout } from "../components/blocks/layout"
-import { Link } from "../components/link"
+import { Link, ToggleButton, Box, Spacer, SVGIconNames, SVGIcon, Container } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
-import { space } from "../constants/space"
-import { Heading } from "../components/typography/heading"
-import { Spacer } from "../components/blocks/spacer"
+import { Heading, Text } from "../components/typography"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
+import {
+  gardenItemStyle,
+  gardenItemWrapperStyle,
+  iconWrapperStyle,
+  tagCloseIconStyle,
+  tagStyle,
+  wrapListStyle,
+} from "./garden.css"
+import { composeClassNames } from "../utils/box"
+import { paddingResponsiveArrays } from "../styles/tokens/space"
 
 type DataProps = {
   garden: {
-    group: {
+    group: Array<{
       title: string
-    }[]
-    nodes: {
+    }>
+    nodes: Array<{
       title: string
       slug: string
-      icon: string
+      icon: SVGIconNames
       lastUpdated: string
-      tags: string[]
-    }[]
+      tags: Array<string>
+    }>
   }
 }
 
-interface State {
-  tags: string[]
+interface IState {
+  tags: Array<string>
 }
 
 type Action = { type: `ADD_TAG`; payload: string } | { type: `REMOVE_TAG`; payload: string }
 
-const initialState: State = {
+const initialState: IState = {
   tags: [],
 }
 
-const reducer = (state: State, action: Action) => {
+const reducer = (state: IState, action: Action) => {
   switch (action.type) {
     case `ADD_TAG`:
       return { ...state, tags: state.tags.concat(action.payload) }
@@ -62,128 +55,93 @@ const reducer = (state: State, action: Action) => {
 }
 
 const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) => {
-  const [state, dispatch] = useQueryStringReducer<State, Action>({
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
+  const [state, dispatch] = useQueryStringReducer<IState, Action>({
     initialState,
     location,
     reducer,
     // @ts-ignore - Somehow doesn't work
     iso: queryStringIso,
   })
-  const prefersReducedMotion = usePrefersReducedMotion()
-  const dividerColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
-  const bgHoverColor = useColorModeValue(`blueGray.100`, `blueGray.800`)
-  const prominentLink = useColorModeValue(`brand.heading`, `brand.dark.heading`)
 
   return (
     <Layout>
-      <SEO
-        title="Digital Garden"
-        description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
-        image="/social/digital-garden.png"
-        breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
-      />
       <SkipNavContent>
-        <Container py={space.paddingSmall}>
+        <Container py={paddingResponsiveArrays.paddingSmall}>
           <Heading as="h1">Digital Garden</Heading>
-          <Text textStyle="prominent">
-            <Link to="/garden/what-is-a-digital-garden" color={prominentLink}>
+          <Text variant="prominent">
+            <Link to="/garden/what-is-a-digital-garden" color="heading">
               What is a Digital Garden?
             </Link>
             {` `}
             Select tags to filter posts:
           </Text>
-          <Spacer size={6} axis="vertical" />
-          <Wrap>
+          <Spacer size="6" axis="vertical" />
+          <div className={wrapListStyle}>
             {garden.group.map((tag) => {
-              const isActive = state.tags.includes(tag.title)
+              const isActive = state.tags.includes(tag.title) && isMounted
 
               return (
-                <WrapItem
-                  as="button"
-                  onClick={() => {
+                <ToggleButton
+                  key={tag.title}
+                  isSelected={isActive}
+                  onChange={() => {
                     if (state.tags.includes(tag.title)) {
                       dispatch({ type: `REMOVE_TAG`, payload: tag.title })
                     } else {
                       dispatch({ type: `ADD_TAG`, payload: tag.title })
                     }
                   }}
-                  borderRadius="md"
-                  _hover={{
-                    cursor: `pointer`,
-                  }}
-                  _focus={{
-                    boxShadow: `outline`,
-                    outline: `none`,
-                  }}
-                  key={`${tag.title}-${isActive}`}
+                  className={composeClassNames(tagStyle, isActive && `active`)}
                 >
-                  <Tag colorScheme={isActive ? `blue` : `gray`} size="lg">
-                    <TagLabel>{tag.title}</TagLabel>
-                    {isActive && <TagCloseButton as="span" aria-hidden aria-label="" />}
-                  </Tag>
-                </WrapItem>
+                  <>
+                    {tag.title}
+                    {isActive && (
+                      <span className={tagCloseIconStyle} aria-hidden>
+                        <SVGIcon id="close" width="100%" height="100%" />
+                      </span>
+                    )}
+                  </>
+                </ToggleButton>
               )
             })}
-          </Wrap>
-          <Spacer size={20} axis="vertical" />
-          <Stack
-            spacing={0}
-            divider={<Spacer axis="horizontal" size="100%" bg={dividerColor} border="none" />}
-            mx={[`-2`, null, null, `-6`]}
-          >
+          </div>
+          <Spacer size="20" axis="vertical" />
+          <div className={gardenItemWrapperStyle}>
             {garden.nodes
               .filter(({ tags = [] }) => {
+                if (!isMounted) return true
                 if (state.tags.length === 0) {
                   return true
                 }
                 return state.tags.some((tag) => tags.includes(tag))
               })
-              .map((post) => (
-                <Link
-                  to={post.slug}
-                  key={post.slug}
-                  display="grid"
-                  gridTemplateColumns={[`25px 1fr 20px`, `35px 1fr 20px`, null, `50px 1fr 24px`]}
-                  alignItems="center"
-                  gridGap={6}
-                  px={[2, null, null, 6]}
-                  py={[2, null, null, 6]}
-                  borderRadius="lg"
-                  _hover={{
-                    textDecoration: `none`,
-                    backgroundColor: bgHoverColor,
-                  }}
-                  sx={{
-                    span: {
-                      transform: `translate3d(0px, 0px, 0px)`,
-                      transition: `transform .3s cubic-bezier(.73,.26,.42,1.24)`,
-                    },
-                    "&:hover": {
-                      span: {
-                        transform: prefersReducedMotion ? undefined : `translate3d(6px, 0px, 0px)`,
-                      },
-                    },
-                    svg: {
-                      height: [`1.25em`, null, null, `1.5em`],
-                      width: [`1.25em`, null, null, `1.5em`],
-                    },
-                  }}
-                >
-                  <Box width={[25, 35, null, 50]} height={[25, 35, null, 50]}>
-                    <img alt="" src={`/icons/${post.icon}.svg`} width="100%" height="100%" />
-                  </Box>
-                  <Box>
-                    <ChakraHeading as="h2" variant="gardenItem">
-                      {post.title}
-                    </ChakraHeading>
-                    <Text fontSize={[`14px`, null, null, `1rem`]}>{post.lastUpdated}</Text>
-                  </Box>
-                  <span>
-                    <BsArrowRight />
-                  </span>
-                </Link>
+              .map((post, index) => (
+                <React.Fragment key={post.slug}>
+                  <Link to={post.slug} p={[`2`, null, null, `6`]} className={gardenItemStyle}>
+                    <div className={iconWrapperStyle}>
+                      <SVGIcon id={post.icon} width="100%" height="100%" />
+                    </div>
+                    <div>
+                      <Box as="h2" fontSize={[`md`, null, null, `lg`, `lgx`]} fontWeight="medium" color="heading">
+                        {post.title}
+                      </Box>
+                      <Text fontSize={[`sm`, null, null, `md`]}>{post.lastUpdated}</Text>
+                    </div>
+                    <span>
+                      <SVGIcon id="arrow-right" height="1.25em" width="1.25em" />
+                    </span>
+                  </Link>
+                  {index !== garden.nodes.length - 1 && (
+                    <Spacer axis="horizontal" size="full" bg="divider" border="none" />
+                  )}
+                </React.Fragment>
               ))}
-          </Stack>
+          </div>
         </Container>
       </SkipNavContent>
     </Layout>
@@ -191,6 +149,16 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
 }
 
 export default Garden
+
+export const Head = () => (
+  <SEO
+    title="Digital Garden"
+    pathname="/garden"
+    description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
+    image="/social/digital-garden.png"
+    breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
+  />
+)
 
 export const query = graphql`
   {

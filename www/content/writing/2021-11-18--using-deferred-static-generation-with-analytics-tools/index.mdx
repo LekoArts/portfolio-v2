@@ -16,7 +16,7 @@ Gatsby 4 introduced a lot of new features, most notably the introduction of addi
 
 So why should you care about Deferred Static Generation? In a nutshell it delays (or defers) the generation of pages until a user actually requests the page. After that the build artifacts (HTML & JSON) are cached at the CDN level and for all visitors afterwards it behaves like a normal SSG page. In a scenario where you build thousands of pages but only a subset of them gets regular visits from users, DSG can dramatically improve your build speeds. And you still get the SSG benefits like great SEO, speed, and reliability.
 
-In choosing what pages to defer you can improve your page on a granular and individual level -- but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site. You can find a complete example on GitHub: [gatsby-dsg-plausible-analytics](https://github.com/LekoArts/gatsby-dsg-plausible-analytics).
+In choosing what pages to defer you can improve your page on a granular and individual level – but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site. You can find a complete example on GitHub: [gatsby-dsg-plausible-analytics](https://github.com/LekoArts/gatsby-dsg-plausible-analytics).
 
 <Alert status="info" title="Prerequisites">
 
@@ -176,7 +176,7 @@ curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&pro
 
 Here, for a period of 6 months the top 5 pages are returned for the given site id. By default, the `limit` is 100. Translating that `curl` command into the shape of `node-fetch` looks something like this:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {3,11-16}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=3,11-16
 const fetch = require("node-fetch")
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -202,7 +202,7 @@ To authenticate your request to Plausible you set an `Authorization` header in t
 
 All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.js` file:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js {18-31}
+```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=18-31
 const fetch = require("node-fetch")
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
@@ -243,7 +243,7 @@ Each node needs a unique `id` and by using the helper function `createNodeId` yo
 
 Congrats, you wrote a source plugin! Time to test it out and see if it all works. Before you can start the development server, you first need to add your newly created local plugin to `gatsby-config.js`. When using `.env` files you'll also need to initialize `dotenv`. You saved the `PLAUSIBLE_API_KEY` earlier in an `.env` file, and the `siteId` is the same thing as the `domain` for `gatsby-plugin-plausible`.
 
-```js title=gatsby-config.js {1,7-13}
+```js title=gatsby-config.js highlight=1,7-13
 require("dotenv").config()
 
 module.exports = {
@@ -348,7 +348,7 @@ The result will be an array of objects with the `slug` key. For easier compariso
 
 The complete `gatsby-node.js` looks something like this:
 
-```js title=gatsby-node.js {15-23,27,30-31,38}
+```js title=gatsby-node.js highlight=15-23,27,30-31,38
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
 
 exports.createPages = async ({ graphql, actions }) => {

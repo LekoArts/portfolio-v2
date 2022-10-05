@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from "gatsby"
 
 type DistinctCategoryQueryResult = {
   allCategory: {
-    distinct: string[]
+    distinct: Array<string>
   }
 }
 

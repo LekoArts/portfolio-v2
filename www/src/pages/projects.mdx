@@ -1,11 +1,13 @@
 import { MDXLayout as PageLayout } from "../components/blocks/mdx-layout"
 import { SEO } from "../components/seo"
 
-<SEO
-  title="Projects"
-  description="Work Projects and Open Source Contributions explained with technical details and links to source code."
-  breadcrumbListItems={[{ name: `Projects`, url: `/projects` }]}
-/>
+export const Head = () => (
+  <SEO
+    title="Projects"
+    description="Work Projects and Open Source Contributions explained with technical details and links to source code."
+    breadcrumbListItems={[{ name: `Projects`, url: `/projects` }]}
+  />
+)
 
 export default PageLayout
 
@@ -29,7 +31,7 @@ The relevant code was added to the existing [gatsby-plugin-page-creator](https:/
 
 ### Description
 
-While the [File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) when I took the project over has already been in a beta stage for some weeks there was still much to do. Incorporating the bug reports and feature requests from the community, adding unit & end-to-end tests, writing documentation. A lot of work went into the polishing of this feature and ensuring that most common use cases were covered -- since the goal of this new feature was to abstract some lower-level Gatsby APIs away into the filename itself. It greatly improved the DX of Gatsby and lowered the level of entry for each user. Challenges were different encodings/formats of file names, some feature requests from users, and the question of what the final API surface should look like. All the added tests and user interviews cleared a path for finding solutions before the GA release. An [example](https://github.com/gatsbyjs/gatsby/tree/d430823842800745107a441d2f6a6029d6b6c1d7/examples/route-api) also shows the API in action.
+While the [File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) when I took the project over has already been in a beta stage for some weeks there was still much to do. Incorporating the bug reports and feature requests from the community, adding unit & end-to-end tests, writing documentation. A lot of work went into the polishing of this feature and ensuring that most common use cases were covered – since the goal of this new feature was to abstract some lower-level Gatsby APIs away into the filename itself. It greatly improved the DX of Gatsby and lowered the level of entry for each user. Challenges were different encodings/formats of file names, some feature requests from users, and the question of what the final API surface should look like. All the added tests and user interviews cleared a path for finding solutions before the GA release. An [example](https://github.com/gatsbyjs/gatsby/tree/d430823842800745107a441d2f6a6029d6b6c1d7/examples/route-api) also shows the API in action.
 
 ## Internalization Theme (Gatsby)
 

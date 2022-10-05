@@ -2,10 +2,10 @@ import { graphql, useStaticQuery } from "gatsby"
 
 type CategoryQueryResult = {
   allCategory: {
-    nodes: {
+    nodes: Array<{
       name: string
       slug: string
-    }[]
+    }>
   }
 }
 

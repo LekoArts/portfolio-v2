@@ -1,7 +1,10 @@
 import * as React from "react"
-import { VisuallyHidden, Box } from "@chakra-ui/react"
+import { VisuallyHidden } from "../a11y/visually-hidden"
+import { Box } from "../primitives"
 import { copyToClipboard } from "../../utils/copy-to-clipboard"
+import { copyButtonStyle } from "./copy.css"
 
+// eslint-disable-next-line no-promise-executor-return
 const delay = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
 
 type CopyProps = {
@@ -15,13 +18,12 @@ export const Copy = ({ content, duration = 5000, fileName = ``, trim = false }: 
   const [copied, setCopied] = React.useState(false)
 
   const label = copied
-    ? `${fileName ? `${fileName} ` : ``}copied to clipboard`
-    : `${fileName ? `${fileName}: ` : ``}copy code to clipboard`
+    ? `${fileName ? `${fileName} ` : ``}Copied to clipboard`
+    : `${fileName ? `${fileName}: ` : ``}Copy code to clipboard`
 
   return (
     <Box
       as="button"
-      type="button"
       name={label}
       disabled={copied}
       onClick={async () => {
@@ -30,22 +32,12 @@ export const Copy = ({ content, duration = 5000, fileName = ``, trim = false }: 
         await delay(duration)
         setCopied(false)
       }}
-      transition="all 0.3s ease-in-out"
-      border="1px solid transparent"
-      px={2}
-      borderRadius="6px"
-      _hover={{
-        border: `1px solid currentColor`,
-      }}
-      _disabled={{
-        opacity: 0.5,
-        cursor: `not-allowed`,
-      }}
+      px="2"
+      borderRadius="md"
+      className={copyButtonStyle}
     >
       {copied ? `Copied` : `Copy`}
-      <VisuallyHidden as="span" aria-roledescription="status">
-        {label}
-      </VisuallyHidden>
+      <VisuallyHidden aria-roledescription="status">{label}</VisuallyHidden>
     </Box>
   )
 }

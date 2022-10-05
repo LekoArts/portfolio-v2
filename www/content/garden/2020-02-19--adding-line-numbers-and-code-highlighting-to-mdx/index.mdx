@@ -1,40 +1,48 @@
 ---
 title: "Adding Line Numbers and Code Highlighting to MDX"
 date: 2020-02-19
-lastUpdated: 2021-04-26
+lastUpdated: 2022-09-01
 icon: "mdx"
 tags:
   - Gatsby
   - MDX
 ---
 
-In this very short quick tip you'll learn how to set up code blocks in [MDX](https://mdxjs.com/) and Gatsby that support line numbers and code highlighting using the code renderer [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer). A preview can be found on [CodeSandbox](https://codesandbox.io/s/mdx-line-numbers-code-highlighting-99wb5).
+In this very short quick tip you'll learn how to set up code blocks in [MDX](https://mdxjs.com/) and Gatsby that support line numbers and code highlighting using the code renderer [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer). You can also combine this with the tip on [Adding Language Tabs](/garden/language-tabs-for-markdown-and-mdx-code-blocks#mdx--prism-react-renderer).
 
-First, make sure that you have a MDX blog set up. If you have that already, you can skip to the packages. If not, you should first read [Getting Started with MDX](https://www.gatsbyjs.com/docs/mdx/getting-started/) on Gatsby's documentation.
+You'll be able to write the following in your MDX:
+
+````mdx
+```js highlight=1,3-5
+const foo = "bar"
+
+const hello = () => {
+  return "World"
+}
+```
+````
+
+The first and third to fifth line will be highlighted.
+
+<Alert status="info" title="Note">
+
+The following instructions require you to use at least `gatsby@^4.0.0`, `gatsby-plugin-mdx@^4.0.0`, and `@mdx-js/react@^2.0.0`.
+
+</Alert>
+
+First, make sure that you have a MDX blog set up. If you have that already, you can skip to the packages. If not, you should first read [Getting Started with MDX](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) on Gatsby's documentation.
 
 Install the necessary packages for this quick tip:
 
 ```sh
-npm install mdx-utils prism-react-renderer
+npm install prism-react-renderer unist-util-visit@^2
 ```
 
-Create a Code React component in `src/components/code.js` and leave the file empty for now.
+Create a `Code` React component in `src/components/code.js` and leave the file empty for now.
 
 Also create a CSS file:
 
-```css title=src/components/layout.css
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
+```css title=styles.css
 .prism-code {
   font-size: 1rem;
   padding-top: 1rem;
@@ -95,31 +103,91 @@ gatsby-highlight > code[class*="language-"],
 }
 ```
 
-Switch to your file that contains the `MDXProvider`. If you use e.g. the `defaultLayouts` option inside `gatsby-plugin-mdx` of `gatsby-config.js`:
+Import the `styles.css` file into `gatsby-browser.js` to add them to your site:
 
-```js title=gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-mdx",
-      options: {
-        defaultLayouts: {
-          default: require.resolve("./src/components/layout.js"),
-        },
-      },
-    },
-  ],
-}
+```js title=gatsby-browser.js
+import "./styles.css"
 ```
 
-You'll need to add the `MDXProvider` and the rest of the following code (it's essentially the components placed into the wrapping `MDXProvider`) to your Layout file:
+Next, create a `rehype` plugin to add the `highlight` information to the `meta` field of MDX. Then, those meta fields will be added as `props` that that you then can access.
+
+Create a file called `rehype-meta-as-attributes.js` at the root:
+
+```js title=rehype-meta-as-attributes.js
+const visit = require(`unist-util-visit`)
+const re = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
+
+function rehypeMetaAsAttributes() {
+  return (tree) => {
+    visit(tree, `element`, (node) => {
+      let match
+
+      if (node.tagName === `code` && node.data && node.data.meta) {
+        re.lastIndex = 0 // Reset regex.
+
+        while ((match = re.exec(node.data.meta))) {
+          node.properties[match[1]] = match[2] || match[3] || match[4] || true
+        }
+      }
+    })
+  }
+}
+
+module.exports = rehypeMetaAsAttributes
+```
+
+<Alert status="info" title="Note">
+
+The instructions were adapted from the MDX Guide [Syntax Highlighting witht the `meta` field](https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-with-the-meta-field).
+
+</Alert>
+
+In your `gatsby-config.js`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
+
+```js title=gatsby-config.js
+const rehypeMetaAsAttributes = require(`rehype-meta-as-attributes`)
+
+// Rest of config...
+
+{
+  resolve: `gatsby-plugin-mdx`,
+  options: {
+    // Rest of options...
+    mdxOptions: {
+      rehypePlugins: [rehypeMetaAsAttributes],
+    },
+  },
+},
+```
+
+Switch to your file that contains the `MDXProvider`. This is most likely your layout file, check [Defining a layout](https://www.gatsbyjs.com/docs/how-to/routing/mdx/#defining-a-layout) if you haven't one already.
+
+You'll need to create a helper function called `preToCodeBlock` and define the `components` object. The `preToCodeBlock` parses the incoming props from the `pre` tag and returns a normalized object that later the `Code` component uses. Later you'll define [shortcodes](https://www.gatsbyjs.com/docs/how-to/routing/mdx/#make-components-available-globally-as-shortcodes).
 
 ```js title=src/components/layout.js
 import * as React from "react"
 import { MDXProvider } from "@mdx-js/react"
-import { preToCodeBlock } from "mdx-utils"
 import Code from "./code"
-import "./layout.css"
+
+const preToCodeBlock = (preProps) => {
+  if (preProps?.children?.type === `code`) {
+    const {
+      children: codeString,
+      className = ``,
+      ...props
+    } = preProps.children.props
+
+    const match = className.match(/language-([\0-\uFFFF]*)/)
+    return {
+      codeString: codeString.trim(),
+      className,
+      language: match !== null ? match[1] : ``,
+      ...props,
+    }
+  }
+
+  return undefined
+}
 
 const components = {
   pre: (preProps) => {
@@ -143,7 +211,7 @@ const Layout = ({ children }) => (
 export default Layout
 ```
 
-The important bit is that you pass `components` into the provider and the previously created Code React component is used.
+The important bit is that you pass `components` into the `MDXProvider` and the previously created `Code` React component is used.
 
 Add the following to said component:
 
@@ -152,15 +220,14 @@ import * as React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 import theme from "prism-react-renderer/themes/nightOwl"
 
-const RE = /{([\d,-]+)}/
-
 const calculateLinesToHighlight = (meta) => {
-  if (!RE.test(meta)) {
+  if (!meta) {
     return () => false
   }
-  const lineNumbers = RE.exec(meta)[1]
+  const lineNumbers = meta
     .split(`,`)
     .map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
+
   return (index) => {
     const lineNumber = index + 1
     const inRange = lineNumbers.some(([start, end]) =>
@@ -170,8 +237,8 @@ const calculateLinesToHighlight = (meta) => {
   }
 }
 
-const Code = ({ codeString, language, metastring, ...props }) => {
-  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+const Code = ({ codeString, language, highlight, ...props }) => {
+  const shouldHighlightLine = calculateLinesToHighlight(highlight)
 
   return (
     <Highlight
@@ -210,8 +277,4 @@ const Code = ({ codeString, language, metastring, ...props }) => {
 export default Code
 ```
 
-The `calculateLinesToHighlight` helper function gets the `metastring` as an input which is the notation for the line highlighting. As you can see in the linked [CodeSandbox](https://codesandbox.io/s/mdx-line-numbers-code-highlighting-99wb5) example you can write `{1,9-12}` to highlight the first and 9th to 12th line.
-
-## Learn more
-
-Want to learn how to add language tabs to your code blocks? Read [Language Tabs for Markdown and MDX Code Blocks](/garden/language-tabs-for-markdown-and-mdx-code-blocks) to learn more.
+The `calculateLinesToHighlight` helper function gets the `highlight` prop from the `preProps` with the help of `rehype-meta-as-attributes`.

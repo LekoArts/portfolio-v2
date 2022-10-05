@@ -2,17 +2,17 @@ import { graphql, useStaticQuery } from "gatsby"
 
 type Props = {
   allFooterNavigation: {
-    nodes: {
+    nodes: Array<{
       heading: {
         link?: string
         name: string
       }
-      items: {
+      items: Array<{
         isExternal?: boolean
         link: string
         name: string
-      }[]
-    }[]
+      }>
+    }>
   }
 }
 

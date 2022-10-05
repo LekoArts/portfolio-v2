@@ -1,21 +1,14 @@
 import * as React from "react"
-import { useStyleConfig, Box, BoxProps } from "@chakra-ui/react"
-
-interface IProseProps extends BoxProps {
-  variant?: "default" | "sm" | "md" | "lg" | "xl"
-}
+import { composeClassNames } from "../../utils/box"
+import { IBoxProps, Box } from "../primitives"
+import { proseRootStyle } from "./prose.css"
 
 /**
  * Implementation of https://github.com/tailwindlabs/tailwindcss-typography.
- * Use the variant to choose from the different options (default, sm, md, lg, xl)
- * "default" is [`sm`, `md`, `md`, `lg`, `xl`] as included CSS media queries
+ * Default variant choosing with [`sm`, `md`, null, `lg`, `xl`] as responsive array of those variants
  */
-export const Prose: React.FC<IProseProps> = ({ variant = `default`, children, ...rest }) => {
-  const styles = useStyleConfig(`Prose`, { variant })
-
-  return (
-    <Box sx={styles} {...rest}>
-      {children}
-    </Box>
-  )
-}
+export const Prose: React.FC<React.PropsWithChildren<IBoxProps>> = ({ children, className, ...rest }) => (
+  <Box className={composeClassNames(proseRootStyle, className)} {...rest}>
+    {children}
+  </Box>
+)

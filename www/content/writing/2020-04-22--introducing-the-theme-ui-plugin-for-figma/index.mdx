@@ -2,11 +2,11 @@
 title: "Introducing the Theme UI Plugin for Figma"
 subtitle: ""
 date: 2020-04-22
-lastUpdated: 2021-08-07
+lastUpdated: 2021-12-25
 description: "The Theme UI plugin for Figma allows for a workflow where Theme UI is the starting point both for design & development."
 type: "prose"
 category: "Design"
-image: /og-images/theme-ui-plugin.png?v=1
+image: /og-images/theme-ui-plugin.png?v=2
 published: true
 ---
 
@@ -18,7 +18,7 @@ Introducing the [Theme UI plugin for Figma](https://www.figma.com/community/plug
 
 ![Theme UI header graphic saying on the left: "Use your Theme UI config to quickly create color and text styles". On the right a preview of the interface is shown.](./theme-ui_header.jpg)
 
-You can install the plugin directly in Figma via the Community hub. Since the plugin is still in its early stages I'd appreciate feedback or contributions to the plugin itself. The source code is on GitHub: https://github.com/LekoArts/figma-theme-ui
+You can install the plugin directly in Figma via the Community hub. Since the plugin is still in its early stages I'd appreciate feedback or contributions to the plugin itself. The source code is [on GitHub](https://github.com/LekoArts/figma-theme-ui).
 
 <Collapsible summary={<em>Want to create your own Figma plugin?</em>}>
 
@@ -30,48 +30,47 @@ So if you know Svelte already, go ahead and clone the boilerplate. If not, I'd e
 
 ## How a typical workflow looks like
 
-So, what even is Theme UI? For me personally it's a great abstraction on top of existing CSS-in-JS styling solutions. Using plain Emotion still enabled me to get into bad habits of e.g. using different CSS for things that actually should look the same / feel consistent. Designing with constraints -- but still being able to break out of those in one-off cases -- is a huge step forward in creating interfaces more quickly and coherent. I think the [motivation docs](https://theme-ui.com/guides/motivation/) also phrase it in a clear way:
+So, what even is Theme UI? For me personally it's a great abstraction on top of existing CSS-in-JS styling solutions. Using plain Emotion still enabled me to get into bad habits of e.g. using different CSS for things that actually should look the same / feel consistent. Designing with constraints – but still being able to break out of those in one-off cases – is a huge step forward in creating interfaces more quickly and coherent. I think the [motivation docs](https://theme-ui.com/guides/motivation/) also phrase it in a clear way:
 
 > One of the primary motivations behind Theme UI is to make building themeable, constraint-based user interfaces in React as simple and as interoperable as possible. [...] While some of the ideas encapsulated within this library may seem familiar, the intent here is to combine modern CSS tooling into a single "mini-framework" with good guidance on how to fall into the pit of success for creating white-label products, themed component libraries, and even full websites.
 
 ### Creating a theme file
 
-You should begin by creating a theme file in JavaScript with a default export in the `module.exports` syntax. It can be as minimal as:
+You should begin by creating a theme file in JSON following the [Theme UI specification](https://theme-ui.com/theme-spec/). It can be as minimal as:
 
-```js title=index.js
-module.exports = {
-  space: [0, 4, 8, 16, 32, 64],
-  fonts: {
-    body: '-apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
-    heading: "inherit",
+```json title=your-config.json
+{
+  "space": [0, 4, 8, 16, 32, 64],
+  "fonts": {
+    "body": "-apple-system, BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
+    "heading": "inherit"
   },
-  fontSizes: [12, 14, 16, 20, 24, 32],
-  fontWeights: {
-    body: 400,
-    heading: 700,
+  "fontSizes": [12, 14, 16, 20, 24, 32],
+  "fontWeights": {
+    "body": 400,
+    "heading": 700
   },
-  lineHeights: {
-    body: 1.5,
-    heading: 1.125,
+  "lineHeights": {
+    "body": 1.5,
+    "heading": 1.125
   },
-  colors: {
-    text: "#000",
-    background: "#fff",
-    brand: {
-      primary: "#07c",
-      secondary: "#30c",
+  "colors": {
+    "text": "#000",
+    "background": "#fff",
+    "brand": {
+      "primary": "#07c",
+      "secondary": "#30c"
     },
-    teal: [null, "#e6fffa", "#b2f5ea", "#81e6d9"],
-  },
+    "teal": [null, "#e6fffa", "#b2f5ea", "#81e6d9"]
+  }
 }
 ```
 
-Save the file as `index.js` somewhere (e.g. in your React project where you use Theme UI). The content is from [an example config](https://github.com/LekoArts/figma-theme-ui/blob/master/example-config.js). The theme file itself can be extended of course, following the [official spec](https://theme-ui.com/theme-spec/).
+Save the file as `your-config.json` somewhere (e.g. in your React project where you use Theme UI). The content is from [an example config](https://github.com/LekoArts/figma-theme-ui/blob/main/example-config.json). The theme file itself can be extended of course, following the [official spec](https://theme-ui.com/theme-spec/).
 
 <Alert status="info" title="Note">
 
-You need to make sure to use `module.exports` syntax as no other content than the config is allowed in the file.
-Otherwise the Figma plugin has problems parsing your config.
+You need to make sure to create a valid JSON file. Otherwise the Figma plugin has problems parsing your config.
 
 </Alert>
 
@@ -83,7 +82,7 @@ Open the plugin by doing a _Right click_ => _Plugins_ => _Theme UI_.
 
 ![A window showing the interface for the Theme UI plugin. One can upload the config, optionally only apply colors or typography and then press a "Add styles" button.](./theme-ui_step-01.jpg)
 
-The only option in the initial window is pressing the "Upload config" button. Choose the `index.js` file you created in the previous step. When it successfully loaded you'll be able to toggle two options:
+The only option in the initial window is pressing the "Upload config" button. Choose the `your-config.json` file you created in the previous step. When it successfully loaded you'll be able to toggle two options:
 
 ![After uploading the theme file you then can activate/deactivate "colors" and "typography" and then press "Add styles" to close the dialog.](./theme-ui_step-02.jpg)
 

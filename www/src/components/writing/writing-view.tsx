@@ -1,16 +1,11 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { Box, Container, Divider, Link as ExternalLink, Text, Stack } from "@chakra-ui/react"
 import { MDXProvider } from "@mdx-js/react"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Layout } from "../blocks/layout"
-import { SEO } from "../seo"
 import { SkipNavContent } from "../a11y/skip-nav"
-import { Spacer } from "../blocks/spacer"
-import { Prose } from "../typography/prose"
+import { Spacer, Box, ExternalLink, ShareAnywhereButton, TwitterButton, Container } from "../primitives"
+import { Prose, Text } from "../typography"
 import { components } from "../mdx"
-import { article } from "../../constants/json-ld"
-import { ShareAnywhereButton, TwitterButton } from "../buttons"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
 
@@ -20,7 +15,6 @@ export type WritingViewDataProps = {
     title: string
     date: string
     description: string
-    body: string
     excerpt: string
     lastUpdated: string
     seoDate: string
@@ -29,7 +23,7 @@ export type WritingViewDataProps = {
     subtitle: string
     timeToRead: string
     tableOfContents?: {
-      items?: TocItem[]
+      items?: Array<TocItem>
     }
     image?: string
     category: {
@@ -44,9 +38,16 @@ export type WritingViewDataProps = {
   }
   pathname: string
   type: "prose" | "tutorial"
+  mdxContent: string
 }
 
-const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children, type }) => {
+export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>> = ({
+  post,
+  pathname,
+  children,
+  type,
+  mdxContent,
+}) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
   React.useEffect(() => {
@@ -55,65 +56,33 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
 
   return (
     <Layout>
-      <SEO title={post.title} description={post.description ? post.description : post.excerpt} image={post.image}>
-        <meta name="twitter:label1" value="Time To Read" />
-        <meta name="twitter:data1" value={`${post.timeToRead} Minutes`} />
-        <meta name="twitter:label2" value="Category" />
-        <meta name="twitter:data2" value={post.category.name} />
-        <meta name="article:published_time" content={post.seoDate} />
-        <meta name="article:modified_time" content={post.seoLastUpdated} />
-        <script type="application/ld+json">
-          {JSON.stringify(
-            article({
-              isGarden: false,
-              post: {
-                title: post.title,
-                description: post.description ? post.description : post.excerpt,
-                date: post.seoDate,
-                lastUpdated: post.seoLastUpdated,
-                year: post.yearDate,
-                image: post.image,
-                slug: post.slug,
-              },
-              category: {
-                name: post.category.name,
-                slug: post.category.slug,
-              },
-            })
-          )}
-        </script>
-      </SEO>
       <Container variant="proseRoot">
         <SkipNavContent>
           {children}
           {type === `tutorial` && post.tableOfContents?.items ? (
             <WithSidebarWrapper items={post.tableOfContents.items}>
-              <Prose as="article" flex="1 1 100%" minW="100%">
-                <MDXProvider components={components}>
-                  <MDXRenderer>{post.body}</MDXRenderer>
-                </MDXProvider>
+              <Prose as="article" style={{ flex: `1 1 100%`, minWidth: `100%` }}>
+                <MDXProvider components={components}>{mdxContent}</MDXProvider>
               </Prose>
             </WithSidebarWrapper>
           ) : (
             <Prose as="article">
-              <MDXProvider components={components}>
-                <MDXRenderer>{post.body}</MDXRenderer>
-              </MDXProvider>
+              <MDXProvider components={components}>{mdxContent}</MDXProvider>
             </Prose>
           )}
-          <Spacer size={12} axis="vertical" />
-          <Divider />
-          <Spacer size={6} axis="vertical" />
-          <Stack
-            direction={[`column`, `row`]}
+          <Spacer size="12" axis="vertical" />
+          <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
+          <Spacer size="6" axis="vertical" />
+          <Box
             display="flex"
-            spacing="5"
+            flexDirection={[`column`, `row`]}
+            gap="5"
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
           >
-            <Box>
+            <div>
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/writing/${post.parent.parent.relativePath}`}
               >
@@ -121,24 +90,24 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
               </ExternalLink>
               {` `}-{` `}
               <ExternalLink
-                fontSize={[`md`, null, null, `1.125rem`]}
+                fontSize={[`md`, null, null, `lg`]}
                 fontWeight="medium"
                 href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
               >
                 Discuss on Twitter
               </ExternalLink>
-            </Box>
+            </div>
             {hasShareApi ? (
-              <Stack direction={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]}>
                 <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
                 <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
-              </Stack>
+              </Box>
             ) : (
               <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
             )}
-          </Stack>
+          </Box>
           {type === `prose` && (
-            <Text mt={6} fontSize={[`md`, null, null, `1.125rem`]}>
+            <Text marginTop="6" fontSize={[`md`, null, null, `lg`]}>
               Last updated: {post.lastUpdated}
             </Text>
           )}
@@ -148,15 +117,12 @@ const WritingView: React.FC<WritingViewDataProps> = ({ post, pathname, children,
   )
 }
 
-export default WritingView
-
 export const query = graphql`
   fragment WritingView on Post {
     slug
     title
     description
     excerpt
-    body
     seoLastUpdated: lastUpdated
     lastUpdated(formatString: "MMM DD, YYYY")
     seoDate: date

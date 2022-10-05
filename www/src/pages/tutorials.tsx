@@ -6,37 +6,39 @@ import { SEO } from "../components/seo"
 
 type TutorialsProps = {
   posts: {
-    nodes: {
+    nodes: Array<{
       title: string
       date: string
       slug: string
       subtitle: string
       description: string
-    }[]
+    }>
   }
 }
 
-const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => {
-  const tutorialsTitle = `Tutorials`
-  const tutorialsDescription = `Tutorials across different categories in a longform format & with interactive elements`
+const tutorialsTitle = `Tutorials`
+const tutorialsDescription = `Tutorials across different categories in a longform format & with interactive elements`
 
-  return (
-    <CategoryView posts={posts}>
-      <SEO
-        title={tutorialsTitle}
-        description={tutorialsDescription}
-        breadcrumbListItems={[{ name: `Tutorials`, url: `/tutorials` }]}
-      />
-      <CategoryHero
-        bgGradient="linear(to-t, blueGray.600, blueGray.900)"
-        title={tutorialsTitle}
-        description={tutorialsDescription}
-      />
-    </CategoryView>
-  )
-}
+const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => (
+  <CategoryView posts={posts}>
+    <CategoryHero
+      bgGradient="linear-gradient(to top, #475569, #0f172a)"
+      title={tutorialsTitle}
+      description={tutorialsDescription}
+    />
+  </CategoryView>
+)
 
 export default Tutorials
+
+export const Head = () => (
+  <SEO
+    title={tutorialsTitle}
+    pathname="/tutorials"
+    description={tutorialsDescription}
+    breadcrumbListItems={[{ name: `Tutorials`, url: `/tutorials` }]}
+  />
+)
 
 export const query = graphql`
   {

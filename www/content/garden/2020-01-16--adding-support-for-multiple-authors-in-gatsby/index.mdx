@@ -5,7 +5,6 @@ lastUpdated: 2021-04-26
 icon: "gatsby"
 tags:
   - Gatsby
-  - MDX
 ---
 
 This quick tip will explain how you can have multiple authors for your blog posts. It's not limited to Markdown but the example Gatsby site will use that. You can apply the general technique also to your site that is powered by a CMS or other data source. [See the example project on Codesandbox](https://codesandbox.io/s/markdown-multiple-authors-b3s64).
@@ -69,7 +68,7 @@ For this to work you'll need to create a foreign-key relationship between the bl
 
 Add to your `gatsby-node.js` file:
 
-```js title=gatsby-node.js {9}
+```js title=gatsby-node.js highlight=9
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `

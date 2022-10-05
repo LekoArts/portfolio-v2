@@ -56,3 +56,12 @@ junit.xml
 cypress/videos
 cypress/screenshots
 cypress/e2e/build
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.swc
+playwright/test-results

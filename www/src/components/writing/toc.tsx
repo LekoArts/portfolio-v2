@@ -1,14 +1,16 @@
 import * as React from "react"
-import { Box, useColorModeValue, Link } from "@chakra-ui/react"
+import { Box, ExternalLink } from "../primitives"
+import { asideStyle, headingStyle, navStyle, wrapperStyle } from "./toc.css"
+import type { Colors } from "../../styles/tokens/colors"
 import { useActiveHash } from "../../hooks/use-active-hash"
 
 export type TocItem = {
   url: string
   title: string
-  items?: TocItem[]
+  items?: Array<TocItem>
 }
 
-function getIds(items: TocItem[]): string[] {
+function getIds(items: Array<TocItem>): Array<string> {
   return items.reduce((acc, item) => {
     if (item.url) {
       // url has a # as first character, remove it to get the raw CSS-id
@@ -24,13 +26,13 @@ function getIds(items: TocItem[]): string[] {
 const renderItems = ({
   items,
   activeId,
-  nested = false,
-  activeColor = `red`,
+  level = 0,
+  activeColor = `primary`,
 }: {
-  items: TocItem[]
+  items: Array<TocItem>
   activeId: string
-  nested?: boolean
-  activeColor?: string
+  level?: number
+  activeColor?: Colors
 }): JSX.Element => (
   <>
     {items.map((item) => {
@@ -38,72 +40,51 @@ const renderItems = ({
       const isActive = activeId === itemId
 
       return (
-        <>
-          <Link
+        <React.Fragment key={item.url}>
+          <ExternalLink
+            fontWeight={isActive ? `medium` : `normal`}
             color={isActive ? activeColor : `inherit`}
-            key={item.url}
-            mt={nested ? 1 : { base: `2`, "2xl": `3` }}
-            ml={nested ? 3 : 0}
+            marginTop={level ? `1` : { mobile: `2`, "2xl": `3` }}
+            marginLeft={level ? `${level * 2}` : `0`}
+            paddingRight="1"
             href={item.url}
           >
             {item.title}
-          </Link>
-          {item.items && renderItems({ items: item.items, activeId, activeColor, nested: true })}
-        </>
+          </ExternalLink>
+          {item.items && renderItems({ items: item.items, activeId, activeColor, level: level + 1 })}
+        </React.Fragment>
       )
     })}
   </>
 )
 
-export const Toc = ({ items }: { items: TocItem[] }) => {
-  const tocHeadingColor = useColorModeValue(`brand.heading`, `brand.dark.heading`)
-  const activeColor = useColorModeValue(`brand.primary`, `brand.dark.primary`)
+export const Toc = ({ items }: { items: Array<TocItem> }) => {
   const ids = getIds(items)
   const activeItemHash = useActiveHash(ids)
 
   return (
-    <Box
-      as="aside"
-      position={{ base: `relative`, "2xl": `sticky` }}
-      maxHeight={{ base: `unset`, "2xl": `300px` }}
-      top={{ base: `unset`, "2xl": `80px` }}
-      mb={{ base: `16`, "2xl": 0 }}
-      fontSize={[`0.875rem`, `1rem`]}
-    >
-      <Box
-        as="nav"
-        display="flex"
-        flexDir="column"
-        mt={{ base: `0rem`, "2xl": `1.8em` }}
-        minWidth="175px"
-        maxWidth={{ base: `100%`, "2xl": `210px` }}
-        overflow="auto"
-        alignItems="flex-start"
-      >
+    <Box as="aside" marginBottom={{ mobile: `16`, "2xl": `0` }} fontSize={[`sm`, `md`]} className={asideStyle}>
+      <Box as="nav" display="flex" flexDirection="column" alignItems="flex-start" className={navStyle}>
         <Box
           as="h2"
-          color={tocHeadingColor}
-          textTransform="uppercase"
-          fontSize={[`14px`, null, null, `1rem`, null, `14px`]}
+          color="heading"
           fontWeight="medium"
-          letterSpacing="0.075em"
-          mb={{ base: `2`, "2xl": `4` }}
+          marginBottom={{ mobile: `2`, "2xl": `4` }}
+          className={headingStyle}
         >
           Table of Contents
         </Box>
-        {renderItems({ items, activeId: activeItemHash, activeColor })}
+        {renderItems({ items, activeId: activeItemHash, activeColor: `primary` })}
       </Box>
     </Box>
   )
 }
 
-export const WithSidebarWrapper: React.FC<{ items: TocItem[] }> = ({ children, items }) => (
-  <Box
-    display={{ base: `block`, "2xl": `flex` }}
-    flexDirection="row-reverse"
-    justifyContent="flex-end"
-    sx={{ gap: `5rem` }}
-  >
+export const WithSidebarWrapper: React.FC<React.PropsWithChildren<{ items: Array<TocItem> }>> = ({
+  children,
+  items,
+}) => (
+  <Box flexDirection="row-reverse" justifyContent="flex-end" gap="20" className={wrapperStyle}>
     <Toc items={items} />
     {children}
   </Box>

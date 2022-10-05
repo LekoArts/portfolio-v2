@@ -3,7 +3,7 @@ import { site } from "./meta"
 export const identity = {
   "@id": `${site.url}/#identity`,
   "@type": `Organization`,
-  alternateName: `LekoArts`,
+  alternateName: `Lennart Jörgens`,
   description: site.description,
   email: `hello@lekoarts.de`,
   founder: `Lennart Jörgens`,
@@ -34,7 +34,7 @@ export const identity = {
 export const creator = {
   "@id": `${site.url}/#creator`,
   "@type": `Organization`,
-  alternateName: `LekoArts`,
+  alternateName: `Lennart Jörgens`,
   description: site.description,
   email: `hello@lekoarts.de`,
   founder: `Lennart Jörgens`,
@@ -60,7 +60,7 @@ export type BreadcrumbListItem = {
   name: string
 }
 
-export const breadcrumbList = (items: BreadcrumbListItem[]) => {
+export const breadcrumbList = (items: Array<BreadcrumbListItem>) => {
   const homeLevel = {
     "@type": `ListItem`,
     item: {

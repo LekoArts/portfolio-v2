@@ -1,5 +1,7 @@
 import * as React from "react"
-import { Box, VisuallyHidden } from "@chakra-ui/react"
+import { VisuallyHidden } from "../a11y/visually-hidden"
+import { Box } from "../primitives"
+import { anchorStyle, headingStyle, introductionStyle } from "./heading.css"
 
 type HeadingProps = {
   id: string
@@ -13,30 +15,20 @@ const heading =
       if (Tag === 'h2' && children === `Introduction`) {
         return (
           <VisuallyHidden>
-            <Box as={Tag} id={id} sx={{ my: '0 !important' }}>{children}</Box>
+            <Box as={Tag} id={id} className={introductionStyle}>{children}</Box>
           </VisuallyHidden>
         )
       }
 
       return (
-        <Box as={Tag} id={id} position="relative" _hover={{ a: { visibility: `visible` } }}>
+        <Box as={Tag} id={id} position="relative" className={headingStyle}>
           <Box
             as="a"
             href={`#${id}`}
             aria-label={`${children} permalink`}
             display="inline-block"
             position="absolute"
-            left={-10}
-            fontFamily="body"
-            transition="all 0.3s ease-in-out"
-            visibility="hidden"
-            sx={{
-              textDecoration: `none !important`,
-              opacity: 0.3,
-            }}
-            _hover={{
-              opacity: 1,
-            }}
+            className={anchorStyle}
           >
             #
           </Box>

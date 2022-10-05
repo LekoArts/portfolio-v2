@@ -1,6 +1,4 @@
 import * as React from "react"
-import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
 import { breadcrumbList, BreadcrumbListItem } from "../constants/json-ld"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
@@ -10,16 +8,16 @@ type SEOProps = {
   pathname?: string
   image?: string
   noIndex?: boolean
-  breadcrumbListItems?: BreadcrumbListItem[]
+  breadcrumbListItems?: Array<BreadcrumbListItem>
 }
 
 /* istanbul ignore next */
 const faviconSrc =
-  process.env.NODE_ENV === `production`
+  process.env.NODE_ENV === `production` || process.env.NODE_ENV === `test`
     ? `/favicon.svg`
     : `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>`
 
-export const SEO: React.FC<SEOProps> = ({
+export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
   title,
   description,
   pathname,
@@ -28,19 +26,18 @@ export const SEO: React.FC<SEOProps> = ({
   breadcrumbListItems = [],
   children,
 }) => {
-  const { href } = useLocation()
   const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = useSiteMetadata()
 
   const seo = {
-    title: title || siteTitleDefault,
+    title: title ? `${title} | ${siteTitle}` : siteTitleDefault,
     description: description || siteDescription,
-    url: pathname ? `${siteUrl}${pathname}` : href,
+    url: `${siteUrl}${pathname || ``}`,
     image: `${siteUrl}${image || siteImage}`,
   }
 
   return (
-    <Helmet title={title} defaultTitle={siteTitleDefault} titleTemplate={`%s | ${siteTitle}`} key={seo.url}>
-      <html lang="en-US" />
+    <>
+      <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
       <link rel="canonical" href={seo.url} />
@@ -66,9 +63,12 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="msapplication-TileColor" content="#0f172a" />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {breadcrumbListItems.length >= 1 && (
-        <script type="application/ld+json">{JSON.stringify(breadcrumbList(breadcrumbListItems))}</script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList(breadcrumbListItems)) }}
+        />
       )}
       {children}
-    </Helmet>
+    </>
   )
 }

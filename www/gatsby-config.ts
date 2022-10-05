@@ -1,5 +1,6 @@
 import { GatsbyConfig } from "gatsby"
-import { slugifyOptions } from "utils"
+import path from "path"
+import { slugifyOptions } from "../packages/utils"
 import { site } from "./src/constants/meta"
 
 require(`dotenv`).config()
@@ -15,36 +16,20 @@ const gatsbyConfig: GatsbyConfig = {
     siteImage: site.image,
     twitter: site.twitter,
   },
+  trailingSlash: `never`,
   plugins: [
     `gatsby-theme-core`,
-    `@chakra-ui/gatsby-plugin`,
+    `gatsby-plugin-vanilla-extract`,
     `gatsby-plugin-image`,
-    `gatsby-plugin-react-helmet`,
     // Overwrite the default "slugify" option
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/pages`,
+        path: path.resolve(`src/pages`),
         slugify: slugifyOptions,
-      },
-    },
-    {
-      resolve: `gatsby-omni-font-loader`,
-      options: {
-        enableListener: true,
-        preconnect: [`https://fonts.gstatic.com`],
-        interval: 300,
-        timeout: 30000,
-        web: [
-          {
-            name: `Inter`,
-            file: `https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap`,
-          },
-          {
-            name: `Crimson Pro`,
-            file: `https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600..800&display=swap`,
-          },
-        ],
+        ignore: {
+          patterns: [`**/*.css.ts`],
+        },
       },
     },
     {
@@ -82,7 +67,7 @@ const gatsbyConfig: GatsbyConfig = {
           `/privacy-policy`,
           `/legal-notice`,
         ],
-        query: `
+        query: `#graphql
         {
           posts: allPost(filter: { published: { eq: true } } ) {
             nodes {
@@ -105,8 +90,8 @@ const gatsbyConfig: GatsbyConfig = {
         `,
         resolveSiteUrl: () => site.url,
         resolvePages: ({ posts, garden, other }) => [].concat(posts.nodes, garden.nodes, other.nodes),
-        serialize: ({ path, lastmod }) => ({
-          url: path,
+        serialize: ({ path: pagePath, lastmod }) => ({
+          url: pagePath,
           lastmod,
         }),
       },
@@ -114,7 +99,7 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-feed`,
       options: {
-        query: `
+        query: `#graphql
         {
           site {
             siteMetadata {
@@ -128,7 +113,7 @@ const gatsbyConfig: GatsbyConfig = {
         `,
         feeds: [
           {
-            query: `
+            query: `#graphql
             {
               allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
                 nodes {
@@ -162,9 +147,7 @@ const gatsbyConfig: GatsbyConfig = {
     },
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
-      options: {
-        allPageHeaders: [`Permissions-Policy: interest-cohort=()`],
-      },
+      options: {},
     },
     shouldAnalyseBundle && {
       resolve: `gatsby-plugin-perf-budgets`,

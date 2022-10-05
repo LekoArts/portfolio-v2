@@ -1,13 +1,16 @@
 import { MDXLayout as PageLayout } from "../../components/blocks/mdx-layout"
 import { SEO } from "../../components/seo"
+import { Flickr3D } from "../../components/art/flickr-3d"
 
-<SEO
-  title="3D Art"
-  breadcrumbListItems={[
-    { name: `Art`, url: `/art` },
-    { name: `3D Art`, url: `/art/3d` },
-  ]}
-/>
+export const Head = () => (
+  <SEO
+    title="3D Art"
+    breadcrumbListItems={[
+      { name: `Art`, url: `/art` },
+      { name: `3D Art`, url: `/art/3d` },
+    ]}
+  />
+)
 
 export default PageLayout
 
@@ -15,90 +18,4 @@ export default PageLayout
 
 Over the years I taught myself how to create 3D art with various tools, with my primary software being Cinema4D. I use Arnold as a renderer and most of the time post-process my images with Photoshop. I'm really grateful that I was able to learn everything with free YouTube videos created by many cool humans!
 
-<a href="https://www.flickr.com/photos/192975453@N04/51171614644/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51171614644_54625610a5_b.jpg"
-    width="1024"
-    height="1024"
-    alt="A colorful blob of glowing spheres with some translucent rings around them. The background is a light blue and a chinese sign is below the 'blob'. The mashed together spheres in the middle touch each other and morph into each other in some places. They are orange and black."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51170158072/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51170158072_8c5f377a32_b.jpg"
-    width="1024"
-    height="1024"
-    alt="A dark background with a white circle in the middle. In front of it is a sphere with the surface of a rocky mountain is placed. The sphere itself is impaled by a black stick. The sphere itself is rocky grey with an orange stripe in the middle. A ring (with frosty glass texture) is around the sphere."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51171616754/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51171616754_39e6d369d6_b.jpg"
-    width="1024"
-    height="1024"
-    alt="A skeleton stature standing in a seemingly endless room that has blue-orange stripes. The skeleton is holding up the left hand with an apple in the hand. Some bubbles are floating around the statue and refracting the background."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51171904090/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51171904090_e8feebab1a_b.jpg"
-    width="1024"
-    height="1024"
-    alt="An isometric illustration that represents a 'Gatsby Theme'. The middle is a box with a hovering Gatsby Logo (a stylized G) over the box, orange light shining from below. The Box is connected by three other smaller platforms that represent components, data layer, external sources and other themes. A conveyor belt is transporting pieces (representing React components)."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51173589844/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51173589844_dcf1605624_b.jpg"
-    width="1024"
-    height="1024"
-    alt="A purple hand reaching out of the water at sunset. The hand is falling into pieces at the bottom."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51170153602/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51170153602_dd1998090c_b.jpg"
-    width="1024"
-    height="576"
-    alt="Hexagonal abstract shapes with different hights and light beams coming out of the centers of some of those pillars."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51171604079/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51171604079_0964c6da3b_b.jpg"
-    width="1024"
-    height="641"
-    alt="A box with two conveyor belts, one coming in and the other going out. In goes HTML, JS, React and out comes a finished Gatsby site. The HTML, JS, React are represented with their logos on the conveyor belt, the Gatsby Logo is the stylized G."
-  />
-</a>
-
-<a href="https://www.flickr.com/photos/192975453@N04/51177237834/in/datetaken/">
-  <img
-    loading="lazy"
-    data-drop-shadow="true"
-    src="https://live.staticflickr.com/65535/51177237834_577c3a060b_h.jpg"
-    width="1067"
-    height="1600"
-    alt="3D Rendered image in Cinema4D showing a Mandalorian Helmet (from Star Wars) floating above a tube. It's white with gold accents. In the background metal tubes and golden plants float behind the helmet."
-  />
-</a>
+<Flickr3D />
