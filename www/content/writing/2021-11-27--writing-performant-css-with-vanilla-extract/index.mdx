@@ -1,0 +1,117 @@
+---
+title: "Writing Performant CSS with vanilla-extract"
+subtitle: "It's like CSS Modules-in-TypeScript"
+date: 2021-11-27
+lastUpdated: 2021-11-27
+description: "TODO"
+type: "tutorial"
+category: "JavaScript"
+image: file-name-inside-og-images-folder.png
+published: false
+---
+
+In this tutorial you'll learn how to write performant and type-safe CSS with vanilla-extract. The guide will explain how to build a Tailwind UI component from scratch using most available vanilla-extract APIs. vanilla-extract has become my go-to CSS solution in any new React project as it combines the strengths of TypeScript and CSS modules, meaning: Best performance on the client but still a more convenient way of writing CSS than plain `.css` files.
+
+I suspect that vanilla-extract will be _very_ popular in the near future so it's a great time to learn it now. It also taught me to use and think more about the built-in CSS Custom Properties (commonly known as "CSS Variables") of CSS. It's difficult with classic CSS-in-JS solutions (like emotion or styled-components) to get great performance results and with the recent additions to React like streaming and server components they also need to adapt more and more. Build-time solutions like vanilla-extract are future-proof in that regard.
+
+You'll rebuild a [Tailwind UI mockup](https://tailwindui.com/components/application-ui/data-display/stats#component-72704cac437a06d94cdb941c274591ba) from scratch. It'll have support for light & dark mode, and also have two color variants. You can [see a live demo](https://vanilla-extract-tutorial.pages.dev/) and can find the code also on GitHub: [vanilla-extract-tutorial](https://github.com/LekoArts/vanilla-extract-tutorial).
+
+<Alert status="info" title="Intended audience">
+
+You should have beginner knowledge in CSS and TypeScript as it'll enable you to navigate easier around the code and understand the CSS itself. The guide won't focus on the specifics of the CSS itself, but rather how to apply it with vanilla-extract. However, understanding TypeScript syntax and knowing the basics of CSS will really help you.
+
+You'll use [Vite](https://vitejs.dev/) to build the demo site but no prior knowledge is necessary.
+
+</Alert>
+
+## Overview
+
+- order of instructions how I would start a project
+- ref to official docs site
+- start with barebones project with markup
+- styling with vanilla-extract
+- showing each of the most important APIs
+- one could only use `style` API
+- should probably not used that way in production
+- ref my own site + rewrite
+
+## Prerequisites
+
+- setup repo and checkout start branch
+- install deps
+- have app running
+
+## globalStyle
+
+- Reset CSS
+- based on josh's reset
+- using globalStyle (as first API)
+- globalStyle also useful for other things (show snippet in alert)
+
+<Alert status="success" title="What you just learned">
+
+TODO
+
+</Alert>
+
+## Theming
+
+- explain why theming so early in process
+- themeContract
+- create common vars between themes
+- create two themes (light & dark)
+- colors can't be nested, only one level deep
+
+<Alert status="success" title="What you just learned">
+
+TODO
+
+</Alert>
+
+## style & styleVariants
+
+- style the app shell
+- only using style and styleVariants
+- I love styleVariants!
+- using the prev created themes
+
+<Alert status="success" title="What you just learned">
+
+TODO
+
+</Alert>
+
+## Sprinkles
+
+- like zero-runtime typesafe version of tailwind, styled-system
+- unresponsive properties
+- responsive properties
+- color properties
+- transformBreakpoints helper
+
+<Alert status="success" title="What you just learned">
+
+TODO
+
+</Alert>
+
+## Recipes
+
+- multi-variant styles, inspired by stitches
+- personally I never had a use-case for this, style + styleVariants + sprinkles did the job for me
+
+<Alert status="success" title="What you just learned">
+
+TODO
+
+</Alert>
+
+## Summary
+
+TODO
+
+## Where to go from here
+
+- possible follow-up articles
+- my production usage
+- convert your project
