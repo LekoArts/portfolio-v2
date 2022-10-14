@@ -14,22 +14,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
       - uses: actions/cache@v3
         id: playwright-cache
         with:
           path: |
             ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
       - uses: actions/cache@v3
@@ -41,11 +31,11 @@ jobs:
           path: |
             public
             .cache
-          key: ${{ runner.os }}-gatsby-${{ env.files }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-gatsby-${{ env.files }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-gatsby-
       - name: Install dependencies
-        run: yarn --immutable
+        uses: ./.github/actions/yarn-install
       - name: Install Playwright
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
