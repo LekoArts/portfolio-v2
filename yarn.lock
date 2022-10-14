@@ -10012,7 +10012,7 @@ __metadata:
     ts-node: ^10.9.1
     utils: ^0.0.1
   peerDependencies:
-    gatsby: ^4.0.0
+    gatsby: ^5.0.0
   languageName: unknown
   linkType: soft
 
