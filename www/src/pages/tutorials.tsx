@@ -42,7 +42,7 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    posts: allPost(filter: { published: { eq: true }, type: { eq: tutorial } }, sort: { fields: date, order: DESC }) {
+    posts: allPost(filter: { published: { eq: true }, type: { eq: tutorial } }, sort: { date: DESC }) {
       nodes {
         ...CardPostInformation
       }

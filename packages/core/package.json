@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.1",
   "peerDependencies": {
-    "gatsby": "^4.0.0"
+    "gatsby": "^5.0.0"
   },
   "dependencies": {
     "@mdx-js/react": "^2.1.5",
