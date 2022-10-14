@@ -7,7 +7,7 @@
     "gatsby": "^4.0.0"
   },
   "dependencies": {
-    "@mdx-js/react": "^2.1.2",
+    "@mdx-js/react": "^2.1.5",
     "gatsby-plugin-catch-links": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
@@ -24,11 +24,11 @@
     "remark-slug": "^6.0.0",
     "remark-smartypants": "^0.0.1",
     "remark-unwrap-images": "^2.0.0",
-    "ts-node": "^10.7.0",
+    "ts-node": "^10.9.1",
     "utils": "^0.0.1"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.182",
-    "regenerator-runtime": "^0.13.9"
+    "@swc/core": "^1.3.8",
+    "regenerator-runtime": "^0.13.10"
   }
 }
