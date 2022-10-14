@@ -24,10 +24,10 @@ interface IQueryResult {
 
 export const FlickrPhotography = () => {
   const data = useStaticQuery<IQueryResult>(graphql`
-    query {
+    {
       Photography: allFlickrPhotosetsList(
         filter: { _id: { nin: ["72177720300732809", "72177720300725772"] } }
-        sort: { fields: date_update, order: DESC }
+        sort: { date_update: DESC }
       ) {
         nodes {
           title

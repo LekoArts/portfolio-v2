@@ -302,7 +302,7 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    posts: allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC }, limit: 4) {
+    posts: allPost(filter: { published: { eq: true } }, sort: { date: DESC }, limit: 4) {
       nodes {
         title
         description
@@ -311,7 +311,7 @@ export const query = graphql`
     }
     garden: allGarden(
       limit: 3
-      sort: { fields: lastUpdated, order: DESC }
+      sort: { lastUpdated: DESC }
       filter: { slug: { ne: "/garden/what-is-a-digital-garden" } }
     ) {
       nodes {
