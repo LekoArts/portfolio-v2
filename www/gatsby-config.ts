@@ -115,7 +115,7 @@ const gatsbyConfig: GatsbyConfig = {
           {
             query: `#graphql
             {
-              allPost(filter: {published: {eq: true}}, sort: {date: DESC}) {
+              allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
                 nodes {
                   title
                   date

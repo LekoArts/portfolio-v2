@@ -162,8 +162,8 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    garden: allGarden(sort: { lastUpdated: DESC }) {
-      group(field: { tags: SELECT }) {
+    garden: allGarden(sort: { fields: lastUpdated, order: DESC }) {
+      group(field: tags) {
         title: fieldValue
       }
       nodes {

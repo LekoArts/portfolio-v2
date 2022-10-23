@@ -10,7 +10,7 @@ export const useDistinctCategories = () => {
   const data = useStaticQuery<DistinctCategoryQueryResult>(graphql`
     {
       allCategory {
-        distinct(field: { slug: SELECT })
+        distinct(field: slug)
       }
     }
   `)

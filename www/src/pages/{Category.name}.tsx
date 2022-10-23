@@ -48,7 +48,10 @@ export const query = graphql`
       gradient
       slug
     }
-    posts: allPost(filter: { published: { eq: true }, category: { name: { eq: $name } } }, sort: { date: DESC }) {
+    posts: allPost(
+      filter: { published: { eq: true }, category: { name: { eq: $name } } }
+      sort: { fields: date, order: DESC }
+    ) {
       nodes {
         ...CardPostInformation
       }
