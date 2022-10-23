@@ -1,6 +1,11 @@
 module.exports = {
   parser: `@typescript-eslint/parser`,
-  extends: [`airbnb`, `plugin:prettier/recommended`],
+  extends: [
+    `airbnb`,
+    `plugin:@typescript-eslint/recommended`,
+    `plugin:import/typescript`,
+    `plugin:prettier/recommended`,
+  ],
   plugins: [`@typescript-eslint`, `prettier`, `react-hooks`],
   parserOptions: {
     ecmaVersion: 2018,
@@ -129,6 +134,12 @@ module.exports = {
         prefix: [`I`],
       },
     ],
+    "@typescript-eslint/no-empty-interface": [
+      `error`,
+      {
+        allowSingleExtends: true,
+      },
+    ],
     "@typescript-eslint/array-type": [`error`, { default: `generic` }],
     "no-console": [`warn`, { allow: [`warn`] }],
     "spaced-comment": [2, `always`, { exceptions: [`-`, `+`], markers: [`/`] }],
@@ -149,6 +160,7 @@ module.exports = {
     "space-before-function-paren": 0,
     "import/extensions": 0,
     "import/no-anonymous-default-export": 2,
+    "import/no-relative-packages": 0,
     "react/jsx-one-expression-per-line": 0,
     "react/no-danger": 0,
     "react/display-name": 0,
@@ -193,13 +205,32 @@ module.exports = {
   },
   overrides: [
     {
+      files: [`*.mdx`],
+      parser: `eslint-mdx`,
+      extends: [`plugin:mdx/recommended`],
+      rules: {
+        indent: 0,
+        "react/jsx-no-undef": 0,
+        "react/jsx-filename-extension": 0,
+        "react/self-closing-comp": 0,
+        "jsx-a11y/heading-has-content": 0,
+        "import/no-named-as-default": 0,
+        "import/no-named-as-default-member": 0,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/naming-convention": 0,
+        "react/no-children-prop": 0,
+        "no-irregular-whitespace": 0,
+      },
+    },
+    {
       files: [
         `www/src/pages/**/*.tsx`,
+        `www/src/pages/**/*.mdx`,
         `playwright.config.ts`,
         `vitest.config.ts`,
         `www/src/templates/*.tsx`,
         `**/gatsby-config.ts`,
-        `www/src/@chakra-ui/gatsby-plugin/theme.ts`,
+        `www/content/**/*.mdx`,
       ],
       rules: {
         "import/no-default-export": 0,

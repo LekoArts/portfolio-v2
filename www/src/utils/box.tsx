@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copied from https://github.com/TheMightyPenguin/dessert-box
 // The MIT License (MIT) - Copyright (c) 2021 Victor Tortolero
 
