@@ -24,6 +24,7 @@ module.exports = {
       1,
       {
         argsIgnorePattern: `res|next|stage|^err|on|config|e|_`,
+        destructuredArrayIgnorePattern: `^_`,
       },
     ],
     "arrow-body-style": [2, `as-needed`],

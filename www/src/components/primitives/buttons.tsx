@@ -29,7 +29,7 @@ export const ButtonIcon = (props) => {
   const { children, ...rest } = props
 
   return (
-    <span aria-hidden focusable="false" className={iconButtonStyle} {...rest}>
+    <span aria-hidden className={iconButtonStyle} {...rest}>
       {children}
     </span>
   )
