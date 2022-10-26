@@ -24,7 +24,7 @@ export const Flickr3D = () => {
     {
       ThreeD: allFlickrPhotosetsPhotos(
         filter: { photoset_id: { eq: "72177720300732809" } }
-        sort: { fields: datetaken, order: DESC }
+        sort: { datetaken: DESC }
       ) {
         nodes {
           title
