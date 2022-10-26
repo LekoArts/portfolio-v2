@@ -24,7 +24,7 @@ export const FlickrDesign = () => {
     {
       Design: allFlickrPhotosetsPhotos(
         filter: { photoset_id: { eq: "72177720300725772" } }
-        sort: { fields: datetaken, order: DESC }
+        sort: { datetaken: DESC }
       ) {
         nodes {
           title

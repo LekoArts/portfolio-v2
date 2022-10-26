@@ -12,7 +12,7 @@ type CategoryQueryResult = {
 export const useCategories = () => {
   const data = useStaticQuery<CategoryQueryResult>(graphql`
     {
-      allCategory(sort: { fields: name, order: ASC }) {
+      allCategory(sort: { name: ASC }) {
         nodes {
           name
           slug
