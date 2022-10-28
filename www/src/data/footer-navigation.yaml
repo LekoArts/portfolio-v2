@@ -10,6 +10,9 @@
       link: /react
     - name: Community
       link: /community
+    - name: RSS Feed
+      link: /rss.xml
+      isExternal: true
 - heading:
     name: Art
     link: /art
@@ -39,12 +42,12 @@
     - name: Twitter
       link: https://www.twitter.com/lekoarts_de
       isExternal: true
+    - name: Mastodon
+      link: https://mastodon.social/@lekoarts
+      isExternal: true
     - name: GitHub
       link: https://www.github.com/LekoArts
       isExternal: true
     - name: LinkedIn
       link: https://www.linkedin.com/in/lennart-joergens/
-      isExternal: true
-    - name: RSS
-      link: /rss.xml
       isExternal: true
