@@ -3,6 +3,12 @@ import { Link, ExternalLink, Spacer, Box } from "../primitives"
 import { FullWidthContainer } from "./full-width-container"
 import { useFooterNavigation } from "../../hooks/use-footer-navigation"
 
+const linkAttributesMap = {
+  Mastodon: {
+    rel: `me`,
+  },
+}
+
 export const Footer: React.FC = () => {
   const footerNavigation = useFooterNavigation()
 
@@ -46,7 +52,12 @@ export const Footer: React.FC = () => {
                     {section.items.map((item) => (
                       <React.Fragment key={item.link}>
                         {item.isExternal ? (
-                          <ExternalLink marginRight={[`2`, `0`]} p="1" href={item.link}>
+                          <ExternalLink
+                            {...linkAttributesMap[item.name]}
+                            marginRight={[`2`, `0`]}
+                            p="1"
+                            href={item.link}
+                          >
                             {item.name}
                           </ExternalLink>
                         ) : (

@@ -67,6 +67,7 @@ interface IPreProps {
       title?: string
       highlight?: string
       withLineNumbers?: boolean
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [key: string]: any
     }
     type: string

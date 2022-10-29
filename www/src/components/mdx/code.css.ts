@@ -1,4 +1,4 @@
-import { createVar, globalStyle, style, StyleRule } from "@vanilla-extract/css"
+import { createVar, globalStyle, style } from "@vanilla-extract/css"
 import { themesSelectors } from "../../styles/atoms.css"
 import { vars } from "../../styles/themes/contract.css"
 import { darkThemeClass } from "../../styles/themes/dark.css"

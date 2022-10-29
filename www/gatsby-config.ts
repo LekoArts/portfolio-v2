@@ -1,4 +1,4 @@
-import { GatsbyConfig } from "gatsby"
+import type { GatsbyConfig, PluginRef } from "gatsby"
 import path from "path"
 import { slugifyOptions } from "../packages/utils"
 import { site } from "./src/constants/meta"
@@ -115,7 +115,7 @@ const gatsbyConfig: GatsbyConfig = {
           {
             query: `#graphql
             {
-              allPost(filter: { published: { eq: true } }, sort: { fields: date, order: DESC } ) {
+              allPost(filter: {published: {eq: true}}, sort: {date: DESC}) {
                 nodes {
                   title
                   date
@@ -157,7 +157,7 @@ const gatsbyConfig: GatsbyConfig = {
       resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
       options: {},
     },
-  ].filter(Boolean),
+  ].filter(Boolean) as Array<PluginRef>,
 }
 
 export default gatsbyConfig

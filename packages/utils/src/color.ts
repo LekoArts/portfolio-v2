@@ -3,7 +3,7 @@
 import { TinyColor } from "@ctrl/tinycolor"
 import { memoizedGet as get } from "./get"
 
-type Dict<T = any> = Record<string, T>
+type Dict<T = unknown> = Record<string, T>
 
 /**
  * Get the color raw value from colorPalette

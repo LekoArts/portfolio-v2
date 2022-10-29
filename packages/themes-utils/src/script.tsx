@@ -23,7 +23,7 @@ export const ThemeScript = React.memo(
       return `if(e==='light'||e==='dark')d.style.colorScheme=e`
     })()
 
-    const updateDOM = (name: string, literal: boolean = false, setColorScheme = true) => {
+    const updateDOM = (name: string, literal = false, setColorScheme = true) => {
       const resolvedName = value ? value[name] : name
       const val = literal ? `${name}|| ''` : `'${resolvedName}'`
       let text = ``
