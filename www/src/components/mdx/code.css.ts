@@ -156,7 +156,7 @@ export const gatsbyHighlightPreStyle = style({
   overflowWrap: `normal`,
   tabSize: 4,
   minWidth: vars.space.full,
-  maxHeight: `80vh`,
+  maxHeight: `70vh`,
   hyphens: `none`,
 })
 
