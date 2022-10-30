@@ -875,9 +875,12 @@ Here's how you would write Tailwind-like utlity classes with Sprinkles:
 
 ```tsx title=Sprinkles
 import { sprinkles as s } from "./sprinkles.css"
-;<main className={s({ fontSize: `xl`, maxWidth: `xl`, p: 4 })}>
-  Hello World
-</main>
+
+const Page = () => (
+  <main className={s({ fontSize: `xl`, maxWidth: `xl`, p: 4 })}>
+    Hello World
+  </main>
+)
 ```
 
 Tailwind supports responsive design and dark mode but with the right configuration Sprinkles can do that, too!
@@ -892,15 +895,17 @@ Tailwind supports responsive design and dark mode but with the right configurati
 import { sprinkles as s } from "./sprinkles.css"
 
 // You can use object notation or array notation for conditions
-;<main
-  className={s({
-    width: { default: 16, sm: 32 },
-    textAlign: [`center`, `left`],
-    background: { light: `white`, dark: `bgSlate800` },
-  })}
->
-  Hello World
-</main>
+const Page = () => (
+  <main
+    className={s({
+      width: { default: 16, sm: 32 },
+      textAlign: [`center`, `left`],
+      background: { light: `white`, dark: `bgSlate800` },
+    })}
+  >
+    Hello World
+  </main>
+)
 ```
 
 I hope these examples clicked for you and you can understand the immediate value that Sprinkles can offer. The Sprinkles version might seem more verbose but you can create your own `<Box>` component to mitigate that. At the end of this section you'll learn more about that.
