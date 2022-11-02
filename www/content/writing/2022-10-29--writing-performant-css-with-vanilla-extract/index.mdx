@@ -1403,21 +1403,113 @@ export const Trend: React.FC<{ percentage: number }> = ({ percentage }) => {
 }
 ```
 
-The percentages should now have a green up and a red down arrow beside them.
+The percentages should now have a green up and a red down arrow beside them (but still slightly misaligned).
+
+And that's a wrap for the Sprinkles section of this tutorial. Everything you learned so far will be enough to build out your small blog to really large company websites. And as promised, read below the pro tip about making your own `<Box>` component. This is the primary way of using Sprinkles for me.
 
 <Collapsible summary={<em>Pro Tip: Your own Box component</em>}>
 
-teset
+So, what's a `<Box>` component? It's a low-level component for binding your theme-based styles to an element. You can apply CSS properties of your design system through props to this `<Box>` component. You might have seen this in e.g. [Chakra UI](https://chakra-ui.com/docs/components/box). Here's an example usage:
+
+```tsx
+import Box from "./box"
+
+export default function Component() {
+  return (
+    <Box px="4" fontSize="lg">
+      Hello World
+    </Box>
+  )
+}
+```
+
+You get the type safety of Sprinkles with an (in my eyes) better developer experience as props on a React component are more concise than constantly using `sprinkles()`. You can also use this `<Box>` component as the fundamental building block of your other React components. This very same `<Collapsible>` component this content is currently rendered in, is made out of `<Box>` components. Here's the actual source code:
+
+```tsx
+import * as React from "react"
+import { Box } from "../primitives"
+import { detailsStyle, summaryStyle } from "./collapsible.css"
+
+export const Collapsible = ({ summary, children }) => (
+  <Box
+    as="details"
+    px={[`4`, null, `6`]}
+    py="4"
+    borderRadius="lg"
+    className={detailsStyle}
+  >
+    <Box as="summary" className={summaryStyle}>
+      {summary}
+    </Box>
+    {children}
+  </Box>
+)
+```
+
+So how can you make one of your own? Luckily a community member of vanilla-extract created [Dessert Box](https://github.com/TheMightyPenguin/dessert-box). (Side note, don't you also get hungry hearing all those food terms?)
+
+Install the dependency:
+
+```shell
+npm install @dessert-box/react
+```
+
+After you created your `sprinkles()` function (as shown above) you can create your `<Box>` component. In a new file, do the following:
+
+```tsx
+import { createBox } from "@dessert-box/react"
+import { sprinkles } from "./sprinkles.css"
+
+const { Box } = createBox({ atoms: sprinkles })
+
+export default Box
+```
+
+And et voilà, you have your own Sprinkles-powered `<Box>` component. Read the [Dessert Box Readme](https://github.com/TheMightyPenguin/dessert-box) for more information.
 
 </Collapsible>
 
-- like zero-runtime typesafe version of tailwind, styled-system
-- unresponsive properties
-- responsive properties
-- color properties
-- transformBreakpoints helper
-
 ## Recipes
+
+Ok, hang on with me. This is the last section of this tutorial! You'll now learn more about vanilla-extract's Recipes package. Similar to Sprinkles this is an additional package that you can install and it's not part of the core of vanilla-extract.
+
+[Recipes][recipes] allows you to create multi-variant styles and the authors were heavily inspired by [Stitches](https://stitches.dev/). It also reminds me a bit of [Chakra UI's component style](https://chakra-ui.com/docs/styled-system/component-style) API.
+
+Basically, the power of such a multi-variant API is that you can have even tigther control over how your design system is used for components while giving consumers of said components a really easy way to build with them. Since you've read the section about `style()` and `styleVariants()` I'd make this comparison: Recipes is similar to using `styleVariants()` with base styles and a set of variants.
+
+Here's a usage example of a `button` recipe:
+
+```tsx
+import { button } from "./recipes.css"
+
+export const Component = () => (
+  <button
+    className={button({
+      colorScheme: `primary`,
+      size: `large`,
+      variant: `outline`,
+    })}
+  >
+    Hello World
+  </button>
+)
+```
+
+And then behind the scenes the `colorScheme` can modify the `background` and `border-color`, the `size` can modify the `font-size` and `padding`, and `variant` can modify if the button is filled or only has a border. It feels like e.g. using a `<Button>` component from a pre-built UI kit.
+
+<Alert status="warning" title="Do not use Sprinkles and Recipes together">
+
+TODO
+
+</Alert>
+
+### Defining Recipes
+
+TODO
+
+### Using Recipes
+
+TODO
 
 - multi-variant styles, inspired by stitches
 - personally I never had a use-case for this, style + styleVariants + sprinkles did the job for me
@@ -1443,3 +1535,4 @@ TODO
 [sprinkles]: https://vanilla-extract.style/documentation/packages/sprinkles/
 [complex-selectors]: https://vanilla-extract.style/documentation/styling/#complex-selectors
 [media-queries]: https://vanilla-extract.style/documentation/styling/#media-queries
+[recipes]: https://vanilla-extract.style/documentation/packages/recipes/
