@@ -35,20 +35,27 @@ You'll use [Vite](https://vitejs.dev/) to build the demo site but no prior knowl
 
 ## Overview
 
+vanilla-extract describes itself like this on its website:
+
 > Use TypeScript as your preprocessor. Write type‑safe, locally scoped classes, variables and themes, then generate static CSS files at build time.
 
-> Zero-runtime Stylesheets in TypeScript.
+This also meens zero runtime cost! So everything you'll build today won't have any performance impacts (at least no negative ones) in the browser. And while you'll use React in this tutorial, vanilla-extract itself is framework agnostic.
 
-- order of instructions how I would start a project
-- ref to official docs site
-- start with barebones project with markup
-- styling with vanilla-extract
-- showing each of the most important APIs
-- one could only use `style` API
-- should probably not used that way in production
-- ref my own site + rewrite
+Here's a short description of what you'll do:
+
+1. Define a CSS reset through global styles.
+1. Define a theme contract and two themes. In my projects I also always begin with the themes first before doing the actual styling of the app.
+1. Explanation of the different styling APIs (`style`, `styleVariants`) and external packages (Sprinkles, Recipes).
+1. Summary of what you built.
+1. Inspiration and more learning resources.
+
+Throughout the tutorial you might feel like this meme:
 
 ![The "Power Rangers" meme with the text: vanilla-extract, dynamic API, recipes, sprinkles, typescript results in CSS styles on a website.](./vanilla-extract-meme.jpg)
+
+But please keep in mind that I want to showcase most of the APIs. You don't need to use them all in your project, you can e.g. only stick to `style` and `styleVariants` and be super productive with it.
+
+The [official docs][vanilla-extract] are also super well written, so I'd recommend having them open in another tab to reference more examples while going through this tutorial.
 
 ## Prerequisites
 
@@ -611,11 +618,11 @@ import { vars } from "../styles/themes.css"
 export const wrapper = style({})
 ```
 
-You can define CSS rules by passing an array of class names and/or style objects to `style()`. CSS Variables, simple pseudo elements, selectors, and media/feature queries are also supported (refer to the [`style` docs][style-api] for more information). By exporting `wrapper` you have access to its class name and can use it inside your React component.
+You can define CSS rules by passing an array of class names and/or style objects to `style`. CSS Variables, simple pseudo elements, selectors, and media/feature queries are also supported (refer to the [`style` docs][style-api] for more information). By exporting `wrapper` you have access to its class name and can use it inside your React component.
 
 <Alert status="info" title="style() inputs">
 
-As said above, `style()` not only accepts a style object, but also an array of class names. Or in other words: You can use other `style()` definitions in `style()`.
+As said above, `style` not only accepts a style object, but also an array of class names. Or in other words: You can use other `style` definitions in `style`.
 
 ```ts
 // Behind the scenes this generates a class name
@@ -1181,13 +1188,13 @@ For every property and every condition a new class has to be created, or in othe
 
 If you have the need to e.g. have `fontWeight` responsive in just one case, then don't make `fontWeight` responsive in your Sprinkles configuration. Instead, use [media queries in your `style`][media-queries] and don't feel bad that for this one-off case you didn't use Sprinkles.
 
-Furthermore, ask yourself if you need the property inside Sprinkles at all. I like to add more properties at the beginning, then build out my app, and then afterwards check how much I actually used the individual property. You can find that out by e.g. using the search in your IDE. If you then find out for example, that you only used a property once or twice, I'd recommend moving these to `style()` and removing them from Sprinkles.
+Furthermore, ask yourself if you need the property inside Sprinkles at all. I like to add more properties at the beginning, then build out my app, and then afterwards check how much I actually used the individual property. You can find that out by e.g. using the search in your IDE. If you then find out for example, that you only used a property once or twice, I'd recommend moving these to `style` and removing them from Sprinkles.
 
 </Alert>
 
 ### Using Sprinkles
 
-Basically the `sprinkles` function you created in the last section returns a class list which you can use as if it were a single class. This means that you can use `sprinkles` on its own (directly in React components or `.css.ts` files) or use it inside `style()`, `styleVariants()`, `globalStyle()` or Recipes API (more on that later).
+Basically the `sprinkles` function you created in the last section returns a class list which you can use as if it were a single class. This means that you can use `sprinkles` on its own (directly in React components or `.css.ts` files) or use it inside `style`, `styleVariants`, `globalStyle` or Recipes API (more on that later).
 
 <Alert status="info" title="Sprinkles: Usage">
 
@@ -1212,7 +1219,7 @@ export const container = sprinkles({
 })
 ```
 
-Inside `style()`, `styleVariants()`, and `globalStyle()`:
+Inside `style`, `styleVariants`, and `globalStyle`:
 
 ```ts
 import { style, styleVariants, globalStyle } from "@vanilla-extract/css"
@@ -1242,7 +1249,7 @@ globalStyle(`${wrapper} *`, {
 })
 ```
 
-As you can see Sprinkles can also be used purely in `.css.ts` files as an alternative way of accessing the design tokens. My preferred way of using Sprinkles is purely inside React components unless I need to combine CSS styles that are not inside Sprinkles (for this I combine Sprinkles with `style()` then). At the end of this section you'll also learn how to create your own `<Box>` component with Sprinkles which removes some of the verbosity from using `className={sprinkles()}` everywhere.
+As you can see Sprinkles can also be used purely in `.css.ts` files as an alternative way of accessing the design tokens. My preferred way of using Sprinkles is purely inside React components unless I need to combine CSS styles that are not inside Sprinkles (for this I combine Sprinkles with `style` then). At the end of this section you'll also learn how to create your own `<Box>` component with Sprinkles which removes some of the verbosity from using `className={sprinkles()}` everywhere.
 
 </Alert>
 
@@ -1331,7 +1338,7 @@ import { wrapper, toValue, arrowUp, arrowDown } from "./stats.css"
 // Rest of the file...
 ```
 
-Notice that `sprinkles` was renamed on import to `s` so that one can use `s()` instead of `sprinkles()`. It's time now to finally use it in the React components. While applying the styles is not necessarily super exciting (as you already know how to apply it), you can at least see some progress in the browser preview. First, replace the `<StatsItem>` component with the styled code:
+Notice that `sprinkles` was renamed on import to `s` so that one can use `s` instead of `sprinkles` as a function. It's time now to finally use it in the React components. While applying the styles is not necessarily super exciting (as you already know how to apply it), you can at least see some progress in the browser preview. First, replace the `<StatsItem>` component with the styled code:
 
 ```tsx title=src/components/stats.tsx
 // Rest of imports and components...
@@ -1405,6 +1412,10 @@ export const Trend: React.FC<{ percentage: number }> = ({ percentage }) => {
 
 The percentages should now have a green up and a red down arrow beside them (but still slightly misaligned).
 
+Your browser preview should now look like this:
+
+![A horizontal top bar with "Last 30 Days" and "Toggle Variant" button. Below that is a list of statistics items which percentages.](./sprinkles_end.jpg)
+
 And that's a wrap for the Sprinkles section of this tutorial. Everything you learned so far will be enough to build out your small blog to really large company websites. And as promised, read below the pro tip about making your own `<Box>` component. This is the primary way of using Sprinkles for me.
 
 <Collapsible summary={<em>Pro Tip: Your own Box component</em>}>
@@ -1423,7 +1434,7 @@ export default function Component() {
 }
 ```
 
-You get the type safety of Sprinkles with an (in my eyes) better developer experience as props on a React component are more concise than constantly using `sprinkles()`. You can also use this `<Box>` component as the fundamental building block of your other React components. This very same `<Collapsible>` component this content is currently rendered in, is made out of `<Box>` components. Here's the actual source code:
+You get the type safety of Sprinkles with an (in my eyes) better developer experience as props on a React component are more concise than constantly using `sprinkles`. You can also use this `<Box>` component as the fundamental building block of your other React components. This very same `<Collapsible>` component this content is currently rendered in, is made out of `<Box>` components. Here's the actual source code:
 
 ```tsx
 import * as React from "react"
@@ -1454,7 +1465,7 @@ Install the dependency:
 npm install @dessert-box/react
 ```
 
-After you created your `sprinkles()` function (as shown above) you can create your `<Box>` component. In a new file, do the following:
+After you created your `sprinkles` function (as shown above) you can create your `<Box>` component. In a new file, do the following:
 
 ```tsx
 import { createBox } from "@dessert-box/react"
@@ -1475,7 +1486,7 @@ Ok, hang on with me. This is the last section of this tutorial! You'll now learn
 
 [Recipes][recipes] allows you to create multi-variant styles and the authors were heavily inspired by [Stitches](https://stitches.dev/). It also reminds me a bit of [Chakra UI's component style](https://chakra-ui.com/docs/styled-system/component-style) API.
 
-Basically, the power of such a multi-variant API is that you can have even tigther control over how your design system is used for components while giving consumers of said components a really easy way to build with them. Since you've read the section about `style()` and `styleVariants()` I'd make this comparison: Recipes is similar to using `styleVariants()` with base styles and a set of variants.
+Basically, the power of such a multi-variant API is that you can have even tigther control over how your design system is used for components while giving consumers of said components a really easy way to build with them. Since you've read the section about `style` and `styleVariants` I'd make this comparison: Recipes is similar to using `styleVariants` with base styles and a set of variants.
 
 Here's a usage example of a `button` recipe:
 
@@ -1487,7 +1498,7 @@ export const Component = () => (
     className={button({
       colorScheme: `primary`,
       size: `large`,
-      variant: `outline`,
+      shape: `round`,
     })}
   >
     Hello World
@@ -1495,34 +1506,260 @@ export const Component = () => (
 )
 ```
 
-And then behind the scenes the `colorScheme` can modify the `background` and `border-color`, the `size` can modify the `font-size` and `padding`, and `variant` can modify if the button is filled or only has a border. It feels like e.g. using a `<Button>` component from a pre-built UI kit.
+And then behind the scenes the `colorScheme` can modify the `background` and `border-color`, the `size` can modify the `font-size` and `padding`, and `shape` can modify if the button is has a `border-radius` or not. It feels like e.g. using a `<Button>` component from a pre-built UI kit.
 
 <Alert status="warning" title="Do not use Sprinkles and Recipes together">
 
-TODO
+You can use Sprinkles and Recipes together, you'll see in just a bit how. But because you can do that, it doesn't mean you should.
+
+Unless you take absolute care you can easily generate massive amount of CSS classes and have a website with differing styling choices. Sprinkles and Recipes are different design paradigms and as such you should just choose one. Choose the one that makes more sense to you or that your team likes more. This way you don't have think about how to use them together or when to use which, it's a smaller mental burden.
+
+Of course, if you absolutely know what you're doing, take this advice with a grain of salt. But I think that the best advice for most folks is to choose either Sprinkles or Recipes and then stick with it.
 
 </Alert>
 
 ### Defining Recipes
 
-TODO
+Create a new file called `recipes.css.ts` inside `src/styles`, add the imports, and your first recipe:
+
+```ts title=src/styles/recipes.css.ts
+import { recipe } from "@vanilla-extract/recipes"
+import { sprinkles } from "./sprinkles.css"
+import { vars } from "./themes.css"
+
+export const stats = recipe({
+  base: {},
+  variants: {},
+  // compoundVariants: {},
+  defaultVariants: {},
+})
+```
+
+- `base`: The styling that is applied to every variant.
+- `variants`: A map of valid CSS property names. Each property then has a map of variant names and their respective CSS styles.
+- `compoundVariants`: Apply styles when multiple variants are set.
+- `defaultVariants`: For each CSS property (defined in `variants`) you can define a default variant here.
+
+The `stats` recipe is supposed to be used later in the `<Stats>` component on the `<section>` element. So it wraps all `<StatsItem>`. I needs to change its `color` and `background`. The names for the two variants you'll implement are `default` and `invert`. Update the `stats` recipe to account for that:
+
+```ts title=src/styles/recipes.css.ts
+import { recipe } from "@vanilla-extract/recipes"
+import { sprinkles } from "./sprinkles.css"
+import { vars } from "./themes.css"
+
+export const stats = recipe({
+  base: {},
+  variants: {
+    color: {
+      default: {},
+      invert: {},
+    },
+    background: {
+      default: {},
+      invert: {},
+    },
+  },
+  defaultVariants: {
+    background: `default`,
+    color: `default`,
+  },
+})
+```
+
+You should get TypeScript autocompletion while filling out the `defaultVariants` map. vanilla-extract is smart enough to know what you wrote in `variants`.
+
+As you have seen in other APIs already, you can use the other styling APIs to add styles to a recipe. A simple style object will do it, but you can also use `style` or `sprinkles`. Add the following styles:
+
+```ts title=src/styles/recipes.css.ts
+import { recipe } from "@vanilla-extract/recipes"
+import { sprinkles } from "./sprinkles.css"
+import { vars } from "./themes.css"
+
+export const stats = recipe({
+  base: sprinkles({
+    borderRadius: `md`,
+    boxShadow: `md`,
+    display: `flex`,
+    justifyContent: `space-between`,
+    flexDirection: [`column`, `column`, `row`],
+  }),
+  variants: {
+    color: {
+      default: {
+        color: vars.colors.body,
+      },
+      invert: sprinkles({ color: { light: `blue200`, dark: `blue200` } }),
+    },
+    background: {
+      default: sprinkles({ background: { light: `white`, dark: `gray900` } }),
+      invert: sprinkles({
+        background: { light: `blue600`, dark: `blue900` },
+      }),
+    },
+  },
+  defaultVariants: {
+    background: `default`,
+    color: `default`,
+  },
+})
+```
+
+Since you already defined a Sprinkles function, you can then also use it here. But keep in mind that what you see here can also be achieved with usign `vars` and `style` functions.
+
+As a last step, you'll also define a `trend` recipe, to be used in the `<Trend>` component. The interesting piece in this is that no CSS styles for the `invert` variant of `background` are set (`invertUp` and `invertDown`). Because in that variant, the trend percentage (green up, red down) shouldn't have a `background`. And as you'll also see in the next step, the variant names will be computed in the `<Trend>` component.
+
+Here's the complete `recipes.css.ts` file:
+
+```ts title=src/styles/recipes.css.ts
+import { recipe } from "@vanilla-extract/recipes"
+import { sprinkles } from "./sprinkles.css"
+import { vars } from "./themes.css"
+
+export const stats = recipe({
+  base: sprinkles({
+    borderRadius: `md`,
+    boxShadow: `md`,
+    display: `flex`,
+    justifyContent: `space-between`,
+    flexDirection: [`column`, `column`, `row`],
+  }),
+  variants: {
+    color: {
+      default: {
+        color: vars.colors.body,
+      },
+      invert: sprinkles({ color: { light: `blue200`, dark: `blue200` } }),
+    },
+    background: {
+      default: sprinkles({ background: { light: `white`, dark: `gray900` } }),
+      invert: sprinkles({
+        background: { light: `blue600`, dark: `blue900` },
+      }),
+    },
+  },
+  defaultVariants: {
+    background: `default`,
+    color: `default`,
+  },
+})
+
+export const trend = recipe({
+  base: sprinkles({
+    display: `flex`,
+    alignItems: `center`,
+    borderRadius: `md`,
+    px: `xs`,
+    fontSize: `xs`,
+    fontWeight: 500,
+  }),
+  variants: {
+    background: {
+      defaultUp: sprinkles({
+        background: { light: `green100`, dark: `green900` },
+      }),
+      defaultDown: sprinkles({
+        background: { light: `red100`, dark: `red900` },
+      }),
+      invertUp: {},
+      invertDown: {},
+    },
+    color: {
+      defaultUp: sprinkles({ color: { light: `green600`, dark: `green100` } }),
+      defaultDown: sprinkles({ color: { light: `red600`, dark: `red100` } }),
+      invertUp: sprinkles({ color: { light: `green100`, dark: `green200` } }),
+      invertDown: sprinkles({ color: { light: `red100`, dark: `red200` } }),
+    },
+  },
+})
+```
 
 ### Using Recipes
 
-TODO
+Switch to the `src/components/stats.tsx` file and add your `stats` and `trend` recipes as imports:
 
-- multi-variant styles, inspired by stitches
-- personally I never had a use-case for this, style + styleVariants + sprinkles did the job for me
+```tsx title=src/components/stats.tsx highlight=2
+import * as React from "react"
+import { stats, trend } from "../styles/recipes.css"
+import { sprinkles as s } from "../styles/sprinkles.css"
+import { wrapper, toValue, arrowUp, arrowDown } from "./stats.css"
+
+// Rest of file...
+```
+
+When using the recipe functions, the arguments are the CSS properties you defined as the top-level keys in the `variants` object. You then can choose the specific variant (with IntelliSense of course).
+
+Edit the `<Stats>` component to use the `stats` recipe and use the `variant` prop for each value:
+
+```tsx title=src/components/stats.tsx highlight=5
+// Imports
+
+export const Stats: React.FC<React.PropsWithChildren<IStatsProps>> = ({
+  children,
+  variant = `default`,
+}) => (
+  <StatsContext.Provider value={variant}>
+    <section className={stats({ background: variant, color: variant })}>
+      {children}
+    </section>
+  </StatsContext.Provider>
+)
+
+// Rest of file...
+```
+
+Change the `<Trend>` component to use the `trend` recipe:
+
+```tsx title=src/components/stats.tsx highlight=10-13
+// Imports
+
+export const Trend: React.FC<{ percentage: number }> = ({ percentage }) => {
+  const variant = React.useContext(StatsContext)
+  const isPositive = Math.sign(percentage) === 1
+  const variantPostfix = isPositive ? `Up` : `Down`
+
+  return (
+    <div
+      className={trend({
+        background: `${variant}${variantPostfix}`,
+        color: `${variant}${variantPostfix}`,
+      })}
+    >
+      <span className={isPositive ? arrowUp : arrowDown} />
+      <span className={s({ marginLeft: `xs` })}>{Math.abs(percentage)}%</span>
+    </div>
+  )
+}
+
+// Rest of file...
+```
+
+And that's a wrap! Congrats, you now completely styled the tutorial app 🎉 Give the "Toggle Variant" button a try and switch between light and dark mode ([How to emulate `prefers-color-scheme` in DevTools](https://web.dev/prefers-color-scheme/#emulating-prefers-color-scheme-in-devtools)).
+
+Your app should now look the same as in the video at the beginning of this blog post. Stretch your legs or grab a drink, you earned it. Read on to see a summary and learn where to go from here.
 
 ## Summary
 
-TODO
+While building this Tailwind UI component you learned to use the most important vanilla-extract APIs.
+
+At the beginning you used `globalStyle` to add a CSS reset for the whole app. The `globalStyle` API has restrictions though, you can't use complex selectors or pseudo selectors. `globalStyle` will also be helpful for you in the future when you want to reference other scoped class names, e.g. `.scopedClassName > a`.
+
+In the next step you learned a ton about theming in vanilla-extract. While you can just use `createTheme`, in this guide you learned to create a theme contract with `createThemeContract` first. This sets you up nicely for when your application grows and you need additional themes. This theme contract ensured that your light and dark mode themes had the exact same keys. It also exposed a `vars` variable that you can use throughout your vanilla-extract stylesheets.
+
+Really the core API of vanilla-extract is `style` (and maybe by extension `styleVariants`). In good old "CSS Modules" fashion you created locally scoped class names, imported them, and applied them to `className`. You learned how to use the mapping function of `styleVariants` to quickly generate variants of a specific style. After that section you could theoretically already have stopped reading because with `style` and `styleVariants` you can build 100% of your app (but luckily you kept on reading).
+
+After learning all about the basics of vanilla-extract, the first external package on the list was Sprinkles. With it you built our your own version of Tailwind really. You learned how to define properties, and that there are conditions you can add. Lastly the section also explained how to set up media queries for your utility classes.
+
+Last but not least, you got introduced to Recipes. Another external package from the authors of vanilla-extract. It's API is heavily influenced by Stitches and allows you to create multi-variant styles. I pointed out that in my opinion you should either use Sprinkles or Recipes in your app, not really both of them together.
 
 ## Where to go from here
 
-- possible follow-up articles
-- my production usage
-- convert your project
+Believe it or not, but I still do have ideas for other blog posts about vanilla-extract. You can do so many cool things with it! I'll link them below when I have written them. In the meantime, I can highly recommend checking out the [vanilla-extract docs][vanilla-extract] as they have more examples for smaller use cases I couldn't cover here.
+
+If you're curious how I use vanilla-extract in production, you can check out my [portfolio](https://github.com/LekoArts/portfolio-v2/tree/main/www) or [tmdb.lekoarts.de](https://github.com/LekoArts/gatsby-source-tmdb/tree/main/example). I migrated my site from Chakra UI to vanilla-extract ([PR on GitHub](https://github.com/LekoArts/portfolio-v2/pull/52)), resulting in better site performance!
+
+Have you built something cool with this tutorial or the template? Have you converted your project to vanilla-extract? Let me know on [Twitter](https://twitter.com/lekoarts_de)!
+
+You can also ask me questions there 😊
 
 [tutorial-repo]: https://github.com/LekoArts/vanilla-extract-tutorial
 [vanilla-extract]: https://vanilla-extract.style/
