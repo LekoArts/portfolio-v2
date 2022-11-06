@@ -39,7 +39,7 @@ vanilla-extract describes itself like this on its website:
 
 > Use TypeScript as your preprocessor. Write type‑safe, locally scoped classes, variables and themes, then generate static CSS files at build time.
 
-This also meens zero runtime cost! So everything you'll build today won't have any performance impacts (at least no negative ones) in the browser. And while you'll use React in this tutorial, vanilla-extract itself is framework agnostic.
+This also means zero runtime cost! So everything you'll build today won't have any performance impacts (at least no negative ones) in the browser. And while you'll use React in this tutorial, vanilla-extract itself is framework agnostic.
 
 Here's a short description of what you'll do:
 
@@ -171,7 +171,7 @@ globalStyle(`img, picture, video, canvas, svg`, {
   maxWidth: `100%`,
 })
 
-globalStyle(`input, button, textare, select`, {
+globalStyle(`input, button, textarea, select`, {
   font: `inherit`,
 })
 
@@ -197,7 +197,7 @@ import "../styles/global.css"
 
 In case you're wondering why the import is `global.css` and not `global.css.ts`: Vite automatically handles the file extension like the other files.
 
-You should now see slighly changed styles in your browser window.
+You should now see slightly changed styles in your browser window.
 
 ## Theming
 
@@ -482,7 +482,7 @@ It doesn't have to be Open Props of course, feel free to use other libraries lik
 
 ### Using theme classes
 
-Now that you have `lightThemeClass` and `darkThemeClass` available as variables, you need to apply the class names to a DOM element. You'll add it to the outermost wrapper of the app. However, by being able to place it everywhere you want to could theoretically create powerful combinations of locally scoped CSS, so use multiple themes simultanously on the same page.
+Now that you have `lightThemeClass` and `darkThemeClass` available as variables, you need to apply the class names to a DOM element. You'll add it to the outermost wrapper of the app. However, by being able to place it everywhere you want to could theoretically create powerful combinations of locally scoped CSS, so use multiple themes simultaneously on the same page.
 
 Open `src/components/app.tsx`, import both class names and adjust `schemeClass` with its values:
 
@@ -589,7 +589,7 @@ export const alertVariants = styleVariants(alerts, (alert) => [
 ])
 ```
 
-The base style defines the `bgVar` CSS variable and assigns it to `background`. Then, depending on the `AlertStatus`, the CSS variable is overriden. The `selectors` key is used to handle the dark mode case. How it's used in the React component:
+The base style defines the `bgVar` CSS variable and assigns it to `background`. Then, depending on the `AlertStatus`, the CSS variable is overridden. The `selectors` key is used to handle the dark mode case. How it's used in the React component:
 
 ```tsx title=alert.tsx
 import { AlertStatus, alertVariants } from "./alert.css"
@@ -884,7 +884,7 @@ export default App
 
 Congrats, you successfully styled the `<App>` component! Your page should now look like this (light mode at the top & dark mode at the bottom):
 
-![Preview of the app screen both in light (top) and dark (bottom) mode. The app has "Last 30 Days" on top left, "Toogle Variant" button on top right. Below that it's a list of different statistics. At the very bottom there is a centered footer.](./style_end.jpg)
+![Preview of the app screen both in light (top) and dark (bottom) mode. The app has "Last 30 Days" on top left, "Toggle Variant" button on top right. Below that it's a list of different statistics. At the very bottom there is a centred footer.](./style_end.jpg)
 
 ## Sprinkles
 
@@ -894,7 +894,7 @@ So far I've shown vanilla-extract APIs that are part of `@vanilla-extract/css`, 
 
 <Collapsible summary={<em>Tailwind to Sprinkles Comparisons</em>}>
 
-Here's how you would write Tailwind-like utlity classes with Sprinkles:
+Here's how you would write Tailwind-like utility classes with Sprinkles:
 
 ```html title=Tailwind
 <main class="text-xl max-w-xl p-4">Hello World</main>
@@ -1148,9 +1148,9 @@ The output looks something like this:
 
 </Collapsible>
 
-The `responsiveProperties` has two new keys: `reponsiveArray` and `shorthands`. Here's an explainer on both of them:
+The `responsiveProperties` has two new keys: `responsiveArray` and `shorthands`. Here's an explainer on both of them:
 
-- `reponsiveArray`: This is an array of condition names and it enables the "responsive array notation". If that doesn't ring a bell, here's an example:
+- `responsiveArray`: This is an array of condition names and it enables the "responsive array notation". If that doesn't ring a bell, here's an example:
 
   Instead of writing `flexWrap: { mobile: 'wrap', desktop: 'nowrap' }` you can write `flexWrap: ['wrap', null, 'nowrap']`.
 
@@ -1486,7 +1486,7 @@ Ok, hang on with me. This is the last section of this tutorial! You'll now learn
 
 [Recipes][recipes] allows you to create multi-variant styles and the authors were heavily inspired by [Stitches](https://stitches.dev/). It also reminds me a bit of [Chakra UI's component style](https://chakra-ui.com/docs/styled-system/component-style) API.
 
-Basically, the power of such a multi-variant API is that you can have even tigther control over how your design system is used for components while giving consumers of said components a really easy way to build with them. Since you've read the section about `style` and `styleVariants` I'd make this comparison: Recipes is similar to using `styleVariants` with base styles and a set of variants.
+Basically, the power of such a multi-variant API is that you can have even tighter control over how your design system is used for components while giving consumers of said components a really easy way to build with them. Since you've read the section about `style` and `styleVariants` I'd make this comparison: Recipes is similar to using `styleVariants` with base styles and a set of variants.
 
 Here's a usage example of a `button` recipe:
 
@@ -1604,7 +1604,7 @@ export const stats = recipe({
 })
 ```
 
-Since you already defined a Sprinkles function, you can then also use it here. But keep in mind that what you see here can also be achieved with usign `vars` and `style` functions.
+Since you already defined a Sprinkles function, you can then also use it here. But keep in mind that what you see here can also be achieved with using `vars` and `style` functions.
 
 As a last step, you'll also define a `trend` recipe, to be used in the `<Trend>` component. The interesting piece in this is that no CSS styles for the `invert` variant of `background` are set (`invertUp` and `invertDown`). Because in that variant, the trend percentage (green up, red down) shouldn't have a `background`. And as you'll also see in the next step, the variant names will be computed in the `<Trend>` component.
 

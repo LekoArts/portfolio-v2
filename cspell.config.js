@@ -79,6 +79,11 @@ module.exports = {
     `unist`,
     `rehype`,
     `remark`,
+    `startcase`,
+    `metas`,
+    `globalstyle`,
+    `ibns`,
+    `tmdb`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`],
 }
