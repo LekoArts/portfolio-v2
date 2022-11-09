@@ -83,7 +83,7 @@ Since you'll be using TypeScript to write the source files and Rollup to compile
 
 Initialize a new `package.json` with `npm init -y` and add the following dependencies (use the "Copy" button for easier installation):
 
-```shell
+```sh
 npm install @figma/plugin-typings @rollup/plugin-commonjs @rollup/plugin-html @rollup/plugin-node-resolve @rollup/plugin-typescript cssnano figma-plugin-ds-svelte postcss rollup rollup-plugin-postcss rollup-plugin-svelte rollup-plugin-svg rollup-plugin-terser svelte tslib typescript
 ```
 
@@ -262,13 +262,13 @@ I don't want to focus too much on Rollup in this guide as it's just a build tool
 
 Now it's time you try out what you have so far in Figma. In your terminal, run:
 
-```shell
+```sh
 npm run dev
 ```
 
 You should see some output in the terminal that signals that Rollup successfully compiled the files you created:
 
-```shell
+```sh
 $ rollup -c -w
 rollup v2.67.3
 bundles src/main.ts → dist/bundle.js...
