@@ -20,7 +20,6 @@ export type WritingViewDataProps = {
     seoDate: string
     yearDate: string
     seoLastUpdated: string
-    subtitle: string
     timeToRead: string
     tableOfContents?: {
       items?: Array<TocItem>

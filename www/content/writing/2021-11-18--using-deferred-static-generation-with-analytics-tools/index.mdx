@@ -44,7 +44,7 @@ So in short:
 
 Use [gatsby-plugin-plausible](https://www.gatsbyjs.com/plugins/gatsby-plugin-plausible/) to add the necessary tracking script to your site.
 
-```shell
+```sh
 npm install gatsby-plugin-plausible
 ```
 
@@ -169,7 +169,7 @@ exports.sourceNodes = async (
 
 The [Plausible Stats API Reference](https://plausible.io/docs/stats-api) explains the `/api/v1/stats/breakdown` endpoint and already has an example for "Top Pages" [further below](https://plausible.io/docs/stats-api#top-pages):
 
-```shell
+```sh
 curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&property=event:page&limit=5
   -H "Authorization: Bearer ${TOKEN}"
 ```
@@ -396,7 +396,7 @@ As at the time of writing this, DSG is not run in `gatsby develop` you'll need t
 
 You can check if it worked by looking at the build output at the end of `gatsby build`:
 
-```shell
+```sh
 ┌ src/templates/blog-post.jsx
 │ ├   /popular-article/
 │ ├   ...2 more pages available
