@@ -1,12 +1,12 @@
 ---
 title: "Writing Performant CSS with vanilla-extract"
 subtitle: "It's like CSS Modules-in-TypeScript"
-date: 2022-10-29
-lastUpdated: 2022-10-29
+date: 2022-11-10
+lastUpdated: 2022-11-10
 description: "Learn how to build a Tailwind UI component from scratch by writing performant and type-safe CSS with vanilla-extract. The component will support multiple variants and themes."
 type: "tutorial"
 category: "JavaScript"
-image: file-name-inside-og-images-folder.png
+image: vanilla-extract-overview.png
 published: true
 ---
 
@@ -97,7 +97,7 @@ $ vite
   ➜  Network: use --host to expose
 ```
 
-Click on the `localhost` URL to open it in your browser. You should see an unstyled page with content. When the tutorial talks about the browser preview, it refers to this window.
+Click on the `localhost` URL to open it in your browser. You should see an unstyled page with content. When the tutorial talks about the _browser preview_, it refers to this window.
 
 ## globalStyle
 
@@ -116,7 +116,7 @@ globalStyle(`*`, {
 })
 ```
 
-vanilla-extract's styling APIs are all named imports from `@vanilla-extract/css`. The first parameter is a selector string, the second parameter a style object. So the above example will be compiled to the following CSS:
+vanilla-extract's styling APIs are all named imports from `@vanilla-extract/css`. The first parameter of `globalStyle` is a selector string, the second parameter a style object. So the above example will be compiled to the following CSS:
 
 ```css
 * {
@@ -125,7 +125,18 @@ vanilla-extract's styling APIs are all named imports from `@vanilla-extract/css`
 }
 ```
 
-The `globalStyle` API can also be used to add styles depending on other scoped class names. You'll use this pattern in one of the later steps of this tutorial.
+The `globalStyle` API can also be used to add styles depending on other scoped class names. For example:
+
+```ts highlight=5
+import { globalStyle, style } from "@vanilla-extract/css"
+
+export const parentClass = style({})
+
+globalStyle(`${parentClass} > a`, {
+  boxSizing: `border-box`,
+  margin: 0,
+})
+```
 
 <Alert status="info" title="globalStyle restrictions">
 
@@ -820,7 +831,7 @@ export const footer = styleVariants(footerStyles, (style) => style)
 
 Add the styles to `<App>`:
 
-```tsx title=src/components/app.tsx highlight=17,34
+```tsx title=src/components/app.tsx highlight=17,50
 import * as React from "react"
 import { lightThemeClass, darkThemeClass } from "../styles/themes.css"
 import { Stats, StatsItem } from "./stats"
@@ -1508,11 +1519,14 @@ export const Component = () => (
 
 And then behind the scenes the `colorScheme` can modify the `background` and `border-color`, the `size` can modify the `font-size` and `padding`, and `shape` can modify if the button is has a `border-radius` or not. It feels like e.g. using a `<Button>` component from a pre-built UI kit.
 
-<Alert status="warning" title="Do not use Sprinkles and Recipes together">
+<Alert status="warning" title="Things to look out for when combining Sprinkles & Recipes">
 
-You can use Sprinkles and Recipes together, you'll see in just a bit how. But because you can do that, it doesn't mean you should.
+You can use Sprinkles and Recipes together, you'll see in just a bit how. But you'll need to look out for at least two things when combining them:
 
-Unless you take absolute care you can easily generate massive amount of CSS classes and have a website with differing styling choices. Sprinkles and Recipes are different design paradigms and as such you should just choose one. Choose the one that makes more sense to you or that your team likes more. This way you don't have think about how to use them together or when to use which, it's a smaller mental burden.
+- You can easily generate massive amount of CSS classes as Sprinkles' `conditions` and Recipes are not optimized for each other yet. This will hurt both build & frontend performance.
+- It can get confusing when you use both of them without a system that tells you when & where to use which (they are different design paradigms after all).
+
+I'd advise you to choose one of them (e.g. it makes more sense to you, your team likes it more, you used Tailwind/Stitches in the past, etc.) and then stick with that. This way you can't run into the above mentioned problems.
 
 Of course, if you absolutely know what you're doing, take this advice with a grain of salt. But I think that the best advice for most folks is to choose either Sprinkles or Recipes and then stick with it.
 
@@ -1690,7 +1704,7 @@ When using the recipe functions, the arguments are the CSS properties you define
 
 Edit the `<Stats>` component to use the `stats` recipe and use the `variant` prop for each value:
 
-```tsx title=src/components/stats.tsx highlight=5
+```tsx title=src/components/stats.tsx highlight=8
 // Imports
 
 export const Stats: React.FC<React.PropsWithChildren<IStatsProps>> = ({
