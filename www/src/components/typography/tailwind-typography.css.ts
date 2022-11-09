@@ -796,6 +796,12 @@ export const proseBaseStyle = {
       dark: colorPalette.gray[100],
     },
   },
+  "a:has(code)": {
+    textDecorationColor: {
+      light: colorPalette.gray[400],
+      dark: colorPalette.gray[400],
+    },
+  },
   pre: {
     color: colorPalette.gray[200],
     backgroundColor: {

@@ -107,6 +107,9 @@ const badgeStyles = {
   "&[data-lang='sh']": {
     background: { light: `white`, dark: `rgba(255, 255, 255, ${displayOpacityVar})` },
   },
+  "&[data-lang='shell']": {
+    background: { light: `white`, dark: `rgba(255, 255, 255, ${displayOpacityVar})` },
+  },
   "&[data-lang='yaml']": {
     background: `rgba(255, 168, 223, ${displayOpacityVar})`,
     color: { light: `${colorPalette.blueGray[800]}`, dark: `rgb(255, 168, 223)` },
@@ -132,6 +135,9 @@ export const languageDisplayStyle = style({
   borderRadius: rem(6),
   paddingRight: em(6, 14),
   paddingLeft: em(6, 14),
+  fontWeight: vars.fontWeight.medium,
+  letterSpacing: vars.letterSpacing.wide,
+  boxShadow: `inset 0 1px 0px 0px rgba(255, 255, 255, 0.25), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.25)`,
   vars: {
     [displayOpacityVar]: `0.75`,
   },
