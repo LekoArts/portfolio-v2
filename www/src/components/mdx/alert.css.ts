@@ -110,7 +110,7 @@ globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre`, {
   marginRight: `${vars.space[0]} !important`,
 })
 
-globalStyle(`${alertBaseStyle} .${codeBlockWrapper} pre:last-of-type`, {
+globalStyle(`${alertBaseStyle} > *:last-child pre:last-of-type`, {
   marginBottom: `${vars.space[0]} !important`,
 })
 

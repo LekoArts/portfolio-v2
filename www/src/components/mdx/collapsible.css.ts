@@ -55,3 +55,7 @@ globalStyle(`${detailsStyle} .${codeBlockWrapper} pre`, {
   marginLeft: vars.space[0],
   marginRight: vars.space[0],
 })
+
+globalStyle(`${detailsStyle} > *:last-child pre:last-of-type`, {
+  marginBottom: `${vars.space[0]} !important`,
+})

@@ -97,7 +97,7 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
               </ExternalLink>
             </div>
             {hasShareApi ? (
-              <Box display="flex" flexDirection={[`column`, `row`]}>
+              <Box display="flex" flexDirection={[`column`, `row`]} gap="2">
                 <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
                 <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
               </Box>
