@@ -80,7 +80,7 @@ const buttons: Record<VariantNames, StyleRule> = {
     },
   },
   ghost: {
-    color: vars.color.inherit,
+    color: `inherit`,
     background: `transparent`,
     selectors: {
       [pseudoSelectors.hover]: {

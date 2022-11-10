@@ -17,6 +17,7 @@ export const gatsbyHighlightHeaderStyle = style({
   color: `rgb(64, 63, 83)`,
   background: `linear-gradient(to bottom, rgb(253, 253, 253) 0%, rgb(243, 243, 243) 100%)`,
   borderBottom: `1px solid rgba(107, 111, 117, 0.15)`,
+  boxShadow: `inset 0 1px 0px 0px rgba(255, 255, 255, 0.05), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.05)`,
   paddingTop: em(6, 14),
   paddingBottom: em(6, 14),
   paddingRight: em(12, 12),
@@ -131,15 +132,18 @@ const badgeStyles = {
   },
 }
 
+const boxShadowOpacityVar = createVar()
+
 export const languageDisplayStyle = style({
   borderRadius: rem(6),
   paddingRight: em(6, 14),
   paddingLeft: em(6, 14),
   fontWeight: vars.fontWeight.medium,
   letterSpacing: vars.letterSpacing.wide,
-  boxShadow: `inset 0 1px 0px 0px rgba(255, 255, 255, 0.25), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.25)`,
+  boxShadow: `inset 0 1px 4px 0 rgba(0, 0, 0, ${boxShadowOpacityVar}), inset 0 1px 0px 0px rgba(0, 0, 0, ${boxShadowOpacityVar}), inset 0 -1px 0px 0px rgba(255, 255, 255, ${boxShadowOpacityVar})`,
   vars: {
     [displayOpacityVar]: `0.75`,
+    [boxShadowOpacityVar]: `0.1`,
   },
   selectors: {
     [themesSelectors.dark]: {

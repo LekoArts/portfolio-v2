@@ -31,7 +31,7 @@ globalStyle(`*`, {
 
 globalStyle(`a`, {
   backgroundColor: colorPalette.transparent,
-  color: vars.color.inherit,
+  color: `inherit`,
   textDecoration: `inherit`,
 })
 
@@ -104,7 +104,7 @@ globalStyle(`h1, h2, h3, h4, h5, h6`, {
 globalStyle(`button, input, select, textarea`, {
   padding: vars.space[0],
   lineHeight: `inherit`,
-  color: vars.color.inherit,
+  color: `inherit`,
 })
 
 globalStyle(`img, svg, video, canvas, audio, iframe, embed, object`, {
