@@ -86,7 +86,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     type Category implements Node {
       name: String!
-      slug: String! @slugify(prefixFieldName: "name", inputFallback: "name")
+      slug: String! @slugify(inputFallback: "name")
       posts: [Post] @link(by: "category.name", from: "name")
       description: String!
       gradient: String!
