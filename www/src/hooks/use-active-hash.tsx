@@ -3,7 +3,7 @@ import * as React from "react"
 export const useActiveHash = (
   itemIds: Array<string>,
   options: {
-    root?: Element | null
+    root?: HTMLElement | null
     rootMargin?: string
     thresholds?: ReadonlyArray<number>
   } = {}
@@ -28,12 +28,16 @@ export const useActiveHash = (
     const existingElements = itemIds.map((id) => document.getElementById(id)).filter(Boolean)
 
     existingElements.forEach((el) => {
-      observer.observe(el)
+      if (el) {
+        observer.observe(el)
+      }
     })
 
     return () => {
       existingElements.forEach((el) => {
-        observer.unobserve(el)
+        if (el) {
+          observer.unobserve(el)
+        }
       })
     }
   }, [itemIds, options])

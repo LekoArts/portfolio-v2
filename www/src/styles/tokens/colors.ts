@@ -285,7 +285,6 @@ export const nullColors = {
   primary: ``,
   primaryHover: ``,
   primaryAsBg: ``,
-  primaryGhost: ``,
   bg: ``,
   text: ``,
   textMuted: ``,
@@ -302,6 +301,7 @@ export const nullColors = {
   inherit: `inherit`,
   navigationBg: ``,
   ghostBg: ``,
+  copyButtonBg: ``,
 }
 
 export type Colors = keyof typeof nullColors
@@ -310,7 +310,6 @@ export const lightThemeColors: typeof nullColors = {
   primary: colorPalette.blue[600],
   primaryHover: colorPalette.blue[700],
   primaryAsBg: colorPalette.blue[600],
-  primaryGhost: transparentize(colorPalette.blue[200], 0.6),
   bg: colorPalette.white,
   text: colorPalette.blueGray[800],
   textMuted: colorPalette.blueGray[700],
@@ -327,13 +326,13 @@ export const lightThemeColors: typeof nullColors = {
   inherit: `inherit`,
   navigationBg: transparentize(colorPalette.white, navBgTransparency),
   ghostBg: transparentize(colorPalette.blueGray[900], 0.1),
+  copyButtonBg: colorPalette.white,
 }
 
 export const darkThemeColors: typeof nullColors = {
   primary: colorPalette.orange[600],
   primaryHover: colorPalette.orange[700],
   primaryAsBg: colorPalette.blue[900],
-  primaryGhost: transparentize(colorPalette.orange[400], 0.4),
   bg: colorPalette.blueGray[900],
   text: colorPalette.blueGray[300],
   textMuted: colorPalette.blueGray[400],
@@ -350,4 +349,5 @@ export const darkThemeColors: typeof nullColors = {
   inherit: `inherit`,
   navigationBg: transparentize(colorPalette.blueGray[900], navBgTransparency),
   ghostBg: transparentize(colorPalette.white, 0.1),
+  copyButtonBg: transparentize(colorPalette.blue[600], 0.4),
 }

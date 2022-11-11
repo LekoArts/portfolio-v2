@@ -1,14 +1,19 @@
 import { slugify } from "../slugify"
 
 describe(`slugify`, () => {
-  it(`returns with slash if no title, slug, and prefix is given`, () => {
-    expect(slugify({})).toBe(`/`)
+  it(`throws with empty input`, () => {
+    // @ts-ignore
+    expect(() => slugify({})).toThrowErrorMatchingInlineSnapshot(`"title or slug must be provided."`)
   })
-  it(`returns with prefix is no title & slug is given`, () => {
-    expect(slugify({}, `category`)).toBe(`/category`)
+  it(`throws with empty input and given prefix`, () => {
+    // @ts-ignore
+    expect(() => slugify({}, `category`)).toThrowErrorMatchingInlineSnapshot(`"title or slug must be provided."`)
+  })
+  it(`only slug can be provided`, () => {
+    expect(slugify({ slug: `custom-slug` })).toBe(`/custom-slug`)
   })
   it(`slug can override slugified title`, () => {
-    expect(slugify({ slug: `custom-slug` })).toBe(`/custom-slug`)
+    expect(slugify({ slug: `custom-slug`, title: `some-title` })).toBe(`/custom-slug`)
   })
   it(`title gets slugified`, () => {
     expect(slugify({ title: `My Custom Title` })).toBe(`/my-custom-title`)

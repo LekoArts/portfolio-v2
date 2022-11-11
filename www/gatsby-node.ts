@@ -59,7 +59,7 @@ export const createPages: GatsbyNode["createPages"] = async ({ graphql, actions,
     }
   `)
 
-  if (result.errors) {
+  if (result.errors || !result.data) {
     reporter.panicOnBuild(`There was an error loading the createPages query results`, result.errors)
     return
   }

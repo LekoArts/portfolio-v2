@@ -1,4 +1,4 @@
-import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
+import type { CreateNodeArgs, GatsbyNode, NodeInput, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
 import readingTime from "reading-time"
@@ -210,11 +210,19 @@ export const onCreateNode = (
   if (node.internal.type !== `Mdx`) {
     return
   }
+  if (!node.parent) {
+    return
+  }
 
   const { createNode, createParentChildLink } = actions
   const { writingSource, gardenSource } = withDefaults(themeOptions)
 
   const fileNode = getNode(node.parent)
+
+  if (!fileNode) {
+    return
+  }
+
   const source = fileNode.sourceInstanceName
   const timeToRead = Math.round(readingTime(node.body as string).minutes)
 
@@ -250,7 +258,7 @@ export const onCreateNode = (
       },
     })
 
-    createParentChildLink({ parent: node, child: getNode(mdxPostId) })
+    createParentChildLink({ parent: node, child: getNode(mdxPostId) as NodeInput })
   }
 
   if (source === gardenSource) {
@@ -281,7 +289,7 @@ export const onCreateNode = (
       },
     })
 
-    createParentChildLink({ parent: node, child: getNode(mdxGardenId) })
+    createParentChildLink({ parent: node, child: getNode(mdxGardenId) as NodeInput })
   }
 }
 

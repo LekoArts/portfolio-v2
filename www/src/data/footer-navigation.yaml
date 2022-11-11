@@ -8,8 +8,6 @@
       link: /tutorials
     - name: React
       link: /react
-    - name: Community
-      link: /community
     - name: RSS Feed
       link: /rss.xml
       isExternal: true

@@ -27,7 +27,7 @@ const FigureWrapper: React.FC<React.PropsWithChildren<{ description: VideoProps[
 }
 
 export const Video = ({ src, ariaLabel, description, maxWidth = `100%` }: VideoProps) => {
-  const videoRef = React.useRef(null)
+  const videoRef = React.useRef<HTMLVideoElement>(null!)
   const [play, setPlay] = React.useState(true)
   const iconSize = `30px`
   const mbVariant = description ? `withDescription` : `default`

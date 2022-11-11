@@ -3,13 +3,13 @@ import type React from "react"
 export interface IUseTheme {
   themes: Array<string>
   setTheme: (theme: string) => void
-  theme?: string
+  theme: string
   resolvedTheme?: string
   systemTheme?: "light" | "dark"
 }
 
 export interface IThemeProviderProps {
-  themes?: Array<string>
+  themes?: ReadonlyArray<string>
   storageKey?: string
   defaultTheme?: string
   disableTransitionOnChange?: boolean
@@ -21,5 +21,5 @@ export interface IThemeScriptProps {
   storageKey?: string
   defaultTheme?: string
   value?: Record<string, string>
-  attrs: Array<string>
+  attrs: ReadonlyArray<string>
 }

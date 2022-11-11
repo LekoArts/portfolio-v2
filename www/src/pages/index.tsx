@@ -41,6 +41,7 @@ type DataProps = {
   posts: {
     nodes: Array<{
       title: string
+      subtitle?: string
       description: string
       slug: string
     }>
@@ -128,6 +129,14 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               <Badge variant="light">Latest Post</Badge>
               <div>
                 <Heading as="h2">{firstPost.title}</Heading>
+                {firstPost.subtitle && (
+                  <>
+                    <Text variant="prominent" color="heading">
+                      {firstPost.subtitle}
+                    </Text>
+                    <Spacer axis="vertical" size="4" />
+                  </>
+                )}
                 <Text>{firstPost.description}</Text>
               </div>
               <PrimaryButton to={firstPost.slug}>Continue Reading</PrimaryButton>
@@ -305,6 +314,7 @@ export const query = graphql`
     posts: allPost(filter: { published: { eq: true } }, sort: { date: DESC }, limit: 4) {
       nodes {
         title
+        subtitle
         description
         slug
       }

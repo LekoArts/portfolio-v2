@@ -3,6 +3,9 @@ import { vars } from "../../styles/themes/contract.css"
 import { rem, round, em } from "../../utils/css"
 import { fonts } from "../../styles/fonts.css"
 import { colorPalette } from "../../styles/tokens/colors"
+import type { SelectorMap } from "../../utils/vanilla-extract"
+
+const nullHelper = null as unknown as string
 
 export const proseRootMobile = {
   fontSize: rem(14),
@@ -98,8 +101,8 @@ export const proseSmVariant = {
     paddingRight: em(12, 12),
     paddingBottom: em(8, 12),
     paddingLeft: em(12, 12),
-    marginLeft: null,
-    marginRight: null,
+    marginLeft: nullHelper,
+    marginRight: nullHelper,
   },
   ol: {
     marginTop: em(16, 14),
@@ -174,10 +177,10 @@ export const proseSmVariant = {
     paddingLeft: em(12, 12),
   },
   "thead th:first-of-type": {
-    paddingLeft: vars.space[0],
+    paddingLeft: vars.space[0] as string,
   },
   "thead th:last-of-type": {
-    paddingRight: vars.space[0],
+    paddingRight: vars.space[0] as string,
   },
   "tbody td": {
     paddingTop: em(8, 12),
@@ -186,10 +189,10 @@ export const proseSmVariant = {
     paddingLeft: em(12, 12),
   },
   "tbody td:first-of-type": {
-    paddingLeft: vars.space[0],
+    paddingLeft: vars.space[0] as string,
   },
   "tbody td:last-of-type": {
-    paddingRight: vars.space[0],
+    paddingRight: vars.space[0] as string,
   },
 }
 
@@ -267,8 +270,8 @@ export const proseMdVariant: typeof proseSmVariant = {
     paddingRight: em(16, 14),
     paddingBottom: em(12, 14),
     paddingLeft: em(16, 14),
-    marginLeft: null,
-    marginRight: null,
+    marginLeft: nullHelper,
+    marginRight: nullHelper,
   },
   ol: {
     marginTop: em(20, 16),
@@ -343,10 +346,10 @@ export const proseMdVariant: typeof proseSmVariant = {
     paddingLeft: em(8, 14),
   },
   "thead th:first-of-type": {
-    paddingLeft: null,
+    paddingLeft: nullHelper,
   },
   "thead th:last-of-type": {
-    paddingRight: null,
+    paddingRight: nullHelper,
   },
   "tbody td": {
     paddingTop: em(8, 14),
@@ -355,10 +358,10 @@ export const proseMdVariant: typeof proseSmVariant = {
     paddingLeft: em(8, 14),
   },
   "tbody td:first-of-type": {
-    paddingLeft: null,
+    paddingLeft: nullHelper,
   },
   "tbody td:last-of-type": {
-    paddingRight: null,
+    paddingRight: nullHelper,
   },
 }
 
@@ -700,7 +703,7 @@ export const proseXlVariant: typeof proseSmVariant = {
   },
 }
 
-export const proseBaseStyle = {
+export const proseBaseStyle: SelectorMap = {
   a: {
     color: vars.color.proseLink,
     fontWeight: vars.fontWeight.medium,

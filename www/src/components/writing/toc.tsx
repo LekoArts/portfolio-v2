@@ -10,8 +10,8 @@ export type TocItem = {
   items?: Array<TocItem>
 }
 
-function getIds(items: Array<TocItem>): Array<string> {
-  return items.reduce((acc, item) => {
+function getIds(items: Array<TocItem>) {
+  return items.reduce<Array<string>>((acc, item) => {
     if (item.url) {
       // url has a # as first character, remove it to get the raw CSS-id
       acc.push(item.url.slice(1))
