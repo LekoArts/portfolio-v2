@@ -108,7 +108,7 @@ describe(`responsiveStyles`, () => {
       {
         p: {
           fontSize: `1rem`,
-          fontWeight: null,
+          fontWeight: null as unknown as string,
         },
         a: {
           fontSize: `1rem`,
@@ -116,11 +116,11 @@ describe(`responsiveStyles`, () => {
       },
       {
         p: {
-          fontSize: null,
+          fontSize: null as unknown as string,
           fontWeight: `normal`,
         },
         a: {
-          fontSize: null,
+          fontSize: null as unknown as string,
         },
       },
       {

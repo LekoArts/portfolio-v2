@@ -24,7 +24,7 @@ export type WritingViewDataProps = {
     tableOfContents?: {
       items?: Array<TocItem>
     }
-    image?: string
+    image: string
     category: {
       name: string
       slug: string

@@ -28,7 +28,7 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
   location: { pathname },
   children: mdxContent,
 }) => (
-  <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="tutorial">
+  <WritingView post={post} mdxContent={mdxContent as unknown as string} pathname={pathname} type="tutorial">
     <Heading as="h1">{post.title}</Heading>
     <Spacer size="6" axis="vertical" />
     <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />

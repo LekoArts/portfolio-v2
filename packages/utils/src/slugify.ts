@@ -7,18 +7,18 @@ export const slugifyOptions: Options = {
 const singleSlashRegex = /\/\/+/g
 
 /**
- * Creates a slug out of incoming source
- * @param source
+ * Creates a slug out of given input
+ * @param input
  * @param prefix
  * @returns Slugified string
  */
-export const slugify = (source: { slug?: string; title?: string }, prefix = ``): string => {
-  if (!source.slug && !source.title) {
-    return `/${sindresorhusSlugify(prefix, slugifyOptions)}`
+export const slugify = (input: string, prefix = ``) => {
+  if (!input) {
+    throw new Error(`slugify requires an input`)
   }
 
-  const slug = source.slug ? source.slug : sindresorhusSlugify(source.title, slugifyOptions)
-  const p = sindresorhusSlugify(prefix, slugifyOptions)
+  const slug = sindresorhusSlugify(input, slugifyOptions)
+  const slugifiedPrefix = sindresorhusSlugify(prefix, slugifyOptions)
 
-  return `/${p}/${slug}`.replace(singleSlashRegex, `/`)
+  return `/${slugifiedPrefix}/${slug}`.replace(singleSlashRegex, `/`)
 }

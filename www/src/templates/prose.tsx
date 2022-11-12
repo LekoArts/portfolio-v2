@@ -11,7 +11,7 @@ const ProseTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
   location: { pathname },
   children: mdxContent,
 }) => (
-  <WritingView post={post} mdxContent={mdxContent} pathname={pathname} type="prose">
+  <WritingView post={post} mdxContent={mdxContent as unknown as string} pathname={pathname} type="prose">
     <Text color="textEmphasized" fontWeight="medium" textAlign="center" fontSize={[`md`, null, null, `lg`, `lgx`]}>
       {post.category.name}
     </Text>

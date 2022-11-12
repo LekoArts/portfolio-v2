@@ -1,4 +1,4 @@
-import { GatsbyConfig, PluginOptions } from "gatsby"
+import type { GatsbyConfig, PluginOptions, PluginRef } from "gatsby"
 import remarkSlug from "remark-slug"
 import remarkGfm from "remark-gfm"
 import remarkSmartyPants from "remark-smartypants"
@@ -101,7 +101,7 @@ const gatsbyConfig = (themeOptions: PluginOptions): GatsbyConfig => {
       },
       `gatsby-plugin-sharp`,
       `gatsby-plugin-catch-links`,
-    ].filter(Boolean),
+    ].filter(Boolean) as Array<PluginRef>,
   }
 }
 

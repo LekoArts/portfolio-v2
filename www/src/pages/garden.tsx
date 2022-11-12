@@ -96,7 +96,7 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
                       dispatch({ type: `ADD_TAG`, payload: tag.title })
                     }
                   }}
-                  className={composeClassNames(tagStyle, isActive && `active`)}
+                  className={composeClassNames(tagStyle, isActive ? `active` : ``)}
                 >
                   <>
                     {tag.title}

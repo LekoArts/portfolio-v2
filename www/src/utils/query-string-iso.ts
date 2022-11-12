@@ -16,5 +16,5 @@ export const queryStringIso = {
     }
     return result
   },
-  to: (queryString: unknown) => stringify(queryString, { arrayFormat, skipNull: true }),
+  to: (queryString: Record<string, any>) => stringify(queryString, { arrayFormat, skipNull: true }),
 }

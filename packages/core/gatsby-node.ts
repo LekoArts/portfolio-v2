@@ -1,4 +1,4 @@
-import { CreateNodeArgs, GatsbyNode, PluginOptions } from "gatsby"
+import type { CreateNodeArgs, GatsbyNode, NodeInput, PluginOptions } from "gatsby"
 import Prando from "prando"
 import get from "lodash.get"
 import readingTime from "reading-time"
@@ -7,20 +7,21 @@ import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): void => {
   const { createTypes, createFieldExtension } = actions
 
-  const getFieldValue = (fieldName, source) => get(source, fieldName)
+  const getFieldValue = (fieldName: string, source: Record<string, any>) => get(source, fieldName)
 
   createFieldExtension({
     name: `slugify`,
     args: {
-      fieldName: `String`,
-      fallback: `String`,
+      prefixFieldName: `String`,
+      prefix: `String`,
+      inputFallback: `String`,
     },
-    extend({ fieldName, fallback }) {
+    extend({ prefixFieldName, prefix, inputFallback }) {
       return {
-        resolve(source) {
-          const computedPrefix = getFieldValue(fieldName, source)
-          const prefix = computedPrefix || fallback
-          return slugify(source, prefix)
+        resolve(source: Record<string, any>) {
+          const computedPrefix = prefixFieldName ? getFieldValue(prefixFieldName, source) : prefix
+          const computedInput = (source.slug ? source.slug : source.title) || getFieldValue(inputFallback, source)
+          return slugify(computedInput, computedPrefix)
         },
       }
     },
@@ -46,7 +47,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     interface Post implements Node {
       id: ID!
-      slug: String! @slugify(fieldName: "category")
+      slug: String! @slugify(prefixFieldName: "category")
       excerpt(pruneLength: Int = 160): String!
       tableOfContents: JSON
       timeToRead: Int
@@ -63,7 +64,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     }
 
     type MdxPost implements Node & Post {
-      slug: String! @slugify(fieldName: "category")
+      slug: String! @slugify(prefixFieldName: "category")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       tableOfContents: JSON @mdxpassthrough(fieldName: "tableOfContents")
       timeToRead: Int
@@ -81,7 +82,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     type Category implements Node {
       name: String!
-      slug: String! @slugify(fieldName: "name")
+      slug: String! @slugify(inputFallback: "name")
       posts: [Post] @link(by: "category.name", from: "name")
       description: String!
       gradient: String!
@@ -90,7 +91,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     interface Garden implements Node {
       id: ID!
-      slug: String! @slugify(fallback: "garden")
+      slug: String! @slugify(prefix: "garden")
       excerpt(pruneLength: Int = 160): String!
       timeToRead: Int
       date: Date! @dateformat
@@ -102,7 +103,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     }
 
     type MdxGarden implements Node & Garden {
-      slug: String! @slugify(fallback: "garden")
+      slug: String! @slugify(prefix: "garden")
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       timeToRead: Int
       date: Date! @dateformat
@@ -210,11 +211,19 @@ export const onCreateNode = (
   if (node.internal.type !== `Mdx`) {
     return
   }
+  if (!node.parent) {
+    return
+  }
 
   const { createNode, createParentChildLink } = actions
   const { writingSource, gardenSource } = withDefaults(themeOptions)
 
   const fileNode = getNode(node.parent)
+
+  if (!fileNode) {
+    return
+  }
+
   const source = fileNode.sourceInstanceName
   const timeToRead = Math.round(readingTime(node.body as string).minutes)
 
@@ -250,7 +259,7 @@ export const onCreateNode = (
       },
     })
 
-    createParentChildLink({ parent: node, child: getNode(mdxPostId) })
+    createParentChildLink({ parent: node, child: getNode(mdxPostId) as NodeInput })
   }
 
   if (source === gardenSource) {
@@ -281,7 +290,7 @@ export const onCreateNode = (
       },
     })
 
-    createParentChildLink({ parent: node, child: getNode(mdxGardenId) })
+    createParentChildLink({ parent: node, child: getNode(mdxGardenId) as NodeInput })
   }
 }
 

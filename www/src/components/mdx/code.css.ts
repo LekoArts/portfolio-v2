@@ -5,7 +5,7 @@ import { darkThemeClass } from "../../styles/themes/dark.css"
 import { minMediaQuery } from "../../styles/tokens/breakpoints"
 import { colorPalette } from "../../styles/tokens/colors"
 import { em, rem } from "../../utils/css"
-import { themeAwareStyles } from "../../utils/vanilla-extract"
+import { SelectorMap, themeAwareStyles } from "../../utils/vanilla-extract"
 
 export const codeBlockWrapper = style({})
 
@@ -57,7 +57,7 @@ export const gatsbyHighlightHeaderStyle = style({
 
 const displayOpacityVar = createVar()
 
-const badgeStyles = {
+const badgeStyles: SelectorMap = {
   "&[data-lang='js']": {
     background: `rgba(247, 223, 30, ${displayOpacityVar})`,
     color: { light: `black`, dark: `rgb(247, 223, 30)` },

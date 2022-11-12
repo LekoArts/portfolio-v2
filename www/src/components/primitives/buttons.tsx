@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { useButton, useToggleButton } from "@react-aria/button"
+import { useButton, useToggleButton, AriaToggleButtonProps } from "@react-aria/button"
 import { useToggleState } from "@react-stately/toggle"
 import {
   arrowAnimationStyle,
@@ -25,6 +25,10 @@ interface IButtonProps extends IBoxProps {
   rightIcon?: React.ReactNode
 }
 
+interface IToggleButtonProps extends AriaToggleButtonProps {
+  className?: string
+}
+
 export const ButtonIcon = (props) => {
   const { children, ...rest } = props
 
@@ -35,14 +39,13 @@ export const ButtonIcon = (props) => {
   )
 }
 
-export const ToggleButton = (props) => {
-  const ref = React.useRef()
+export const ToggleButton: React.FC<React.PropsWithChildren<IToggleButtonProps>> = (props) => {
+  const ref = React.useRef<HTMLButtonElement>(null!)
   const state = useToggleState(props)
   const { buttonProps } = useToggleButton(props, state, ref)
   const { children, className } = props
 
   return (
-    // @ts-ignore
     <button {...buttonProps} className={className} ref={ref}>
       {children}
     </button>
@@ -51,6 +54,7 @@ export const ToggleButton = (props) => {
 
 export const Button: React.FC<React.PropsWithChildren<IButtonProps>> = (props) => {
   const ref = React.useRef()
+  // @ts-ignore
   const { buttonProps } = useButton(props, ref)
   const {
     children,
