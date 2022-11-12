@@ -18,7 +18,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     },
     extend({ prefixFieldName, prefix, inputFallback }) {
       return {
-        resolve(source: Record<string, any>) 
+        resolve(source: Record<string, any>) {
           const computedPrefix = prefixFieldName ? getFieldValue(prefixFieldName, source) : prefix
           const computedInput = (source.slug ? source.slug : source.title) || getFieldValue(inputFallback, source)
           return slugify(computedInput, computedPrefix)
