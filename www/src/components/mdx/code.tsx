@@ -47,7 +47,7 @@ export const Code = ({
       language={language}
       theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      {({ className, tokens, getLineProps, getTokenProps }) => (
         <div className={codeBlockWrapper} data-testid="code-wrapper">
           {(title || originalLanguage) && (
             <Box
@@ -79,7 +79,7 @@ export const Code = ({
             </Box>
           )}
           <div className={gatsbyHighlightStyle}>
-            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)} style={style}>
+            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)}>
               <code className={composeClassNames(`language-${language}`, codeStyle)}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
