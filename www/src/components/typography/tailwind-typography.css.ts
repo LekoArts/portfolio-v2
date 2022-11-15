@@ -806,11 +806,8 @@ export const proseBaseStyle: SelectorMap = {
     },
   },
   pre: {
-    color: colorPalette.gray[200],
-    backgroundColor: {
-      light: colorPalette.gray[800],
-      dark: colorPalette.gray[900],
-    },
+    color: vars.color.codeBlockText,
+    backgroundColor: vars.color.codeBlockBg,
     overflowX: `auto`,
   },
   "pre code": {

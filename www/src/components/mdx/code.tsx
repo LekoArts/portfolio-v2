@@ -1,8 +1,9 @@
 import * as React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
-import lightTheme from "prism-react-renderer/themes/nightOwlLight"
-import darkTheme from "prism-react-renderer/themes/nightOwl"
 import { useTheme } from "themes-utils"
+import { nightOwlLight } from "../../styles/prism/nightOwlLight"
+import { nightOwl } from "../../styles/prism/nightOwl"
+import { themeWithCssVariables } from "../../styles/prism/prism-utils"
 import { Box } from "../primitives"
 import { calculateLinesToHighlight, getLanguage, GetLanguageInput, languageOverride } from "../../utils/code"
 import { Copy } from "./copy"
@@ -18,6 +19,9 @@ import {
   tokenLineStyle,
 } from "./code.css"
 import { composeClassNames } from "../../utils/box"
+
+const { theme: lightTheme } = themeWithCssVariables(nightOwlLight)
+const { theme: darkTheme } = themeWithCssVariables(nightOwl)
 
 type CodeProps = {
   codeString: string
@@ -47,7 +51,7 @@ export const Code = ({
       language={language}
       theme={resolvedTheme === `light` ? lightTheme : darkTheme}
     >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      {({ className, tokens, getLineProps, getTokenProps }) => (
         <div className={codeBlockWrapper} data-testid="code-wrapper">
           {(title || originalLanguage) && (
             <Box
@@ -79,7 +83,7 @@ export const Code = ({
             </Box>
           )}
           <div className={gatsbyHighlightStyle}>
-            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)} style={style}>
+            <pre className={composeClassNames(className, gatsbyHighlightPreStyle)}>
               <code className={composeClassNames(`language-${language}`, codeStyle)}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
