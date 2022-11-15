@@ -1,4 +1,6 @@
 import { transparentize } from "utils"
+import { nightOwl } from "../prism/nightOwl"
+import { nightOwlLight } from "../prism/nightOwlLight"
 
 const navBgTransparency = 0.85
 
@@ -329,8 +331,8 @@ export const lightThemeColors: typeof nullColors = {
   navigationBg: transparentize(colorPalette.white, navBgTransparency),
   ghostBg: transparentize(colorPalette.blueGray[900], 0.1),
   copyButtonBg: colorPalette.white,
-  codeBlockText: `#403f53`,
-  codeBlockBg: `#fbfbfb`,
+  codeBlockText: nightOwlLight.plain.color as string,
+  codeBlockBg: nightOwlLight.plain.backgroundColor as string,
 }
 
 export const darkThemeColors: typeof nullColors = {
@@ -354,6 +356,6 @@ export const darkThemeColors: typeof nullColors = {
   navigationBg: transparentize(colorPalette.blueGray[900], navBgTransparency),
   ghostBg: transparentize(colorPalette.white, 0.1),
   copyButtonBg: transparentize(colorPalette.blue[600], 0.4),
-  codeBlockText: `#d6deeb`,
-  codeBlockBg: `#011627`,
+  codeBlockText: nightOwl.plain.color as string,
+  codeBlockBg: nightOwl.plain.backgroundColor as string,
 }

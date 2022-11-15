@@ -4,6 +4,7 @@ import "./src/styles/fonts.css"
 import "./src/styles/reset.css"
 import { ThemeProvider } from "./src/styles/theme-provider"
 import "./src/styles/global.css"
+import "./src/styles/prism/prism-themes.css"
 
 export const onRouteUpdate: GatsbyBrowser["onRouteUpdate"] = () => {
   if (process.env.NODE_ENV === `production` && typeof window.plausible !== `undefined`) {
