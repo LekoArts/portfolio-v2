@@ -45,5 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
           IS_PLAYWRIGHT: true
+          SANDPACK_BARE_COMPONENTS: true
       - name: Run Playwright
         run: yarn e2e:build

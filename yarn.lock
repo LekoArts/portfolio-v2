@@ -1806,6 +1806,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codesandbox/sandpack-themes@npm:^1.17.0":
+  version: 1.17.0
+  resolution: "@codesandbox/sandpack-themes@npm:1.17.0"
+  checksum: e4ed29d15c4f17d3f6cff6428c9b7300b960f7a9005f40d785c8bd42b6180e5e3c03f6f5c4494f2ff3b301959f861eed55cc6cde2c6d4844a39ab5238d4e2c36
+  languageName: node
+  linkType: hard
+
 "@cspell/cspell-bundled-dicts@npm:6.14.1":
   version: 6.14.1
   resolution: "@cspell/cspell-bundled-dicts@npm:6.14.1"
@@ -19723,6 +19730,7 @@ __metadata:
   resolution: "www@workspace:www"
   dependencies:
     "@codesandbox/sandpack-react": ^1.17.0
+    "@codesandbox/sandpack-themes": ^1.17.0
     "@lekoarts/gatsby-source-flickr": ^0.1.1
     "@react-aria/button": ^3.6.2
     "@react-stately/toggle": ^3.4.2

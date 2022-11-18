@@ -6,6 +6,7 @@ import { Alert } from "./alert"
 import { Collapsible } from "./collapsible"
 import { Video } from "./video"
 import { YouTube } from "./youtube"
+import { Playground } from "./playground"
 import { preToCodeBlock } from "../../utils/code"
 
 // @ts-ignore
@@ -24,5 +25,6 @@ export const components: Components = {
   Collapsible,
   Video,
   YouTube,
+  Playground,
   ...headings,
 }
