@@ -1,25 +1,60 @@
 import * as React from "react"
-import { SandpackProvider, SandpackPreview, SandpackCodeEditor, Sandpack } from "@codesandbox/sandpack-react"
-import { nightOwl } from "@codesandbox/sandpack-themes"
+import {
+  SandpackProvider,
+  SandpackPreview,
+  SandpackCodeEditor,
+  SandpackThemeProvider,
+} from "@codesandbox/sandpack-react"
+import type { SandpackPredefinedTemplate, SandpackProviderProps } from "@codesandbox/sandpack-react"
+import { nightOwl } from "../../styles/sandpack/nightOwl"
+import { Box } from "../primitives"
+import {
+  spWrapper,
+  spCodeEditor,
+  spEditor,
+  spTabButton,
+  spTabs,
+  header,
+  rootWrapper,
+  spPreviewContainer,
+  spPreview,
+  spPreviewIframe,
+  previewWrapper,
+  middleWrapper,
+} from "./playground.css"
 
-const code1 = `export default function App() {
-  return <h1>Hello Sandpack</h1>
-}`
-const code2 = `export default function App2() {
-  return <h1>Hello World</h1>
-}`
+interface IPlaygroundProps {
+  files: Record<string, string>
+  template?: SandpackPredefinedTemplate
+  title: string
+}
 
-export const Playground = () => (
-  <Sandpack template="react" theme={nightOwl} files={{ "/App.js": code1, "/App2.js": code2 }} />
-)
+const providerOptions: SandpackProviderProps["options"] = {
+  classes: {
+    "sp-wrapper": spWrapper,
+    "sp-code-editor": spCodeEditor,
+    "sp-editor": spEditor,
+    "sp-tabs": spTabs,
+    "sp-tab-button": spTabButton,
+    "sp-preview": spPreview,
+    "sp-preview-container": spPreviewContainer,
+    "sp-preview-iframe": spPreviewIframe,
+  },
+}
 
-/*
-export const Playground = () => (
-  <SandpackProvider template="react" theme={nightOwl} files={{ "/App.js": code1, "/App2.js": code2 }}>
-    <div style={{ border: `solid hotpink` }}>
-      <SandpackCodeEditor showLineNumbers={false} />
-      <SandpackPreview />
-    </div>
+export const Playground = ({ files, template = `react`, title }: IPlaygroundProps) => (
+  <SandpackProvider template={template} files={files} options={providerOptions}>
+    <SandpackThemeProvider theme={nightOwl}>
+      <Box borderRadius="lg" className={rootWrapper}>
+        <Box as="header" className={header}>
+          <Box>{title}</Box>
+        </Box>
+        <SandpackCodeEditor showLineNumbers={false} showTabs closableTabs={false} />
+        <div className={middleWrapper}>Result</div>
+        <div className={previewWrapper}>
+          <SandpackPreview showNavigator={false} showOpenInCodeSandbox={false} showRefreshButton={false} />
+        </div>
+      </Box>
+    </SandpackThemeProvider>
   </SandpackProvider>
 )
-*/

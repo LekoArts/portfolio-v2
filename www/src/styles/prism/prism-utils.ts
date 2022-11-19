@@ -4,11 +4,7 @@ import type { PrismTheme } from "prism-react-renderer"
 
 type StyleObj = { [key: string]: string }
 
-export type CustomPrismTheme = PrismTheme & {
-  id: string
-}
-
-const flattenThemeTypes = (theme: CustomPrismTheme): PrismTheme => {
+const flattenThemeTypes = (theme: PrismTheme): PrismTheme => {
   const { plain, styles } = theme
 
   return {
@@ -34,7 +30,7 @@ const flattenThemeTypes = (theme: CustomPrismTheme): PrismTheme => {
  * Also returns a mapping from CSS Variable to value (i.e. an
  * object with key `--plain-color` and value `"#F8F8F2"`)
  */
-export const themeWithCssVariables = (theme: CustomPrismTheme): { theme: PrismTheme; variables: StyleObj } => {
+export const themeWithCssVariables = (theme: PrismTheme): { theme: PrismTheme; variables: StyleObj } => {
   const flatTheme = flattenThemeTypes(theme)
   const variables: StyleObj = {}
 

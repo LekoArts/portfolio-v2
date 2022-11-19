@@ -91,7 +91,8 @@ export const proseSmVariant = {
   "h3 code": {
     fontSize: em(16, 18),
   },
-  pre: {
+  // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
+  "pre:not(.sp-pre-placeholder)": {
     fontSize: em(12, 14),
     lineHeight: round(20 / 12),
     marginTop: em(20, 12),
@@ -260,7 +261,8 @@ export const proseMdVariant: typeof proseSmVariant = {
   "h3 code": {
     fontSize: em(18, 20),
   },
-  pre: {
+  // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
+  "pre:not(.sp-pre-placeholder)": {
     fontSize: em(14, 16),
     lineHeight: round(24 / 14),
     marginTop: em(24, 14),
@@ -429,7 +431,8 @@ export const proseLgVariant: typeof proseSmVariant = {
   "h3 code": {
     fontSize: em(21, 24),
   },
-  pre: {
+  // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
+  "pre:not(.sp-pre-placeholder)": {
     fontSize: em(16, 18),
     lineHeight: round(28 / 16),
     marginTop: em(32, 16),
@@ -598,7 +601,8 @@ export const proseXlVariant: typeof proseSmVariant = {
   "h3 code": {
     fontSize: em(27, 30),
   },
-  pre: {
+  // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
+  "pre:not(.sp-pre-placeholder)": {
     fontSize: em(18, 20),
     lineHeight: round(32 / 18),
     marginTop: em(36, 18),
@@ -805,9 +809,10 @@ export const proseBaseStyle: SelectorMap = {
       dark: colorPalette.gray[400],
     },
   },
-  pre: {
-    color: vars.color.codeBlockText,
-    backgroundColor: vars.color.codeBlockBg,
+  // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
+  "pre:not(.sp-pre-placeholder)": {
+    color: `var(--plain-color)`,
+    backgroundColor: `var(--plain-backgroundColor)`,
     overflowX: `auto`,
   },
   "pre code": {
