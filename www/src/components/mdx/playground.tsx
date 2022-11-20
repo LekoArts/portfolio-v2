@@ -17,7 +17,6 @@ import {
   header,
   rootWrapper,
   spPreviewContainer,
-  spPreviewIframe,
   previewWrapper,
   middleWrapper,
   refreshButton,
@@ -37,7 +36,6 @@ const providerOptions: SandpackProviderProps["options"] = {
     "sp-code-editor": spCodeEditor,
     "sp-tab-button": spTabButton,
     "sp-preview-container": spPreviewContainer,
-    "sp-preview-iframe": spPreviewIframe,
   },
 }
 
