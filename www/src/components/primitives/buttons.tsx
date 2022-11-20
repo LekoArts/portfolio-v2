@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { useButton, useToggleButton, AriaToggleButtonProps } from "@react-aria/button"
+import { useButton, useToggleButton, AriaToggleButtonProps, AriaButtonProps } from "@react-aria/button"
 import { useToggleState } from "@react-stately/toggle"
 import {
   arrowAnimationStyle,
@@ -14,6 +14,7 @@ import {
 import { Box, IBoxProps } from "./box"
 import { composeClassNames } from "../../utils/box"
 import { SVGIcon } from "./svg-icon"
+import { VisuallyHidden } from "../a11y/visually-hidden"
 
 type ButtonKind = "button" | "internal" | "external"
 
@@ -29,14 +30,17 @@ interface IToggleButtonProps extends AriaToggleButtonProps {
   className?: string
 }
 
-export const ButtonIcon = (props) => {
-  const { children, ...rest } = props
+interface IUnstyledButtonProps extends AriaButtonProps<"button"> {
+  className?: string
+  style?: React.CSSProperties
+}
 
-  return (
-    <span aria-hidden className={iconButtonStyle} {...rest}>
-      {children}
-    </span>
-  )
+interface IIconButtonProps extends AriaButtonProps<"button"> {
+  className?: string
+  title: string
+  description: string
+  children: React.ReactNode
+  style?: React.CSSProperties
 }
 
 export const ToggleButton: React.FC<React.PropsWithChildren<IToggleButtonProps>> = (props) => {
@@ -49,6 +53,39 @@ export const ToggleButton: React.FC<React.PropsWithChildren<IToggleButtonProps>>
     <button {...buttonProps} className={className} ref={ref}>
       {children}
     </button>
+  )
+}
+
+export const UnstyledButton = (props: IUnstyledButtonProps) => {
+  const ref = React.useRef<HTMLButtonElement>(null!)
+  const { buttonProps } = useButton(props, ref)
+  const { children, className, onPress, ...rest } = props
+
+  return (
+    <button {...buttonProps} className={className} ref={ref} {...rest}>
+      {children}
+    </button>
+  )
+}
+
+export const IconButton = (props: IIconButtonProps) => {
+  const { className, description, children, ...rest } = props
+
+  return (
+    <UnstyledButton className={className} {...rest}>
+      {children}
+      <VisuallyHidden>{description}</VisuallyHidden>
+    </UnstyledButton>
+  )
+}
+
+const ButtonIcon = (props) => {
+  const { children, ...rest } = props
+
+  return (
+    <span aria-hidden className={iconButtonStyle} {...rest}>
+      {children}
+    </span>
   )
 }
 

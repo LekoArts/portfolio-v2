@@ -29,7 +29,7 @@ export const nightOwl: SandpackTheme = {
   font: {
     body: fonts.body,
     mono: fonts.mono,
-    size: `14px`,
-    lineHeight: `20px`,
+    size: `0.875rem`,
+    lineHeight: `1.4`,
   },
 }

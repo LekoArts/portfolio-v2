@@ -1,5 +1,6 @@
 import * as React from "react"
 import type { GatsbySSR } from "gatsby"
+import { getSandpackCssText } from "@codesandbox/sandpack-react"
 import { site } from "./src/constants/meta"
 import { ThemeProvider } from "./src/styles/theme-provider"
 // @ts-ignore
@@ -30,6 +31,13 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, set
       type="font/woff2"
       crossOrigin="anonymous"
       key="crimsonFont"
+    />,
+    <style
+      id="sandpack"
+      key="sandpack-css"
+      dangerouslySetInnerHTML={{
+        __html: getSandpackCssText(),
+      }}
     />,
   ])
 

@@ -2,12 +2,12 @@ export { Badge } from "./badge"
 export { Box } from "./box"
 export {
   Button,
-  ButtonIcon,
   PrimaryButton,
   ShareAnywhereButton,
   SubtleButton,
   ToggleButton,
   TwitterButton,
+  IconButton,
 } from "./buttons"
 export { Link, ExternalLink } from "./link"
 export { MotionBox } from "./motion-box"

@@ -1,20 +1,20 @@
-import { style } from "@vanilla-extract/css"
+import { style, globalStyle } from "@vanilla-extract/css"
 import { nightOwl } from "../../styles/prism/nightOwl"
+import { pseudoSelectors } from "../../styles/selectors"
 import { vars } from "../../styles/themes/contract.css"
-import { minMediaQuery } from "../../styles/tokens/breakpoints"
+import { colorPalette } from "../../styles/tokens/colors"
 
-export const spWrapper = style({})
+export const spTabButton = style({
+  borderBottom: `1px solid transparent`,
+  selectors: {
+    "&[data-active='true']": {
+      borderBottom: `1px solid var(--sp-colors-accent)`,
+    },
+  },
+})
 
-export const spEditor = style({})
-
-export const spTabs = style({})
-
-export const spTabButton = style({})
-
-export const spCodeEditor = style({})
-
-export const spPreview = style({
-  backgroundColor: `red`,
+export const spCodeEditor = style({
+  maxHeight: `50vh`,
 })
 
 export const spPreviewContainer = style({
@@ -27,60 +27,74 @@ export const rootWrapper = style({
   overflow: `hidden`,
 })
 
+globalStyle(`${rootWrapper} ${spTabButton}[data-active='true']`, {
+  color: colorPalette.white,
+})
+
 export const header = style({
   color: `rgb(214, 222, 235)`,
   background: `linear-gradient(to bottom, rgb(14 61 100) 0%, rgb(6 41 69) 100%)`,
   borderBottom: `1px solid rgba(214, 222, 235, 0.15)`,
   boxShadow: `inset 0 1px 0px 0px rgba(255, 255, 255, 0.05), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.05)`,
-  fontSize: vars.fontSize.sm,
-  paddingLeft: vars.space[4],
-  paddingRight: vars.space[4],
-  paddingTop: vars.space[2],
-  paddingBottom: vars.space[2],
 })
 
 export const middleWrapper = style({
   borderTop: `1px solid rgba(214, 222, 235, 0.15)`,
-  paddingLeft: vars.space[4],
-  paddingRight: vars.space[4],
-  paddingTop: vars.space[2],
-  paddingBottom: vars.space[2],
-  backgroundColor: nightOwl.plain.backgroundColor,
+  background: `linear-gradient(to top, rgb(1,22,39) 0%, rgb(2,32,56) 100%)`,
+  boxShadow: `inset 0 1px 0px 0px rgba(255, 255, 255, 0.05), inset 0 -1px 0px 0px rgba(0, 0, 0, 0.05)`,
+  color: `var(--sp-colors-clickable)`,
 })
 
-export const previewWrapper = style({
-  borderTop: `1px solid rgba(214, 222, 235, 0.15)`,
-  overflow: `hidden`,
-  height: `100%`,
-  padding: vars.space[4],
-  backgroundColor: nightOwl.plain.backgroundColor,
+export const whiteText = style({
+  color: colorPalette.white,
 })
 
-/*
-export const header = style([
-  gatsbyHighlightHeaderStyle,
+export const buttonBase = style({})
+
+globalStyle(`${rootWrapper} ${buttonBase}`, {
+  color: `var(--sp-colors-clickable)`,
+})
+
+globalStyle(`${rootWrapper} ${buttonBase}:hover`, {
+  color: `var(--sp-colors-hover)`,
+})
+
+export const refreshButton = style([
+  buttonBase,
   {
-    color: `rgb(214, 222, 235)`,
-    background: `linear-gradient(to bottom, rgb(14 61 100) 0%, rgb(6 41 69) 100%)`,
+    transition: `color 0.3s ease-in-out, transform 0.7s linear`,
+    transform: `rotate(0deg)`,
+  },
+])
+
+export const backwardButton = style([
+  buttonBase,
+  {
+    transition: `all 0.3s ease-in-out`,
+    transform: `translate3d(0px, 0px, 0px)`,
     selectors: {
-      [themesSelectors.dark]: {},
-    },
-    "@media": {
-      [minMediaQuery(`sm`)]: {
-        fontSize: em(14, 16),
-        marginTop: em(24, 14),
-        paddingLeft: em(16, 14),
-        paddingRight: em(16, 14),
-      },
-      [minMediaQuery(`lg`)]: {
-        marginLeft: 0,
-        marginRight: 0,
-      },
-      [minMediaQuery(`xl`)]: {
-        marginLeft: 0,
-        marginRight: 0,
+      [pseudoSelectors.hover]: {
+        transform: `translate3d(-1px, 0px, 0px)`,
       },
     },
   },
 ])
-*/
+
+export const exportButton = style([
+  buttonBase,
+  {
+    transition: `all 0.3s ease-in-out`,
+    transform: `scale(1)`,
+    selectors: {
+      [pseudoSelectors.hover]: {
+        transform: `scale(1.05)`,
+      },
+    },
+  },
+])
+
+export const previewWrapper = style({
+  borderTop: `1px solid rgba(214, 222, 235, 0.15)`,
+  overflow: `hidden`,
+  backgroundColor: nightOwl.plain.backgroundColor,
+})
