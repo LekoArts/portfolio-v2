@@ -26,6 +26,9 @@ export type SVGIconNames =
   | "moon"
   | "sun"
   | "computer"
+  | "refresh"
+  | "export"
+  | "backward"
 
 type SVGIconProps = {
   id: SVGIconNames

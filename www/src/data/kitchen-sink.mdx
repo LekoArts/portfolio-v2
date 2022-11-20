@@ -1,5 +1,25 @@
 Kitchen Sink text to try out every MDX component and see if Prose styles all apply correctly. Also used for Playwright tests.
 
+## Playground
+
+<Playground
+  title="Testing Things"
+  files={{
+    "/App.js": `import React from 'react';
+import { sayHello } from './root';
+
+export default function App() {
+  return (
+    <>
+      <h1>Testing Playground</h1>
+      <p>{sayHello()}</p>
+    </>
+  );
+}`,
+    "/root.js": `export function sayHello() { return 'hello world' }`,
+  }}
+/>
+
 ## Alerts
 
 <Alert status="success" title="Success Note">

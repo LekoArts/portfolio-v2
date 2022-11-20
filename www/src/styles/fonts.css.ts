@@ -46,7 +46,7 @@ globalFontFace(crimsonProFallback, {
 })
 
 export const fonts = {
-  body: `'${interUI}', '${interUIFallback}', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,`,
+  body: `'${interUI}', '${interUIFallback}', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`,
   heading: `'${crimsonPro}', '${crimsonProFallback}', ui-serif, Cambria, "Times New Roman", Times, serif`,
   mono: `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
 }

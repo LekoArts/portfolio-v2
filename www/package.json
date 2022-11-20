@@ -11,6 +11,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^1.17.0",
     "@lekoarts/gatsby-source-flickr": "^0.1.1",
     "@react-aria/button": "^3.6.2",
     "@react-stately/toggle": "^3.4.2",
