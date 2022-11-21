@@ -52,8 +52,8 @@ globalStyle(`${detailsStyle} .${codeBlockWrapper} .${gatsbyHighlightHeaderStyle}
 })
 
 globalStyle(`${detailsStyle} .${codeBlockWrapper} pre`, {
-  marginLeft: vars.space[0],
-  marginRight: vars.space[0],
+  marginLeft: `${vars.space[0]} !important`,
+  marginRight: `${vars.space[0]} !important`,
 })
 
 globalStyle(`${detailsStyle} > *:last-child pre:last-of-type`, {
