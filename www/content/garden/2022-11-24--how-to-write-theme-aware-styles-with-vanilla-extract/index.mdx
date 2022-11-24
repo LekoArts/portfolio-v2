@@ -147,9 +147,9 @@ export const output = themeAwareStyles({ selectorMap, defaultTheme, darkThemeCla
       active: true,
     },
     "/utils.ts": {
-      code: `const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value));
-const isString = (value: unknown) => typeof value === "string";
-export const THEMES = ["light", "dark"] as const;
+      code: `const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value))
+const isString = (value: unknown) => typeof value === "string"
+export const THEMES = ["light", "dark"] as const
 
 export const themeAwareStyles = ({
   selectorMap,
