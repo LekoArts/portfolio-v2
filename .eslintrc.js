@@ -221,7 +221,7 @@ module.exports = {
         "react/no-children-prop": 0,
         "no-irregular-whitespace": 0,
         "prettier/prettier": [
-          `warn`,
+          `error`,
           {
             trailingComma: `es5`,
             semi: false,
