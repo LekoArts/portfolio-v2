@@ -30,7 +30,7 @@ export type SelectorMap<Modes extends string = typeof THEMES[number]> = {
 
 interface IThemeAwareStylesProps {
   selectorMap: SelectorMap
-  defaultTheme: string
+  defaultTheme: typeof THEMES[number]
   darkThemeClass: string
   rootClass?: string
 }
@@ -53,8 +53,7 @@ export const themeAwareStyles = ({
         }
         selectors[`html.${darkThemeClass} ${r}${selector}`] = {
           ...selectors[`html.${darkThemeClass} ${r}${selector}`],
-          // @ts-ignore
-          [property]: cssOrObject.dark,
+          [property]: cssOrObject[THEMES[1]],
         }
       } else if (isString(cssOrObject)) {
         selectors[`${r}${selector}`] = {
