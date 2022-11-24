@@ -1,0 +1,265 @@
+---
+title: How to Write Theme-Aware Styles with vanilla-extract
+date: 2022-11-24
+lastUpdated: 2022-11-24
+icon: javascript
+tags:
+  - JavaScript
+  - React
+---
+
+While rewriting my personal site (the one you're currently on) from [Chakra UI](https://chakra-ui.com/) to [vanilla-extract](https://vanilla-extract.style/) I had the need to create a utility for myself that allows me to write theme-aware styles. Chakra UI calls this [conditional tokens](https://chakra-ui.com/docs/styled-system/semantic-tokens) but naming things is hard so here's a concrete example of what I mean:
+
+```ts
+{
+  color: {
+    default: 'gray.900',
+    _dark: 'gray.50',
+  }
+}
+```
+
+I also used a similar pattern in my post [How to Build an Advanced Multipart Component with Chakra UI](/react/how-to-build-an-advanced-multipart-component-with-chakra-ui) for the component styles:
+
+```ts
+import { mode } from "@chakra-ui/theme-tools"
+// Stuff...
+
+color: mode(`gray.900`, `gray.50`)(props),
+```
+
+In summary, I wanted to continue writing my styles in a way of having the light/dark mode under each CSS property instead of having separate style objects per theme. In this short post I want to share my utility function with you!
+
+## Prerequisites
+
+I won't go into details on how to set up your project to be able to use this utility function. You can check out my post [Writing Performant CSS with vanilla-extract](/javascript/writing-performant-css-with-vanilla-extract) for an introduction. You should have two themes created in your site.
+
+## `themeAwareStyles` utility function
+
+Here's the theme-aware utility function ready for copy/paste:
+
+```ts
+import type { CSSProperties } from "@vanilla-extract/css"
+import type { CSSVarFunction } from "@vanilla-extract/private"
+import type { Properties } from "csstype"
+
+export const THEMES = ["light", "dark"] as const
+
+const isObject = (value: unknown) =>
+  !!(value && typeof value === `object` && !Array.isArray(value))
+
+const isString = (value: unknown) => typeof value === `string`
+
+type CSSTypeProperties = Properties<number | (string & Record<string, unknown>)>
+
+type CSSPropertiesWithModes<Modes extends string> = {
+  [Property in keyof CSSTypeProperties]:
+    | CSSTypeProperties[Property]
+    | CSSVarFunction
+    | Array<CSSVarFunction | CSSTypeProperties[Property]>
+    | Record<
+        Modes,
+        | CSSTypeProperties[Property]
+        | CSSVarFunction
+        | Array<CSSVarFunction | CSSTypeProperties[Property]>
+      >
+}
+
+type CSSPropertiesWithVars = CSSProperties & {
+  vars?: {
+    [key: string]: string
+  }
+}
+
+export type SelectorMap<Modes extends string = typeof THEMES[number]> = {
+  [selector: string]: CSSProperties | CSSPropertiesWithModes<Modes>
+}
+
+interface IThemeAwareStylesProps {
+  selectorMap: SelectorMap
+  defaultTheme: typeof THEMES[number]
+  darkThemeClass: string
+  rootClass?: string
+}
+
+export const themeAwareStyles = ({
+  selectorMap,
+  defaultTheme,
+  darkThemeClass,
+  rootClass = ``,
+}: IThemeAwareStylesProps) => {
+  const selectors: Record<string, CSSPropertiesWithVars> = {}
+  const r = rootClass ? `${rootClass} ` : ``
+
+  Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
+    Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
+      if (isObject(cssOrObject)) {
+        selectors[`${r}${selector}`] = {
+          ...selectors[`${r}${selector}`],
+          [property]: cssOrObject[defaultTheme],
+        }
+        selectors[`html.${darkThemeClass} ${r}${selector}`] = {
+          ...selectors[`html.${darkThemeClass} ${r}${selector}`],
+          [property]: cssOrObject[THEMES[1]],
+        }
+      } else if (isString(cssOrObject)) {
+        selectors[`${r}${selector}`] = {
+          ...selectors[`${r}${selector}`],
+          [property]: cssOrObject,
+        }
+      }
+    })
+  })
+
+  return selectors
+}
+```
+
+A few things to point out here:
+
+- If your theme names should be something different, you'll want to change `export const THEMES = ["light", "dark"] as const`. You can also optionally change this to an `enum`, I'm using a `const` array as I'm using `THEMES` also in other functions.
+- You can use the `SelectorMap` type on the object you'll use for the `selectorMap` argument.
+- `CSSPropertiesWithModes` is defining a lot of helper types as you can't reach that deep into the vanilla-extract types. Maybe this changes in the future.
+
+An explanation on the arguments:
+
+- `selectorMap`: Object of your styles
+- `defaultTheme`: Name of your default theme (in this case it can either be `light` or `dark`)
+- `darkThemeClass`: The generated CSS class from vanilla-extract (e.g. `const darkThemeClass = createTheme()`)
+- `rootClass`: This is optional. This way you can further scope the CSS styles
+
+## Playground
+
+You can play around with the function and its output in the box below:
+
+{/* eslint-disable prettier/prettier */}
+
+<Playground 
+  title="themeAwareStyles"
+  template="react-ts"
+  files={{
+    "/demo.ts": {
+      code: `import { themeAwareStyles } from "./utils"
+
+const defaultTheme = "light"
+const darkThemeClass = "dark"
+const selectorMap = { "&.active": { background: { light: "red", dark: "blue" } } }
+
+export const output = themeAwareStyles({ selectorMap, defaultTheme, darkThemeClass })`,
+      active: true,
+    },
+    "/utils.ts": {
+      code: `const isObject = (value: unknown) => !!(value && typeof value === "object" && !Array.isArray(value))
+const isString = (value: unknown) => typeof value === "string"
+export const THEMES = ["light", "dark"] as const
+
+export const themeAwareStyles = ({
+  selectorMap,
+  defaultTheme,
+  darkThemeClass,
+  rootClass = "",
+}) => {
+  const selectors = {}
+  const r = rootClass ? \`$\{rootClass} \` : \`\`
+
+  Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
+    Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
+      if (isObject(cssOrObject)) {
+        selectors[\`$\{r}$\{selector}\`] = {
+          ...selectors[\`$\{r}$\{selector}\`],
+          [property]: cssOrObject[defaultTheme],
+        }
+        selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`] = {
+          ...selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`],
+          [property]: cssOrObject[THEMES[1]],
+        }
+      } else if (isString(cssOrObject)) {
+        selectors[\`\${r}$\{selector}\`] = {
+          ...selectors[\`$\{r}$\{selector}\`],
+          [property]: cssOrObject,
+        }
+      }
+    })
+  })
+
+  return selectors
+}`
+    },
+    "/App.tsx": {
+      code: `import React from "react"
+import { output } from "./demo"
+
+export default function App() {
+  return (
+    <pre>
+      <code>
+        {JSON.stringify(output, null, 2)}
+      </code>
+    </pre>
+  )
+}`,
+      hidden: true,
+    }
+  }}
+/>
+
+{/* eslint-enable prettier/prettier */}
+
+## Usage
+
+You can use the `themeAwareStyles` utility function in the `selectors` key or with `globalStyle`. First, here's an example with `selectors`:
+
+```ts
+import { style } from "@vanilla-extract/css"
+import { darkThemeClass } from "./themes/dark.css"
+import { SelectorMap, themeAwareStyles } from "./utils"
+
+const badgeStyles: SelectorMap = {
+  "&[data-lang='js']": {
+    background: `rgba(247, 223, 30, 0.5)`,
+    color: { light: `black`, dark: `rgb(247, 223, 30)` },
+  },
+}
+
+export const languageDisplayStyle = style({
+  fontWeight: 500,
+  selectors: {
+    ...themeAwareStyles({
+      selectorMap: badgeStyles,
+      defaultTheme: `light`,
+      darkThemeClass,
+    }),
+  },
+})
+```
+
+Secondly, here's the `globalStyle` example:
+
+```ts
+import { globalStyle } from "@vanilla-extract/css"
+import { darkThemeClass } from "./themes/dark.css"
+import { SelectorMap, themeAwareStyles } from "./utils"
+
+const proseBaseStyle: SelectorMap = {
+  strong: {
+    color: {
+      light: `red`,
+      dark: `blue`,
+    },
+  },
+}
+
+const preparedBaseStyles = themeAwareStyles({
+  selectorMap: proseBaseStyle,
+  defaultTheme: `light`,
+  darkThemeClass,
+})
+
+Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
+  globalStyle(selector, selectorStyle)
+})
+```
+
+## Where to go from here
+
+Make the utility function your own or create a library out of it! So far the function only supports two themes and its naming mostly assumes light/dark mode. An improved version could support `n` amount of themes for example.

@@ -220,6 +220,16 @@ module.exports = {
         "@typescript-eslint/naming-convention": 0,
         "react/no-children-prop": 0,
         "no-irregular-whitespace": 0,
+        "prettier/prettier": [
+          `error`,
+          {
+            trailingComma: `es5`,
+            semi: false,
+            singleQuote: false,
+            printWidth: 80,
+            parser: `mdx`,
+          },
+        ],
       },
     },
     {
