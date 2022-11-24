@@ -162,28 +162,31 @@ export const themeAwareStyles = ({
   const selectors = {}
   const r = rootClass ? \`$\{rootClass} \` : \`\`
 
-Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
-Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
-if (isObject(cssOrObject)) {
-selectors[\`$\{r}$\{selector}\`] = {
-...selectors[\`$\{r}$\{selector}\`],
-[property]: cssOrObject[defaultTheme],
-}
-selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`] = {
-...selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`],
-[property]: cssOrObject[THEMES[1]],
-}
-} else if (isString(cssOrObject)) {
-selectors[\`\${r}$\{selector}\`] = {
-...selectors[\`$\{r}$\{selector}\`],
-[property]: cssOrObject,
-}
-}
-})
-})
+  Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
+    Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
+      if (isObject(cssOrObject)) {
+        selectors[\`$\{r}$\{selector}\`] = {
+          ...selectors[\`$\{r}$\{selector}\`],
+          [property]: cssOrObject[defaultTheme],
+        }
+        selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`] = {
+          ...selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`],
+          [property]: cssOrObject[THEMES[1]],
+        }
+      } else if (isString(cssOrObject)) {
+        selectors[\`\${r}$\{selector}\`] = {
+          ...selectors[\`$\{r}$\{selector}\`],
+          [property]: cssOrObject,
+        }
+      }
+    })
+  })
 
-return selectors
-}` }, "/App.tsx": { code:`import React from "react"
+  return selectors
+}`
+    },
+    "/App.tsx": {
+      code: `import React from "react"
 import { output } from "./demo"
 
 export default function App() {
