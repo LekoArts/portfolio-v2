@@ -426,10 +426,10 @@ export const proseLgVariant: typeof proseSmVariant = {
     fontSize: em(16, 18),
   },
   "h2 code": {
-    fontSize: em(26, 30),
+    fontSize: em(24, 30),
   },
   "h3 code": {
-    fontSize: em(21, 24),
+    fontSize: em(20, 24),
   },
   // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
   "pre:not(.sp-pre-placeholder)": {
@@ -596,10 +596,10 @@ export const proseXlVariant: typeof proseSmVariant = {
     fontSize: em(18, 20),
   },
   "h2 code": {
-    fontSize: em(31, 36),
+    fontSize: em(27, 36),
   },
   "h3 code": {
-    fontSize: em(27, 30),
+    fontSize: em(23, 30),
   },
   // Normally this would be "pre" but with Sandpack we need to exclude .sp-pre-placeholder
   "pre:not(.sp-pre-placeholder)": {
