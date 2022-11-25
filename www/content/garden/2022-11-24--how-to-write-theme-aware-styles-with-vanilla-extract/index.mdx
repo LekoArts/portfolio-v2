@@ -1,7 +1,7 @@
 ---
 title: How to Write Theme-Aware Styles with vanilla-extract
 date: 2022-11-24
-lastUpdated: 2022-11-24
+lastUpdated: 2022-11-25
 icon: javascript
 tags:
   - JavaScript
@@ -78,18 +78,19 @@ export type SelectorMap<Modes extends string = typeof THEMES[number]> = {
 interface IThemeAwareStylesProps {
   selectorMap: SelectorMap
   defaultTheme: typeof THEMES[number]
-  darkThemeClass: string
+  alternateThemeClass: string
   rootClass?: string
 }
 
 export const themeAwareStyles = ({
   selectorMap,
   defaultTheme,
-  darkThemeClass,
-  rootClass = ``,
-}: IThemeAwareStylesProps) => {
+  alternateThemeClass,
+  rootClass = "",
+}) => {
   const selectors: Record<string, CSSPropertiesWithVars> = {}
-  const r = rootClass ? `${rootClass} ` : ``
+  const r = rootClass ? `${rootClass} ` : ""
+  const alternate = defaultTheme === `light` ? THEMES[1] : THEMES[0]
 
   Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
     Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
@@ -98,9 +99,9 @@ export const themeAwareStyles = ({
           ...selectors[`${r}${selector}`],
           [property]: cssOrObject[defaultTheme],
         }
-        selectors[`html.${darkThemeClass} ${r}${selector}`] = {
-          ...selectors[`html.${darkThemeClass} ${r}${selector}`],
-          [property]: cssOrObject[THEMES[1]],
+        selectors[`html.${alternateThemeClass} ${r}${selector}`] = {
+          ...selectors[`html.${alternateThemeClass} ${r}${selector}`],
+          [property]: cssOrObject[alternate],
         }
       } else if (isString(cssOrObject)) {
         selectors[`${r}${selector}`] = {
@@ -120,12 +121,13 @@ A few things to point out here:
 - If your theme names should be something different, you'll want to change `export const THEMES = ["light", "dark"] as const`. You can also optionally change this to an `enum`, I'm using a `const` array as I'm using `THEMES` also in other functions.
 - You can use the `SelectorMap` type on the object you'll use for the `selectorMap` argument.
 - `CSSPropertiesWithModes` is defining a lot of helper types as you can't reach that deep into the vanilla-extract types. Maybe this changes in the future.
+- This function assumes that you place your theme classes onto the `<html>` DOM element (thus the `html.` CSS selector).
 
 An explanation on the arguments:
 
 - `selectorMap`: Object of your styles
 - `defaultTheme`: Name of your default theme (in this case it can either be `light` or `dark`)
-- `darkThemeClass`: The generated CSS class from vanilla-extract (e.g. `const darkThemeClass = createTheme()`)
+- `alternateThemeClass`: The generated CSS class from vanilla-extract (e.g. `const darkThemeClass = createTheme()`) that should be used for the alternative theme
 - `rootClass`: This is optional. This way you can further scope the CSS styles
 
 ## Playground
@@ -145,7 +147,12 @@ const defaultTheme = "light"
 const darkThemeClass = "dark"
 const selectorMap = { "&.active": { background: { light: "red", dark: "blue" } } }
 
-export const output = themeAwareStyles({ selectorMap, defaultTheme, darkThemeClass })`,
+export const output = themeAwareStyles({ 
+  selectorMap,
+  defaultTheme,
+  alternateThemeClass: darkThemeClass,
+  // rootClass: ".root",
+})`,
       active: true,
     },
     "/utils.ts": {
@@ -156,11 +163,12 @@ export const THEMES = ["light", "dark"] as const
 export const themeAwareStyles = ({
   selectorMap,
   defaultTheme,
-  darkThemeClass,
+  alternateThemeClass,
   rootClass = "",
 }) => {
   const selectors = {}
-  const r = rootClass ? \`$\{rootClass} \` : \`\`
+  const r = rootClass ? \`$\{rootClass} \` : ""
+  const alternate = defaultTheme === "light" ? THEMES[1] : THEMES[0]
 
   Object.entries(selectorMap).forEach(([selector, selectorStyle]) => {
     Object.entries(selectorStyle).forEach(([property, cssOrObject]) => {
@@ -169,9 +177,9 @@ export const themeAwareStyles = ({
           ...selectors[\`$\{r}$\{selector}\`],
           [property]: cssOrObject[defaultTheme],
         }
-        selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`] = {
-          ...selectors[\`html.$\{darkThemeClass} $\{r}$\{selector}\`],
-          [property]: cssOrObject[THEMES[1]],
+        selectors[\`html.$\{alternateThemeClass} $\{r}$\{selector}\`] = {
+          ...selectors[\`html.$\{alternateThemeClass} $\{r}$\{selector}\`],
+          [property]: cssOrObject[alternate],
         }
       } else if (isString(cssOrObject)) {
         selectors[\`\${r}$\{selector}\`] = {
@@ -227,7 +235,7 @@ export const languageDisplayStyle = style({
     ...themeAwareStyles({
       selectorMap: badgeStyles,
       defaultTheme: `light`,
-      darkThemeClass,
+      alternateThemeClass: darkThemeClass,
     }),
   },
 })
@@ -252,7 +260,7 @@ const proseBaseStyle: SelectorMap = {
 const preparedBaseStyles = themeAwareStyles({
   selectorMap: proseBaseStyle,
   defaultTheme: `light`,
-  darkThemeClass,
+  alternateThemeClass: darkThemeClass,
 })
 
 Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
@@ -262,4 +270,6 @@ Object.entries(preparedBaseStyles).forEach(([selector, selectorStyle]) => {
 
 ## Where to go from here
 
-Make the utility function your own or create a library out of it! So far the function only supports two themes and its naming mostly assumes light/dark mode. An improved version could support `n` amount of themes for example.
+Make the utility function your own or create a library out of it!
+
+So far the function only supports two themes and its naming mostly assumes light/dark mode. An improved version could support `n` amount of themes for example.

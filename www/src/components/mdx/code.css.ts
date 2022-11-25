@@ -151,7 +151,7 @@ export const languageDisplayStyle = style({
         [displayOpacityVar]: `0.25`,
       },
     },
-    ...themeAwareStyles({ selectorMap: badgeStyles, defaultTheme: `light`, darkThemeClass }),
+    ...themeAwareStyles({ selectorMap: badgeStyles, defaultTheme: `light`, alternateThemeClass: darkThemeClass }),
   },
 })
 

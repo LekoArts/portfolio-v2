@@ -62,7 +62,7 @@ globalStyle(`${proseRootStyle} .img-left-wrap-text`, {
 const preparedBaseStyles = themeAwareStyles({
   selectorMap: proseBaseStyle,
   defaultTheme: `light`,
-  darkThemeClass,
+  alternateThemeClass: darkThemeClass,
   rootClass: proseRootStyle,
 })
 
