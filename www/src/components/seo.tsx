@@ -51,6 +51,7 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
       <meta property="og:see_also" content="https://dribbble.com/LekoArts" />
       <meta property="og:see_also" content="https://youtube.de/LekoArtsDE" />
       <meta property="og:see_also" content="https://twitter.com/lekoarts_de" />
+      <meta property="og:see_also" content="https://mastodon.social/@lekoarts" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seo.title} />
       <meta name="twitter:url" content={seo.url} />

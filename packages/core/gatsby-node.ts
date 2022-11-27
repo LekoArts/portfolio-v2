@@ -92,6 +92,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     interface Garden implements Node {
       id: ID!
       slug: String! @slugify(prefix: "garden")
+      description: String
       excerpt(pruneLength: Int = 160): String!
       timeToRead: Int
       date: Date! @dateformat
@@ -104,6 +105,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     type MdxGarden implements Node & Garden {
       slug: String! @slugify(prefix: "garden")
+      description: String
       excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
       timeToRead: Int
       date: Date! @dateformat
@@ -193,6 +195,7 @@ type WritingNode = {
 
 type GardenNode = {
   slug?: string
+  description: string
   date: string
   lastUpdated?: string
   title: string
@@ -266,6 +269,7 @@ export const onCreateNode = (
     const f = node.frontmatter as GardenNode
     const fieldData: GardenNode = {
       slug: f.slug ? f.slug : undefined,
+      description: f.description,
       title: f.title,
       date: f.date,
       lastUpdated: f.lastUpdated ? f.lastUpdated : f.date,

@@ -25,6 +25,7 @@ type DataProps = {
   garden: {
     title: string
     slug: string
+    description: string
     icon: string
     seoLastUpdated: string
     lastUpdated: string
@@ -145,11 +146,16 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
 export default GardenTemplate
 
 export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
-  <SEO title={garden.title} pathname={garden.slug} description={garden.excerpt} image="/social/digital-garden.png">
+  <SEO
+    title={garden.title}
+    pathname={garden.slug}
+    description={garden.description ? garden.description : garden.excerpt}
+    image="/social/digital-garden.png"
+  >
     <meta name="twitter:label1" value="Time To Read" />
     <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
-    <meta name="twitter:label2" value="Category" />
-    <meta name="twitter:data2" value={garden.icon} />
+    <meta name="twitter:label2" value="Tags" />
+    <meta name="twitter:data2" value={garden.tags.join(`, `)} />
     <meta name="article:published_time" content={garden.seoDate} />
     <meta name="article:modified_time" content={garden.seoLastUpdated} />
     <script
@@ -160,7 +166,7 @@ export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
             isGarden: true,
             post: {
               title: garden.title,
-              description: garden.excerpt,
+              description: garden.description ? garden.description : garden.excerpt,
               slug: garden.slug,
               image: `/social/digital-garden.png`,
               date: garden.seoDate,
@@ -183,6 +189,7 @@ export const query = graphql`
     garden(id: { eq: $id }) {
       title
       slug
+      description
       icon
       seoLastUpdated: lastUpdated
       lastUpdated(formatString: "MMM DD, YYYY")
