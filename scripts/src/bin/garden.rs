@@ -2,6 +2,7 @@ use color_eyre::{eyre::eyre, Result};
 use dialoguer::{theme::ColorfulTheme, Confirm, Input, MultiSelect, Select};
 use scripts::{get_current_date, get_file_info, ContentType};
 use serde::Serialize;
+use slug::slugify;
 use std::{fs, path::PathBuf};
 
 const TAGS_CHOICES: [&str; 12] = [
@@ -36,6 +37,8 @@ const ICON_CHOICES: [&str; 10] = [
 #[serde(rename_all = "camelCase")]
 struct Frontmatter {
     title: String,
+    slug: String,
+    description: String,
     date: String,
     last_updated: String,
     icon: String,
@@ -52,12 +55,19 @@ fn main() -> Result<()> {
         .with_prompt("Title")
         .interact_text()?;
 
+    let slug: String = Input::with_theme(&theme)
+        .with_prompt("Slug")
+        .default(slugify(&title))
+        .interact_text()?;
+
+    let description: String = Input::with_theme(&theme)
+        .with_prompt("Description")
+        .interact_text()?;
+
     let date: String = Input::with_theme(&theme)
         .with_prompt("Date")
         .default(current_date.to_string())
         .interact_text()?;
-
-    let slug = slug::slugify(&title);
 
     let tags = MultiSelect::with_theme(&theme)
         .with_prompt("Choose your tags")
@@ -73,17 +83,19 @@ fn main() -> Result<()> {
         .map(|choice| ICON_CHOICES[choice])?;
 
     let (directory_path, filepath, filename): (PathBuf, PathBuf, String) =
-        get_file_info(current_date.to_string(), slug, ContentType::Garden)?;
+        get_file_info(current_date.to_string(), slug.clone(), ContentType::Garden)?;
 
     let fm = Frontmatter {
         title,
+        slug,
+        description,
         date,
         last_updated: current_date.to_string(),
         icon: icon.to_string(),
         tags: tags.map(|s| s.to_string()).collect::<Vec<String>>(),
     };
 
-    let frontmatter = format!("{}---", serde_yaml::to_string(&fm)?);
+    let frontmatter = format!("---\n{}---", serde_yaml::to_string(&fm)?);
 
     println!(
         r#"

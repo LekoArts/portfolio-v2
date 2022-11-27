@@ -2,6 +2,7 @@ use color_eyre::{eyre::eyre, Result};
 use dialoguer::{theme::ColorfulTheme, Confirm, Input, Select};
 use scripts::{get_current_date, get_file_info, ContentType};
 use serde::Serialize;
+use slug::slugify;
 use std::{fs, path::PathBuf};
 
 const TYPE_CHOICES: [&str; 2] = ["prose", "tutorial"];
@@ -20,6 +21,7 @@ Learning goals => Assessment => Lesson Plan
 #[serde(rename_all = "camelCase")]
 struct Frontmatter {
     title: String,
+    slug: String,
     subtitle: String,
     date: String,
     last_updated: String,
@@ -40,12 +42,15 @@ fn main() -> Result<()> {
         .with_prompt("Title")
         .interact_text()?;
 
+    let slug: String = Input::with_theme(&theme)
+        .with_prompt("Slug")
+        .default(slugify(&title))
+        .interact_text()?;
+
     let date: String = Input::with_theme(&theme)
         .with_prompt("Date")
         .default(current_date.to_string())
         .interact_text()?;
-
-    let slug = slug::slugify(&title);
 
     let subtitle: String = Input::with_theme(&theme)
         .with_prompt("Subtitle")
@@ -63,16 +68,17 @@ fn main() -> Result<()> {
         .map(|choice| TYPE_CHOICES[choice])?;
 
     let chosen_category = Select::with_theme(&theme)
-        .with_prompt("Pick an category")
+        .with_prompt("Pick a category")
         .items(&CATEGORY_CHOICES)
         .interact()
         .map(|choice| CATEGORY_CHOICES[choice])?;
 
     let (directory_path, filepath, filename): (PathBuf, PathBuf, String) =
-        get_file_info(current_date.to_string(), slug, ContentType::Writing)?;
+        get_file_info(current_date.to_string(), slug.clone(), ContentType::Writing)?;
 
     let fm = Frontmatter {
         title,
+        slug,
         subtitle,
         date,
         last_updated: current_date.to_string(),
@@ -83,7 +89,7 @@ fn main() -> Result<()> {
         published: false,
     };
 
-    let frontmatter = format!("{}---", serde_yaml::to_string(&fm)?);
+    let frontmatter = format!("---\n{}---", serde_yaml::to_string(&fm)?);
 
     println!(
         r#"
