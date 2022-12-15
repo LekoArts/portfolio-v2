@@ -1,0 +1,65 @@
+---
+title: How to Turn TypeScript Enums into String Literal Types
+slug: how-to-turn-typescript-enums-into-string-literal-types
+description: Do you need to turn TypeScript enums into string literal types, e.g. for public facing types? Then you can use template literal types to achieve that!
+date: 2022-12-15
+lastUpdated: 2022-12-15
+icon: typescript
+tags:
+  - TypeScript
+---
+
+Recently I was stuck on a TypeScript problem involving enums and how to turn those into a string literal type. I was working on public TypeScript types for a project which internally used enums. And normally I prefer using enums over string literal types, but in this instance I wanted the users to not have to import the enums everytime. They should get intellisense automatically. And that's where string literal types are better than enums.
+
+So, to get on the same page, here's an example of an [enum](https://www.typescriptlang.org/docs/handbook/enums.html) and [string literal type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) in TypeScript:
+
+```ts
+// Enum
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+}
+
+// String Literal Type
+type Direction = "UP" | "DOWN"
+
+// Example usage of enums
+const example = [
+  {
+    direction: Direction.Up,
+  },
+  {
+    direction: Direction.Down,
+  },
+]
+```
+
+The `example` array of objects will have a TypeScript type of `Array<{ direction: Direction }>`. But if you'd turn that into a public TypeScript type and your users would use `direction: "UP"`, TypeScript would complain with:
+
+```shell
+Type '"UP"' is not assignable to type 'Direction'.
+```
+
+They'd need to import the `Direction` enum and use it.
+
+You can use [template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) to turn the `Direction` enum into a string literal type like this:
+
+```ts
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+}
+
+const example: YourType = [
+  /* Contents */
+]
+
+// The `${Direction}` is the important piece here
+type YourType = Array<{ direction: `${Direction}` }>
+```
+
+So with the same syntax as template literal strings you turn an enum into a string literal type! With this you can still internally use enums but your users will get IntelliSense like this now while filling out the array of objects:
+
+```
+(property) direction: "UP" | "DOWN"
+```
