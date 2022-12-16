@@ -9,7 +9,7 @@ tags:
   - TypeScript
 ---
 
-Recently I was stuck on a TypeScript problem involving enums and how to turn those into a string literal type. I was working on public TypeScript types for a project which internally used enums. And normally I prefer using enums over string literal types, but in this instance I wanted the users to not have to import the enums everytime. They should get intellisense automatically. And that's where string literal types are better than enums.
+Recently I was stuck on a TypeScript problem involving enums and how to turn those into a string literal type. I was working on public TypeScript types for a project which internally used enums. In this instance I wanted the external users to not have to import enums but have string literal types. This way they should get intellisense automatically.
 
 So, to get on the same page, here's an example of an [enum](https://www.typescriptlang.org/docs/handbook/enums.html) and [string literal type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) in TypeScript:
 
