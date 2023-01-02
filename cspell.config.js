@@ -84,6 +84,9 @@ module.exports = {
     `globalstyle`,
     `ibns`,
     `tmdb`,
+    `csstype`,
+    `Duplicati`,
+    `Acronis`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`],
 }

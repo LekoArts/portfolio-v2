@@ -1,0 +1,46 @@
+---
+title: Using Duplicati for Your Backups
+slug: using-duplicati-for-your-backups
+description: Duplicati is a free and open-source backup software that enables you to securely and regularly backup your data to any destination you could imagine. It's my preferred backup tool and you should use it, too.
+date: 2023-01-02
+lastUpdated: 2023-01-02
+icon: general
+tags:
+  - General
+  - Tooling
+---
+
+A backup is better than no backup at all, that's for sure. But there are different forms of backups and different software. It could be a local backup (On-Site, Off-Site) or cloud backup, using commercial paid software or free (open-source) software.
+
+For quite some time I used software from Acronis to backup data from one hard-drive to another hard-drive in the same computer. Sure, better than nothing but not really a _great_ backup strategy. If the computer gets broken, it's all gone. While looking into a better backup strategy some years ago, I also more and more disliked the fact that the Acronis software (or a lot of other paid backup software) used proprietary file formats and that it was quite limited.
+
+Luckily I found [Duplicati](https://www.duplicati.com/) and since then all my backups for every computer I own run through that.
+
+## Features
+
+Its website or [fact sheet](https://www.duplicati.com/articles/FactSheet/) go into more detail of all the features that Duplicati has, but here's a list of things I really like about Duplicati:
+
+- Free, open-source software. As a maintainer myself I really appreciate the effort that the Duplicati community put into this. It also means that you can help yourself with [contributing to Duplicati](https://github.com/duplicati/duplicati#contributing)
+- No proprietary format, just `.zip` files
+- Every backup target you could imagine. Both for local and online backups I haven't hit any problems so far
+- Strong encryption
+- It's automatically applying compression while creating the backups
+- Runs everywhere
+
+## How I Use It
+
+I'm using the client with a web GUI on different platforms, including a Raspberry Pi. All machines backup with a schedule their data to the local NAS hard-drives. I then also created a backup job that encapsulates all individual backup jobs, but only runs manually. The latter is for when I occasionally attach a hard-drive that I then place somewhere else (Off-Site).
+
+In addition to the local backups each job also exports its data to a cloud provider with the same schedule. The NAS is integrated via network drives, the cloud provider is one of the supported providers of Duplicati.
+
+All jobs use encryption and run on a regular schedule. I'm using Duplicati's ["smart" backup retention](https://forum.duplicati.com/t/new-retention-policy-deletes-old-backups-in-a-smart-way/2195) feature. With it there will be one backup for each day of the last 7 days, each of the 4 last weeks, each of the last 12 months. You could of course modify this behavior to your liking.
+
+Other than that I pretty much use all the default options and settings of Duplicati, I didn't have any needs to further change things!
+
+## Getting Started
+
+Depending on if you want to also backup to the cloud you'll also need to choose a cloud provider or set up your own NAS/server.
+
+- [Download Duplicati](https://www.duplicati.com/download) for your operating system
+- Follow the [Installation Guide](https://duplicati.readthedocs.io/en/latest/02-installation/)
+- Follow the [Getting Started Guide](https://duplicati.readthedocs.io/en/latest/03-using-the-graphical-user-interface/)
