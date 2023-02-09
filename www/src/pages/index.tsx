@@ -109,11 +109,11 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Heading as="h1">Hi, I’m Lennart!</Heading>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `45ch` }}>
               <strong>Software Engineer</strong> from Germany. <br />
-              I’m passionate about working on open source products & building thriving communities around them.
+              I’m passionate about working on open source projects & making the web more inclusive through them.
             </Text>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
-              I’m currently working remotely at <ExternalLink href="https://www.gatsbyjs.com">Gatsby</ExternalLink> on
-              the open source project.
+              I’m currently working at <ExternalLink href="https://www.netlify.com">Netlify</ExternalLink>, integrating
+              & maintaining open source frameworks.
             </Text>
           </Box>
         </FullWidthContainer>
