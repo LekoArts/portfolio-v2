@@ -2,7 +2,7 @@
 title: "Adding Line Numbers and Code Highlighting to MDX"
 description: "Explore how to add line numbers and specific line highlighting to your existing code blocks in MDX. You'll be using some properties that prism-react-renderer gives you already."
 date: 2020-02-19
-lastUpdated: 2022-09-01
+lastUpdated: 2023-05-23
 icon: "mdx"
 tags:
   - Gatsby
@@ -27,7 +27,7 @@ The first and third to fifth line will be highlighted.
 
 <Alert status="info" title="Note">
 
-The following instructions require you to use at least `gatsby@^4.0.0`, `gatsby-plugin-mdx@^4.0.0`, and `@mdx-js/react@^2.0.0`.
+The following instructions require you to use at least `gatsby@^5.3.0`, `gatsby-plugin-mdx@^4.0.0`, and `@mdx-js/react@^2.0.0`.
 
 </Alert>
 
@@ -36,12 +36,12 @@ First, make sure that you have a MDX blog set up. If you have that already, you 
 Install the necessary packages for this quick tip:
 
 ```sh
-npm install prism-react-renderer unist-util-visit@^2
+npm install prism-react-renderer unist-util-visit
 ```
 
-Create a `Code` React component in `src/components/code.js` and leave the file empty for now.
+Create a `Code` React component in `src/components/code.jsx` and leave the file empty for now.
 
-Also create a CSS file:
+Also create a CSS file at the root of the project:
 
 ```css title=styles.css
 .prism-code {
@@ -104,37 +104,37 @@ gatsby-highlight > code[class*="language-"],
 }
 ```
 
-Import the `styles.css` file into `gatsby-browser.js` to add them to your site:
+Import the `styles.css` file into `gatsby-browser.jsx` to add them to your site:
 
-```js title=gatsby-browser.js
+```js title=gatsby-browser.jsx
 import "./styles.css"
 ```
 
 Next, create a `rehype` plugin to add the `highlight` information to the `meta` field of MDX. Then, those meta fields will be added as `props` that that you then can access.
 
-Create a file called `rehype-meta-as-attributes.js` at the root:
+Create a file called `rehype-meta-as-attributes.mjs` at the root:
 
-```js title=rehype-meta-as-attributes.js
-const visit = require(`unist-util-visit`)
+```js title=rehype-meta-as-attributes.mjs
+import { visit } from "unist-util-visit"
 const re = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
 
-function rehypeMetaAsAttributes() {
-  return (tree) => {
-    visit(tree, `element`, (node) => {
-      let match
+const transformer = (tree) => {
+  visit(tree, `element`, (node) => {
+    let match
 
-      if (node.tagName === `code` && node.data && node.data.meta) {
-        re.lastIndex = 0 // Reset regex.
+    if (node.tagName === `code` && node.data && node.data.meta) {
+      re.lastIndex = 0 // Reset regex.
 
-        while ((match = re.exec(node.data.meta))) {
-          node.properties[match[1]] = match[2] || match[3] || match[4] || true
-        }
+      while ((match = re.exec(node.data.meta))) {
+        node.properties[match[1]] = match[2] || match[3] || match[4] || true
       }
-    })
-  }
+    }
+  })
 }
 
-module.exports = rehypeMetaAsAttributes
+const rehypeMetaAsAttributes = () => transformer
+
+export default rehypeMetaAsAttributes
 ```
 
 <Alert status="info" title="Note">
@@ -143,10 +143,10 @@ The instructions were adapted from the MDX Guide [Syntax Highlighting with the `
 
 </Alert>
 
-In your `gatsby-config.js`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
+In your `gatsby-config.mjs`, import the newly created `rehype-meta-as-attributes` and use it inside `mdxOptions.rehypePlugins`:
 
-```js title=gatsby-config.js
-const rehypeMetaAsAttributes = require(`rehype-meta-as-attributes`)
+```js title=gatsby-config.mjs
+import rehypeMetaAsAttributes from "./rehype-meta-as-attributes.mjs"
 
 // Rest of config...
 
@@ -161,11 +161,13 @@ const rehypeMetaAsAttributes = require(`rehype-meta-as-attributes`)
 },
 ```
 
+You **must** use [ESM in Gatsby](https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/) for this to work.
+
 Switch to your file that contains the `MDXProvider`. This is most likely your layout file, check [Defining a layout](https://www.gatsbyjs.com/docs/how-to/routing/mdx/#defining-a-layout) if you haven't one already.
 
 You'll need to create a helper function called `preToCodeBlock` and define the `components` object. The `preToCodeBlock` parses the incoming props from the `pre` tag and returns a normalized object that later the `Code` component uses. Later you'll define [shortcodes](https://www.gatsbyjs.com/docs/how-to/routing/mdx/#make-components-available-globally-as-shortcodes).
 
-```js title=src/components/layout.js
+```js title=src/components/layout.jsx
 import * as React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Code from "./code"
@@ -216,7 +218,7 @@ The important bit is that you pass `components` into the `MDXProvider` and the p
 
 Add the following to said component:
 
-```js title=src/components/code.js
+```js title=src/components/code.jsx
 import * as React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 import theme from "prism-react-renderer/themes/nightOwl"
