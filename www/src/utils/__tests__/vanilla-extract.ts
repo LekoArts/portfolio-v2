@@ -5,11 +5,15 @@ const darkThemeClass = `dark`
 
 describe(`themeAwareStyles`, () => {
   it(`returns empty object when selectorMap is empty`, () => {
-    expect(themeAwareStyles({ selectorMap: {}, defaultTheme, darkThemeClass })).toEqual({})
+    expect(themeAwareStyles({ selectorMap: {}, defaultTheme, alternateThemeClass: darkThemeClass })).toEqual({})
   })
   it(`supports string as property value`, () => {
     expect(
-      themeAwareStyles({ selectorMap: { "&.active": { background: `red` } }, defaultTheme, darkThemeClass })
+      themeAwareStyles({
+        selectorMap: { "&.active": { background: `red` } },
+        defaultTheme,
+        alternateThemeClass: darkThemeClass,
+      })
     ).toEqual({
       "&.active": { background: `red` },
     })
@@ -19,7 +23,7 @@ describe(`themeAwareStyles`, () => {
       themeAwareStyles({
         selectorMap: { "&.active": { background: { light: `red`, dark: `blue` } } },
         defaultTheme,
-        darkThemeClass,
+        alternateThemeClass: darkThemeClass,
       })
     ).toEqual({
       "&.active": { background: `red` },
@@ -31,7 +35,7 @@ describe(`themeAwareStyles`, () => {
       themeAwareStyles({
         selectorMap: { "&.active": { background: { light: `red`, dark: `blue` }, color: `white` } },
         defaultTheme,
-        darkThemeClass,
+        alternateThemeClass: darkThemeClass,
       })
     ).toEqual({
       "&.active": { background: `red`, color: `white` },
@@ -45,7 +49,7 @@ describe(`themeAwareStyles`, () => {
           "&.active": { background: { light: `red`, dark: `blue` }, color: { light: `white`, dark: `black` } },
         },
         defaultTheme,
-        darkThemeClass,
+        alternateThemeClass: darkThemeClass,
       })
     ).toEqual({
       "&.active": { background: `red`, color: `white` },
@@ -57,7 +61,7 @@ describe(`themeAwareStyles`, () => {
       themeAwareStyles({
         selectorMap: { "&.active": { background: { light: `red`, dark: `blue` } } },
         defaultTheme,
-        darkThemeClass,
+        alternateThemeClass: darkThemeClass,
         rootClass: `root`,
       })
     ).toEqual({

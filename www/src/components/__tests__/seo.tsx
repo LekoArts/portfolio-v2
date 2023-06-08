@@ -93,6 +93,10 @@ describe(`SEO component`, () => {
           property="og:see_also"
         />
         <meta
+          content="https://mastodon.social/@lekoarts"
+          property="og:see_also"
+        />
+        <meta
           content="summary_large_image"
           name="twitter:card"
         />
@@ -207,6 +211,10 @@ describe(`SEO component`, () => {
           property="og:see_also"
         />
         <meta
+          content="https://mastodon.social/@lekoarts"
+          property="og:see_also"
+        />
+        <meta
           content="summary_large_image"
           name="twitter:card"
         />
@@ -313,6 +321,10 @@ describe(`SEO component`, () => {
         />
         <meta
           content="https://twitter.com/lekoarts_de"
+          property="og:see_also"
+        />
+        <meta
+          content="https://mastodon.social/@lekoarts"
           property="og:see_also"
         />
         <meta
