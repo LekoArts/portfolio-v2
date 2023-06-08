@@ -1,0 +1,105 @@
+---
+title: Effortless Web Scraping with Cloudflare Workers
+slug: effortless-web-scraping-with-cloudflare-workers
+description: Do you need up-to-date information from a website that doesn't have an API? You can use a web scraper powered by Cloudflare Workers to get your data.
+date: 2023-06-08
+lastUpdated: 2023-06-08
+icon: general
+tags:
+- General
+---
+
+Some time ago I had the need to grab information from a website to display some visitor numbers onto a widget powered by [Scriptable](https://scriptable.app/). Unfortunately, that website didn't have an API for its numbers, it only displayed it in a table on the website. This is where a web scraper is needed.
+
+There are endless ways and articles about web scrapers, so I want to share a little tool I used for that job. I do like it because: It's easy to use, fast, and free. All you need is an account at [Cloudflare](https://www.cloudflare.com/).
+
+The tool I want to highlight is [web.scraper.workers.dev](https://web.scraper.workers.dev/) by [Adam Schwartz](https://adamschwartz.co/). Give it a URL and a CSS selector and you're done! If the website ever goes down, you can grab the code on [GitHub](https://github.com/adamschwartz/web.scraper.workers.dev) and host it yourself.
+
+If for example you'd use the URL `example.com` and the CSS selector `h1` you'd get the result:
+
+```json
+{
+  "result": {
+    "h1": [
+      "Example Domain"
+    ]
+  }
+}
+```
+
+You can also generate a permalink to it:
+
+```
+https://web.scraper.workers.dev/?url=example.com&selector=h1&scrape=text&pretty=true
+```
+
+I'm now using such a permalink as my API for those website numbers. I find using Cloudflare Workers for web scraping to be quite approachable and Adam's tool makes it even easier.
+
+Oh, and in case you're wondering how I use the table data, here's a small code playground to show it:
+
+{/* eslint-disable prettier/prettier */}
+
+<Playground 
+  title="Parsing data from Web Scraper"
+  template="react-ts"
+  files={{
+    "/parsing.ts": {
+      code: `const incoming = "Name Max Current PlaceA 144 51 PlaceB 50 25 PlaceC 200 130"
+
+function chunk(arr: Array<string>, size = 3): Array<Array<string>> {
+  const bulks: Array<Array<string>> = []
+  for (let i = 0; i < Math.ceil(arr.length / size); i++) {
+    bulks.push(arr.slice(i * size, (i + 1) * size))
+  }
+  return bulks
+}
+
+function parseString(input: string, size = 3): ParseStringResponse {
+  const arr = input.split(" ")
+  const columns = arr.slice(0, size).map((i) => ({ heading: i, property: i.toLowerCase() }))
+  const rawData = arr.slice(size, arr.length)
+  const chunkedData = chunk(rawData)
+  const data = chunkedData.map((item) => ({
+    name: item[0],
+    max: item[1],
+    current: item[2],
+  }))
+
+  return { columns, data }
+}
+
+export const output = parseString(incoming)
+
+type ParseStringResponse = {
+  columns: Array<{
+    heading: string
+    property: string
+  }>
+  data: Array<{
+    name: string
+    max: string
+    current: string
+  }>
+}
+`,
+      active: true,
+    },
+    "/App.tsx": {
+      code: `import React from "react"
+import { output } from "./parsing"
+
+export default function App() {
+  return (
+    <pre>
+      <code>
+        {JSON.stringify(output, null, 2)}
+      </code>
+    </pre>
+  )
+}`,
+      hidden: true,
+    }
+  }}
+/>
+
+{/* eslint-enable prettier/prettier */}
