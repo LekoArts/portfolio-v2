@@ -25,7 +25,7 @@ const metaTagAssertions = [
   },
   {
     name: `Blog Post (Tutorial)`,
-    url: `/gatsby/using-deferred-static-generation-with-analytics-tools`,
+    url: `/react/using-deferred-static-generation-with-analytics-tools`,
     title: `Using Deferred Static Generation with Analytics Tools | ${site.title}`,
     metaTags: [
       {
@@ -47,7 +47,7 @@ const metaTagAssertions = [
       },
       {
         key: `twitter:data2`,
-        value: `Gatsby`,
+        value: `React`,
         type: `name`,
       },
     ],

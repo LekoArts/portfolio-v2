@@ -36,11 +36,11 @@
 - fromPath: /tags/*
   toPath: /garden
 - fromPath: /tags/gatsby
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /tags/gatsby-starter
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /tags/gatsby-themes
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /tags/compositing
   toPath: /design
 - fromPath: /tags/photoshop
@@ -74,13 +74,13 @@
 - fromPath: /en/blog/gatsby-starter-fuer-prismic-io
   toPath: /garden/gatsby-starter-for-prismic-io
 - fromPath: /blog/wie-gatsby-mit-steigenden-anforderungen-und-faehigkeiten-wachsen-kann
-  toPath: /gatsby/how-gatsby-scales-with-your-expertise-and-scope
+  toPath: /react/how-gatsby-scales-with-your-expertise-and-scope
 - fromPath: /blog/gatsby-starter-portfolio-cara
   toPath: /garden/gatsby-starter-portfolio-cara
 - fromPath: /blog/gatsby-starter-portfolio-jodie
   toPath: /garden/gatsby-starter-portfolio-jodie
 - fromPath: /blog/tipps-und-tricks-fuer-gatsby
-  toPath: /gatsby/tips-and-tricks-for-gatsby
+  toPath: /react/tips-and-tricks-for-gatsby
 - fromPath: /blog/wie-ich-mit-theme-ui-meine-gatsby-themes-bibliothek-gebaut-habe
   toPath: /javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code
 # Old legacy German
@@ -121,11 +121,11 @@
 - fromPath: /en/tags/*
   toPath: /garden
 - fromPath: /en/tags/gatsby
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /en/tags/gatsby-starter
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /en/tags/gatsby-themes
-  toPath: /gatsby
+  toPath: /react
 - fromPath: /en/tags/photoshop
   toPath: /design
 - fromPath: /en/tags/react
@@ -155,13 +155,13 @@
 - fromPath: /en/blog/gatsby-starter-for-prismic-io
   toPath: /garden/gatsby-starter-for-prismic-io
 - fromPath: /en/blog/how-gatsby-scales-with-your-expertise-and-scope
-  toPath: /gatsby/how-gatsby-scales-with-your-expertise-and-scope
+  toPath: /react/how-gatsby-scales-with-your-expertise-and-scope
 - fromPath: /en/blog/gatsby-starter-portfolio-cara
   toPath: /garden/gatsby-starter-portfolio-cara
 - fromPath: /en/blog/gatsby-starter-portfolio-jodie
   toPath: /garden/gatsby-starter-portfolio-jodie
 - fromPath: /en/blog/tips-and-tricks-for-gatsby
-  toPath: /gatsby/tips-and-tricks-for-gatsby
+  toPath: /react/tips-and-tricks-for-gatsby
 - fromPath: /en/blog/how-i-used-theme-ui-to-build-my-gatsby-themes-library
   toPath: /javascript/how-i-used-theme-ui-to-seamlessly-convert-design-to-code
 - fromPath: /en/blog/setting-up-a-gatsby-themes-workspace-with-typescript-eslint-and-cypress
@@ -182,3 +182,13 @@
   toPath: /garden/adding-line-numbers-and-code-highlighting-to-mdx
 - fromPath: /en/blog/using-theme-ui-as-the-starting-point-for-your-figma-design-and-gatsby-development
   toPath: /design/introducing-the-theme-ui-plugin-for-figma
+
+# Removal of /gatsby subpath and redirect to /react
+- fromPath: /gatsby
+  toPath: /react
+- fromPath: /gatsby/how-gatsby-scales-with-your-expertise-and-scope
+  toPath: /react/how-gatsby-scales-with-your-expertise-and-scope
+- fromPath: /gatsby/tips-and-tricks-for-gatsby
+  toPath: /react/tips-and-tricks-for-gatsby
+- fromPath: /gatsby/using-deferred-static-generation-with-analytics-tools
+  toPath: /react/using-deferred-static-generation-with-analytics-tools

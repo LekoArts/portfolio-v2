@@ -181,7 +181,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({ actions, createContentD
 type WritingNode = {
   slug?: string
   image?: string
-  category: "Community" | "Design" | "Gatsby" | "JavaScript" | "React"
+  category: "Community" | "Design" | "JavaScript" | "React" | "Writing"
   date: string
   lastUpdated?: string
   description: string

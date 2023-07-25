@@ -36,9 +36,6 @@ test.describe(`Navigation`, () => {
     await firstClick(page, `text=Design`)
     await expect(page).toHaveURL(`/design`)
 
-    await firstClick(page, `text=Gatsby`)
-    await expect(page).toHaveURL(`/gatsby`)
-
     await firstClick(page, `text=JavaScript`)
     await expect(page).toHaveURL(`/javascript`)
 
@@ -52,7 +49,7 @@ test.describe(`Navigation`, () => {
     await expect(page).toHaveURL(`/garden`)
   })
   test(`visiting some content pages`, async ({ page }) => {
-    await page.goto(`/gatsby/using-deferred-static-generation-with-analytics-tools`)
+    await page.goto(`/react/using-deferred-static-generation-with-analytics-tools`)
     await page.goto(`/design/introducing-the-theme-ui-plugin-for-figma`)
     await page.goto(`/garden/running-cypress-tests-with-github-actions-in-parallel`)
   })

@@ -6,7 +6,7 @@ use slug::slugify;
 use std::{fs, path::PathBuf};
 
 const TYPE_CHOICES: [&str; 2] = ["prose", "tutorial"];
-const CATEGORY_CHOICES: [&str; 5] = ["Community", "Design", "Gatsby", "JavaScript", "React"];
+const CATEGORY_CHOICES: [&str; 5] = ["Community", "Design", "JavaScript", "React", "Writing"];
 
 const BODY_TEMPLATE: &str = r#"
 
