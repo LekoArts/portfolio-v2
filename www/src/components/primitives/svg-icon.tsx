@@ -29,6 +29,7 @@ export type SVGIconNames =
   | "refresh"
   | "export"
   | "backward"
+  | "download"
 
 type SVGIconProps = {
   id: SVGIconNames

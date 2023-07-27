@@ -192,3 +192,7 @@
   toPath: /react/tips-and-tricks-for-gatsby
 - fromPath: /gatsby/using-deferred-static-generation-with-analytics-tools
   toPath: /react/using-deferred-static-generation-with-analytics-tools
+
+# Addition of a /resume page
+- fromPath: /projects
+  toPath: /resume
