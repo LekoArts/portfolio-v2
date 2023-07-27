@@ -30,10 +30,9 @@ const Resume = () => (
             </Text>
             <Spacer axis="vertical" size="4" />
             <Text>
-              E-Mail: <ExternalLink href="mailto:hello@lekoarts.de">hello@lekoarts.de</ExternalLink>
-            </Text>
-            <Text>
-              GitHub: <ExternalLink href="https://github.com/LekoArts">LekoArts</ExternalLink>
+              <ExternalLink href="mailto:hello@lekoarts.de">hello@lekoarts.de</ExternalLink> —{` `}
+              <ExternalLink href="https://github.com/LekoArts">GitHub</ExternalLink> —{` `}
+              <ExternalLink href="https://www.linkedin.com/in/lennart-joergens/">LinkedIn</ExternalLink>
             </Text>
           </Box>
           <Box>
