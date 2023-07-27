@@ -19,7 +19,7 @@ const metaTagAssertions = [
       },
       {
         key: `og:image`,
-        value: `https://www.lekoarts.de/social/default-og-image.png`,
+        value: `https://www.lekoarts.de${site.defaultOgImage}`,
       },
     ],
   },
@@ -96,7 +96,7 @@ const metaTagAssertions = [
       },
       {
         key: `og:image`,
-        value: `https://www.lekoarts.de/social/digital-garden.png`,
+        value: `https://www.lekoarts.de${site.defaultGardenOgImage}`,
       },
       {
         key: `twitter:label2`,

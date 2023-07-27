@@ -3,6 +3,7 @@ import Prando from "prando"
 import get from "lodash.get"
 import readingTime from "reading-time"
 import { mdxResolverPassthrough, slugify, withDefaults, shuffle } from "utils"
+import { site } from "../../www/src/constants/meta"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }): void => {
   const { createTypes, createFieldExtension } = actions
@@ -101,6 +102,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       tags: [String!]!
       icon: String!
       contentFilePath: String!
+      image: String
     }
 
     type MdxGarden implements Node & Garden {
@@ -114,6 +116,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       tags: [String!]!
       icon: String!
       contentFilePath: String!
+      image: String
     }
 
     type CoreConfig implements Node {
@@ -203,6 +206,7 @@ type GardenNode = {
   icon: string
   contentFilePath: string
   timeToRead: number
+  image: string
 }
 
 type MdxNode = WritingNode | GardenNode
@@ -277,6 +281,7 @@ export const onCreateNode = (
       tags: f.tags,
       contentFilePath: fileNode.absolutePath as string,
       timeToRead,
+      image: f.image ? f.image : site.defaultGardenOgImage,
     }
 
     const mdxGardenId = createNodeId(`${node.id} >>> MdxGarden`)
