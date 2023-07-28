@@ -28,12 +28,23 @@ const Resume = () => (
               projects and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and
               well-documented solutions to customers' needs.
             </Text>
-            <Spacer axis="vertical" size="4" />
+            <Spacer axis="vertical" size="8" />
             <Text>
               <ExternalLink href="mailto:hello@lekoarts.de">hello@lekoarts.de</ExternalLink> —{` `}
               <ExternalLink href="https://github.com/LekoArts">GitHub</ExternalLink> —{` `}
               <ExternalLink href="https://www.linkedin.com/in/lennart-joergens/">LinkedIn</ExternalLink>
             </Text>
+            <Spacer axis="vertical" size="4" />
+            <Button
+              kind="external"
+              target="_blank"
+              to="resume.pdf"
+              size="md"
+              variant="primary"
+              rightIcon={<SVGIcon id="download" height="1em" width="1em" />}
+            >
+              Download Resume
+            </Button>
           </Box>
           <Box>
             <img
@@ -52,26 +63,8 @@ const Resume = () => (
         </Prose>
         <Spacer size="12" axis="vertical" />
         <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
-        <Spacer size="6" axis="vertical" />
-        <Box
-          display="flex"
-          flexDirection={[`column`, `row`]}
-          gap="5"
-          justifyContent={[`flex-start`, `space-between`]}
-          alignItems={[`flex-start`, `center`]}
-        >
-          <Text fontSize={[`md`, null, null, `lg`]}>Last updated: July 27, 2023</Text>
-          <Button
-            kind="external"
-            target="_blank"
-            to="TODO.pdf"
-            size="md"
-            variant="primary"
-            rightIcon={<SVGIcon id="download" height="1em" width="1em" />}
-          >
-            Download Resume
-          </Button>
-        </Box>
+        <Spacer size="8" axis="vertical" />
+        <Text fontSize={[`md`, null, null, `lg`]}>Last updated: July 27, 2023</Text>
       </Container>
     </SkipNavContent>
   </Layout>
