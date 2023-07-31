@@ -64,7 +64,7 @@ const Resume = () => (
         <Spacer size="12" axis="vertical" />
         <Box as="hr" height="px" width="full" bg="text" opacity={0.1} border="none" />
         <Spacer size="8" axis="vertical" />
-        <Text fontSize={[`md`, null, null, `lg`]}>Last updated: July 27, 2023</Text>
+        <Text fontSize={[`md`, null, null, `lg`]}>Last updated: July 31, 2023</Text>
       </Container>
     </SkipNavContent>
   </Layout>
