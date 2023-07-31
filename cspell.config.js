@@ -87,6 +87,11 @@ module.exports = {
     `csstype`,
     `Duplicati`,
     `Acronis`,
+    `LMDB`,
+    `Garbaya`,
+    `skillset`,
+    `Schau`,
+    `Urlocker`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`],
 }

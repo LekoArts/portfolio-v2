@@ -19,7 +19,7 @@ const metaTagAssertions = [
       },
       {
         key: `og:image`,
-        value: `https://www.lekoarts.de/social/default-og-image.png`,
+        value: `https://www.lekoarts.de${site.defaultOgImage}`,
       },
     ],
   },
@@ -92,20 +92,20 @@ const metaTagAssertions = [
       },
       {
         key: `og:description`,
-        value: `You’re a fan of Plausible Analytics and Gatsby? Great! In this guide you’ll learn how to add Plausible Analytics to your Gatsby site…`,
+        value: `Learn how to add Plausible Analytics to your Gatsby site. Also read how to add TypeScript types for Plausible and 404 page tracking.`,
       },
       {
         key: `og:image`,
-        value: `https://www.lekoarts.de/social/digital-garden.png`,
+        value: `https://www.lekoarts.de${site.defaultGardenOgImage}`,
       },
       {
         key: `twitter:label2`,
-        value: `Category`,
+        value: `Tags`,
         type: `name`,
       },
       {
         key: `twitter:data2`,
-        value: `gatsby`,
+        value: `Gatsby`,
         type: `name`,
       },
     ],
@@ -122,8 +122,8 @@ const noIndexPages = [
     url: `/privacy-policy`,
   },
   {
-    name: `About`,
-    url: `/about`,
+    name: `Resume`,
+    url: `/resume`,
   },
 ]
 

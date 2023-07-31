@@ -153,7 +153,7 @@ export const homepage = {
       headline: site.titleDefault,
       image: {
         "@type": `ImageObject`,
-        url: `${site.url}${site.image}`,
+        url: `${site.url}${site.defaultOgImage}`,
       },
       inLanguage: `en-US`,
       mainEntityOfPage: site.url,

@@ -35,6 +35,7 @@ type DataProps = {
     tags: Array<string>
     timeToRead: number
     excerpt: string
+    image: string
     parent: {
       parent: {
         relativePath: string
@@ -150,7 +151,7 @@ export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
     title={garden.title}
     pathname={garden.slug}
     description={garden.description ? garden.description : garden.excerpt}
-    image="/social/digital-garden.png"
+    image={garden.image}
   >
     <meta name="twitter:label1" value="Time To Read" />
     <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
@@ -168,7 +169,7 @@ export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
               title: garden.title,
               description: garden.description ? garden.description : garden.excerpt,
               slug: garden.slug,
-              image: `/social/digital-garden.png`,
+              image: garden.image,
               date: garden.seoDate,
               lastUpdated: garden.seoLastUpdated,
               year: garden.yearDate,
@@ -198,6 +199,7 @@ export const query = graphql`
       yearDate: date(formatString: "YYYY")
       tags
       timeToRead
+      image
       excerpt
       ... on MdxGarden {
         parent {

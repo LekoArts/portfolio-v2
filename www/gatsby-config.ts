@@ -13,7 +13,7 @@ const gatsbyConfig: GatsbyConfig = {
     siteTitleDefault: site.titleDefault,
     siteUrl: site.url,
     siteDescription: site.description,
-    siteImage: site.image,
+    siteImage: site.defaultOgImage,
     twitter: site.twitter,
   },
   trailingSlash: `never`,

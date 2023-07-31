@@ -17,6 +17,7 @@ import {
 } from "./garden.css"
 import { composeClassNames } from "../utils/box"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
+import { site } from "../constants/meta"
 
 type DataProps = {
   garden: {
@@ -155,7 +156,7 @@ export const Head = () => (
     title="Digital Garden"
     pathname="/garden"
     description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
-    image="/social/digital-garden.png"
+    image={site.defaultGardenOgImage}
     breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
   />
 )
