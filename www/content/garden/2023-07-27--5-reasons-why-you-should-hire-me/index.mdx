@@ -12,9 +12,19 @@ tags:
 
 ## I maintained a major React meta framework
 
-From 2019 to 2023 I maintained [Gatsby](https://github.com/gatsbyjs/gatsby), one of the major React meta frameworks. As a team we shipped multiple major versions featuring a lot of awesome features, more recently things like Partial Hydration (powered by React Server Components) or ESM support. While I used a lot of other awesome open source software (e.g. webpack, Babel, LMDB, Redux) I also built such widely used software myself.
+From 2019 to 2023 I maintained [Gatsby](https://github.com/gatsbyjs/gatsby), one of the major React meta frameworks. As a team we shipped multiple major versions featuring a lot of awesome features which I'll highlight in just a bit. While I used a lot of other awesome open source software (e.g. webpack, Babel, LMDB, Redux) I also built such widely used software myself.
 
-Thus I have a deep understanding of React, GraphQL, build tooling, API design and maintenance, publishing packages, and more things than I can count. Generally speaking I have the “under the hood”-knowledge that makes a React meta framework work.
+Some of the highlights of my work:
+
+- Implemented Gatsby's [Parallel Query Running (PQR)](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0/#parallel-query-running) feature, allowing for multi-core parallelization of running GraphQL queries. Gatsby's in-memory data store had to be changed to the fast [LMDB](https://github.com/kriszyp/lmdb-js) database. This feature enabled a reduction in build times of up to 40%.
+- Aided in developing Gatsby's [Deferred Static Generation (DSG)](https://www.gatsbyjs.com/docs/conceptual/rendering-options/#deferred-static-generation-dsg) and [Server-Side Rendering (SSR)](https://www.gatsbyjs.com/docs/conceptual/rendering-options/#server-side-rendering-ssr) features
+- Brought complete TypeScript support to Gatsby. Worked together with the [Parcel](https://parceljs.org/) team to bring ahead of time compilation to Gatsby. I've also implemented automatic TypeScript type generation for GraphQL queries.
+- Led the work on Partial Hydration, Gatsby’s feature to serve less JavaScript on each page. This feature is powered by React Server Components (RSC) and with its beta release it was the first major React framework to have support for RSC.
+- Wrote extensive documentation for each new feature, e.g. [DSG & SSR](https://www.gatsbyjs.com/docs/conceptual/rendering-options/), [TypeScript](https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/), or [Partial Hydration](https://www.gatsbyjs.com/docs/conceptual/partial-hydration/).
+
+Generally speaking I have the “under the hood”-knowledge that makes a React meta framework work. I have deep knowledge about the JavaScript, Node.js, and React ecosystem.
+
+For a full list of my work check out my [resume](/resume).
 
 ## I’m a strong communicator & technical writer
 
@@ -34,11 +44,11 @@ In High School and college I did freelance design work including but not limited
 
 This very website you’re currently reading this on and my [Gatsby Themes](https://themes.lekoarts.de/) are all designed and developed by me.
 
-## I’m completely self-taught
+## I’m constantly learning & improving myself
 
 I’ve been honing my design, writing, and software development skills for years now with the help of a lot of amazing people. Every person has a unique set of abilities and you can always learn something new by working together. Before working in a team, I learned how to learn quickly and how to navigate the path to getting things done.
 
-My background allows me to approach technical writing and mentoring junior folks with empathy and joy. I care about creating educational content, lifting everyone up with me, and open source since I’ve directly benefited from all these things myself.
+I approach technical writing and mentoring junior folks with empathy and joy. I care about creating educational content, lifting everyone up with me, and open source since I’ve directly benefited from all these things myself.
 
 > I have managed Lennart directly, and have seen truly tremendous growth in his skills and in his career while at Gatsby. [...] Lennart is not yet done growing, and he is ready for an even more outsized impact to help shape, build, and improve products and any team would be lucky to have his design sensibilities, his deep JavaScript expertise, his open-source acumen and community building, and perhaps most importantly his growing and robust engineering skillset.
 
