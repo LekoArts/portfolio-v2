@@ -1,5 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 import { CategoryHero } from "../components/writing/category-hero"
 import { CategoryView } from "../components/writing/category-view"
 import { SEO } from "../components/seo"
@@ -25,6 +26,17 @@ const Tutorials: React.FC<PageProps<TutorialsProps>> = ({ data: { posts } }) => 
       bgGradient="linear-gradient(to top, #475569, #0f172a)"
       title={tutorialsTitle}
       description={tutorialsDescription}
+      image={
+        <StaticImage
+          alt=""
+          src="../data/category-images/tutorials.png"
+          quality={100}
+          formats={[`auto`, `webp`, `avif`]}
+          placeholder="blurred"
+          layout="constrained"
+          width={350}
+        />
+      }
     />
   </CategoryView>
 )

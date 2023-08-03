@@ -1,5 +1,6 @@
 import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
+import { IGatsbyImageData, GatsbyImage } from "gatsby-plugin-image"
 import { CategoryHero } from "../components/writing/category-hero"
 import { CategoryView } from "../components/writing/category-view"
 import { SEO } from "../components/seo"
@@ -20,12 +21,22 @@ type DataProps = {
     description: string
     gradient: string
     slug: string
+    image: {
+      childImageSharp: {
+        gatsbyImageData: IGatsbyImageData
+      }
+    }
   }
 }
 
 const ReactCategory: React.FC<PageProps<DataProps>> = ({ data: { posts, category } }) => (
   <CategoryView posts={posts}>
-    <CategoryHero bgGradient={category.gradient} title={category.name} description={category.description} />
+    <CategoryHero
+      bgGradient={category.gradient}
+      title={category.name}
+      description={category.description}
+      image={<GatsbyImage alt="" image={category.image.childImageSharp.gatsbyImageData} />}
+    />
   </CategoryView>
 )
 
@@ -47,6 +58,17 @@ export const query = graphql`
       description
       gradient
       slug
+      image {
+        childImageSharp {
+          gatsbyImageData(
+            width: 350
+            layout: CONSTRAINED
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+            quality: 100
+          )
+        }
+      }
     }
     posts: allPost(filter: { published: { eq: true }, category: { name: { eq: $name } } }, sort: { date: DESC }) {
       nodes {

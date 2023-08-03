@@ -1,8 +1,11 @@
 import * as React from "react"
 import { Heading, Text } from "../typography"
 import { Box, Container } from "../primitives"
-import { contentWrapperStyle, descriptionStyle } from "./category-hero.css"
-import { paddingResponsiveArrays } from "../../styles/tokens/space"
+import { contentWrapperStyle, descriptionStyle, imageWrapperStyle } from "./category-hero.css"
+import { Atoms } from "../../styles/atoms.css"
+
+const pt = [`12`, `2`, null, null, null] as Atoms["paddingTop"]
+const pb = [`12`, null, `14`, `16`, null] as Atoms["paddingTop"]
 
 type CategoryHeroProps = {
   bgGradient: string
@@ -17,9 +20,9 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
     paddingTop="navigationWithSubHeight"
     style={{ backgroundImage: bgGradient }}
   >
-    <Container py={paddingResponsiveArrays.paddingSmall}>
+    <Container paddingBottom={pb} paddingTop={pt}>
       <div className={contentWrapperStyle}>
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" justifyContent="center">
           <Heading as="h1" __color="white">
             {title}
           </Heading>
@@ -27,7 +30,7 @@ export const CategoryHero: React.FC<CategoryHeroProps> = ({ bgGradient, title, d
             {description}
           </Text>
         </Box>
-        {image}
+        <div className={imageWrapperStyle}>{image}</div>
       </div>
     </Container>
   </Box>
