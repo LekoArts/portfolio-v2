@@ -1,3 +1,7 @@
-User-agent: *
+User-agent: GPTBot
+Disallow: /
 
-sitemap: https://www.lekoarts.de/sitemap-index.xml
+User-agent: *
+Allow: /
+
+Sitemap: https://www.lekoarts.de/sitemap-index.xml
