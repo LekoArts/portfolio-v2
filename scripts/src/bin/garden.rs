@@ -5,7 +5,7 @@ use serde::Serialize;
 use slug::slugify;
 use std::{fs, path::PathBuf};
 
-const TAGS_CHOICES: [&str; 12] = [
+const TAGS_CHOICES: [&str; 13] = [
     "CLI",
     "Disord",
     "elitepvpers",
@@ -16,11 +16,12 @@ const TAGS_CHOICES: [&str; 12] = [
     "MDX",
     "Python",
     "React",
+    "Rust",
     "Tooling",
     "TypeScript",
 ];
 
-const ICON_CHOICES: [&str; 10] = [
+const ICON_CHOICES: [&str; 11] = [
     "cli",
     "discord",
     "elitepvpers",
@@ -30,6 +31,7 @@ const ICON_CHOICES: [&str; 10] = [
     "mdx",
     "python",
     "react",
+    "rust",
     "typescript",
 ];
 

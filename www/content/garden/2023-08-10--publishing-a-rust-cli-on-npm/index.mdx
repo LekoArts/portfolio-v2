@@ -1,0 +1,83 @@
+---
+title: Publishing a Rust CLI on npm
+slug: publishing-a-rust-cli-on-npm
+description: Learn how you can publish your CLI written in Rust on npm through napi-rs
+date: 2023-08-10
+lastUpdated: 2023-08-10
+icon: rust
+tags:
+- CLI
+- Rust
+---
+
+While building my CLI [thanks-contributors](https://github.com/LekoArts/thanks-contributors) (this little script accesses GitHub's API to get all contributors and their PRs between two distinct points in the history of commits) I decided that I wanted to make this CLI available to my colleagues. And they shouldn't need to install any additional toolchains besides what they already use on a daily basis (which is Node.js among other things). So it only made sense to publish the CLI to npm so that it can be run with `npx @lekoarts/thanks-contributors`.
+
+Well, at first this was easier said than done. While searching for "Rust CLI npm" or "Rust binary npm" I've found articles talking about [binary-install](https://github.com/EverlastingBugstopper/binary-install) and [wasm-pack](https://github.com/rustwasm/wasm-pack). They are certainly great projects and good options but I wanted something simpler.
+
+Luckily I found [napi-rs](https://napi.rs/). It's a framework for building pre-compiled Node.js addons in Rust.
+
+## Setting Up napi-rs
+
+I recommend using `@napi-rs/cli` to initialize your project. The [napi-rs getting started guide](https://napi.rs/docs/introduction/getting-started) is a great resource for all options and a deep dive on how it works.
+
+Install the CLI globally:
+
+```shell
+npm install -g @napi-rs/cli
+```
+
+Afterwards, navigate to your desired parent directory and run the CLI. It'll create a new folder containing the project:
+
+```shell
+napi new
+```
+
+When you're asked for the package name, I recommend using a [npm scope](https://docs.npmjs.com/cli/v9/using-npm/scope) because for each platform a separate package will be published. This can trigger spam detection.
+
+In one of the next steps you're asked for the targets you want to support. There is a [short overview page](https://napi.rs/docs/cross-build/summary) in the napi-rs documentation but this one took me longer to figure out initially. You'll need to research where your CLI should be able to run. I've chosen these options and so far I didn't get any complaints: `darwin-arm64, darwin-x64, linux-arm-gnueabihf, linux-arm64-gnu, linux-arm64-musl, linux-x64-gnu, linux-x64-musl, win32-x64-msvc`. So I'm supporting Intel and Apple Silicon Macs, a couple of Linux flavors (including ARM), and Windows.
+
+I recommend enabling GitHub actions as they'll enable you to automatically build and publish new versions in CI.
+
+Follow the rest of the [getting started instructions](https://napi.rs/docs/introduction/getting-started) and also check out the [example package walkthrough](https://napi.rs/docs/introduction/simple-package) to learn how to use the scaffolded project.
+
+## Defining an Executable
+
+So you've successfully initialized your project and wrote your Rust CLI, e.g. with [clap](https://docs.rs/clap/latest/clap/). Great! Now you need to wire up your compiled file in such a way that anyone can run it as a Node.js executable.
+
+Give your exported function inside `src/lib.rs` a suitable name, for example `run`. When you run `npm run build` napi-rs will compile your native packages and create a new file at the root called `index.js`. When you inspect the file you'll see that it's quite long — it needs to figure out which package/native binary it should load for your platform. At the very bottom you'll see `run` exported as a named function:
+
+```js title=index.js
+const { run } = nativeBinding
+
+module.exports.run = run
+```
+
+Which means that you can import `run` from `index.js`.
+
+You can use the `bin` property inside [package.json](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#bin) to define one or more executables files. But you can't directly execute `run` from `index.js` as you need to define a small helper file.
+
+At the root of your project, create a `bin.js` file with the following contents:
+
+```js title=bin.js
+#!/usr/bin/env node
+
+const cli = require("./index")
+const arguments = process.argv.slice(2)
+
+cli.run(arguments).catch((e) => {
+	console.error(e)
+	process.exit(1)
+})
+```
+
+The first line is a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) and necessary to run the Node.js executable. Since you only want to pass the arguments to the `run` function, you need to grab them from `process.argv`. Feel free to `console.log(process.argv)` to see what it all contains when you run `node bin.js`.
+
+Last but not least, add the `bin` property to your root `package.json`:
+
+```json title=package.json
+{
+  "bin": "bin.js"
+}
+```
+
+The next time you publish your package to npm one can directly use the CLI you wrote in Rust 🎉 As mentioned in the beginning, if you need a real-world example of this pattern look at the source code of [thanks-contributors](https://github.com/LekoArts/thanks-contributors).

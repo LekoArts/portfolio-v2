@@ -92,6 +92,9 @@ module.exports = {
     `skillset`,
     `Schau`,
     `Urlocker`,
+    `napi`,
+    `gnueabihf`,
+    `msvc`,
   ],
-  flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`],
+  flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`, `Lenart`, `Lennard`],
 }
