@@ -115,7 +115,7 @@ const gatsbyConfig: GatsbyConfig = {
           {
             query: `#graphql
             {
-              allPost(filter: {published: {eq: true}}, sort: {date: DESC}) {
+              posts: allPost(filter: {published: {eq: true}}, sort: {date: DESC}) {
                 nodes {
                   title
                   date
@@ -123,10 +123,31 @@ const gatsbyConfig: GatsbyConfig = {
                   slug
                 }
               }
+              garden: allGarden(sort: {lastUpdated: DESC}) {
+                nodes {
+                  title
+                  date: lastUpdated(formatString: "MMM DD, YYYY")
+                  description
+                  slug
+                }
+              }
             }
             `,
-            serialize: ({ query: { site: s, allPost } }) =>
-              allPost.nodes.map((node) => {
+            serialize: ({
+              query: { site: s, posts, garden },
+            }: {
+              query: {
+                site: ISite
+                posts: { nodes: Array<IFeedEntryInput> }
+                garden: { nodes: Array<IFeedEntryInput> }
+              }
+            }) => {
+              // Combine posts and garden + sort them by date
+              const allEntries = [...posts.nodes, ...garden.nodes].sort(
+                (a, b) => Date.parse(b.date) - Date.parse(a.date)
+              )
+
+              return allEntries.map((node) => {
                 const url = `${s.siteMetadata.siteUrl}${node.slug}`
                 const content = `<p>${node.description}</p><div style="margin-top: 50px; font-style: italic;"><strong><a href="${url}">Keep reading</a>.</strong></div><br /> <br />`
 
@@ -138,9 +159,12 @@ const gatsbyConfig: GatsbyConfig = {
                   description: node.description,
                   custom_elements: [{ "content:encoded": content }],
                 }
-              }),
+              })
+            },
             output: `/rss.xml`,
             title: site.titleDefault,
+            language: `en`,
+            image_url: `${site.url}/social/logo-60w.png`,
           },
         ],
       },
@@ -161,3 +185,19 @@ const gatsbyConfig: GatsbyConfig = {
 }
 
 export default gatsbyConfig
+
+interface ISite {
+  siteMetadata: {
+    title: string
+    description: string
+    siteUrl: string
+    site_url: string
+  }
+}
+
+interface IFeedEntryInput {
+  title: string
+  date: string
+  description: string
+  slug: string
+}
