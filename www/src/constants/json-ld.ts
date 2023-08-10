@@ -27,6 +27,7 @@ export const identity = {
     `https://github.com/LekoArts`,
     `https://dribbble.com/LekoArts`,
     `https://www.behance.net/lekoarts`,
+    `https://mastodon.social/@lekoarts`,
   ],
   url: site.url,
 }

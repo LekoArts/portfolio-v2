@@ -3,11 +3,12 @@ import { graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../blocks/layout"
 import { SkipNavContent } from "../a11y/skip-nav"
-import { Spacer, Box, ExternalLink, ShareAnywhereButton, TwitterButton, Container } from "../primitives"
+import { Spacer, Box, ExternalLink, ShareAnywhereButton, Container } from "../primitives"
 import { Prose, Text } from "../typography"
 import { components } from "../mdx"
 import { site } from "../../constants/meta"
 import { TocItem, WithSidebarWrapper } from "./toc"
+import { getMastodonShareLink, getTwitterShareLink, getWritingEditLink } from "../../utils/sharing"
 
 export type WritingViewDataProps = {
   post: {
@@ -79,31 +80,15 @@ export const WritingView: React.FC<React.PropsWithChildren<WritingViewDataProps>
             justifyContent={[`flex-start`, `space-between`]}
             alignItems={[`flex-start`, `center`]}
           >
-            <div>
-              <ExternalLink
-                fontSize={[`md`, null, null, `lg`]}
-                fontWeight="medium"
-                href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/writing/${post.parent.parent.relativePath}`}
-              >
-                Edit on GitHub
-              </ExternalLink>
+            <Box fontSize={[`md`, null, null, `lg`]} fontWeight="medium">
+              <ExternalLink href={getWritingEditLink(post.parent.parent.relativePath)}>Edit on GitHub</ExternalLink>
               {` `}-{` `}
-              <ExternalLink
-                fontSize={[`md`, null, null, `lg`]}
-                fontWeight="medium"
-                href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
-              >
-                Discuss on Twitter
-              </ExternalLink>
-            </div>
-            {hasShareApi ? (
-              <Box display="flex" flexDirection={[`column`, `row`]} gap="2">
-                <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />
-                <TwitterButton link={`${site.url}${post.slug}`} message={post.title} variant="outline" />
-              </Box>
-            ) : (
-              <TwitterButton link={`${site.url}${post.slug}`} message={post.title} />
-            )}
+              Share on{` `}
+              <ExternalLink href={getTwitterShareLink(`${site.url}${post.slug}`, post.title)}>Twitter</ExternalLink>
+              {` `}/{` `}
+              <ExternalLink href={getMastodonShareLink(`${site.url}${post.slug}`, post.title)}>Mastodon</ExternalLink>
+            </Box>
+            {hasShareApi && <ShareAnywhereButton link={`${site.url}${post.slug}`} message={post.title} />}
           </Box>
           {type === `prose` && (
             <Text marginTop="6" fontSize={[`md`, null, null, `lg`]}>

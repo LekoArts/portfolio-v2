@@ -176,33 +176,6 @@ export const SubtleButton: React.FC<React.PropsWithChildren<{ to: string; kind?:
   </Button>
 )
 
-const getTwitterShareLink = (link, message) =>
-  `https://twitter.com/intent/tweet/?text=${encodeURIComponent(message)}&via=lekoarts_de&url=${encodeURIComponent(
-    link
-  )}`
-
-export const TwitterButton = ({
-  link,
-  message,
-  variant = `primary`,
-}: {
-  link: string
-  message: string
-  variant?: VariantNames
-}) => (
-  <Button
-    kind="external"
-    to={getTwitterShareLink(link, message)}
-    target="_blank"
-    rel="noreferrer noopener"
-    size="md"
-    variant={variant}
-    rightIcon={<SVGIcon id="twitter" height="1em" width="1em" />}
-  >
-    Share on Twitter
-  </Button>
-)
-
 export const ShareAnywhereButton = ({
   link,
   message,
@@ -218,7 +191,7 @@ export const ShareAnywhereButton = ({
     navigator
       .share({
         title: message,
-        text: `${message} by Lennart Jörgens (@lekoarts_de)`,
+        text: `${message} by Lennart Jörgens`,
         url: link,
       })
       // eslint-disable-next-line no-console

@@ -22,7 +22,6 @@ export type SVGIconNames =
   | "star"
   | "arrow-right"
   | "share"
-  | "twitter"
   | "moon"
   | "sun"
   | "computer"

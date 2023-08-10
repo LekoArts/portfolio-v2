@@ -2,17 +2,7 @@ import * as React from "react"
 import { PageProps, graphql, HeadFC } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { Layout } from "../components/blocks/layout"
-import {
-  ExternalLink,
-  Link,
-  Spacer,
-  Box,
-  ShareAnywhereButton,
-  TwitterButton,
-  SVGIcon,
-  Tag,
-  Container,
-} from "../components/primitives"
+import { ExternalLink, Link, Spacer, Box, ShareAnywhereButton, SVGIcon, Tag, Container } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { SEO } from "../components/seo"
 import { Heading, Text, Prose } from "../components/typography"
@@ -20,6 +10,7 @@ import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
 import { site } from "../constants/meta"
 import { gardenCtaStyle, metaStyle, plantIconStyle } from "./garden.css"
+import { getGardenEditLink, getMastodonShareLink, getTwitterShareLink } from "../utils/sharing"
 
 type DataProps = {
   garden: {
@@ -88,33 +79,19 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
             alignItems={[`flex-start`, `center`]}
             gap="5"
           >
-            <Box>
-              <ExternalLink
-                fontSize={[`md`, null, null, `lg`]}
-                fontWeight="medium"
-                href={`https://github.com/LekoArts/portfolio-v2/edit/main/www/content/garden/${garden.parent.parent.relativePath}`}
-              >
-                Edit on GitHub
-              </ExternalLink>
+            <Box fontSize={[`md`, null, null, `lg`]} fontWeight="medium">
+              <ExternalLink href={getGardenEditLink(garden.parent.parent.relativePath)}>Edit on GitHub</ExternalLink>
               {` `}-{` `}
-              <ExternalLink
-                fontSize={[`md`, null, null, `lg`]}
-                fontWeight="medium"
-                href={`https://www.twitter.com/search?q=${encodeURIComponent(`https://www.lekoarts.de${pathname}`)}`}
-              >
-                Discuss on Twitter
+              Share on{` `}
+              <ExternalLink href={getTwitterShareLink(`${site.url}${garden.slug}`, garden.title)}>Twitter</ExternalLink>
+              {` `}/{` `}
+              <ExternalLink href={getMastodonShareLink(`${site.url}${garden.slug}`, garden.title)}>
+                Mastodon
               </ExternalLink>
             </Box>
-            {hasShareApi ? (
-              <Box display="flex" flexDirection={[`column`, `row`]} gap="2">
-                <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />
-                <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} variant="outline" />
-              </Box>
-            ) : (
-              <TwitterButton link={`${site.url}${garden.slug}`} message={garden.title} />
-            )}
+            {hasShareApi && <ShareAnywhereButton link={`${site.url}${garden.slug}`} message={garden.title} />}
           </Box>
-          <Spacer size="12" axis="vertical" />
+          <Spacer size={[`12`, null, `16`]} axis="vertical" />
           <Box
             borderRadius="xl"
             p="6"
@@ -125,8 +102,8 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
           >
             <Box
               as={SVGIcon}
-              height={[`6`, `8`, `12`]}
-              width={[`6`, `8`, `12`]}
+              height={[`8`, null, `12`]}
+              width={[`8`, null, `12`]}
               marginRight="6"
               id="lightbulb"
               className={plantIconStyle}
