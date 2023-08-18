@@ -1,8 +1,9 @@
 import * as React from "react"
 import { WindowLocation } from "@reach/router"
 import { useQueryString, IIsomorphism } from "./use-query-string"
+import { ITagState } from "../components/blocks/tag-group"
 
-export function useQueryStringReducer<State, Action>(opts: {
+export function useQueryStringReducer<State extends ITagState, Action>(opts: {
   reducer: React.Reducer<State, Action>
   initialState: State
   iso: IIsomorphism<State, string>

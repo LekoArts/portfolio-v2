@@ -1,23 +1,16 @@
 import * as React from "react"
 import { graphql, PageProps } from "gatsby"
 import { Layout } from "../components/blocks/layout"
-import { Link, ToggleButton, Box, Spacer, SVGIconNames, SVGIcon, Container } from "../components/primitives"
+import { Link, Box, Spacer, SVGIconNames, SVGIcon, Container } from "../components/primitives"
 import { SkipNavContent } from "../components/a11y/skip-nav"
 import { Heading, Text } from "../components/typography"
 import { SEO } from "../components/seo"
 import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
-import {
-  gardenItemStyle,
-  gardenItemWrapperStyle,
-  iconWrapperStyle,
-  tagCloseIconStyle,
-  tagStyle,
-  wrapListStyle,
-} from "./garden.css"
-import { composeClassNames } from "../utils/box"
+import { gardenItemStyle, gardenItemWrapperStyle, iconWrapperStyle } from "./garden.css"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
 import { site } from "../constants/meta"
+import { initialState, reducer, TagAction, TagGroup, TagGroupItem, ITagState } from "../components/blocks/tag-group"
 
 type DataProps = {
   garden: {
@@ -34,38 +27,16 @@ type DataProps = {
   }
 }
 
-interface IState {
-  tags: Array<string>
-}
-
-type Action = { type: `ADD_TAG`; payload: string } | { type: `REMOVE_TAG`; payload: string }
-
-const initialState: IState = {
-  tags: [],
-}
-
-const reducer = (state: IState, action: Action) => {
-  switch (action.type) {
-    case `ADD_TAG`:
-      return { ...state, tags: state.tags.concat(action.payload) }
-    case `REMOVE_TAG`:
-      return { ...state, tags: state.tags.filter((tag) => tag !== action.payload) }
-    default:
-      throw new Error(`Unknown action passed to filter reducer`)
-  }
-}
-
 const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) => {
   const [isMounted, setIsMounted] = React.useState(false)
 
   React.useEffect(() => {
     setIsMounted(true)
   }, [])
-  const [state, dispatch] = useQueryStringReducer<IState, Action>({
+  const [state, dispatch] = useQueryStringReducer<ITagState, TagAction>({
     initialState,
     location,
     reducer,
-    // @ts-ignore - Somehow doesn't work
     iso: queryStringIso,
   })
 
@@ -82,35 +53,11 @@ const Garden: React.FC<PageProps<DataProps>> = ({ data: { garden }, location }) 
             Select tags to filter posts:
           </Text>
           <Spacer size="6" axis="vertical" />
-          <div className={wrapListStyle}>
-            {garden.group.map((tag) => {
-              const isActive = state.tags.includes(tag.title) && isMounted
-
-              return (
-                <ToggleButton
-                  key={tag.title}
-                  isSelected={isActive}
-                  onChange={() => {
-                    if (state.tags.includes(tag.title)) {
-                      dispatch({ type: `REMOVE_TAG`, payload: tag.title })
-                    } else {
-                      dispatch({ type: `ADD_TAG`, payload: tag.title })
-                    }
-                  }}
-                  className={composeClassNames(tagStyle, isActive ? `active` : ``)}
-                >
-                  <>
-                    {tag.title}
-                    {isActive && (
-                      <span className={tagCloseIconStyle} aria-hidden>
-                        <SVGIcon id="close" width="100%" height="100%" />
-                      </span>
-                    )}
-                  </>
-                </ToggleButton>
-              )
-            })}
-          </div>
+          <TagGroup>
+            {garden.group.map(({ title: name }) => (
+              <TagGroupItem key={name} name={name} state={state} dispatch={dispatch} />
+            ))}
+          </TagGroup>
           <Spacer size="20" axis="vertical" />
           <div className={gardenItemWrapperStyle}>
             {garden.nodes
