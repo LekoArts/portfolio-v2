@@ -41,6 +41,7 @@ const getSrcSet = (images: IImages) => {
 }
 
 export const ArtImage = ({ images, photoId, alt, className }: IArtImageProps) => {
+  // Sometimes the API returns null 🤷🏻
   if (!photoId) return null
 
   const src = images.lg.url
