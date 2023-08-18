@@ -5,7 +5,7 @@ import { composeClassNames } from "../../utils/box"
 
 interface IArtImageProps {
   images: IImages
-  photoId: string
+  photoId: string | null
   alt: string
   className?: string
 }
@@ -41,6 +41,8 @@ const getSrcSet = (images: IImages) => {
 }
 
 export const ArtImage = ({ images, photoId, alt, className }: IArtImageProps) => {
+  if (!photoId) return null
+
   const src = images.lg.url
   const { width: maxWidth, height: maxHeight } = images.lg
   const aspectRatio = maxWidth / maxHeight
