@@ -33,10 +33,10 @@ export const Flickr3D = () => {
   }
 
   return threeDNodes.map((img) => {
-    const src = img.images?.lg?.url
+    const photoId = img?.photoId
 
-    if (src) {
-      return <ArtImage key={img.photoId} images={img.images} alt={img.description} photoId={img.photoId} />
+    if (photoId) {
+      return <ArtImage key={img.photoId} images={img.images} alt={img.description} photoId={photoId} />
     }
 
     return null

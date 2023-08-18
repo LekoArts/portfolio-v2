@@ -32,15 +32,23 @@ const Content = ({ layout, nodes }: IContentProps) => {
   if (layout === `grid` || layout === `masonry`) {
     return (
       <div className={imageWrapperVariants[layout]}>
-        {flatNodes.map((img) => (
-          <ArtImage
-            key={img.photoId}
-            alt={img.description}
-            photoId={img.photoId}
-            images={img.images}
-            className={gridImagesVariants[layout]}
-          />
-        ))}
+        {flatNodes.map((img) => {
+          const photoId = img?.photoId
+
+          if (photoId) {
+            return (
+              <ArtImage
+                key={photoId}
+                alt={img.description}
+                photoId={photoId}
+                images={img.images}
+                className={gridImagesVariants[layout]}
+              />
+            )
+          }
+
+          return null
+        })}
       </div>
     )
   }
@@ -52,15 +60,23 @@ const Content = ({ layout, nodes }: IContentProps) => {
           <React.Fragment key={title}>
             {index !== 0 && <Spacer axis="vertical" size="10" />}
             <Heading as="h2">{title}</Heading>
-            {content.map((img) => (
-              <ArtImage
-                key={img.photoId}
-                alt={img.description}
-                photoId={img.photoId}
-                images={img.images}
-                className={gridImagesVariants[layout]}
-              />
-            ))}
+            {content.map((img) => {
+              const photoId = img?.photoId
+
+              if (photoId) {
+                return (
+                  <ArtImage
+                    key={photoId}
+                    alt={img.description}
+                    photoId={photoId}
+                    images={img.images}
+                    className={gridImagesVariants[layout]}
+                  />
+                )
+              }
+
+              return null
+            })}
           </React.Fragment>
         ))}
       </div>
