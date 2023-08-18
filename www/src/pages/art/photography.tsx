@@ -16,29 +16,64 @@ import { composeClassNames } from "../../utils/box"
 import { ITagState, TagAction, TagGroup, TagGroupItem, initialState, reducer } from "../../components/blocks/tag-group"
 import { useQueryStringReducer } from "../../hooks/use-query-string-reducer"
 import { queryStringIso } from "../../utils/query-string-iso"
+import { useLocalStorage } from "../../hooks/use-local-storage"
 
 // @ts-ignore
 import PhotographyBodyMdx from "../../data/photography-body.mdx"
-import { useLocalStorage } from "../../hooks/use-local-storage"
 
-const Images = ({ content, layout }) => (
-  <>
-    {content.map((img) => (
-      <ArtImage
-        key={img.photoId}
-        alt={img.description}
-        photoId={img.photoId}
-        images={img.images}
-        className={gridImagesVariants[layout]}
-      />
-    ))}
-  </>
-)
+interface IContentProps {
+  layout: LayoutType
+  nodes: IDataProps["photography"]["nodes"]
+}
+
+const Content = ({ layout, nodes }: IContentProps) => {
+  const flatNodes = nodes.map(({ content }) => content).flat()
+
+  if (layout === `grid` || layout === `masonry`) {
+    return (
+      <div className={imageWrapperVariants[layout]}>
+        {flatNodes.map((img) => (
+          <ArtImage
+            key={img.photoId}
+            alt={img.description}
+            photoId={img.photoId}
+            images={img.images}
+            className={gridImagesVariants[layout]}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (layout === `list`) {
+    return (
+      <div className={imageWrapperVariants[layout]}>
+        {nodes.map(({ content, title }, index) => (
+          <React.Fragment key={title}>
+            {index !== 0 && <Spacer axis="vertical" size="10" />}
+            <Heading as="h2">{title}</Heading>
+            {content.map((img) => (
+              <ArtImage
+                key={img.photoId}
+                alt={img.description}
+                photoId={img.photoId}
+                images={img.images}
+                className={gridImagesVariants[layout]}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    )
+  }
+
+  return null
+}
 
 interface IDataProps {
   photography: {
     nodes: Array<{
-      title
+      title: string
       content: Array<IArtImageItem>
     }>
     group: Array<{
@@ -47,7 +82,9 @@ interface IDataProps {
   }
 }
 
-const layoutTypes = [`grid`, `masonry`, `list`] as const
+type LayoutType = typeof layoutTypes[number]
+
+const layoutTypes = [`masonry`, `grid`, `list`] as const
 const excludeAlbums = [`3D`, `Design`]
 
 const Photography: React.FC<PageProps<IDataProps>> = ({ data: { photography }, location }) => {
@@ -57,17 +94,26 @@ const Photography: React.FC<PageProps<IDataProps>> = ({ data: { photography }, l
     .filter((title) => !excludeAlbums.includes(title))
     .sort((a, b) => a.localeCompare(b))
 
-  const [layout, setLayout] = useLocalStorage(`lekoarts-photography-layout`, `grid`)
+  const [layout, setLayout] = useLocalStorage<LayoutType>(`lekoarts-photography-layout`, `masonry`)
   const [isMounted, setIsMounted] = React.useState(false)
 
   React.useEffect(() => {
     setIsMounted(true)
   }, [])
+
   const [state, dispatch] = useQueryStringReducer<ITagState, TagAction>({
     initialState,
     location,
     reducer,
     iso: queryStringIso,
+  })
+
+  const filteredPhotographyNodes = photography.nodes.filter(({ title }) => {
+    if (!isMounted) return true
+    if (state.tags.length === 0) {
+      return true
+    }
+    return state.tags.some((tag) => title.includes(tag))
   })
 
   return (
@@ -111,29 +157,7 @@ const Photography: React.FC<PageProps<IDataProps>> = ({ data: { photography }, l
           </TagGroup>
         </Container>
         <Spacer size="20" axis="vertical" />
-        <div className={imageWrapperVariants[layout]}>
-          {photography.nodes
-            .filter(({ title }) => {
-              if (!isMounted) return true
-              if (state.tags.length === 0) {
-                return true
-              }
-              return state.tags.some((tag) => title.includes(tag))
-            })
-            .map(({ content, title }, index) => {
-              if (layout === `list`) {
-                return (
-                  <React.Fragment key={title}>
-                    {index !== 0 && <Spacer axis="vertical" size="10" />}
-                    <Heading as="h2">{title}</Heading>
-                    <Images content={content} layout={layout} />
-                  </React.Fragment>
-                )
-              }
-
-              return <Images key={title} content={content} layout={layout} />
-            })}
-        </div>
+        <Content layout={layout} nodes={filteredPhotographyNodes} />
         <Spacer axis="vertical" size={[`20`, null, null, `24`]} />
       </SkipNavContent>
     </Layout>

@@ -59,7 +59,26 @@ const imageWrapper: Record<ImageWrapperVariants, StyleRule> = {
       },
     },
   },
-  masonry: {},
+  masonry: {
+    columns: `2`,
+    gap: vars.space[4],
+    paddingLeft: vars.space[4],
+    paddingRight: vars.space[4],
+    "@media": {
+      [minMediaQuery(`sm`)]: {
+        columns: `3`,
+        gap: vars.space[6],
+        paddingLeft: vars.space[6],
+        paddingRight: vars.space[6],
+      },
+      [minMediaQuery(`lg`)]: {
+        columns: `4`,
+      },
+      [minMediaQuery(`xl`)]: {
+        columns: `5`,
+      },
+    },
+  },
 }
 
 export const imageWrapperVariants = styleVariants(imageWrapper, (variant) => [variant])
@@ -81,7 +100,17 @@ const gridImages: Record<ImageWrapperVariants, StyleRule> = {
     objectFit: `cover`,
     maxHeight: `100% !important`,
   },
-  masonry: {},
+  masonry: {
+    width: `100%`,
+    height: `auto`,
+    marginBottom: vars.space[4],
+    borderRadius: vars.borderRadius.lg,
+    "@media": {
+      [minMediaQuery(`sm`)]: {
+        marginBottom: vars.space[6],
+      },
+    },
+  },
 }
 
 export const gridImagesVariants = styleVariants(gridImages, (variant) => [variant])
