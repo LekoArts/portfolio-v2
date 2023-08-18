@@ -1,13 +1,14 @@
 import * as React from "react"
 import { navigate } from "gatsby"
 import { WindowLocation } from "@reach/router"
+import { ITagState } from "../components/blocks/tag-group"
 
 export interface IIsomorphism<State, QueryString> {
   from: (v: QueryString) => State
   to: (t: State) => QueryString
 }
 
-export function useQueryString<State>(opts: {
+export function useQueryString<State extends ITagState>(opts: {
   initialState: State
   iso: IIsomorphism<State, string>
   location: WindowLocation
@@ -20,7 +21,6 @@ export function useQueryString<State>(opts: {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-      // @ts-ignore - Tags exists there
       if (desiredState.tags.length === 0) {
         navigate(`${location.pathname}`, { replace: true })
       } else {

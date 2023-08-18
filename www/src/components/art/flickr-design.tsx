@@ -1,48 +1,30 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import { ArtImage } from "./art-image"
+import { ArtImage, IArtImageItem } from "./art-image"
 
 interface IQueryResult {
-  Design: {
-    nodes: Array<{
-      title: string
-      description: string
-      photoId: string
-      imageUrls: {
-        image: {
-          url: string
-          width: number
-          height: number
-        }
-      }
-    }>
+  design: {
+    nodes: Array<IArtImageItem>
   }
 }
 
 export const FlickrDesign = () => {
   const data = useStaticQuery<IQueryResult>(graphql`
     {
-      Design: allFlickrPhotosetsPhotos(
+      design: allFlickrPhotosetsPhotos(
         filter: { photoset_id: { eq: "72177720300725772" } }
         sort: { datetaken: DESC }
       ) {
         nodes {
-          title
-          description
-          photoId: _id
-          imageUrls {
-            image: _1024px {
-              url
-              width
-              height
-            }
-          }
+          ...ArtImage
         }
       }
     }
   `)
 
-  if (data?.Design?.nodes.length === 0) {
+  const designNodes = data?.design?.nodes
+
+  if (designNodes.length === 0) {
     return (
       <p>
         Define a <code>FLICKR_API_KEY</code>.
@@ -50,19 +32,13 @@ export const FlickrDesign = () => {
     )
   }
 
-  return (
-    <>
-      {data.Design.nodes.map((img) => (
-        <ArtImage
-          key={img.photoId}
-          alt={img.description}
-          photoId={img.photoId}
-          height={img.imageUrls?.image?.height}
-          width={img.imageUrls?.image?.width}
-          src={img.imageUrls?.image?.url}
-          title={img.title}
-        />
-      ))}
-    </>
-  )
+  return designNodes.map((img) => {
+    const src = img.images?.lg?.url
+
+    if (src) {
+      return <ArtImage key={img.photoId} images={img.images} alt={img.description} photoId={img.photoId} />
+    }
+
+    return null
+  })
 }

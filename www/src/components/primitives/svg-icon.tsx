@@ -30,6 +30,9 @@ export type SVGIconNames =
   | "backward"
   | "download"
   | "rust"
+  | "grid"
+  | "list"
+  | "masonry"
 
 type SVGIconProps = {
   id: SVGIconNames
