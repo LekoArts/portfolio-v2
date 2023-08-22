@@ -9,7 +9,7 @@ import interVariableWoff2 from "./src/assets/fonts/inter-latin.var.woff2"
 import crimsonProVariableWoff2 from "./src/assets/fonts/crimson-pro-latin.var.woff2"
 
 const PLAUSIBLE_DOMAIN = `plausible.io`
-const SCRIPT_URI = `/js/plausible.js`
+const SCRIPT_URI = `/js/script.js`
 
 export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, setHtmlAttributes }) => {
   setHtmlAttributes({ lang: `en-US` })

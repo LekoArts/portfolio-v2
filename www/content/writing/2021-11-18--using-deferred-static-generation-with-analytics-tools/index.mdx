@@ -2,7 +2,7 @@
 title: "Using Deferred Static Generation with Analytics Tools"
 subtitle: ""
 date: 2021-11-18
-lastUpdated: 2021-11-18
+lastUpdated: 2023-08-22
 description: "Only want to build out the most popular pages as static pages? No problem, you can use your analytics tool to control the usage of Deferred Static Generation in Gatsby."
 type: "tutorial"
 category: "React"
@@ -16,7 +16,7 @@ Gatsby 4 introduced a lot of new features, most notably the introduction of addi
 
 So why should you care about Deferred Static Generation? In a nutshell it delays (or defers) the generation of pages until a user actually requests the page. After that the build artifacts (HTML & JSON) are cached at the CDN level and for all visitors afterwards it behaves like a normal SSG page. In a scenario where you build thousands of pages but only a subset of them gets regular visits from users, DSG can dramatically improve your build speeds. And you still get the SSG benefits like great SEO, speed, and reliability.
 
-In choosing what pages to defer you can improve your page on a granular and individual level – but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site. You can find a complete example on GitHub: [gatsby-dsg-plausible-analytics](https://github.com/LekoArts/gatsby-dsg-plausible-analytics).
+In choosing what pages to defer you can improve your page on a granular and individual level – but for how you'd do this the sky is really the limit. In this tutorial I'll explain how you can use data from your analytics tool (like Google Analytics, [Plausible Analytics](https://plausible.io), [Fathom](https://usefathom.com/), etc.) to programmatically defer pages that are not popular, only building your top pages as SSG. By the end of this tutorial, you'll be able to create a source plugin for your analytics tool (if it doesn't exist yet) and use that data to defer pages in your site.
 
 <Alert status="info" title="Prerequisites">
 
@@ -48,10 +48,10 @@ Use [gatsby-plugin-plausible](https://www.gatsbyjs.com/plugins/gatsby-plugin-pla
 npm install gatsby-plugin-plausible
 ```
 
-Add the plugin to your `gatsby-config.js` and provide the necessary `domain` option.
+Add the plugin to your `gatsby-config.mjs` and provide the necessary `domain` option.
 
-```js title=gatsby-config.js
-module.exports = {
+```js title=gatsby-config.mjs
+const config = {
   plugins: [
     {
       resolve: `gatsby-plugin-plausible`,
@@ -63,6 +63,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 Be sure to commit and push your change so that the tracking goes live and you can gather some data. If you don't have many visitors yet you can also click around with a couple of devices of your own to generate some data 😋
@@ -115,17 +117,17 @@ For Google Analytics there's even an existing plugin called [gatsby-source-googl
 
 ### Local Plugin
 
-Instead of placing the logic for Plausible inside your `gatsby-node.js` file at the root of your repository, you should create a [local plugin](https://www.gatsbyjs.com/docs/creating-a-local-plugin/) instead. This way your own "gatsby-source-plausible" is easily reusable across your projects.
+Instead of placing the logic for Plausible inside your `gatsby-node` file at the root of your repository, you should create a [local plugin](https://www.gatsbyjs.com/docs/creating-a-local-plugin/) instead. This way your own "gatsby-source-plausible" is easily reusable across your projects.
 
-Start by creating the folder structure `/plugins/gatsby-source-plausible` and create both a `package.json` and `gatsby-node.js` inside it.
+Start by creating the folder structure `/plugins/gatsby-source-plausible` and create both a `package.json` and `gatsby-node.mjs` inside it.
 
 ```
 /your-gatsby-site
-└── gatsby-config.js
+└── gatsby-config.mjs
 └── /src
 └── /plugins
     └── /gatsby-source-plausible
-        |── gatsby-node.js
+        |── gatsby-node.mjs
         └── package.json
 ```
 
@@ -133,31 +135,19 @@ For the `package.json` use the following contents:
 
 ```json title=plugins/gatsby-source-plausible/package.json
 {
-  "name": "gatsby-source-plausible",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "node-fetch": "^2.6.6"
-  }
+  "name": "gatsby-source-plausible"
 }
 ```
 
 Go into `plugins/gatsby-source-plausible` and run `npm install` to install `node-fetch`.
 
-<Alert status="warning" title="node-fetch">
+Lastly, create some boilerplate code inside `gatsby-node.mjs` for the next step:
 
-Be sure to only install `node-fetch@cjs` / `node-fetch@^2.0.0` as v3 of `node-fetch` is ESM-only. At the time of writing this guide Gatsby doesn't support handling ESM-only dependencies yet.
-
-</Alert>
-
-Lastly, create some boilerplate code inside `gatsby-node.js` for the next step:
-
-```js title=plugins/gatsby-source-plausible/gatsby-node.js
-const fetch = require("node-fetch")
+```js title=plugins/gatsby-source-plausible/gatsby-node.mjs
+import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 
-exports.sourceNodes = async (
+export const sourceNodes = async (
   { actions, createNodeId, createContentDigest },
   { siteId, apiKey }
 ) => {
@@ -176,12 +166,12 @@ curl https://plausible.io/api/v1/stats/breakdown?site_id=$SITE_ID&period=6mo&pro
 
 Here, for a period of 6 months the top 5 pages are returned for the given site id. By default, the `limit` is 100. Translating that `curl` command into the shape of `node-fetch` looks something like this:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=3,11-16
-const fetch = require("node-fetch")
+```js title=plugins/gatsby-source-plausible/gatsby-node.mjs highlight=3,11-16
+import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
 
-exports.sourceNodes = async (
+export const sourceNodes = async (
   { actions, createNodeId, createContentDigest },
   { siteId, apiKey }
 ) => {
@@ -196,18 +186,18 @@ exports.sourceNodes = async (
 }
 ```
 
-The `siteId` and `apiKey` in the second argument of the `sourceNodes` function are plugin options that get passed through when you set them inside `gatsby-config.js`. The constructed `API_URL` endpoint is the same as Plausible's example except for the removal of the `limit` param.
+The `siteId` and `apiKey` in the second argument of the `sourceNodes` function are plugin options that get passed through when you set them inside `gatsby-config`. The constructed `API_URL` endpoint is the same as Plausible's example except for the removal of the `limit` param.
 
 To authenticate your request to Plausible you set an `Authorization` header in the request using the bearer token method ([What is a Bearer Token?](https://swagger.io/docs/specification/authentication/bearer-authentication/)). As `response` is only a Response stream, you need to use `.json()` to read it to completion and to get data you can actually work with.
 
-All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.js` file:
+All that is left now is to actually create GraphQL nodes from the API response! Use [`createNode`](https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode) to loop over the response and create nodes. In the next step you'll then be able to query `allPlausibleTopPage`. The complete `gatsby-node.mjs` file:
 
-```js title=plugins/gatsby-source-plausible/gatsby-node.js highlight=18-31
-const fetch = require("node-fetch")
+```js title=plugins/gatsby-source-plausible/gatsby-node.mjs highlight=18-31
+import fetch from "node-fetch"
 const POST_NODE_TYPE = `PlausibleTopPage`
 const API_ENDPOINT = `https://plausible.io/api/v1/stats/breakdown`
 
-exports.sourceNodes = async (
+export const sourceNodes = async (
   { actions, createNodeId, createContentDigest },
   { siteId, apiKey }
 ) => {
@@ -241,13 +231,13 @@ Each node needs a unique `id` and by using the helper function `createNodeId` yo
 
 ### Using GraphiQL
 
-Congrats, you wrote a source plugin! Time to test it out and see if it all works. Before you can start the development server, you first need to add your newly created local plugin to `gatsby-config.js`. When using `.env` files you'll also need to initialize `dotenv`. You saved the `PLAUSIBLE_API_KEY` earlier in an `.env` file, and the `siteId` is the same thing as the `domain` for `gatsby-plugin-plausible`.
+Congrats, you wrote a source plugin! Time to test it out and see if it all works. Before you can start the development server, you first need to add your newly created local plugin to `gatsby-config.mjs`. When using `.env` files you'll also need to initialize `dotenv`. You saved the `PLAUSIBLE_API_KEY` earlier in an `.env` file, and the `siteId` is the same thing as the `domain` for `gatsby-plugin-plausible`.
 
-```js title=gatsby-config.js highlight=1,7-13
+```js title=gatsby-config.mjs highlight=1,7-13
 require("dotenv").config()
 
-module.exports = {
-  // Rest of your gatsby-config.js...
+const config = {
+  // Rest of your gatsby-config.mjs...
   plugins: [
     // Rest of your plugins...
     {
@@ -259,6 +249,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 <Alert status="warning" title="Add environment variable in Gatsby Cloud">
@@ -288,7 +280,7 @@ Now it's time for you to interpret the data you see. In this instance the index 
 
 ## Deferring Low-Traffic Pages
 
-You're nearly there! The last piece of this puzzle is to use the data you get from `allPlausibleTopPage` in your page creation logic inside `gatsby-node.js` of the project. Stop the development server (if you haven't already) and go to your `gatsby-node.js` file at the root of your project (not the `gatsby-node.js` of the plugin). You should have something similar:
+You're nearly there! The last piece of this puzzle is to use the data you get from `allPlausibleTopPage` in your page creation logic inside `gatsby-node.js` of the project. Stop the development server (if you haven't already) and go to your `gatsby-node.js` file at the root of your project (not the `gatsby-node.mjs` of the plugin). Here's an example file that creates pages from Markdown files, you'll need to adapt the workflow to your own file below.
 
 ```js title=gatsby-node.js
 const templatePath = require.resolve(`./src/templates/blog-post.jsx`)
