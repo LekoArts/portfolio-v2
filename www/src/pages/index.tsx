@@ -112,8 +112,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               I’m passionate about working on open source projects & making the web more inclusive through them.
             </Text>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
-              I’m currently looking for my next role so I've laid out{` `}
-              <Link to="/garden/5-reasons-why-you-should-hire-me">5 Reasons Why You Should Hire Me</Link>
+              I’m currently working at TBA.
             </Text>
           </Box>
         </FullWidthContainer>
