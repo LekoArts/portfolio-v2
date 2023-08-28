@@ -261,6 +261,10 @@ const gatsbyConfig = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-gatsby-cloud`,
+      options: {},
+    },
   ].filter(Boolean),
 }
 
