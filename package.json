@@ -9,6 +9,9 @@
     "www"
   ],
   "scripts": {
+    "bootstrap": "yarn install && yarn packages:build",
+    "packages:build": "cross-env FORCE_COLOR=1 yarn workspaces foreach --parallel --interlaced run package:build",
+    "packages:watch": "cross-env FORCE_COLOR=1 yarn workspaces foreach --parallel --interlaced run package:watch",
     "develop": "yarn workspace www develop",
     "clean": "yarn workspace www clean",
     "build": "yarn workspace www build",
@@ -31,7 +34,8 @@
     "e2e:develop": "yarn playwright:debug",
     "e2e:build": "cross-env IS_BUILD=y yarn playwright",
     "spellcheck": "cspell lint www/content/**/**/*.mdx --show-suggestions",
-    "rs:build": "cd scripts && cargo build --release"
+    "rs:build": "cd scripts && cargo build --release",
+    "postinstall": "yarn packages:build"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",
@@ -43,7 +47,6 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
-    "c8": "^8.0.1",
     "cross-env": "^7.0.3",
     "cspell": "^7.0.1",
     "eslint": "^8.48.0",
@@ -62,5 +65,5 @@
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.6.3"
 }

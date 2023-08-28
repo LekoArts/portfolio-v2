@@ -1,10 +1,10 @@
 {
   "include": [
-    "packages/**/*",
-    "www/**/*",
+    "packages/**/*.ts",
+    "www/**/*.ts",
     ".eslintrc.js",
     "lint-staged.config.js",
-    "playwright/**/*",
+    "playwright/**/*.ts",
     "playwright.config.ts",
     "vitest.config.ts",
     "vitest/setup.ts",
@@ -14,6 +14,7 @@
     "target": "ES2020",
     "module": "CommonJS",
     "lib": ["dom", "es2020"],
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "strict": true,

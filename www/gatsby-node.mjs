@@ -2,9 +2,8 @@ import path from "path"
 import Prando from "prando"
 import { shuffle, mdxResolverPassthrough, slugify, withDefaults } from "utils"
 import get from "lodash.get"
-
 import readingTime from "reading-time"
-import { site } from "../constants/meta"
+import { site } from "./src/constants/meta.mjs"
 
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}

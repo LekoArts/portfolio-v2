@@ -1,7 +1,7 @@
 import * as React from "react"
 import type { GatsbySSR } from "gatsby"
 import { getSandpackCssText } from "@codesandbox/sandpack-react"
-import { site } from "./src/constants/meta"
+import { site } from "./src/constants/meta.mjs"
 import { ThemeProvider } from "./src/styles/theme-provider"
 // @ts-ignore
 import interVariableWoff2 from "./src/assets/fonts/inter-latin.var.woff2"

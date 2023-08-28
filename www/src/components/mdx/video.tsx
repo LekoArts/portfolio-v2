@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, SVGIcon } from "../primitives"
-import { site } from "../../constants/meta"
+import { site } from "../../constants/meta.mjs"
 import { groupStyle, marginBottomVariants, playPauseButtonStyle, videoStyle } from "./video.css"
 import { composeClassNames } from "../../utils/box"
 

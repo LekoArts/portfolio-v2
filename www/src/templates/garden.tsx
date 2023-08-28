@@ -8,7 +8,7 @@ import { SEO } from "../components/seo"
 import { Heading, Text, Prose } from "../components/typography"
 import { components } from "../components/mdx"
 import { article } from "../constants/json-ld"
-import { site } from "../constants/meta"
+import { site } from "../constants/meta.mjs"
 import { gardenCtaStyle, metaStyle, plantIconStyle } from "./garden.css"
 import { getGardenEditLink, getMastodonShareLink, getTwitterShareLink } from "../utils/sharing"
 

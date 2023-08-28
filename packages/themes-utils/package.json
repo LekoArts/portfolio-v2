@@ -3,5 +3,27 @@
   "description": "React components & hooks to control theme switching",
   "private": true,
   "version": "0.0.1",
-  "source": "index.ts"
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "LekoArts",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^7.2.0"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "package:build": "tsup",
+    "package:watch": "yarn package:build --watch",
+    "prepare": "yarn package:build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
 }

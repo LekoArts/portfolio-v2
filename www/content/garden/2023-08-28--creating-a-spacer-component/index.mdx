@@ -1,0 +1,137 @@
+---
+title: Creating a Spacer Component
+description: How to create a Spacer component in plain React, Chakra UI, and vanilla-extract
+date: 2023-08-28
+lastUpdated: 2023-08-28
+icon: javascript
+tags:
+  - JavaScript
+---
+
+I think the first time I really considered using a `Spacer` or `Stack` component was when I read [Margin considered harmful](https://mxstbr.com/thoughts/margin) and later [Let's Bring Spacer GIFs Back!](https://www.joshwcomeau.com/react/modern-spacer-gif/). If you think this is useful for you, read on.
+
+I want to explain how to create a `Spacer` component in plain React, [Chakra UI](https://chakra-ui.com/), and [vanilla-extract](https://vanilla-extract.style/). You can probably adapt the code to to your styling solution if you don't use any of those three.
+
+## Plain React
+
+{/* eslint-disable prettier/prettier */}
+
+<Playground 
+  title="Plain React"
+  template="react-ts"
+  files={{
+    "/spacer.tsx": {
+      code: `import React from "react"
+
+type SpacerProps = {
+  axis: "vertical" | "horizontal"
+  size: number
+}
+
+export const Spacer = ({ size, axis, ...rest }: SpacerProps) => {
+  const width = axis === "vertical" ? "1px" : size
+  const height = axis === "horizontal" ? "1px" : size
+
+  return (
+    <span
+      style={{
+        display: "block",
+        width,
+        minWidth: width,
+        height,
+        minHeight: height,
+      }}
+      {...rest}
+    />
+  )
+}`,
+      active: true,
+    },
+    "/App.tsx": {
+      code: `import React from "react"
+import { Spacer } from "./spacer"
+
+export default function App() {
+  return (
+    <main>
+      <p>Spacer</p>
+      {/* Increase the size value */}
+      <Spacer axis="vertical" size={16} />
+      <p>Some text below</p>
+    </main>
+  )
+}`
+    }
+  }}
+/>
+
+{/* eslint-enable prettier/prettier */}
+
+## Chakra UI
+
+{/* eslint-disable prettier/prettier */}
+
+<Playground 
+  title="Chakra UI"
+  template="react-ts"
+  customSetup={{
+    dependencies: {
+      "@chakra-ui/react": `latest`,
+      "@emotion/react": `latest`,
+      "@emotion/styled": `latest`,
+      "framer-motion": `latest`,
+    }
+  }}
+  files={{
+    "/spacer.tsx": {
+      code: `import React from "react"
+import { Box, BoxProps } from "@chakra-ui/react"
+
+interface ISpacerProps extends BoxProps {
+  size: BoxProps["width"]
+  axis: "vertical" | "horizontal"
+}
+
+export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
+  const width = axis === "vertical" ? "1px" : size
+  const height = axis === "horizontal" ? "1px" : size
+  return (
+    <Box
+      as="span"
+      width={width}
+      height={height}
+      minWidth={width}
+      minHeight={height}
+      display="block"
+      {...rest}
+    />
+  )
+}`,
+      active: true,
+    },
+    "/App.tsx": {
+      code: `import React from "react"
+import { ChakraProvider } from "@chakra-ui/react"
+import { Spacer } from "./spacer"
+
+export default function App() {
+  return (
+    <ChakraProvider>
+      <main>
+        <p>Spacer</p>
+        {/* Use one of the tokens */}
+        <Spacer axis="vertical" size="16" />
+        <p>Some text below</p>
+      </main>
+    </ChakraProvider>
+  )
+}`
+    }
+  }}
+/>
+
+{/* eslint-enable prettier/prettier */}
+
+## vanilla-extract
+
+TODO

@@ -23,11 +23,11 @@ const mockUseStaticQuery = {
 }
 
 describe(`SEO component`, () => {
-  beforeEach(() => {
+  beforeAll(() => {
     useStaticQuery.mockImplementation(() => mockUseStaticQuery)
   })
 
-  afterEach(() => {
+  afterAll(() => {
     vi.restoreAllMocks()
   })
 

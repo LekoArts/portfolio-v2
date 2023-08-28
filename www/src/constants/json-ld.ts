@@ -1,4 +1,4 @@
-import { site } from "./meta"
+import { site } from "./meta.mjs"
 
 export const identity = {
   "@id": `${site.url}/#identity`,

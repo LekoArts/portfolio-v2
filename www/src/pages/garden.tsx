@@ -9,7 +9,7 @@ import { useQueryStringReducer } from "../hooks/use-query-string-reducer"
 import { queryStringIso } from "../utils/query-string-iso"
 import { gardenItemStyle, gardenItemWrapperStyle, iconWrapperStyle } from "./garden.css"
 import { paddingResponsiveArrays } from "../styles/tokens/space"
-import { site } from "../constants/meta"
+import { site } from "../constants/meta.mjs"
 import { initialState, reducer, TagAction, TagGroup, TagGroupItem, ITagState } from "../components/blocks/tag-group"
 
 type DataProps = {

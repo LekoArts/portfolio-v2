@@ -1,4 +1,8 @@
-import { PluginOptions } from "gatsby"
+interface IPluginOptions {
+  writingSource?: string
+  gardenSource?: string
+  dataSource?: string
+}
 
 export const defaults = {
   writingSource: `content/writing`,
@@ -11,7 +15,7 @@ export const defaults = {
  * @param themeOptions - Incoming options
  * @returns Default values unless options are specified
  */
-export const withDefaults = (themeOptions: PluginOptions) => {
+export const withDefaults = (themeOptions: IPluginOptions) => {
   const writingSource = (themeOptions.writingSource as string) || defaults.writingSource
   const gardenSource = (themeOptions.gardenSource as string) || defaults.gardenSource
   const dataSource = (themeOptions.dataSource as string) || defaults.dataSource

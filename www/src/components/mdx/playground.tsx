@@ -8,7 +8,7 @@ import {
   useSandpack,
   UnstyledOpenInCodeSandboxButton,
 } from "@codesandbox/sandpack-react"
-import type { SandpackPredefinedTemplate, SandpackProviderProps } from "@codesandbox/sandpack-react"
+import type { SandpackPredefinedTemplate, SandpackProviderProps, SandpackSetup } from "@codesandbox/sandpack-react"
 import { nightOwl } from "../../styles/sandpack/nightOwl"
 import { Box, IconButton, SVGIcon } from "../primitives"
 import {
@@ -29,6 +29,7 @@ interface IPlaygroundProps {
   files: Record<string, string>
   template?: SandpackPredefinedTemplate
   title: string
+  customSetup?: SandpackSetup
 }
 
 const providerOptions: SandpackProviderProps["options"] = {
@@ -105,8 +106,8 @@ export const PlaygroundContents = ({ title }: Pick<IPlaygroundProps, "title">) =
   )
 }
 
-export const Playground = ({ files, template = `react`, title }: IPlaygroundProps) => (
-  <SandpackProvider template={template} files={files} options={providerOptions}>
+export const Playground = ({ files, template = `react`, title, customSetup }: IPlaygroundProps) => (
+  <SandpackProvider template={template} files={files} options={providerOptions} customSetup={customSetup}>
     <SandpackThemeProvider theme={nightOwl}>
       <PlaygroundContents title={title} />
     </SandpackThemeProvider>

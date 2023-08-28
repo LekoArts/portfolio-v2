@@ -1,7 +1,0 @@
-export { withDefaults } from "./src/with-defaults"
-export { slugify, slugifyOptions } from "./src/slugify"
-export { mdxResolverPassthrough } from "./src/mdx-resolver-passthrough"
-export { shuffle } from "./src/shuffle"
-export { capitalize } from "./src/capitalize"
-export { get, memoizedGet, memoize } from "./src/get"
-export { getColor, transparentizeDict, transparentize } from "./src/color"

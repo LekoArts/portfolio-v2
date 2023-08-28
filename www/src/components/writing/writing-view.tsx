@@ -6,7 +6,7 @@ import { SkipNavContent } from "../a11y/skip-nav"
 import { Spacer, Box, ExternalLink, ShareAnywhereButton, Container } from "../primitives"
 import { Prose, Text } from "../typography"
 import { components } from "../mdx"
-import { site } from "../../constants/meta"
+import { site } from "../../constants/meta.mjs"
 import { TocItem, WithSidebarWrapper } from "./toc"
 import { getMastodonShareLink, getTwitterShareLink, getWritingEditLink } from "../../utils/sharing"
 

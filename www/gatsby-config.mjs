@@ -1,13 +1,25 @@
-import type { GatsbyConfig, PluginRef } from "gatsby"
+/* eslint-disable import/no-default-export */
 import path from "path"
-import { slugifyOptions } from "../packages/utils"
-import { site } from "./src/constants/meta"
+import dotenv from "dotenv"
+import remarkSlug from "remark-slug"
+import remarkGfm from "remark-gfm"
+import remarkSmartyPants from "remark-smartypants"
+import rehypeMetaAsAttributes from "@lekoarts/rehype-meta-as-attributes"
+import camelCase from "lodash.camelcase"
+import { withDefaults, capitalize, slugifyOptions } from "utils"
+import { site } from "./src/constants/meta.mjs"
 
-require(`dotenv`).config()
+dotenv.config()
 
+const { GITHUB_TOKEN, FLICKR_API_KEY } = process.env
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
-const gatsbyConfig: GatsbyConfig = {
+const options = withDefaults({})
+
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+const gatsbyConfig = {
   siteMetadata: {
     siteTitle: site.title,
     siteTitleDefault: site.titleDefault,
@@ -18,7 +30,94 @@ const gatsbyConfig: GatsbyConfig = {
   },
   trailingSlash: `never`,
   plugins: [
-    `gatsby-theme-core`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: options.writingSource,
+        path: options.writingSource,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: options.gardenSource,
+        path: options.gardenSource,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: options.dataSource,
+        path: options.dataSource,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `src/pages`,
+      },
+    },
+    GITHUB_TOKEN && {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `GitHub`,
+        fieldName: `github`,
+        url: `https://api.github.com/graphql`,
+        headers: {
+          Authorization: `bearer ${GITHUB_TOKEN}`,
+        },
+        fetchOptions: {},
+      },
+    },
+    FLICKR_API_KEY && {
+      resolve: `@lekoarts/gatsby-source-flickr`,
+      options: {
+        api_key: FLICKR_API_KEY,
+        username: `ars_aurea`,
+        endpoints: [
+          {
+            method: `flickr.photosets.getList`,
+            extension: {
+              method: `flickr.photosets.getPhotos`,
+              mapping: `id:photoset_id`,
+              args: {
+                extras: `description,last_update,date_taken,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o,media,views,original_format`,
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1024,
+              quality: 90,
+              linkImagesToOriginal: true,
+            },
+          },
+        ],
+        mdxOptions: {
+          remarkPlugins: [remarkGfm, remarkSlug, remarkSmartyPants],
+          rehypePlugins: [rehypeMetaAsAttributes],
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-transformer-yaml`,
+      options: {
+        typeName: ({ node }) => capitalize(camelCase(node.name)),
+      },
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-catch-links`,
     `gatsby-plugin-vanilla-extract`,
     `gatsby-plugin-image`,
     // Overwrite the default "slugify" option
@@ -133,15 +232,7 @@ const gatsbyConfig: GatsbyConfig = {
               }
             }
             `,
-            serialize: ({
-              query: { site: s, posts, garden },
-            }: {
-              query: {
-                site: ISite
-                posts: { nodes: Array<IFeedEntryInput> }
-                garden: { nodes: Array<IFeedEntryInput> }
-              }
-            }) => {
+            serialize: ({ query: { site: s, posts, garden } }) => {
               // Combine posts and garden + sort them by date
               const allEntries = [...posts.nodes, ...garden.nodes].sort(
                 (a, b) => Date.parse(b.date) - Date.parse(a.date)
@@ -181,23 +272,7 @@ const gatsbyConfig: GatsbyConfig = {
       resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
       options: {},
     },
-  ].filter(Boolean) as Array<PluginRef>,
+  ].filter(Boolean),
 }
 
 export default gatsbyConfig
-
-interface ISite {
-  siteMetadata: {
-    title: string
-    description: string
-    siteUrl: string
-    site_url: string
-  }
-}
-
-interface IFeedEntryInput {
-  title: string
-  date: string
-  description: string
-  slug: string
-}
