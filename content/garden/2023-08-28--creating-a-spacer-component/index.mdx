@@ -14,6 +14,8 @@ I want to explain how to create a `Spacer` component in plain React, [Chakra UI]
 
 ## Plain React
 
+You can pass in any `number` here as there are no style tokens and type-safety on which numbers to use.
+
 {/* eslint-disable prettier/prettier */}
 
 <Playground 
@@ -68,6 +70,8 @@ export default function App() {
 {/* eslint-enable prettier/prettier */}
 
 ## Chakra UI
+
+You'll be using Chakra UI's built-in scale for the spacing props (coming from `width`). So `size` will be a defined list of numbers or tokens like `xl`.
 
 {/* eslint-disable prettier/prettier */}
 
@@ -134,4 +138,91 @@ export default function App() {
 
 ## vanilla-extract
 
-TODO
+For this example I didn't want to install any third-party/additional packages for vanilla-extract. So it uses its CSS custom properties API.
+
+```ts title=spacer.tsx
+import React from "react"
+import { type SpacerScale, spacerVariants } from "./spacer.css"
+
+export const Spacer = ({
+  size,
+  axis,
+  ...rest
+}: {
+  size: SpacerScale
+  axis: "horizontal" | "vertical"
+}) => <span data-axis={axis} className={spacerVariants[size]} {...rest} />
+```
+
+```ts title=spacer.css.ts
+import { style, styleVariants, createVar } from "@vanilla-extract/css"
+
+export type SpacerScale = "sm" | "md" | "lg"
+
+const spacerScales = {
+  sm: "12px",
+  md: "16px",
+  lg: "24px",
+}
+
+const size = createVar()
+
+const base = style({
+  display: "block",
+  vars: {
+    [size]: spacerScales.md,
+  },
+})
+
+export const spacerVariants = styleVariants(spacerScales, (scale) => [
+  base,
+  {
+    vars: {
+      [size]: scale,
+    },
+    selectors: {
+      "&[data-axis='vertical']": {
+        width: "1px",
+        minWidth: "1px",
+        height: size,
+        minHeight: size,
+      },
+      "&[data-axis='horizontal']": {
+        width: size,
+        minWidth: size,
+        height: "1px",
+        minHeight: "1px",
+      },
+    },
+  },
+])
+```
+
+You could also use [`dessert-box`](https://github.com/TheMightyPenguin/dessert-box) and create Atoms with [Sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/). Then it would look like this:
+
+```ts
+import * as React from "react"
+import { Box } from "./box"
+import { Atoms } from "./atoms.css"
+
+interface ISpacerProps extends Atoms {
+  size: Atoms["width"]
+  axis: "vertical" | "horizontal"
+}
+
+export const Spacer = ({ size, axis, ...rest }: ISpacerProps) => {
+  const width = axis === `vertical` ? `px` : size
+  const height = axis === `horizontal` ? `px` : size
+  return (
+    <Box
+      as="span"
+      width={width}
+      height={height}
+      minWidth={width}
+      minHeight={height}
+      display="block"
+      {...rest}
+    />
+  )
+}
+```
