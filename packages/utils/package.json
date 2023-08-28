@@ -5,7 +5,7 @@
   "private": true,
   "source": "index.ts",
   "dependencies": {
-    "@ctrl/tinycolor": "^3.4.1",
+    "@ctrl/tinycolor": "^3.6.1",
     "@sindresorhus/slugify": "^1.1.2"
   }
 }
