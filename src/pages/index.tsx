@@ -143,7 +143,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Box display="flex" flexDirection="column" width="full" gap="6">
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Badge variant="light">More Posts</Badge>
-                <SubtleButton aria-label="Read all long-form posts" to="/writing">
+                <SubtleButton aria-label="Read all long-form posts" to="/writing/">
                   Read all
                 </SubtleButton>
               </Box>
@@ -168,7 +168,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Box display="flex" flexDirection="column" width="full" gap="6">
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Badge variant="light">Digital Garden</Badge>
-                <SubtleButton aria-label="Read all Digital Garden posts" to="/garden">
+                <SubtleButton aria-label="Read all Digital Garden posts" to="/garden/">
                   Read all
                 </SubtleButton>
               </Box>
@@ -193,11 +193,11 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
             <Box display="flex" flexDirection="column" width="full" gap="6">
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Badge variant="light">Art</Badge>
-                <SubtleButton to="/art">See all art</SubtleButton>
+                <SubtleButton to="/art/">See all art</SubtleButton>
               </Box>
               <Box className={artGridStyle}>
                 <Link
-                  to="/art/photography"
+                  to="/art/photography/"
                   aria-label="View my photography"
                   borderRadius="lg"
                   className={cardLinkStyle}
@@ -215,7 +215,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
                     />
                   </MotionBox>
                 </Link>
-                <Link to="/art/3d" aria-label="View my 3D art" borderRadius="lg" className={cardLinkStyle}>
+                <Link to="/art/3d/" aria-label="View my 3D art" borderRadius="lg" className={cardLinkStyle}>
                   <MotionBox className={staticImageOverride}>
                     <StaticImage
                       src="../assets/images/pages-index-3d-preview.jpg"

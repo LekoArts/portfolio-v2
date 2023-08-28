@@ -10,13 +10,13 @@ export const WritingSubNavigation: React.FC = () => {
     <Box display="flex" alignItems="center" py="2" data-subnavigation="true" className={wrapperStyle}>
       <Box display="flex" alignItems="center" flexDirection="row" as="ul" className={innerWrapperStyle}>
         <li>
-          <Link to="/writing" fontSize="md" p="2" activeClassName="active" className={linkStyle}>
+          <Link to="/writing/" fontSize="md" p="2" activeClassName="active" className={linkStyle}>
             Latest
           </Link>
         </li>
         <Spacer axis="horizontal" size="2" />
         <li>
-          <Link to="/tutorials" fontSize="md" p="2" activeClassName="active" className={linkStyle}>
+          <Link to="/tutorials/" fontSize="md" p="2" activeClassName="active" className={linkStyle}>
             Tutorials
           </Link>
         </li>

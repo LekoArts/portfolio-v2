@@ -56,7 +56,7 @@ const Writing: React.FC<PageProps<WritingProps>> = ({ data: { posts } }) => (
 export default Writing
 
 export const Head = () => (
-  <SEO title="Writing" pathname="/writing" breadcrumbListItems={[{ name: `Writing`, url: `/writing` }]} />
+  <SEO title="Writing" pathname="/writing/" breadcrumbListItems={[{ name: `Writing`, url: `/writing/` }]} />
 )
 
 export const query = graphql`

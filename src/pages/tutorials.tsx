@@ -46,9 +46,9 @@ export default Tutorials
 export const Head = () => (
   <SEO
     title={tutorialsTitle}
-    pathname="/tutorials"
+    pathname="/tutorials/"
     description={tutorialsDescription}
-    breadcrumbListItems={[{ name: `Tutorials`, url: `/tutorials` }]}
+    breadcrumbListItems={[{ name: `Tutorials`, url: `/tutorials/` }]}
   />
 )
 

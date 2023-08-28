@@ -101,10 +101,10 @@ export default Garden
 export const Head = () => (
   <SEO
     title="Digital Garden"
-    pathname="/garden"
+    pathname="/garden/"
     description="I understand my Digital Garden as a collection of free form, interconnected & evolving ideas that grow over time. Like plants grow in a real-world garden."
     image={site.defaultGardenOgImage}
-    breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden` }]}
+    breadcrumbListItems={[{ name: `Digital Garden`, url: `/garden/` }]}
   />
 )
 

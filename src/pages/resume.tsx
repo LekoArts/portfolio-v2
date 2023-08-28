@@ -76,8 +76,8 @@ export const Head = () => (
   <SEO
     title="Resume"
     description="Lennart Jörgens' resume"
-    pathname="/resume"
-    breadcrumbListItems={[{ name: `Resume`, url: `/resume` }]}
+    pathname="/resume/"
+    breadcrumbListItems={[{ name: `Resume`, url: `/resume/` }]}
     noIndex
   />
 )
