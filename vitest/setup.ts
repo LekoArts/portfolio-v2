@@ -1,6 +1,6 @@
 import { vi } from "vitest"
 import React from "react"
-import "@testing-library/jest-dom"
+import "@testing-library/jest-dom/vitest"
 
 vi.mock(`gatsby`, async () => {
   const gatsby = await vi.importActual<typeof import("gatsby")>(`gatsby`)
