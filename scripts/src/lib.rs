@@ -28,7 +28,7 @@ pub fn get_file_info(
 
     let filename = format!("{}--{}", date, slug);
     let directory_path = current_dir
-        .join("www/content")
+        .join("content")
         .join(content_dir)
         .join(&filename);
     let filepath = directory_path.join("index.mdx");

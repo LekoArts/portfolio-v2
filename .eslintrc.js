@@ -235,13 +235,13 @@ module.exports = {
     },
     {
       files: [
-        `www/src/pages/**/*.tsx`,
-        `www/src/pages/**/*.mdx`,
+        `src/pages/**/*.tsx`,
+        `src/pages/**/*.mdx`,
         `playwright.config.ts`,
         `vitest.config.ts`,
-        `www/src/templates/*.tsx`,
+        `src/templates/*.tsx`,
         `**/gatsby-config.ts`,
-        `www/content/**/*.mdx`,
+        `content/**/*.mdx`,
       ],
       rules: {
         "import/no-default-export": 0,

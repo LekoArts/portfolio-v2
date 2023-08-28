@@ -1,7 +1,7 @@
 {
   "include": [
     "packages/**/*.ts",
-    "www/**/*.ts",
+    "src/**/*.ts",
     ".eslintrc.js",
     "lint-staged.config.js",
     "playwright/**/*.ts",

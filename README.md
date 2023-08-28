@@ -6,6 +6,6 @@ Welcome to the source code of [lekoarts.de](https://www.lekoarts.de). Similarly 
 
 While the code itself has no `LICENSE` (but is still a public repository) I'd appreciate it if you only use it to read it and learn from it. Do not do any non-commercial/commercial stuff with it, e.g. selling it or creating your own site with it. This has worked in the past and I'd like to keep the code open to everyone, but if I see ripoffs on the internet I'll make this repository private. Thanks for understanding!
 
-If you found a typo in a post and want to fix it, you can go the the [content](./www/content) folder and find the relevant MDX file. Highly appreciated!
+If you found a typo in a post and want to fix it, you can go the the [content](./content) folder and find the relevant MDX file. Highly appreciated!
 
 You can find **Free & Open Source Gatsby Themes** I made at [themes.lekoarts.de](https://themes.lekoarts.de/).

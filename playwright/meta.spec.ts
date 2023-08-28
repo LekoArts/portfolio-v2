@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { test, expect } from "@playwright/test"
-import { site } from "../www/src/constants/meta.mjs"
+import { site } from "../src/constants/meta.mjs"
 
 const metaTagAssertions = [
   {
