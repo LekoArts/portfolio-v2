@@ -12,7 +12,7 @@
     "e2e:build": "cross-env IS_BUILD=y yarn playwright",
     "e2e:develop": "yarn playwright:debug",
     "format": "prettier \"**/*.{md,mdx,json,yaml}\" --write",
-    "lint": "eslint . --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx,.js,.mdx",
+    "lint": "eslint . --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx,.js,.mdx,.mjs",
     "lint:fix": "yarn lint --fix",
     "lint:mdx": "eslint content/**/*.mdx --ext .mdx",
     "new-garden": "./scripts/target/release/garden",
