@@ -72,13 +72,13 @@ type CSSPropertiesWithVars = CSSProperties & {
   }
 }
 
-export type SelectorMap<Modes extends string = typeof THEMES[number]> = {
+export type SelectorMap<Modes extends string = (typeof THEMES)[number]> = {
   [selector: string]: CSSProperties | CSSPropertiesWithModes<Modes>
 }
 
 interface IThemeAwareStylesProps {
   selectorMap: SelectorMap
-  defaultTheme: typeof THEMES[number]
+  defaultTheme: (typeof THEMES)[number]
   alternateThemeClass: string
   rootClass?: string
 }

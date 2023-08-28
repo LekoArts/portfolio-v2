@@ -6,8 +6,8 @@ date: 2023-08-10
 lastUpdated: 2023-08-10
 icon: rust
 tags:
-- CLI
-- Rust
+  - CLI
+  - Rust
 ---
 
 While building my CLI [thanks-contributors](https://github.com/LekoArts/thanks-contributors) (this little script accesses GitHub's API to get all contributors and their PRs between two distinct points in the history of commits) I decided that I wanted to make this CLI available to my colleagues. And they shouldn't need to install any additional toolchains besides what they already use on a daily basis (which is Node.js among other things). So it only made sense to publish the CLI to npm so that it can be run with `npx @lekoarts/thanks-contributors`.
@@ -65,12 +65,12 @@ const cli = require("./index")
 const arguments = process.argv.slice(2)
 
 cli.run(arguments).catch((e) => {
-	console.error(e)
-	process.exit(1)
+  console.error(e)
+  process.exit(1)
 })
 ```
 
-The first line is a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) and necessary to run the Node.js executable. Since you only want to pass the arguments to the `run` function, you need to grab them from `process.argv`. Feel free to `console.log(process.argv)` to see what it all contains when you run `node bin.js`.
+The first line is a [shebang](<https://en.wikipedia.org/wiki/Shebang_(Unix)>) and necessary to run the Node.js executable. Since you only want to pass the arguments to the `run` function, you need to grab them from `process.argv`. Feel free to `console.log(process.argv)` to see what it all contains when you run `node bin.js`.
 
 Last but not least, add the `bin` property to your root `package.json`:
 
