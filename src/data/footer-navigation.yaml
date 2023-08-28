@@ -1,36 +1,36 @@
 - heading:
     name: Writing
-    link: /writing
+    link: /writing/
   items:
     - name: Digital Garden
-      link: /garden
+      link: /garden/
     - name: Tutorials
-      link: /tutorials
+      link: /tutorials/
     - name: React
-      link: /react
+      link: /react/
     - name: RSS Feed
       link: /rss.xml
       isExternal: true
 - heading:
     name: Art
-    link: /art
+    link: /art/
   items:
     - name: Design
-      link: /art/design
+      link: /art/design/
     - name: 3D Art
-      link: /art/3d
+      link: /art/3d/
     - name: Photography
-      link: /art/photography
+      link: /art/photography/
 - heading:
     name: About
-    link: /about
+    link: /about/
   items:
     - name: Appearances
-      link: /appearances
+      link: /appearances/
     - name: Resume
-      link: /resume
+      link: /resume/
     - name: Uses
-      link: /uses
+      link: /uses/
 - heading:
     name: Social
   items:

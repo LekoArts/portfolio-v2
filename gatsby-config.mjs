@@ -14,7 +14,6 @@ import { site } from "./src/constants/meta.mjs"
 dotenv.config()
 
 const { GITHUB_TOKEN, FLICKR_API_KEY } = process.env
-const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 const options = withDefaults({})
 
@@ -30,7 +29,7 @@ const gatsbyConfig = {
     siteImage: site.defaultOgImage,
     twitter: site.twitter,
   },
-  trailingSlash: `never`,
+  trailingSlash: `always`,
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
@@ -261,18 +260,6 @@ const gatsbyConfig = {
           },
         ],
       },
-    },
-    {
-      resolve: `gatsby-plugin-gatsby-cloud`,
-      options: {},
-    },
-    shouldAnalyseBundle && {
-      resolve: `gatsby-plugin-perf-budgets`,
-      options: {},
-    },
-    shouldAnalyseBundle && {
-      resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
-      options: {},
     },
   ].filter(Boolean),
 }

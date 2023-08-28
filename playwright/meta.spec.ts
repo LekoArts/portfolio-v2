@@ -25,7 +25,7 @@ const metaTagAssertions = [
   },
   {
     name: `Blog Post (Tutorial)`,
-    url: `/react/using-deferred-static-generation-with-analytics-tools`,
+    url: `/react/using-deferred-static-generation-with-analytics-tools/`,
     title: `Using Deferred Static Generation with Analytics Tools | ${site.title}`,
     metaTags: [
       {
@@ -54,7 +54,7 @@ const metaTagAssertions = [
   },
   {
     name: `Blog Post (Prose)`,
-    url: `/design/introducing-the-theme-ui-plugin-for-figma`,
+    url: `/design/introducing-the-theme-ui-plugin-for-figma/`,
     title: `Introducing the Theme UI Plugin for Figma | ${site.title}`,
     metaTags: [
       {
@@ -83,7 +83,7 @@ const metaTagAssertions = [
   },
   {
     name: `Garden Post`,
-    url: `/garden/how-to-add-plausible-analytics-to-gatsby`,
+    url: `/garden/how-to-add-plausible-analytics-to-gatsby/`,
     title: `How to Add Plausible Analytics to Gatsby | ${site.title}`,
     metaTags: [
       {
@@ -115,15 +115,15 @@ const metaTagAssertions = [
 const noIndexPages = [
   {
     name: `Legal Notice`,
-    url: `/legal-notice`,
+    url: `/legal-notice/`,
   },
   {
     name: `Privacy Policy`,
-    url: `/privacy-policy`,
+    url: `/privacy-policy/`,
   },
   {
     name: `Resume`,
-    url: `/resume`,
+    url: `/resume/`,
   },
 ]
 
@@ -162,14 +162,14 @@ test.describe(`Meta Tags`, () => {
     expect(lang).toBe(`en-US`)
   })
   test(`should be correct on category pages`, async ({ page }) => {
-    await page.goto(`/tutorials`)
+    await page.goto(`/tutorials/`)
     await expect(page).toHaveTitle(`Tutorials | ${site.title}`)
     const desc1 = await page.locator(`meta[property="og:description"]`).getAttribute(`content`)
     expect(desc1).toStrictEqual(
       `Tutorials across different categories in a longform format & with interactive elements`
     )
 
-    await page.goto(`/community`)
+    await page.goto(`/community/`)
     await expect(page).toHaveTitle(`Community | ${site.title}`)
     const desc2 = await page.locator(`meta[property="og:description"]`).getAttribute(`content`)
     expect(desc2).toStrictEqual(

@@ -6,7 +6,6 @@
   "author": "LekoArts <hello@lekoarts.de>",
   "scripts": {
     "build": "gatsby build",
-    "build:analyse": "ANALYSE_BUNDLE=true gatsby build",
     "clean": "gatsby clean",
     "develop": "gatsby develop",
     "e2e:build": "cross-env IS_BUILD=y yarn playwright",
@@ -43,9 +42,9 @@
     "@vanilla-extract/sprinkles": "^1.6.1",
     "@vanilla-extract/webpack-plugin": "^2.3.0",
     "gatsby": "^5.12.3",
+    "gatsby-adapter-netlify": "^1.0.0",
     "gatsby-plugin-catch-links": "^5.12.0",
     "gatsby-plugin-feed": "^5.12.0",
-    "gatsby-plugin-gatsby-cloud": "^5.12.0",
     "gatsby-plugin-image": "^3.12.0",
     "gatsby-plugin-manifest": "^5.12.0",
     "gatsby-plugin-mdx": "^5.12.0",

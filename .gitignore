@@ -66,3 +66,4 @@ cypress/e2e/build
 .swc
 playwright/test-results
 dist
+test-results
