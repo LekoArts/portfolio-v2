@@ -1,14 +1,14 @@
 ---
 title: "Receiving Build Notifications via Discord Webhooks"
-description: "Learn how to receive build notifications (e.g. from Netlify or Gatsby Cloud) to Discord through webhooks. Most guides only show Slack but now you know how to also use Discord."
+description: "Learn how to receive build notifications (e.g. from Netlify) to Discord through webhooks. Most guides only show Slack but now you know how to also use Discord."
 date: 2018-10-27
-lastUpdated: 2021-04-20
+lastUpdated: 2023-08-31
 icon: "discord"
 tags:
   - Discord
 ---
 
-Many CI/CD services support both incoming and outgoing webhooks for the communication with external services. Also [Discord](https://discord.com/) allows the usage of webhooks to display messages -- so receiving build notifications in your Discord server is totally doable! For this example I'm using [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/) but the same steps (albeit with a different UI) also apply to services like [Netlify](https://www.netlify.com/) or [CircleCI](https://circleci.com/).
+Many CI/CD services support both incoming and outgoing webhooks for the communication with external services. Also [Discord](https://discord.com/) allows the usage of webhooks to display messages — so receiving build notifications in your Discord server is totally doable! For this example I'm using [Netlify](https://www.netlify.com/) but the same steps (albeit with a different UI) also apply to other services.
 
 You can also adapt this guide to send notifications of [GitHub Actions](/garden/running-cypress-tests-with-github-actions-in-parallel/) to a discord channel of yours.
 
@@ -18,18 +18,14 @@ Choose a channel on your server in which the messages should come in. Right-clic
 
 ## Step 2: Go to your CI/CD service
 
-Visit your dashboard where you can set Notifications and add a notification of type "Webhooks":
+Visit your dashboard where you can set Notifications and add a notification of type "Slack integration":
 
-![Section of the Dashboard on gatsbyjs.com. At the 'Outgoing Notifications' section there's a button called 'Add notification'. After pressing it you'll see a context menu with the items Webhooks, Slack, and Pull-Request comment. Click on Webhooks.](./add-notification.jpg)
+![Section of the dashboard on Netlify. After clicking on "Add notification" one can choose "Slack integration". It has the description: Send notifications to a Slack channel](./add-notification.jpg)
 
-Paste the webhook URL from your clipboard to the input for the outgoing webhook URL.
-
-![The sidebar menu lets you choose an event to listen to (you can choose between: Build Succeeded, Build Failed, Deploy Succeeded, and Deploy Failed) and add the copied webhook URL to the input of "outgoing webhook URL". Then press "Save".](./add-webhook-url.jpg)
+When asked about which event it should listen to, choose the one you need. For Netlify, you could choose _Deploy succeeded_. Paste the webhook URL from your clipboard to the input for the outgoing webhook URL. Netlify calls this field _Slack Incoming Webhook URL_. You're choosing the Slack integration and not a pure webhook because the Slack notifications will be formatted and embedded as rich text.
 
 ## Step 3: Add `/slack` to the webhook URL
 
 Discord explains in their [developer documentation](https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook) that you need to add `/slack` to the end of the webhook URL to receive webhook messages in the proper format.
 
-![The final input field with the added slack postfix](./final-webhook-url-input.jpg)
-
-You can use the same webhook URL multiple times to get notifications from multiple builds into the same channel.
+Go to the URL input field and add `/slack` to the end of the URL. Now, go try it out and trigger a build!
