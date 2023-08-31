@@ -2,7 +2,7 @@
 title: "Using Deferred Static Generation with Analytics Tools"
 subtitle: ""
 date: 2021-11-18
-lastUpdated: 2023-08-22
+lastUpdated: 2023-08-31
 description: "Only want to build out the most popular pages as static pages? No problem, you can use your analytics tool to control the usage of Deferred Static Generation in Gatsby."
 type: "tutorial"
 category: "React"
@@ -20,11 +20,11 @@ In choosing what pages to defer you can improve your page on a granular and indi
 
 <Alert status="info" title="Prerequisites">
 
-If you want to follow this tutorial step-by-step you'll need to have a couple of accounts for the online platforms in this guide. You need to have a [Gatsby Cloud account](https://www.gatsbyjs.com/dashboard/signup/) and an account on GitHub or GitLab. Since I'm personally a big fan of [Plausible Analytics](https://plausible.io) it'll be used in this tutorial. You can't create a free account there (but start a 30 day trial), so if you need something free you can use Google Analytics.
+If you want to follow this tutorial step-by-step you'll need to have a couple of accounts for the online platforms in this guide. You need to have a [Netlify account](https://app.netlify.com/signup) and an account on [GitHub](https://github.com/) or [GitLab](https://about.gitlab.com/). Since I'm personally a big fan of [Plausible Analytics](https://plausible.io) it'll be used in this tutorial. You can't create a free account there (but start a 30 day trial), so if you need something free you can use Google Analytics.
 
-If you haven't set up your development environment yet, you can follow [Part 0 of the official Gatsby tutorial](https://www.gatsbyjs.com/docs/tutorial/part-0/) to do so.
+If you haven't set up your development environment yet, you can follow [Part 0 of the official Gatsby tutorial](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/) to do so.
 
-Lastly, you should already have a Gatsby site locally or on GitHub/GitLab that you can work with and connect to Gatsby Cloud.
+Lastly, you should already have a Gatsby site locally or on GitHub/GitLab that you can work with and connect to Netlify.
 
 </Alert>
 
@@ -44,7 +44,7 @@ So in short:
 
 Use [gatsby-plugin-plausible](https://www.gatsbyjs.com/plugins/gatsby-plugin-plausible/) to add the necessary tracking script to your site.
 
-```sh
+```shell
 npm install gatsby-plugin-plausible
 ```
 
@@ -80,24 +80,15 @@ Or use the [plugin library](https://www.gatsbyjs.com/plugins) to find the fittin
 
 </Collapsible>
 
-## Deploying to Gatsby Cloud
+## Deploying to Netlify
 
-**Already use Gatsby Cloud to build & host your site? Then you can skip this step.**
+**Already use Netlify to build & host your site? Then you can skip this step.**
 
-1. Go to your [Gatsby Cloud Dashboard](https://www.gatsbyjs.com/dashboard/) and click the _Add a site_ button.
-1. Import your project from GitHub and select the project you worked on until now.
-1. For now you can leave the sections about integrations and environment variables empty. Later you'll need to fill out the environment variables for the local plugin.
-1. Finish the wizard by pressing _Create site_.
-
-<Collapsible summary={<em>Want a more detailed walkthrough?</em>}>
-
-No problem! Part 1 of the official Gatsby tutorial has you covered. The guide [Create and Deploy Your First Gatsby Site](https://www.gatsbyjs.com/docs/tutorial/part-1/) walks you through the creation of a Gatsby site itself and then the deployment to Gatsby Cloud. It uses GitHub to host the code of your site.
-
-</Collapsible>
+Follow Netlify's [Get Started guide](https://docs.netlify.com/get-started/) to connect and deploy your site inside the repository.
 
 ## Creating A Source Plugin
 
-So you've added analytics to your site, gathered some data, and deployed the site to Gatsby Cloud. The Plausible dashboard might look something like this:
+So you've added analytics to your site, gathered some data, and deployed the site to Netlify. The Plausible dashboard might look something like this:
 
 ![Overview of the Plausible Dashboard. Below the navigation with the logo, a big line chart shows the number of visitors over the timespan of 30 days. Additional information also shows the count of unique visitors, total pageviews, bounce rate, and visit duration. Below the line chart there are two boxes named "Top Sources" and "Top Pages". The "Top Pages" box lists and sorts the pages by visitor count. It shows that the "/", "/another-popular-post", "/super-popular-post" are the top 3 posts.](./plausible-dashboard.jpg)
 
@@ -253,9 +244,9 @@ const config = {
 export default config
 ```
 
-<Alert status="warning" title="Add environment variable in Gatsby Cloud">
+<Alert status="warning" title="Add environment variable in Netlify">
 
-Don't forget to also set `PLAUSIBLE_API_KEY` inside Gatsby Cloud as an environment variable. Otherwise the plugin won't be able to pull the information from Plausible's API. Go to your **Site Settings** and in the **Environment Variables** card you can add the key.
+Don't forget to also set `PLAUSIBLE_API_KEY` inside Netlify as an environment variable. Otherwise the plugin won't be able to pull the information from Plausible's API. Navigate to **Site configuration** > **Environment variables** to add a new value.
 
 </Alert>
 
@@ -405,13 +396,11 @@ You can check if it worked by looking at the build output at the end of `gatsby 
   ╰────────────────────────────────────────────────────────────────╯
 ```
 
-So as expected, the index page is SSG, and three posts are marked as DSG (and the correct ones). Great! 🎉 Time to see in action on Gatsby Cloud. Commit your changes and push it to trigger a build on Gatsby Cloud (if you work on a feature branch you'll need to open a PR to trigger a build).
+So as expected, the index page is SSG, and three posts are marked as DSG (and the correct ones). Great! 🎉 Time to see in action on Netlify. Commit your changes and push it to trigger a build on Netlify (if you work on a feature branch you'll need to open a PR to trigger a build).
 
 Go to some pages that are marked as deferred. The first request might take a bit longer, after that the requests to other DSG pages should be fast.
 
-You can also see it working in Gatsby Cloud directly. For this, go to the detailed view of a build and go to the _SSR logs_ tab. There you'll see each invocation of a DSG/SSR page.
-
-![Screenshot of a view inside Gatsby Cloud. This page shows the details of a specific build. From top to bottom: Commit message and current deploy URL, information about how long the build & deploy took and that it was published to Gatsby Hosting. Then a little diagram which pages are SSR, DSG, or SSG. Lastly, a tab overview with the tabs Logs, Raw Logs, SSR logs, and Functions. The screenshot shows the SSR logs. They show activity when a page is requested and say that pages are rendered with the DSG rendering strategy.](./gatsby-cloud-ssr-logs.jpg)
+You can also see it working in Netlify directly. For this, go to the **Functions** site and view the DSG function logs.
 
 ## Next Steps
 
