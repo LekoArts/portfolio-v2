@@ -11,6 +11,8 @@
 # Plausible 404 Requests
 - fromPath: /personal/
   toPath: /about/
+- fromPath: /garden/testing-gatsby-s-head-api-with-vitest-and-playwright
+  toPath: /garden/testing-gatsbys-head-api-with-vitest-and-playwright/
 
 # German
 # Top Level
