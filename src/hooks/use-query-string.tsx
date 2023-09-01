@@ -15,9 +15,15 @@ export function useQueryString<State extends ITagState>(opts: {
 }): [State, (v: State) => void] {
   const { initialState, iso, location } = opts
 
-  const [desiredState, setDesiredState] = React.useState(() =>
-    location.search ? iso.from(location.search.slice(1)) : initialState
-  )
+  const [desiredState, setDesiredState] = React.useState(() => {
+    const parsed = iso.from(location.search.slice(1))
+
+    if (parsed) {
+      return parsed
+    }
+
+    return initialState
+  })
 
   React.useEffect(() => {
     const handler = setTimeout(() => {

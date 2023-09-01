@@ -6,13 +6,17 @@ export const queryStringIso = {
   from: (locationSearch: string) => {
     let result
     const parsed = parse(locationSearch, { arrayFormat })
-    // If only one tag is selected a string is returned, not an array
-    if (typeof parsed.tags === `string`) {
-      result = {
-        tags: [parsed.tags],
+
+    // Only set `result` if there are tags in the query string
+    if (parsed.tags) {
+      // If only one tag is selected a string is returned, not an array
+      if (typeof parsed.tags === `string`) {
+        result = {
+          tags: [parsed.tags],
+        }
+      } else {
+        result = parsed
       }
-    } else {
-      result = parsed
     }
     return result
   },
