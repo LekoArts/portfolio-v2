@@ -145,7 +145,7 @@ export const createSchemaCustomization = ({ actions }) => {
       _id: String
       title: String
       content: [FlickrPhotosetsPhotos] @link(by: "photoset_id", from: "_id")
-      date_update: Date @dateformat
+      date_create: Date @dateformat
     }
 
     type FlickrPhotosetsPhotos implements Node {
@@ -158,6 +158,8 @@ export const createSchemaCustomization = ({ actions }) => {
     }
 
     type FlickrImageUrls {
+      _640px: FlickrImageUrlsContent
+      _800px: FlickrImageUrlsContent
       _1024px: FlickrImageUrlsContent
     }
 

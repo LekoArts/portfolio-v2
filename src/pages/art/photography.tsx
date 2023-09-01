@@ -29,6 +29,14 @@ interface IContentProps {
 const Content = ({ layout, nodes }: IContentProps) => {
   const flatNodes = nodes.map(({ content }) => content).flat()
 
+  if (flatNodes.length === 0) {
+    return (
+      <Container>
+        <strong>FLICKR_API_KEY</strong> for gatsby-source-flickr necessary.
+      </Container>
+    )
+  }
+
   if (layout === `grid` || layout === `masonry`) {
     return (
       <div className={imageWrapperVariants[layout]}>
