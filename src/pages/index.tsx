@@ -112,7 +112,7 @@ const Index: React.FC<PageProps<DataProps>> = ({ data }) => {
               I’m passionate about working on open source projects & making the web more inclusive through them.
             </Text>
             <Text variant="prominent" textAlign="center" style={{ maxWidth: `40ch` }}>
-              I’m currently working at TBA.
+              I’m currently working at <ExternalLink href="https://www.clerk.com">Clerk</ExternalLink>.
             </Text>
           </Box>
         </FullWidthContainer>
