@@ -38,7 +38,7 @@ const Resume = () => (
             <Button
               kind="external"
               target="_blank"
-              to="resume.pdf"
+              to="/resume.pdf"
               size="md"
               variant="primary"
               rightIcon={<SVGIcon id="download" height="1em" width="1em" />}
