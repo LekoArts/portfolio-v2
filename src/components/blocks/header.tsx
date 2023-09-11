@@ -16,10 +16,12 @@ type HeaderProps = {
   subnavigation?: React.ReactNode
 }
 
+const stripTrailingSlash = (str: string) => (str.endsWith(`/`) ? str.slice(0, -1) : str)
+
 export const Header: React.FC<HeaderProps> = ({ subnavigation = undefined }) => {
   const categorySlugs = useDistinctCategories()
   const location = useLocation()
-  const isCategoryPage = categorySlugs.includes(location.pathname)
+  const isCategoryPage = categorySlugs.includes(stripTrailingSlash(location.pathname))
   const height = subnavigation ? `navigationWithSubHeight` : `navigationHeight`
   const variant = isCategoryPage ? `fullBleed` : `navigation`
 
