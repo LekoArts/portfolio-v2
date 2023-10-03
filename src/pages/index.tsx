@@ -71,8 +71,8 @@ const cardGradients = [
 
 const openSourceRepos = [
   {
-    name: `gatsby-source-tmdb`,
-    url: `https://github.com/LekoArts/gatsby-source-tmdb`,
+    name: `figma-theme-ui`,
+    url: `https://github.com/LekoArts/figma-theme-ui`,
   },
   {
     name: `thanks-contributors`,
@@ -337,7 +337,7 @@ export const query = graphql`
       }
     }
     secondaryRepo: github {
-      repository(name: "figma-theme-ui", owner: "LekoArts") {
+      repository(name: "secco", owner: "LekoArts") {
         stargazerCount
         description
         name
