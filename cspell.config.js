@@ -95,6 +95,8 @@ module.exports = {
     `napi`,
     `gnueabihf`,
     `msvc`,
+    `tsup`,
+    `globster`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`, `Lenart`, `Lennard`],
 }
