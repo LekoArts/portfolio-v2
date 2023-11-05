@@ -23,10 +23,9 @@ const customFonts: Array<{ name: string; weight: Weight; style: Style; fileName:
   },
 ]
 
-const fonts = Promise.all(customFonts.map((font) => fetch(new URL(`./${font.fileName}`, import.meta.url))))
-
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url)
+  const fonts = Promise.all(customFonts.map((font) => fetch(new URL(`/edge/${font.fileName}`, req.url))))
 
   const fontsDatas = await fonts
 
@@ -56,7 +55,7 @@ export default async function handler(req: Request) {
           justifyContent: `center`,
           alignItems: `center`,
           position: `relative`,
-          background: `url(https://www.lekoarts.de/social/digital-garden-template.png?v1)`,
+          background: `url(${new URL(`/edge/digital-garden-template.png`, req.url).toString()})`,
         }}
       >
         <div
