@@ -96,7 +96,7 @@ const metaTagAssertions = [
       },
       {
         key: `og:image`,
-        value: `https://www.lekoarts.de${site.defaultGardenOgImage}`,
+        value: `https://www.lekoarts.de/og/garden?title=How+to+Add+Plausible+Analytics+to+Gatsby&lastUpdated=Aug+22%2C+2023&tags=Gatsby`,
       },
       {
         key: `twitter:label2`,

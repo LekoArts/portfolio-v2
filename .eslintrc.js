@@ -242,6 +242,7 @@ module.exports = {
         `src/templates/*.tsx`,
         `**/gatsby-config.ts`,
         `content/**/*.mdx`,
+        `netlify/edge-functions/*.tsx`,
       ],
       rules: {
         "import/no-default-export": 0,

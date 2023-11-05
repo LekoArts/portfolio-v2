@@ -7,4 +7,5 @@ export const site = {
   defaultOgImage: `/social/default-og-image.png?v=1`,
   twitter: `@lekoarts_de`,
   defaultGardenOgImage: `/social/digital-garden.png`,
+  gardenOgEdge: `/og/garden`,
 }
