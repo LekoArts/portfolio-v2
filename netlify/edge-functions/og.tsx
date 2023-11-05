@@ -5,36 +5,16 @@ import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts"
 const WIDTH = 1600
 const HEIGHT = 836
 
-type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-type Style = "normal" | "italic"
+const interMedium = await loadFont(`https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.ttf`)
 
-const customFonts: Array<{ name: string; weight: Weight; style: Style; fileName: string }> = [
-  {
-    name: `Inter`,
-    weight: 500,
-    style: `normal`,
-    fileName: `inter-500.ttf`,
-  },
-  {
-    name: `Inter`,
-    weight: 700,
-    style: `normal`,
-    fileName: `inter-700.ttf`,
-  },
-]
+const interBold = await loadFont(`https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf`)
+
+function loadFont(name: string) {
+  return fetch(name).then((res) => res.arrayBuffer())
+}
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url)
-  const fonts = Promise.all(customFonts.map((font) => fetch(new URL(`/edge/${font.fileName}`, req.url))))
-
-  const fontsDatas = await fonts
-
-  const fontsOptions = fontsDatas.map((fontData, i) => ({
-    name: customFonts[i].name,
-    data: fontData,
-    style: customFonts[i].style,
-    weight: customFonts[i].weight,
-  }))
 
   const hasTitle = searchParams.has(`title`)
   const title = hasTitle ? (searchParams.get(`title`) as string) : `Digital Garden`
@@ -55,7 +35,7 @@ export default async function handler(req: Request) {
           justifyContent: `center`,
           alignItems: `center`,
           position: `relative`,
-          background: `url(${new URL(`/edge/digital-garden-template.png`, req.url).toString()})`,
+          background: `url(https://www.lekoarts.de/edge/digital-garden-template.png)`,
         }}
       >
         <div
@@ -150,7 +130,20 @@ export default async function handler(req: Request) {
     {
       width: WIDTH,
       height: HEIGHT,
-      fonts: fontsOptions,
+      fonts: [
+        {
+          name: `Inter`,
+          data: interMedium,
+          style: `normal`,
+          weight: 500,
+        },
+        {
+          name: `Inter`,
+          data: interBold,
+          style: `normal`,
+          weight: 700,
+        },
+      ],
     }
   )
 }
