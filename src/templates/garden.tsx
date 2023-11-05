@@ -51,16 +51,9 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
           <Spacer size="4" axis="vertical" />
           <Box className={metaStyle} fontSize={[`sm`, `md`, null, null, `lg`]}>
             <Text>
-              Created {garden.date} – Last Updated {garden.lastUpdated}
+              Created: {garden.date} – Last Updated: {garden.lastUpdated}
             </Text>
-            <Box display="flex" flexWrap="wrap" justifyContent={[`flex-start`, null, `flex-end`]}>
-              {garden.tags.map((tag, index) => (
-                <React.Fragment key={tag}>
-                  <Box as="span">{tag}</Box>
-                  {index !== garden.tags.length - 1 && <Spacer axis="horizontal" size="2" />}
-                </React.Fragment>
-              ))}
-            </Box>
+            <Text>Tags: {garden.tags.map((tag) => tag).join(`, `)}</Text>
             <Tag colorScheme="green" style={{ justifySelf: `flex-start` }}>
               <Link to="/garden">Digital Garden</Link>
             </Tag>

@@ -3482,6 +3482,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@netlify/edge-functions@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@netlify/edge-functions@npm:2.2.0"
+  checksum: 14c4d72c15737a8c4b49d5306040b8ccebba706b9e07b06de08970d3bbc838f978759bef9047d43337606b46c08af5bd0fb62a78883bd4ac0ee197e28b249080
+  languageName: node
+  linkType: hard
+
 "@netlify/functions@npm:^1.6.0":
   version: 1.6.0
   resolution: "@netlify/functions@npm:1.6.0"
@@ -16330,6 +16337,7 @@ __metadata:
     "@lekoarts/gatsby-source-flickr": ^0.1.1
     "@lekoarts/rehype-meta-as-attributes": ^3.0.0
     "@mdx-js/react": ^2.3.0
+    "@netlify/edge-functions": ^2.2.0
     "@playwright/test": ^1.37.1
     "@react-aria/button": ^3.8.1
     "@react-stately/toggle": ^3.6.1

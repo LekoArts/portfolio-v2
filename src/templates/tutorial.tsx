@@ -35,7 +35,7 @@ const TutorialTemplate: React.FC<PageProps<WritingViewDataProps>> = ({
     <Spacer size="4" axis="vertical" />
     <Box display="flex" justifyContent="space-between" flexDirection={[`column`, null, null, `row`]}>
       <Text marginBottom="2">
-        Created {post.date} – Last Updated {post.lastUpdated}
+        Created: {post.date} – Last Updated: {post.lastUpdated}
       </Text>
       <Tag marginBottom="2" colorScheme={tagColorSwitch(post.category.name)} style={{ alignSelf: `flex-start` }}>
         {post.category.name}

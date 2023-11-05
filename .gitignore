@@ -67,3 +67,4 @@ cypress/e2e/build
 playwright/test-results
 dist
 test-results
+.netlify
