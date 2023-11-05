@@ -35,7 +35,7 @@ type DataProps = {
   }
 }
 
-const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, location: { pathname }, children }) => {
+const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, children }) => {
   const [hasShareApi, setHasShareApi] = React.useState(false)
 
   React.useEffect(() => {
@@ -116,44 +116,58 @@ const GardenTemplate: React.FC<PageProps<DataProps>> = ({ data: { garden }, loca
 
 export default GardenTemplate
 
-export const Head: HeadFC<DataProps> = ({ data: { garden } }) => (
-  <SEO
-    title={garden.title}
-    pathname={garden.slug}
-    description={garden.description ? garden.description : garden.excerpt}
-    image={garden.image}
-  >
-    <meta name="twitter:label1" value="Time To Read" />
-    <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
-    <meta name="twitter:label2" value="Tags" />
-    <meta name="twitter:data2" value={garden.tags.join(`, `)} />
-    <meta name="article:published_time" content={garden.seoDate} />
-    <meta name="article:modified_time" content={garden.seoLastUpdated} />
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(
-          article({
-            isGarden: true,
-            post: {
-              title: garden.title,
-              description: garden.description ? garden.description : garden.excerpt,
-              slug: garden.slug,
-              image: garden.image,
-              date: garden.seoDate,
-              lastUpdated: garden.seoLastUpdated,
-              year: garden.yearDate,
-            },
-            category: {
-              name: `Digital Garden`,
-              slug: `/garden`,
-            },
-          })
-        ),
-      }}
-    />
-  </SEO>
-)
+export const Head: HeadFC<DataProps> = ({ data: { garden } }) => {
+  // You can set image in frontmatter to overwrite the default image
+  // The OG Edge image should not be used in those cases
+  const hasDefaultOgImage = garden.image === site.defaultGardenOgImage
+
+  const ogURL = new URL(site.gardenOgEdge, site.url)
+  ogURL.searchParams.set(`title`, garden.title)
+  ogURL.searchParams.set(`lastUpdated`, garden.lastUpdated)
+  ogURL.searchParams.set(`tags`, garden.tags.join(`,`))
+
+  // The image link passed to <SEO /> has to be a relative path as it will prepend the site URL
+  const ogImage = hasDefaultOgImage ? `${ogURL.pathname}${ogURL.search}` : garden.image
+
+  return (
+    <SEO
+      title={garden.title}
+      pathname={garden.slug}
+      description={garden.description ? garden.description : garden.excerpt}
+      image={ogImage}
+    >
+      <meta name="twitter:label1" value="Time To Read" />
+      <meta name="twitter:data1" value={`${garden.timeToRead} Minutes`} />
+      <meta name="twitter:label2" value="Tags" />
+      <meta name="twitter:data2" value={garden.tags.join(`, `)} />
+      <meta name="article:published_time" content={garden.seoDate} />
+      <meta name="article:modified_time" content={garden.seoLastUpdated} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            article({
+              isGarden: true,
+              post: {
+                title: garden.title,
+                description: garden.description ? garden.description : garden.excerpt,
+                slug: garden.slug,
+                image: ogImage,
+                date: garden.seoDate,
+                lastUpdated: garden.seoLastUpdated,
+                year: garden.yearDate,
+              },
+              category: {
+                name: `Digital Garden`,
+                slug: `/garden`,
+              },
+            })
+          ),
+        }}
+      />
+    </SEO>
+  )
+}
 
 export const query = graphql`
   query ($id: String!) {
