@@ -8,9 +8,6 @@ import interVariableWoff2 from "./src/assets/fonts/inter-latin.var.woff2"
 // @ts-ignore
 import crimsonProVariableWoff2 from "./src/assets/fonts/crimson-pro-latin.var.woff2"
 
-const PLAUSIBLE_DOMAIN = `plausible.io`
-const SCRIPT_URI = `/js/script.js`
-
 export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, setHtmlAttributes }) => {
   setHtmlAttributes({ lang: `en-US` })
 
@@ -44,15 +41,14 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({ setHeadComponents, set
   if (process.env.NODE_ENV === `production`) {
     const scriptProps = {
       "data-domain": site.dataDomain,
-      src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
+      src: `/js/script.js`,
     }
 
     setHeadComponents([
-      <link key="gatsby-plugin-plausible-preconnect" rel="preconnect" href={`https://${PLAUSIBLE_DOMAIN}`} />,
-      <script key="gatsby-plugin-plausible-script" defer {...scriptProps} />,
+      <script key="plausible-script" defer {...scriptProps} />,
       // See: https://plausible.io/docs/custom-event-goals#1-trigger-custom-events-with-javascript-on-your-site
       <script
-        key="gatsby-plugin-plausible-custom-events"
+        key="plausible-custom-events"
         dangerouslySetInnerHTML={{
           __html: `
             window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
