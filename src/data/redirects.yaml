@@ -14,6 +14,12 @@
 - fromPath: /garden/testing-gatsby-s-head-api-with-vitest-and-playwright
   toPath: /garden/testing-gatsbys-head-api-with-vitest-and-playwright/
 
+# Plausible Proxy
+- fromPath: /js/script.js
+  toPath: https://plausible.io/js/script.js
+- fromPath: /api/event
+  toPath: https://plausible.io/api/event
+
 # German
 # Top Level
 - fromPath: /projects/*
