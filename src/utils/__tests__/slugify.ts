@@ -2,10 +2,10 @@ import { slugify } from "../slugify.mjs"
 
 describe(`slugify`, () => {
   it(`throws with empty input`, () => {
-    expect(() => slugify(``)).toThrowErrorMatchingInlineSnapshot(`"slugify requires an input"`)
+    expect(() => slugify(``)).toThrowErrorMatchingInlineSnapshot(`[Error: slugify requires an input]`)
   })
   it(`throws with empty input and given prefix`, () => {
-    expect(() => slugify(``, `category`)).toThrowErrorMatchingInlineSnapshot(`"slugify requires an input"`)
+    expect(() => slugify(``, `category`)).toThrowErrorMatchingInlineSnapshot(`[Error: slugify requires an input]`)
   })
   it(`title gets slugified`, () => {
     expect(slugify(`My Custom Title`)).toBe(`/my-custom-title`)
