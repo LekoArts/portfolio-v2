@@ -134,6 +134,10 @@ module.exports = {
         format: [`PascalCase`],
         prefix: [`I`],
       },
+      {
+        selector: `import`,
+        format: null,
+      },
     ],
     "@typescript-eslint/no-empty-interface": [
       `error`,

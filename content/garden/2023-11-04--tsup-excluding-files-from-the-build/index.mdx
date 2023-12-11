@@ -1,12 +1,12 @@
 ---
-title: 'tsup: Excluding Files From the Build'
+title: "tsup: Excluding Files From the Build"
 slug: tsup-excluding-files-from-the-build
 description: A short explainer on how you can exclude files from your tsup build output
 date: 2023-11-04
 lastUpdated: 2023-11-04
 icon: general
 tags:
-- Tooling
+  - Tooling
 ---
 
 [tsup](https://tsup.egoist.dev/) is a popular bundler powered by [esbuild](https://github.com/evanw/esbuild). You can bundle, transform, and minify JavaScript and TypeScript with it.
@@ -22,10 +22,10 @@ tsup src
 This would build all files inside the `src` directory. In a configuration file it would look like this:
 
 ```ts
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup"
 
 export default defineConfig({
-  entry: ['src'],
+  entry: ["src"],
 })
 ```
 
@@ -34,10 +34,10 @@ tsup uses [globby](https://www.npmjs.com/package/globby) under the hood for its 
 To exclude files inside `__tests__` or `<filename>.test.<ext>` files, you can modify the `entry` to this:
 
 ```ts highlight=4
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup"
 
 export default defineConfig({
-  entry: ['src', '!src/**/__tests__/**', '!src/**/*.test.*'],
+  entry: ["src", "!src/**/__tests__/**", "!src/**/*.test.*"],
 })
 ```
 
