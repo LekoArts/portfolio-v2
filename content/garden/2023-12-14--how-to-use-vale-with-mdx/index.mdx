@@ -1,0 +1,98 @@
+---
+title: How to Use Vale with MDX
+slug: how-to-use-vale-with-mdx
+description: Learn how you can configure Vale to lint your MDX files
+date: 2023-12-14
+lastUpdated: 2023-12-14
+icon: cli
+tags:
+- CLI
+- MDX
+---
+
+[Vale](https://vale.sh/) is an open-source command-line tool to lint your prose. It's fast, extensible, and syntax-aware. It supports linting Markdown but at the time of writing this post it doesn't natively lint MDX.
+
+In this short article I want to give you two tips:
+
+1. How to install and use Vale as an npm package
+1. How to configure Vale's `.vale.ini`
+
+I recommend reading through [Vale's documentation](https://vale.sh/docs) if you need instructions on how to set it up or how to add styles ⸺ because I won't touch on these topics here.
+
+## How to install & use Vale as an npm package
+
+If you're using MDX you're most likely working in a Node.js environment and as such use npm. You can [install](https://vale.sh/docs/vale-cli/installation/) vale as a binary for your platform. However, by going that route you'll require every person who wants to run Vale to go through the same installation steps. Instead, install [`@vvago/vale`](https://www.npmjs.com/package/@vvago/vale) as a dependency and use it instead.
+
+<Alert status="info" title="Note">
+
+`@vvago/vale` is a small CLI wrapper around Vale that downloads the correct binary for your system. At the time of writing this post it's an up-to-date and maintained package.
+
+</Alert>
+
+1. Install `@vvago/vale` as a devDependency:
+
+    ```shell
+    npm install -D @vvago/vale
+    ```
+
+1. Add the following two entries to your `package.json` scripts:
+
+    ```json title="package.json"
+    {
+      "scripts": {
+        "vale": "./node_modules/@vvago/vale/bin/vale",
+        "lint": "npm run vale -- <path-to-your-files>"
+      },
+    }
+    ```
+
+    Replace `<path-to-your-files>` with a path, e.g. if your docs live in `docs/` then use that. If you want to lint everything, use `.`.
+
+1. Try running the following script in your terminal:
+
+    ```shell
+    npm run vale -- -h
+    ```
+
+    You should see a similar output to this:
+
+    ```shell
+    ➜ npm run vale -- -h
+
+    > vale-test@1.0.0 vale
+    > ./node_modules/@vvago/vale/bin/vale -h
+
+    vale - A command-line linter for prose.
+
+    Usage:	vale [options] [input...]
+      vale myfile.md myfile1.md mydir1
+      vale --output=JSON [input...]
+
+    Vale is a syntax-aware linter for prose built with speed and extensibility in
+    mind. It supports Markdown, AsciiDoc, reStructuredText, HTML, and more.
+    ```
+
+Great, you can run Vale now. Follow [Vale's documentation](https://vale.sh/docs) to setup your `.vale.ini` configuration file and in the next step you'll learn how to use it with MDX.
+
+## How to configure Vale's `.vale.ini`
+
+MDX isn't one of Vale's supported formats so you'll need to associate an unknown format (in this case MDX) with a known format (Markdown).
+
+Open your `.vale.ini` and add the following:
+
+```text title=".vale.ini"
+# Treat MDX as Markdown
+[formats]
+mdx = md
+```
+
+This gives you some baseline functionality with Vale. But since MDX enables you to use JSX in Markdown, you need to tell Vale to ignore those parts as it can't parse them correctly.
+
+You should explore using `IgnoredScopes`, `SkippedScopes`, `BlockIgnores`, and `TokenIgnores` inside the [configuration options](https://vale.sh/docs/topics/config) to exclude these. An example config could look like this:
+
+```text title=".vale.ini"
+IgnoredScopes = code, tt, img, url, a
+SkippedScopes = script, style, pre, figure, code
+# Ignore code surrounded by backticks or plus sign, parameters defaults, URLs, and angle brackets.
+TokenIgnores = (<\/?[A-Z].+>), (\x60[^\n\x60]+\x60), ([^\n]+=[^\n]*), (\+[^\n]+\+), (http[^\n]+\[)
+```

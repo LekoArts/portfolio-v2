@@ -97,6 +97,8 @@ module.exports = {
     `msvc`,
     `tsup`,
     `globster`,
+    `vvago`,
+    `mydir`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`, `Lenart`, `Lennard`],
 }
