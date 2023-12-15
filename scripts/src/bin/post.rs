@@ -4,6 +4,7 @@ use scripts::{get_current_date, get_file_info, ContentType};
 use serde::Serialize;
 use slug::slugify;
 use std::{fs, path::PathBuf};
+use titlecase::titlecase;
 
 const TYPE_CHOICES: [&str; 2] = ["prose", "tutorial"];
 const CATEGORY_CHOICES: [&str; 5] = ["Community", "Design", "JavaScript", "React", "Writing"];
@@ -77,7 +78,7 @@ fn main() -> Result<()> {
         get_file_info(current_date.to_string(), slug.clone(), ContentType::Writing)?;
 
     let fm = Frontmatter {
-        title,
+        title: titlecase(&title),
         slug,
         subtitle,
         date,
