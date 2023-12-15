@@ -6,8 +6,8 @@ date: 2023-12-14
 lastUpdated: 2023-12-14
 icon: cli
 tags:
-- CLI
-- MDX
+  - CLI
+  - MDX
 ---
 
 [Vale](https://vale.sh/) is an open-source command-line tool to lint your prose. It's fast, extensible, and syntax-aware. It supports linting Markdown but at the time of writing this post it doesn't natively lint MDX.
@@ -31,46 +31,46 @@ If you're using MDX you're most likely working in a Node.js environment and as s
 
 1. Install `@vvago/vale` as a devDependency:
 
-    ```shell
-    npm install -D @vvago/vale
-    ```
+   ```shell
+   npm install -D @vvago/vale
+   ```
 
 1. Add the following two entries to your `package.json` scripts:
 
-    ```json title="package.json"
-    {
-      "scripts": {
-        "vale": "./node_modules/@vvago/vale/bin/vale",
-        "lint": "npm run vale -- <path-to-your-files>"
-      },
-    }
-    ```
+   ```json title="package.json"
+   {
+     "scripts": {
+       "vale": "./node_modules/@vvago/vale/bin/vale",
+       "lint": "npm run vale -- <path-to-your-files>"
+     }
+   }
+   ```
 
-    Replace `<path-to-your-files>` with a path, e.g. if your docs live in `docs/` then use that. If you want to lint everything, use `.`.
+   Replace `<path-to-your-files>` with a path, e.g. if your docs live in `docs/` then use that. If you want to lint everything, use `.`.
 
 1. Try running the following script in your terminal:
 
-    ```shell
-    npm run vale -- -h
-    ```
+   ```shell
+   npm run vale -- -h
+   ```
 
-    You should see a similar output to this:
+   You should see a similar output to this:
 
-    ```shell
-    ➜ npm run vale -- -h
+   ```shell
+   ➜ npm run vale -- -h
 
-    > vale-test@1.0.0 vale
-    > ./node_modules/@vvago/vale/bin/vale -h
+   > vale-test@1.0.0 vale
+   > ./node_modules/@vvago/vale/bin/vale -h
 
-    vale - A command-line linter for prose.
+   vale - A command-line linter for prose.
 
-    Usage:	vale [options] [input...]
-      vale myfile.md myfile1.md mydir1
-      vale --output=JSON [input...]
+   Usage:	vale [options] [input...]
+     vale myfile.md myfile1.md mydir1
+     vale --output=JSON [input...]
 
-    Vale is a syntax-aware linter for prose built with speed and extensibility in
-    mind. It supports Markdown, AsciiDoc, reStructuredText, HTML, and more.
-    ```
+   Vale is a syntax-aware linter for prose built with speed and extensibility in
+   mind. It supports Markdown, AsciiDoc, reStructuredText, HTML, and more.
+   ```
 
 Great, you can run Vale now. Follow [Vale's documentation](https://vale.sh/docs) to setup your `.vale.ini` configuration file and in the next step you'll learn how to use it with MDX.
 
