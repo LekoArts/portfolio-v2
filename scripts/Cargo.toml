@@ -11,6 +11,8 @@ authors = ["LekoArts"]
 chrono = "0.4.31"
 color-eyre = "0.6.2"
 dialoguer = "0.11.0"
+glob = "0.3.1"
+gray_matter = "0.2.6"
 serde = { version = "1.0.147", features = ["derive"] }
 serde_yaml = "0.9.14"
 slug = "0.1.5"

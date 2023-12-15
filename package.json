@@ -14,6 +14,7 @@
     "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js,.mdx,.mjs",
     "lint:fix": "yarn lint --fix",
     "lint:mdx": "eslint content/**/*.mdx --ext .mdx",
+    "lint:title-case": "./scripts/target/release/lint-title-case",
     "new-garden": "./scripts/target/release/garden",
     "new-post": "./scripts/target/release/post",
     "rs:build": "cd scripts && cargo build --release",
