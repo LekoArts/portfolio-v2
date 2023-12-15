@@ -30,3 +30,7 @@ public
 LICENSE
 *.txt
 *.toml
+results
+**/static/**
+**/*.hbs
+scripts

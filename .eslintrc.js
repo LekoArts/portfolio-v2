@@ -20,8 +20,6 @@ module.exports = {
     node: true,
   },
   globals: {
-    cy: true,
-    Cypress: true,
     JSX: true,
   },
   rules: {
@@ -244,7 +242,6 @@ module.exports = {
         `playwright.config.ts`,
         `vitest.config.ts`,
         `src/templates/*.tsx`,
-        `**/gatsby-config.ts`,
         `content/**/*.mdx`,
         `netlify/edge-functions/*.tsx`,
       ],

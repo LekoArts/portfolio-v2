@@ -20,5 +20,6 @@ export const queryStringIso = {
     }
     return result
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   to: (queryString: Record<string, any>) => stringify(queryString, { arrayFormat, skipNull: true }),
 }

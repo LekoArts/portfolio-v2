@@ -59,6 +59,7 @@ export const ToggleButton: React.FC<React.PropsWithChildren<IToggleButtonProps>>
 export const UnstyledButton = (props: IUnstyledButtonProps) => {
   const ref = React.useRef<HTMLButtonElement>(null!)
   const { buttonProps } = useButton(props, ref)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { children, className, onPress, ...rest } = props
 
   return (
