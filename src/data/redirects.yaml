@@ -204,3 +204,7 @@
 # Addition of a /resume page
 - fromPath: /projects/
   toPath: /resume/
+
+# Permanently deleted content
+- fromPath: /garden/gatsby-starter-for-prismic-io/
+  toPath: /garden/
