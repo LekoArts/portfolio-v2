@@ -2,6 +2,7 @@ use color_eyre::Result;
 use glob::glob;
 use gray_matter::engine::YAML;
 use gray_matter::Matter;
+use scripts::read_lines;
 use serde::Deserialize;
 use std::{env, fs};
 use titlecase::titlecase;
@@ -11,17 +12,6 @@ struct FrontMatter {
     // The frontmatter also includes other properties, but I only care about the title
     title: String,
 }
-
-// A list of paths to ignore
-const IGNORE: [&str; 7] = [
-    "2017-10-23--elitepvpers-wallpaper-2017",
-    "2021-04-05--what-is-a-digital-garden",
-    "2022-02-10--replacing-ls-with-exa",
-    "2022-11-24--how-to-write-theme-aware-styles-with-vanilla-extract",
-    "2023-08-10--publishing-a-rust-cli-on-npm",
-    "2023-11-04--tsup-excluding-files-from-the-build",
-    "2022-11-10--writing-performant-css-with-vanilla-extract",
-];
 
 fn main() -> Result<()> {
     color_eyre::install()?;
@@ -42,13 +32,16 @@ fn main() -> Result<()> {
     for entry in glob(&pattern).expect("Failed to read glob pattern") {
         match entry {
             Ok(path) => {
-                // Path to the file stripped of the "index.mdx"
+                // Name of the parent directory of the file
                 let parent = path.parent().unwrap().into_iter().last().unwrap();
 
-                // Ignore any paths that are in the IGNORE list considering the parent
-                if IGNORE.contains(&parent.to_str().unwrap()) {
-                    continue;
+                // Ignore any paths that are in the ignore-title-case.txt file
+                if let Ok(mut ignored_urls) = read_lines("./scripts/ignore-title-case.txt") {
+                    if ignored_urls.any(|x| x.unwrap() == parent.to_str().unwrap()) {
+                        continue;
+                    }
                 }
+
                 // Get the file contents from the path
                 if let Ok(contents) = fs::read_to_string(&path) {
                     // Parse with custom struct
@@ -57,17 +50,21 @@ fn main() -> Result<()> {
                     let title = frontmatter.data.title;
                     let titlecase_title = titlecase(&title);
 
+                    // Relative path to the file from the root of the project
+                    let relative_path = path.strip_prefix(&current_dir).unwrap();
+
                     // Compare the title with the titlecase version
                     if title != titlecase_title {
                         counter += 1;
                         println!(
                             r#"-----
-Old: {}
-New: {}
-Filepath: {}"#,
-                            title,
-                            titlecase_title,
-                            &path.display()
+{}
+Path: {}"#,
+                            colored_diff::PrettyDifference {
+                                expected: &title,
+                                actual: &titlecase_title
+                            },
+                            &relative_path.display()
                         );
                     }
                 }
