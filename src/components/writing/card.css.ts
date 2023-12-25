@@ -23,6 +23,8 @@ export const linkStyle = style({
 })
 
 export const headingStyle = style({
+  // @ts-expect-error - This is a valid CSS property
+  textWrap: `balance`,
   transition: `color 0.3s ease-in-out`,
   selectors: {
     [`${linkStyle}:hover &`]: {

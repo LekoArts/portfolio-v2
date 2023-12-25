@@ -28,6 +28,8 @@ globalStyle(`${prominent} a`, {
 const headingBaseStyle = style({
   fontWeight: vars.fontWeight.bold,
   color: vars.color.heading,
+  // @ts-expect-error - This is a valid CSS property
+  textWrap: `balance`,
 })
 
 export type Headings = "h1" | "h2" | "h3" | "h4"

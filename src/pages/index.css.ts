@@ -52,6 +52,8 @@ const colorfulCardStyle = style({
   color: `white`,
   textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)`,
   boxShadow: vars.shadow.lg,
+  // @ts-expect-error - This is a valid CSS property
+  textWrap: `balance`,
 })
 
 export const postBoxStyle = style([
