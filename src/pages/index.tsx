@@ -71,20 +71,20 @@ const cardGradients = [
 
 const openSourceRepos = [
   {
-    name: `figma-theme-ui`,
-    url: `https://github.com/LekoArts/figma-theme-ui`,
-  },
-  {
     name: `thanks-contributors`,
     url: `https://github.com/LekoArts/thanks-contributors`,
   },
   {
-    name: `lekoarts-stats`,
-    url: `https://github.com/LekoArts/lekoarts-stats`,
+    name: `annum`,
+    url: `https://github.com/LekoArts/annum`,
   },
   {
-    name: `portfolio-v2`,
-    url: `https://github.com/LekoArts/portfolio-v2`,
+    name: `figma-theme-ui`,
+    url: `https://github.com/LekoArts/figma-theme-ui`,
+  },
+  {
+    name: `lekoarts-stats`,
+    url: `https://github.com/LekoArts/lekoarts-stats`,
   },
 ]
 
