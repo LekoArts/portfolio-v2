@@ -99,6 +99,12 @@ module.exports = {
     `globster`,
     `vvago`,
     `mydir`,
+    `secco`,
+    `secco's`,
+    `Gleb`,
+    `Bahmutov's`,
+    `execa`,
+    `Execa`,
   ],
   flagWords: [`hte`, `Gastby`, `reponsive`, `GatsbyJS`, `GastbyJS`, `Lenart`, `Lennard`],
 }
