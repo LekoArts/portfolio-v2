@@ -24,8 +24,8 @@ const Resume = () => (
           <Box>
             <Heading as="h2">Hi, I'm Lennart Jörgens.</Heading>
             <Text variant="prominent">
-              A product-focused full stack engineer with five years of experience in leading large-scale open source
-              projects and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and
+              A product-focused full stack engineer with years of experience in leading large-scale open source projects
+              and shipping high-quality work to millions of users. Adept at building delightful, inclusive, and
               well-documented solutions to customers' needs.
             </Text>
             <Spacer axis="vertical" size="8" />
