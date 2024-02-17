@@ -26,11 +26,11 @@ const metaTagAssertions = [
   {
     name: `Blog Post (Tutorial)`,
     url: `/react/using-deferred-static-generation-with-analytics-tools/`,
-    title: `Using Deferred Static Generation with Analytics Tools | ${site.title}`,
+    title: `Using Deferred Static Generation With Analytics Tools | ${site.title}`,
     metaTags: [
       {
         key: `og:title`,
-        value: `Using Deferred Static Generation with Analytics Tools`,
+        value: `Using Deferred Static Generation With Analytics Tools | ${site.title}`,
       },
       {
         key: `og:description`,
@@ -59,7 +59,7 @@ const metaTagAssertions = [
     metaTags: [
       {
         key: `og:title`,
-        value: `Introducing the Theme UI Plugin for Figma`,
+        value: `Introducing the Theme UI Plugin for Figma | ${site.title}`,
       },
       {
         key: `og:description`,
@@ -88,7 +88,7 @@ const metaTagAssertions = [
     metaTags: [
       {
         key: `og:title`,
-        value: `How to Add Plausible Analytics to Gatsby`,
+        value: `How to Add Plausible Analytics to Gatsby | ${site.title}`,
       },
       {
         key: `og:description`,
@@ -137,6 +137,7 @@ test.describe(`Meta Tags`, () => {
       for (const tag of assertion.metaTags) {
         let content: string | null
 
+        // @ts-ignore
         if (tag.type === `name`) {
           content = await page.locator(`meta[name="${tag.key}"]`).getAttribute(`value`)
         } else {

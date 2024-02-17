@@ -1,6 +1,7 @@
 {
   "include": [
     "packages/**/*.ts",
+    "src/**/__tests__/*.tsx",
     "src/**/*.ts",
     ".eslintrc.js",
     "lint-staged.config.js",
@@ -22,6 +23,6 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "vitest/jsdom"]
   }
 }

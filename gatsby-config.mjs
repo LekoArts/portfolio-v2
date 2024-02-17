@@ -118,7 +118,6 @@ const gatsbyConfig = {
       },
     },
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-catch-links`,
     `gatsby-plugin-vanilla-extract`,
     `gatsby-plugin-image`,
     // Overwrite the default "slugify" option
@@ -260,10 +259,6 @@ const gatsbyConfig = {
           },
         ],
       },
-    },
-    {
-      resolve: `gatsby-plugin-gatsby-cloud`,
-      options: {},
     },
   ].filter(Boolean),
 }

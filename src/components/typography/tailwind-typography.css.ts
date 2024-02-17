@@ -5,6 +5,9 @@ import { fonts } from "../../styles/fonts.css"
 import { colorPalette } from "../../styles/tokens/colors"
 import type { SelectorMap } from "../../utils/vanilla-extract"
 
+// @ts-ignore
+import arrowRightUp from "../../assets/icons/arrow-up-right.svg"
+
 const nullHelper = null as unknown as string
 
 export const proseRootMobile = {
@@ -195,6 +198,9 @@ export const proseSmVariant = {
   "tbody td:last-of-type": {
     paddingRight: vars.space[0] as string,
   },
+  "a[data-link-external]::after": {
+    paddingRight: vars.space[5] as string,
+  },
 }
 
 export const proseMdVariant: typeof proseSmVariant = {
@@ -363,6 +369,9 @@ export const proseMdVariant: typeof proseSmVariant = {
     paddingLeft: nullHelper,
   },
   "tbody td:last-of-type": {
+    paddingRight: nullHelper,
+  },
+  "a[data-link-external]::after": {
     paddingRight: nullHelper,
   },
 }
@@ -535,6 +544,9 @@ export const proseLgVariant: typeof proseSmVariant = {
   "tbody td:last-of-type": {
     paddingRight: vars.space[0],
   },
+  "a[data-link-external]::after": {
+    paddingRight: nullHelper,
+  },
 }
 
 export const proseXlVariant: typeof proseSmVariant = {
@@ -705,6 +717,9 @@ export const proseXlVariant: typeof proseSmVariant = {
   "tbody td:last-of-type": {
     paddingRight: vars.space[0],
   },
+  "a[data-link-external]::after": {
+    paddingRight: vars.space[6],
+  },
 }
 
 export const proseBaseStyle: SelectorMap = {
@@ -716,6 +731,13 @@ export const proseBaseStyle: SelectorMap = {
   },
   "a:hover": {
     textDecoration: `none`,
+  },
+  "a[data-link-external]::after": {
+    content: ``,
+    backgroundImage: `url(${arrowRightUp})`,
+    backgroundPositionX: `50%`,
+    backgroundPositionY: `center`,
+    backgroundRepeat: `no-repeat`,
   },
   strong: {
     color: {
