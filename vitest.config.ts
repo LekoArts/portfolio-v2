@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config"
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin"
 
 export default defineConfig({
   test: {
@@ -9,4 +10,5 @@ export default defineConfig({
       reporter: [`text`, `json`, `html`],
     },
   },
+  plugins: [vanillaExtractPlugin()],
 })
