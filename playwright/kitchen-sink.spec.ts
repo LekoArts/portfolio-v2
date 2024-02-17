@@ -30,40 +30,40 @@ test.describe(`Code`, () => {
     await page.locator(`code:has-text("inline-code-block)`)
   })
   test(`should not show code-header with no language/title defined`, async ({ page }) => {
-    const childSelector = `pre:has-text("code block without any meta")`
+    const childSelector = `pre:has-text("without any meta")`
     const codeWrapperLocator = await page.locator(`data-testid=code-wrapper`, {
       has: page.locator(childSelector),
     })
 
-    const codeHeader = await codeWrapperLocator.locator(`data-testid=code-header`)
-    expect(await codeHeader.isVisible()).toBe(false)
+    const codeHeader = await codeWrapperLocator.getByTestId(`code-header`)
+    await expect(codeHeader).not.toBeVisible()
   })
   test(`should show code-header with language`, async ({ page }) => {
-    const childSelector = `text=/.*const language: string = "simple language".*/`
+    const childSelector = `text=/.*"simple language".*/`
     const codeWrapperLocator = await page.locator(`data-testid=code-wrapper`, {
       has: page.locator(childSelector),
     })
 
-    const codeHeader = await codeWrapperLocator.locator(`data-testid=code-header`)
-    expect(await codeHeader.isVisible()).toBe(true)
+    const codeHeader = await codeWrapperLocator.getByTestId(`code-header`)
+    await expect(codeHeader).toBeVisible()
     const lang = await codeHeader.locator(`[data-lang="ts"]`)
     await expect(lang).toContainText(`ts`)
   })
   test(`should show code-header with language & title`, async ({ page }) => {
-    const childSelector = `text=/.*const withTitle = "simple language with title".*/`
+    const childSelector = `text=/.*"simple language with title".*/`
     const codeWrapperLocator = await page.locator(`data-testid=code-wrapper`, {
       has: page.locator(childSelector),
     })
 
-    const codeHeader = await codeWrapperLocator.locator(`data-testid=code-header`)
-    expect(await codeHeader.isVisible()).toBe(true)
+    const codeHeader = await codeWrapperLocator.getByTestId(`code-header`)
+    await expect(codeHeader).toBeVisible()
     const lang = await codeHeader.locator(`[data-lang="js"]`)
     await expect(lang).toContainText(`js`)
-    const title = await codeHeader.locator(`data-testid=code-title`)
+    const title = await codeHeader.getByTestId(`code-title`)
     await expect(title).toContainText(`title.js`)
   })
   test(`should show line numbers`, async ({ page }) => {
-    const childSelector = `text=/.*1const lineNumbers = "simple language with title and line numbers".*/`
+    const childSelector = `text=/.*"simple language with title and line numbers".*/`
     const codeWrapperLocator = await page.locator(`data-testid=code-wrapper`, {
       has: page.locator(childSelector),
     })
@@ -72,12 +72,12 @@ test.describe(`Code`, () => {
     const two = await codeWrapperLocator.locator(`span:has-text("2")`)
     const three = await codeWrapperLocator.locator(`span:has-text("3")`)
 
-    expect(await one.isVisible()).toBe(true)
-    expect(await two.isVisible()).toBe(true)
-    expect(await three.isVisible()).toBe(true)
+    await expect(one).toBeVisible()
+    await expect(two).toBeVisible()
+    await expect(three).toBeVisible()
   })
   test(`should show line numbers and line highlights`, async ({ page }) => {
-    const childSelector = `text=/.*1const lineNumbers = "simple language with title and line numbers and highlight".*/`
+    const childSelector = `text=/.*"simple language with title and line numbers and highlight".*/`
     const codeWrapperLocator = await page.locator(`data-testid=code-wrapper`, {
       has: page.locator(childSelector),
     })
@@ -87,10 +87,10 @@ test.describe(`Code`, () => {
     const three = await codeWrapperLocator.locator(`span:has-text("3")`)
     const four = await codeWrapperLocator.locator(`span:has-text("4")`)
 
-    expect(await one.isVisible()).toBe(true)
-    expect(await two.isVisible()).toBe(true)
-    expect(await three.isVisible()).toBe(true)
-    expect(await four.isVisible()).toBe(true)
+    await expect(one).toBeVisible()
+    await expect(two).toBeVisible()
+    await expect(three).toBeVisible()
+    await expect(four).toBeVisible()
 
     const highlightCSS = /linear-gradient\(90deg, rgb\(140, 175, 255\)/gm
 
