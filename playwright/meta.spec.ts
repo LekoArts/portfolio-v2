@@ -26,7 +26,7 @@ const metaTagAssertions = [
   {
     name: `Blog Post (Tutorial)`,
     url: `/react/using-deferred-static-generation-with-analytics-tools/`,
-    title: `Using Deferred Static Generation with Analytics Tools | ${site.title}`,
+    title: `Using Deferred Static Generation With Analytics Tools | ${site.title}`,
     metaTags: [
       {
         key: `og:title`,
