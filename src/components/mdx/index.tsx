@@ -8,6 +8,7 @@ import { Video } from "./video"
 import { YouTube } from "./youtube"
 import { Playground } from "./playground"
 import { preToCodeBlock } from "../../utils/code"
+import { MarkdownLink } from "./link"
 
 // @ts-ignore
 export const components: Components = {
@@ -21,6 +22,8 @@ export const components: Components = {
     // it's possible to have a pre without a code in it
     return <pre {...preProps} />
   },
+  // @ts-ignore
+  a: (props) => <MarkdownLink {...props} />,
   Alert,
   Collapsible,
   Video,
