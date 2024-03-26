@@ -421,6 +421,19 @@ export const createPages = async ({ graphql, actions, reporter }) => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
+  // Plausible Proxy
+  createRedirect({
+    fromPath: `/js/script.js`,
+    toPath: `https://plausible.io/js/script.js`,
+    statusCode: 200,
+  })
+
+  createRedirect({
+    fromPath: `/api/event/`,
+    toPath: `https://plausible.io/api/event`,
+    statusCode: 200,
+  })
+
   if (process.env.gatsby_executing_command === `develop` || process.env.IS_PLAYWRIGHT) {
     createPage({
       path: `/kitchen-sink`,
