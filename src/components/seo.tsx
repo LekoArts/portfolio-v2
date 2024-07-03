@@ -59,6 +59,7 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({
       <meta name="twitter:image" content={seo.image} />
       <meta name="twitter:creator" content={twitter} />
       <meta name="creator" content="LekoArts" />
+      <meta name="fediverse:creator" content="@lekoarts@mastodon.social" />
       <link rel="icon" type="image/svg+xml" href={faviconSrc} />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <meta name="msapplication-TileColor" content="#0f172a" />
