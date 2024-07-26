@@ -42,6 +42,7 @@ export const getLanguage = (className: GetLanguageInput = ``) => className.split
 
 const OVERRIDES = {
   svelte: `html`,
+  astro: `ts`,
 } as const
 
 type OverridesInput = keyof typeof OVERRIDES

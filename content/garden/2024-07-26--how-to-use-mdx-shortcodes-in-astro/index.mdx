@@ -1,0 +1,53 @@
+---
+title: How to Use MDX Shortcodes in Astro
+slug: how-to-use-mdx-shortcodes-in-astro
+description: Make MDX components automatically available in MDX files without importing them each time.
+date: 2024-07-26
+lastUpdated: 2024-07-26
+icon: astro
+tags:
+- Astro
+---
+
+Let's assume that you have the following page that uses Astro's [Content Collections](https://docs.astro.build/en/guides/content-collections/) feature:
+
+```astro title="src/pages/[...slug].astro"
+---
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+	const entries = await getCollection('blog')
+	return entries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}))
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<h1>{entry.data.title}</h1>
+<Content />
+```
+
+You now want to use a `<Collapsible>` component in your MDX files without having to import it each and every time. You can use _shortcodes_ for this.
+
+All you have to do is to pass your custom components to `<Content>`:
+
+```astro title="src/pages/[...slug].astro" highlight=3,14
+---
+import { getCollection } from 'astro:content'
+import Collapsible from '../components/collapsible.astro'
+
+export async function getStaticPaths() {
+	// getStaticPaths()
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<h1>{entry.data.title}</h1>
+<Content components={{ Collapsible }} />
+```

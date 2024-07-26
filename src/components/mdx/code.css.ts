@@ -130,6 +130,10 @@ const badgeStyles: SelectorMap = {
     background: { light: `rgb(255, 62, 0)`, dark: `rgba(255, 62, 0, ${displayOpacityVar})` },
     color: { light: `white`, dark: `rgb(255, 221, 211)` },
   },
+  "&[data-lang='astro']": {
+    background: { light: `rgb(227, 57, 142)`, dark: `rgba(227, 57, 142, ${displayOpacityVar})` },
+    color: { light: `white`, dark: `rgb(255, 221, 211)` },
+  },
 }
 
 const boxShadowOpacityVar = createVar()
