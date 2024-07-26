@@ -33,6 +33,7 @@ export type SVGIconNames =
   | "grid"
   | "list"
   | "masonry"
+  | "astro"
 
 type SVGIconProps = {
   id: SVGIconNames
