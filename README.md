@@ -1,3 +1,6 @@
+> [!NOTE]
+> The new home of lekoarts.de is [portfolio-v3](https://github.com/LekoArts/portfolio-v3) now.
+
 # lekoarts.de
 
 Hello 👋
